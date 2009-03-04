@@ -3,6 +3,7 @@
 <project name="dosis-til-text" basedir=".">
 
 	<property file="build.properties" />
+	<property file="revision.properties" />
 	<property name="trifork-common" value="${basedir}/../trifork-common"/>
 	<import file="${trifork-common}/etc/build-common.xml"/>
 
