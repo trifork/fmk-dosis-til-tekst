@@ -8,12 +8,6 @@
 	<import file="${trifork-common}/etc/build-common.xml"/>
 
 	<property name="test.instrument" value="true"/>
-	
-	<target name="dosisstructuretest" depends="compile" description="just run the Test class">
-		<java classname="dk.medicinkortet.dosisstructuretext.Test" classpathref="classpath">
-			<arg value="test/CreateDrugMedicationRequest-1.xml"/>
-		</java>
-	</target>
 
 	<target name="releasedosisstructure" depends="compile" description="dosisstructure jar">
 		<tstamp/>

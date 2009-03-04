@@ -50,7 +50,7 @@ import dk.medicinkortet.dosisstructuretext.simpelxml.parser.XPathException;
  * See also the package level documention. 
  * 
  */
-public class Test {
+public class Runner {
 
 	/**
 	 * 
@@ -175,18 +175,4 @@ public class Test {
 		else  
 			System.out.println(result.getPriceListDosageCode()+"\t"+result.getPriceListDosageText()+"\t???\t???"+"\t"+dosage.append("\t").append(longText));	
 	}
-	
-	/**
-	 * Runs the conversion
-	 * @param args paths to individual XML files or path to folders containing XML files
-	 */
-	public static void main(String[] args) {
-		try {
-			run(args);
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-		}
-	}
-
 }
