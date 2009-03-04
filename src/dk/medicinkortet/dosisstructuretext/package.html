@@ -1,0 +1,50 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!--
+
+  @(#)package.html	1.60 98/01/27
+
+  Copyright 2008 Trifork, Denmark.  All Rights Reserved.
+
+  This software is the confidential and proprietary information of...
+
+-->
+</head>
+<body>
+
+<font color="red"><b>NEW READERS START HERE</b></font>
+<br><br>
+
+The classes in this package and it's sub packages implements the core functionality for converting structured 
+dosages used in the the common medicine card project ("Det f&aelig;lles medicinkort") to text
+
+. 
+ 
+<!-- Text above goes into the header (the dot breaks) -->
+
+The structures dosages, in XML form, are converted to:
+
+<ul>
+	<li>
+		Long text. 
+	</li>
+	<li> 
+		Short text. This is only supported for a limited number of dosage structures. The goal is to be able 
+		to convert the majority of the structured dosages for dosages given in the Danish Medicines Agency's 
+		pricelist ("Taksten"). 
+	</li>
+	<li>
+		Average daily dosage. The average daily dosage is calculated for structured dosages with exception of 
+		dosages according to need and dosages not given on spcific days (where DosageDayIdentifier is 0). 
+		Note that is not allowed to alter the dosage in the free text, but this cannot be validated for.
+	</li>
+</ul>
+
+The Test class in this package shows an example of how this converter can be used. See <a href="Test.html">the Test 
+class</a> for further information.
+<p/>
+This is part of the dosisstructure module.
+ 
+</body>
+</html>

@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!-- the project element's name attribute will be used in the name of the module's jar file -->
+<project name="dosis-til-text" basedir=".">
+
+	<property file="build.properties" />
+	<property name="trifork-common" value="${basedir}/../trifork-common"/>
+	<import file="${trifork-common}/etc/build-common.xml"/>
+
+	<property name="test.instrument" value="true"/>
+	
+	<target name="dosisstructuretest" depends="compile" description="just run the Test class">
+		<java classname="dk.medicinkortet.dosisstructuretext.Test" classpathref="classpath">
+			<arg value="test/CreateDrugMedicationRequest-1.xml"/>
+		</java>
+	</target>
+
+	<target name="releasedosisstructure" depends="compile" description="dosisstructure jar">
+		<tstamp/>
+		<mkdir dir="target/dosisstruct"/>
+	    <copy todir="target/dosisstruct">
+			<fileset dir="${build.dir}"/>
+	    </copy>
+		<jar destfile="target/dosisstructuretext.jar" basedir="target/dosisstruct">
+		    <manifest>                                                                                                                                        
+		        <attribute name="Built-By" value="${DSTAMP} ${TSTAMP}"/>                                                                                  
+		        <attribute name="Implementation-Vendor" value="Trifork"/>                                                                     
+		        <attribute name="Implementation-Title" value="dosisstructuretext"/>                                                             
+		    </manifest>
+		</jar>
+		<mkdir dir="target/doc"/>
+		<javadoc
+			sourcepath = "src"
+			packagenames="dk.medicinkortet.dosisstructuretext.*"
+			destdir="target/doc"
+		/>	
+	</target>	
+</project>
