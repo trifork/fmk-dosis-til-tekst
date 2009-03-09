@@ -1,13 +1,11 @@
 package dk.medicinkortet.dosisstructuretext.shorttext.helper;
 
-import java.text.DecimalFormat;
-
 import dk.medicinkortet.dosisstructuretext.simpelxml.parser.XPathException;
 
 public class ShortTextConverterHelper {
-
-	private static DecimalFormat FORMAT = new DecimalFormat("########0.#########");				
 			
+	private static MyDecimalFormatter FORMAT = new MyDecimalFormatter();
+	
 	public static String make(Value morning, Value noon, Value evening, Value night, String unit) throws XPathException {		
 		return 
 			"<DosageTimesStructure>\n"+
@@ -61,6 +59,16 @@ public class ShortTextConverterHelper {
 	
 	private static String replace(String value, String tag) {
 		return tag.replaceAll("%", value);
+	}
+	
+	static class MyDecimalFormatter {
+		public String format(double value) {
+			String stringValue = Double.toString(value);
+			while (stringValue.endsWith("0")) {
+				stringValue = stringValue.substring(0, stringValue.length() -1);
+			}
+			return stringValue;
+		}
 	}
 	
 }

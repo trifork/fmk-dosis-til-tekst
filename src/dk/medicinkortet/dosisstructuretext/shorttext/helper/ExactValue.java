@@ -1,6 +1,5 @@
 package dk.medicinkortet.dosisstructuretext.shorttext.helper;
 
-import java.math.BigDecimal;
 
 public class ExactValue implements Value {
 		

@@ -1,9 +1,5 @@
 package dk.medicinkortet.dosisstructuretext;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
 /**
@@ -12,22 +8,22 @@ import java.util.TimeZone;
  */
 public class TextHelper {
 	
-	private static final DateFormat DATE_FORMAT_Z = new SimpleDateFormat("yyyy-MM-dd'Z'");
-	private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
-	private static final SimpleDateFormat DATE_FORMAT_3 = new SimpleDateFormat("yyyy-MM-dd");
-
-	private static final DateFormat TIME_FORMAT_000Z = new SimpleDateFormat("HH:mm:ss'.'SSS'Z'");
-	private static final DateFormat TIME_FORMAT_Z = new SimpleDateFormat("HH:mm:ss'Z'");
-	private static final DateFormat TIME_FORMAT = new SimpleDateFormat("HH:mm:ss");
-	private static final DateFormat TIME_FORMAT_000 = new SimpleDateFormat("HH:mm:ss.SSS");
-	private static final SimpleDateFormat TIME_FORMAT_2 = new SimpleDateFormat("HH:mm");
-	private static final SimpleDateFormat TIME_FORMAT_3 = new SimpleDateFormat("HH:mm:ss");
+//	private static final DateFormat DATE_FORMAT_Z = new SimpleDateFormat("yyyy-MM-dd'Z'");
+//	private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
+//	private static final SimpleDateFormat DATE_FORMAT_3 = new SimpleDateFormat("yyyy-MM-dd");
+//
+//	private static final DateFormat TIME_FORMAT_000Z = new SimpleDateFormat("HH:mm:ss'.'SSS'Z'");
+//	private static final DateFormat TIME_FORMAT_Z = new SimpleDateFormat("HH:mm:ss'Z'");
+//	private static final DateFormat TIME_FORMAT = new SimpleDateFormat("HH:mm:ss");
+//	private static final DateFormat TIME_FORMAT_000 = new SimpleDateFormat("HH:mm:ss.SSS");
+//	private static final SimpleDateFormat TIME_FORMAT_2 = new SimpleDateFormat("HH:mm");
+//	private static final SimpleDateFormat TIME_FORMAT_3 = new SimpleDateFormat("HH:mm:ss");
 
 	
-	static {
-		TIME_FORMAT_Z.setTimeZone(TimeZone.getTimeZone("UTC"));
-		TIME_FORMAT_000Z.setTimeZone(TimeZone.getTimeZone("UTC"));
-	}
+//	static {
+//		TIME_FORMAT_Z.setTimeZone(TimeZone.getTimeZone("UTC"));
+//		TIME_FORMAT_000Z.setTimeZone(TimeZone.getTimeZone("UTC"));
+//	}
 	
 	/**
 	 * This array contains a mapping of the units defined in the schema file DKMA_DosageQuantityUnitText.xsd to 
@@ -146,104 +142,108 @@ public class TextHelper {
 	}
 	
 	public static String formatDateString(String dateString) throws DosageValidationException {
-		if(dateString==null)
-			return null;		
-		if(dateString.endsWith("Z")) {
-			try {
-				GregorianCalendar now = new GregorianCalendar();		
-				if(now.getTimeZone().useDaylightTime()) {
-					now.setTime(DATE_FORMAT_Z.parse(dateString));				
-					now.roll(GregorianCalendar.HOUR_OF_DAY, now.getTimeZone().getRawOffset()/(1000*60*60));
-				}
-				else {
-					now.setTime(DATE_FORMAT_Z.parse(dateString));									
-				}
-				return DATE_FORMAT_3.format(now.getTime());
-			}
-			catch(ParseException e) {
-				throw new DosageValidationException("Error in date format for \""+dateString+"\"");
-			}
-		}
-		else {				
-			try {
-				return DATE_FORMAT_3.format(DATE_FORMAT.parse(dateString));
-			}
-			catch(ParseException e) {
-				throw new DosageValidationException("Error in date format for \""+dateString+"\"");
-			}
-		}		
+		//TODO Tom skal have kigget på det her
+		return dateString;
+		//		if(dateString==null)
+//			return null;		
+//		if(dateString.endsWith("Z")) {
+//			try {
+//				GregorianCalendar now = new GregorianCalendar();		
+//				if(now.getTimeZone().useDaylightTime()) {
+//					now.setTime(DATE_FORMAT_Z.parse(dateString));				
+//					now.roll(GregorianCalendar.HOUR_OF_DAY, now.getTimeZone().getRawOffset()/(1000*60*60));
+//				}
+//				else {
+//					now.setTime(DATE_FORMAT_Z.parse(dateString));									
+//				}
+//				return DATE_FORMAT_3.format(now.getTime());
+//			}
+//			catch(ParseException e) {
+//				throw new DosageValidationException("Error in date format for \""+dateString+"\"");
+//			}
+//		}
+//		else {				
+//			try {
+//				return DATE_FORMAT_3.format(DATE_FORMAT.parse(dateString));
+//			}
+//			catch(ParseException e) {
+//				throw new DosageValidationException("Error in date format for \""+dateString+"\"");
+//			}
+//		}		
 	}	
 
 	public static String formatTimeString(String timeString) throws DosageValidationException {
-		if(timeString==null)
-			return null;		
-		boolean hasTimezone = timeString.endsWith("Z");
-		boolean hasMilliseconds = timeString.indexOf(".")>0;
-		if(hasTimezone&&hasMilliseconds) {
-			try {
-				GregorianCalendar now = new GregorianCalendar();		
-				if(now.getTimeZone().useDaylightTime()) {
-					now.setTime(TIME_FORMAT_000Z.parse(timeString));				
-					now.roll(GregorianCalendar.HOUR_OF_DAY, now.getTimeZone().getRawOffset()/(1000*60*60));
-				}
-				else {
-					now.setTime(TIME_FORMAT_000Z.parse(timeString));									
-				}
-				if(now.get(GregorianCalendar.SECOND)==0)
-					return TIME_FORMAT_2.format(now.getTime());
-				else
-					return TIME_FORMAT_3.format(now.getTime());
-			}
-			catch(ParseException e) {
-				throw new DosageValidationException("Error in time format for \""+timeString+"\"");
-			}			
-		}
-		else if(hasTimezone&&!hasMilliseconds) {
-			try {
-				GregorianCalendar now = new GregorianCalendar();		
-				if(now.getTimeZone().useDaylightTime()) {
-					now.setTime(TIME_FORMAT_Z.parse(timeString));				
-					now.roll(GregorianCalendar.HOUR_OF_DAY, now.getTimeZone().getRawOffset()/(1000*60*60));
-				}
-				else {
-					now.setTime(TIME_FORMAT_Z.parse(timeString));									
-				}
-				if(now.get(GregorianCalendar.SECOND)==0)
-					return TIME_FORMAT_2.format(now.getTime());
-				else
-					return TIME_FORMAT_3.format(now.getTime());
-			}
-			catch(ParseException e) {
-				throw new DosageValidationException("Error in time format for \""+timeString+"\"");
-			}
-		}
-		else if(!hasTimezone&&hasMilliseconds) {
-			try {
-				GregorianCalendar now = new GregorianCalendar();		
-				now.setTime(TIME_FORMAT_000.parse(timeString));				
-				if(now.get(GregorianCalendar.SECOND)==0)
-					return TIME_FORMAT_2.format(now.getTime());
-				else
-					return TIME_FORMAT_3.format(now.getTime());
-			}
-			catch(ParseException e) {
-				throw new DosageValidationException("Error in time format for \""+timeString+"\"");
-			}
-			
-		}
-		else { // if(!hasTimezone&&!hasMilliseconds){				
-			try {
-				GregorianCalendar now = new GregorianCalendar();		
-				now.setTime(TIME_FORMAT.parse(timeString));				
-				if(now.get(GregorianCalendar.SECOND)==0)
-					return TIME_FORMAT_2.format(now.getTime());
-				else
-					return TIME_FORMAT_3.format(now.getTime());
-			}
-			catch(ParseException e) {
-				throw new DosageValidationException("Error in time format for \""+timeString+"\"");
-			}
-		}		
+		//TODO tom skal have et kig på det her
+		return timeString;
+		//		if(timeString==null)
+//			return null;		
+//		boolean hasTimezone = timeString.endsWith("Z");
+//		boolean hasMilliseconds = timeString.indexOf(".")>0;
+//		if(hasTimezone&&hasMilliseconds) {
+//			try {
+//				GregorianCalendar now = new GregorianCalendar();		
+//				if(now.getTimeZone().useDaylightTime()) {
+//					now.setTime(TIME_FORMAT_000Z.parse(timeString));				
+//					now.roll(GregorianCalendar.HOUR_OF_DAY, now.getTimeZone().getRawOffset()/(1000*60*60));
+//				}
+//				else {
+//					now.setTime(TIME_FORMAT_000Z.parse(timeString));									
+//				}
+//				if(now.get(GregorianCalendar.SECOND)==0)
+//					return TIME_FORMAT_2.format(now.getTime());
+//				else
+//					return TIME_FORMAT_3.format(now.getTime());
+//			}
+//			catch(ParseException e) {
+//				throw new DosageValidationException("Error in time format for \""+timeString+"\"");
+//			}			
+//		}
+//		else if(hasTimezone&&!hasMilliseconds) {
+//			try {
+//				GregorianCalendar now = new GregorianCalendar();		
+//				if(now.getTimeZone().useDaylightTime()) {
+//					now.setTime(TIME_FORMAT_Z.parse(timeString));				
+//					now.roll(GregorianCalendar.HOUR_OF_DAY, now.getTimeZone().getRawOffset()/(1000*60*60));
+//				}
+//				else {
+//					now.setTime(TIME_FORMAT_Z.parse(timeString));									
+//				}
+//				if(now.get(GregorianCalendar.SECOND)==0)
+//					return TIME_FORMAT_2.format(now.getTime());
+//				else
+//					return TIME_FORMAT_3.format(now.getTime());
+//			}
+//			catch(ParseException e) {
+//				throw new DosageValidationException("Error in time format for \""+timeString+"\"");
+//			}
+//		}
+//		else if(!hasTimezone&&hasMilliseconds) {
+//			try {
+//				GregorianCalendar now = new GregorianCalendar();		
+//				now.setTime(TIME_FORMAT_000.parse(timeString));				
+//				if(now.get(GregorianCalendar.SECOND)==0)
+//					return TIME_FORMAT_2.format(now.getTime());
+//				else
+//					return TIME_FORMAT_3.format(now.getTime());
+//			}
+//			catch(ParseException e) {
+//				throw new DosageValidationException("Error in time format for \""+timeString+"\"");
+//			}
+//			
+//		}
+//		else { // if(!hasTimezone&&!hasMilliseconds){				
+//			try {
+//				GregorianCalendar now = new GregorianCalendar();		
+//				now.setTime(TIME_FORMAT.parse(timeString));				
+//				if(now.get(GregorianCalendar.SECOND)==0)
+//					return TIME_FORMAT_2.format(now.getTime());
+//				else
+//					return TIME_FORMAT_3.format(now.getTime());
+//			}
+//			catch(ParseException e) {
+//				throw new DosageValidationException("Error in time format for \""+timeString+"\"");
+//			}
+//		}		
 	}	
 	
 }

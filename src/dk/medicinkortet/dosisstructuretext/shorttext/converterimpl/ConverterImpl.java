@@ -25,7 +25,7 @@ public abstract class ConverterImpl {
 		shortText = new StringBuffer();
 		doConvert(dosageTimesStructure);
 		result.setShortText(getShortText());
-		result.setShortTextFilter(getClass().getSimpleName());
+		result.setShortTextFilter(getClass().getName());
 		return true;
 	}
 	
