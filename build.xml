@@ -29,4 +29,10 @@
 			destdir="target/doc"
 		/>	
 	</target>	
+	
+	<target name="publish-trifork-common" depends="publish-local">
+		<copy todir="/${trifork-common}/lib/shared-lib/trifork/${ant.project.name}/${revision}">
+			<fileset dir="target" includes="ivy.xml, dosis-til-text.jar"/>
+		</copy>	
+	</target>
 </project>
