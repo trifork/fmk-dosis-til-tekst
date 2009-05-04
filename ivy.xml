@@ -15,5 +15,7 @@
 		<dependency org="com.google.gwt" name="gwt-user" rev="1.5.2" /> 
 		<dependency org="com.google.gwt" name="gwt-math" rev="2.0.1" />
 		<dependency org="com.google.gwt" name="gwt-math-server" rev="2.0.1" />
+		<dependency org="log4j" name="log4j" rev="1.2.9" transitive="false" conf="test->default" />
+		<dependency org="oro" name="oro" rev="2.0.8" transitive="false" conf="test->default"/>
 	</dependencies>
 </ivy-module>
