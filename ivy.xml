@@ -13,7 +13,7 @@
 		
 		<dependency org="com.google.gwt" name="dev" rev="1.5.2" conf="build->default"/>
 		<dependency org="com.google.gwt" name="gwt-user" rev="1.5.2" /> 
-		<dependency org="com.google.gwt" name="gwt-math" rev="2.0.3" />
-		<dependency org="com.google.gwt" name="gwt-math-server" rev="2.0.3" />
+		<dependency org="com.google.gwt" name="gwt-math" rev="2.0.1" />
+		<dependency org="com.google.gwt" name="gwt-math-server" rev="2.0.1" />
 	</dependencies>
 </ivy-module>
