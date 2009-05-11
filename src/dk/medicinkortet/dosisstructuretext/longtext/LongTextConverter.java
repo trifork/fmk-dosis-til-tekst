@@ -129,7 +129,8 @@ public class LongTextConverter {
 		*/
 		
 		// Get the unit, don't add for now				
-		String dosageQuantityUnitText = dosageTimesStructure.getChildNodeText("*", "DosageQuantityUnitText");				
+		String dosageQuantityUnitText = dosageTimesStructure.getChildNodeText("*", "DosageQuantityUnitText");
+		String dosageSupplementaryText = dosageTimesStructure.findChildNodeText("*", "DosageSupplementaryText"); // For 2009-01-01 schema
 		
 		// Days...
 		Nodes dosageDayElements = dosageTimesStructure.getChildNodes("*", "DosageDayElementStructure"); 
@@ -140,7 +141,7 @@ public class LongTextConverter {
 		else
 			s.append("\n");
 		for(int i=0; i<dosageDayElements.size(); i++) {
-			s.append(makeFromDosageDayElementStructure(dosageDayElements.getNode(i), dosageQuantityUnitText, onlyDay1));			
+			s.append(makeFromDosageDayElementStructure(dosageDayElements.getNode(i), dosageQuantityUnitText, dosageSupplementaryText, onlyDay1));			
 		}		
 		
 		return s;
@@ -154,7 +155,7 @@ public class LongTextConverter {
 	 * @param onlyDay1 If the dosage only contains one day (or is the same very day) make a slightly simpler text 
 	 * @return
 	 */
-	private static StringBuffer makeFromDosageDayElementStructure(Node dosageDayElementStructure, String dosageQuantityUnitText, boolean onlyDay1) throws DosageValidationException {		
+	private static StringBuffer makeFromDosageDayElementStructure(Node dosageDayElementStructure, String dosageQuantityUnitText, String dosageSupplementaryText, boolean onlyDay1) throws DosageValidationException {		
 		StringBuffer s = new StringBuffer();
 		
 		String dosageDayIdentifier = dosageDayElementStructure.getChildNodeText(0);
@@ -180,12 +181,12 @@ public class LongTextConverter {
 		allNodes.addNodes(dosageDayElementStructure.findChildNodes("*", "NightDosageTimeElementStructure"));
 				
 		if(allNodes.allEquals()&&allNodes.size()>1) {
-			s.append(makeFromDosageTimeElementStructure(allNodes.getNode(0), dosageQuantityUnitText));	
+			s.append(makeFromDosageTimeElementStructure(allNodes.getNode(0), dosageQuantityUnitText, dosageSupplementaryText));	
 			s.append(" ").append(allNodes.size()).append(" gange");
 		}
 		else {
 			for(int j=0; j<allNodes.size(); j++) {
-				s.append(makeFromDosageTimeElementStructure(allNodes.getNode(j), dosageQuantityUnitText));	
+				s.append(makeFromDosageTimeElementStructure(allNodes.getNode(j), dosageQuantityUnitText, dosageSupplementaryText));	
 				if(j<allNodes.size()-1)
 					s.append(" + ");
 			}
@@ -201,7 +202,7 @@ public class LongTextConverter {
 	 * @param dosageQuantityUnitText
 	 * @return
 	 */
-	private static StringBuffer makeFromDosageTimeElementStructure(Node dosage, String dosageQuantityUnitText) throws DosageValidationException {
+	private static StringBuffer makeFromDosageTimeElementStructure(Node dosage, String dosageQuantityUnitText, String dosageSupplementaryText) throws DosageValidationException {
 		StringBuffer s = new StringBuffer();
 				
 		// Optional time of dosage 
@@ -212,19 +213,14 @@ public class LongTextConverter {
 		}
 		
 		String name = dosage.getName();
-		String insertText = null;
+		String pnText = null;
 		if(name.equals("DosageTimeElementStructure")) {
 			// nothing to add in front
 		}
 		else if(name.equals("AccordingToNeedDosageTimeElementStructure")) {
-			insertText = "efter behov";
+			pnText = "efter behov";
 		}
 		
-		// Add fixed dosage
-		Node dosageQuantityStructure = dosage.findChildNode("*", "DosageQuantityStructure");
-		Node minimalDosageQuantityStructure = dosage.findChildNode("*", "MinimalDosageQuantityStructure");
-		Node maximalDosageQuantityStructure = dosage.findChildNode("*", "MaximalDosageQuantityStructure");
-
 		String when = null;
 		if(name.equals("MorningDosageTimeElementStructure")) {
 			when = "morgen";		
@@ -238,12 +234,33 @@ public class LongTextConverter {
 		else if(name.equals("NightDosageTimeElementStructure")) {
 			when = "nat";					
 		}				
-		
-		if(dosageQuantityStructure!=null) 
-			s.append(makeFromDosageQuantityStructure(dosageQuantityStructure, dosageQuantityUnitText, when, insertText));
-		else 
-			s.append(makeFromMinMaxDosageQuantityStructure(minimalDosageQuantityStructure, maximalDosageQuantityStructure, dosageQuantityUnitText, when, insertText));									
-		
+				
+		// Add fixed dosage 
+		Node dosageQuantityStructure = dosage.findChildNode("*", "DosageQuantityStructure");
+		Node minimalDosageQuantityStructure = dosage.findChildNode("*", "MinimalDosageQuantityStructure");
+		Node maximalDosageQuantityStructure = dosage.findChildNode("*", "MaximalDosageQuantityStructure");
+		if(dosageQuantityStructure!=null) {
+			// for 2008-06-01 schemas
+			s.append(makeFromDosageQuantityStructureOrValue(dosageQuantityStructure, dosageQuantityUnitText, when, pnText, dosageSupplementaryText));			
+		}
+		else if (minimalDosageQuantityStructure!=null&&maximalDosageQuantityStructure!=null) {
+			// for 2008-06-01 schemas with min-max
+			s.append(makeFromMinMaxDosageQuantityStructureOrValue(minimalDosageQuantityStructure, maximalDosageQuantityStructure, dosageQuantityUnitText, when, pnText, dosageSupplementaryText));									
+		}
+		else {
+			Node dosageQuantityValue = dosage.findChildNode("*", "DosageQuantityValue");
+			Node minimalDosageQuantityValue = dosage.findChildNode("*", "MinimalDosageQuantityValue");
+			Node maximalDosageQuantityValue = dosage.findChildNode("*", "MaximalDosageQuantityValue");
+			if(dosageQuantityValue!=null) {
+				// for 2009-01-01 schemas 
+				s.append(makeFromDosageQuantityStructureOrValue(dosageQuantityValue, dosageQuantityUnitText, when, pnText, dosageSupplementaryText));							
+			}
+			else if(minimalDosageQuantityValue!=null&&maximalDosageQuantityValue!=null){
+				// for 2009-01-01 schemas with min-max 
+				s.append(makeFromMinMaxDosageQuantityStructureOrValue(minimalDosageQuantityValue, maximalDosageQuantityValue, dosageQuantityUnitText, when, pnText, dosageSupplementaryText));									
+			}
+		}
+		 		
 		return s;
 	}
 	
@@ -251,13 +268,13 @@ public class LongTextConverter {
 	 * Makes the exact dosage quantity
 	 * @param dosageQuantityStructure
 	 * @param dosageQuantityUnitText
-	 * @param insertText
+	 * @param pnText
 	 * @return
 	 */
-	private static StringBuffer makeFromDosageQuantityStructure(Node dosageQuantityStructure, String dosageQuantityUnitText, String when, String insertText) {
+	private static StringBuffer makeFromDosageQuantityStructureOrValue(Node dosageQuantityStructureOrValue, String dosageQuantityUnitText, String when, String pnText, String dosageSupplementaryText) {
 		StringBuffer s = new StringBuffer();
-		String dosageQuantityValue = dosageQuantityStructure.findChildNodeText("*", "DosageQuantityValue");
-		String dosageQuantityFreeText = dosageQuantityStructure.findChildNodeText("*", "DosageQuantityFreeText");
+		String dosageQuantityValue = dosageQuantityStructureOrValue.findChildNodeText("*", "DosageQuantityValue");
+		String dosageQuantityFreeText = dosageQuantityStructureOrValue.findChildNodeText("*", "DosageQuantityFreeText");
 		if(dosageQuantityValue!=null)
 			s.append(TextHelper.decimalToFraction(dosageQuantityValue)).append(" ");
 		if(dosageQuantityValue!=null&&dosageQuantityValue.equals("1"))
@@ -267,10 +284,12 @@ public class LongTextConverter {
 		if(when!=null) {
 			s.append(" ").append(when);
 		}		
-		if(insertText!=null)
-			s.append(" ").append(insertText);
+		if(pnText!=null)
+			s.append(" ").append(pnText);
 		if(dosageQuantityFreeText!=null)
-			s.append(" ").append(dosageQuantityFreeText);			
+			s.append(" ").append(dosageQuantityFreeText);		
+		if(dosageSupplementaryText!=null)
+			s.append(" ").append(dosageSupplementaryText);
 		return s;
 	}
 	
@@ -279,15 +298,19 @@ public class LongTextConverter {
 	 * @param minimalDosageQuantityStructure
 	 * @param maximalDosageQuantityStructure
 	 * @param dosageQuantityUnitText
-	 * @param insertText
+	 * @param pnText
 	 * @return
 	 */
-	private static StringBuffer makeFromMinMaxDosageQuantityStructure(Node minimalDosageQuantityStructure, Node maximalDosageQuantityStructure, String dosageQuantityUnitText, String when, String insertText) {
+	private static StringBuffer makeFromMinMaxDosageQuantityStructureOrValue(Node minimalDosageQuantityStructureOrValue, Node maximalDosageQuantityStructureOrValue, String dosageQuantityUnitText, String when, String pnText, String dosageSupplementaryText) {
 		StringBuffer s = new StringBuffer();
-		String minimalDosageQuantityValue = minimalDosageQuantityStructure.findChildNodeText("*", "DosageQuantityValue");
-		String minimalDosageQuantityFreeText = minimalDosageQuantityStructure.findChildNodeText("*", "DosageQuantityFreeText");
-		String maximalDosageQuantityValue = maximalDosageQuantityStructure.findChildNodeText("*", "DosageQuantityValue");
-		String maximalDosageQuantityFreeText = maximalDosageQuantityStructure.findChildNodeText("*", "DosageQuantityFreeText");
+		String minimalDosageQuantityValue = minimalDosageQuantityStructureOrValue.findChildNodeText("*", "DosageQuantityValue");
+		if(minimalDosageQuantityValue==null)
+			minimalDosageQuantityValue = minimalDosageQuantityStructureOrValue.findChildNodeText("*", "MinimalDosageQuantityValue");
+		String minimalDosageQuantityFreeText = minimalDosageQuantityStructureOrValue.findChildNodeText("*", "DosageQuantityFreeText");
+		String maximalDosageQuantityValue = maximalDosageQuantityStructureOrValue.findChildNodeText("*", "DosageQuantityValue");
+		if(maximalDosageQuantityValue==null)
+			maximalDosageQuantityValue = maximalDosageQuantityStructureOrValue.findChildNodeText("*", "MaximalDosageQuantityValue");
+		String maximalDosageQuantityFreeText = maximalDosageQuantityStructureOrValue.findChildNodeText("*", "DosageQuantityFreeText");
 		
 		boolean sameText = minimalDosageQuantityFreeText!=null&&maximalDosageQuantityValue!=null&&minimalDosageQuantityFreeText.equals(maximalDosageQuantityFreeText)
 			|| (minimalDosageQuantityFreeText==null&&maximalDosageQuantityValue==null);
@@ -313,11 +336,12 @@ public class LongTextConverter {
 		if(when!=null) {
 			s.append(" ").append(when);
 		}				
-		if(insertText!=null)
-			s.append(" ").append(insertText);
+		if(pnText!=null)
+			s.append(" ").append(pnText);
 		if(sameText&&minimalDosageQuantityFreeText!=null)
 			s.append(" ").append(minimalDosageQuantityFreeText);
-		
+		if(dosageSupplementaryText!=null)
+			s.append(" ").append(dosageSupplementaryText);		
 		return s;
 	}
 	

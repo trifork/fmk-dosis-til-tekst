@@ -11,18 +11,18 @@ import dk.medicinkortet.dosisstructuretext.dailydosis.DailyDosisCalculator;
 import dk.medicinkortet.dosisstructuretext.longtext.LongTextConverter;
 import dk.medicinkortet.dosisstructuretext.shorttext.ShortTextConverter;
 import dk.medicinkortet.dosisstructuretext.simpelxml.Node;
-import dk.medicinkortet.dosisstructuretext.vo.DosageTimeVO;
-import dk.medicinkortet.dosisstructuretext.vo.DosageVO;
+import dk.medicinkortet.dosisstructuretext.vo.DosageTime20080601VO;
+import dk.medicinkortet.dosisstructuretext.vo.Dosage20080601VO;
 
 public class DosageVOTest extends TestCase {
 
 	public void testSimpleToXML() throws Exception {
-		DosageVO d = new DosageVO();
+		Dosage20080601VO d = new Dosage20080601VO();
 		d.setDosageTimesIterationIntervalQuantity(1);
 		d.setDosageTimesStartDate(new GregorianCalendar(2008, 1, 1).getTime());
 		d.setDosageTimesEndDate(new GregorianCalendar(2008, 12, 31).getTime());
 		d.setDosageUnit("stk");		
-		d.addDosageTime(new DosageTimeVO(
+		d.addDosageTime(new DosageTime20080601VO(
 				123, 
 				1, 
 				new Date(0, 0, 0, 23, 30, 50), 
@@ -66,12 +66,12 @@ public class DosageVOTest extends TestCase {
 	}
 
 	public void testMultipleToXML() {
-		DosageVO d = new DosageVO();
+		Dosage20080601VO d = new Dosage20080601VO();
 		d.setDosageTimesIterationIntervalQuantity(1);
 		d.setDosageTimesStartDate(new GregorianCalendar(2008, 1, 1).getTime());
 		d.setDosageTimesEndDate(new GregorianCalendar(2008, 12, 31).getTime());
 		d.setDosageUnit("stk");		
-		d.addDosageTime(new DosageTimeVO(
+		d.addDosageTime(new DosageTime20080601VO(
 				123, 
 				1, 
 				new Date(0, 0, 0, 23, 30, 50), 
@@ -80,7 +80,7 @@ public class DosageVOTest extends TestCase {
 				null, null, 
 				true, false, false, false, false, false
 				));						
-		d.addDosageTime(new DosageTimeVO(
+		d.addDosageTime(new DosageTime20080601VO(
 				123, 
 				2, 
 				new Date(0, 0, 0, 1, 2, 3), 
@@ -126,12 +126,12 @@ public class DosageVOTest extends TestCase {
 	}
 	
 	public void testMMANToXML() {
-		DosageVO d = new DosageVO();
+		Dosage20080601VO d = new Dosage20080601VO();
 		d.setDosageTimesIterationIntervalQuantity(1);
 		d.setDosageTimesStartDate(new GregorianCalendar(2008, 1, 1).getTime());
 		d.setDosageTimesEndDate(new GregorianCalendar(2008, 12, 31).getTime());
 		d.setDosageUnit("stk");		
-		d.addDosageTime(new DosageTimeVO(
+		d.addDosageTime(new DosageTime20080601VO(
 				123, 
 				1, 
 				null, 
@@ -140,7 +140,7 @@ public class DosageVOTest extends TestCase {
 				null, null, 
 				false, true, false, false, false, false
 				));						
-		d.addDosageTime(new DosageTimeVO(
+		d.addDosageTime(new DosageTime20080601VO(
 				123, 
 				1, 
 				null, 
@@ -149,7 +149,7 @@ public class DosageVOTest extends TestCase {
 				null, null, 
 				false, false, true, false, false, false
 				));						
-		d.addDosageTime(new DosageTimeVO(
+		d.addDosageTime(new DosageTime20080601VO(
 				123, 
 				1, 
 				null, 
@@ -158,7 +158,7 @@ public class DosageVOTest extends TestCase {
 				null, null, 
 				false, false, false, true, false, false
 				));
-		d.addDosageTime(new DosageTimeVO(
+		d.addDosageTime(new DosageTime20080601VO(
 				123, 
 				1, 
 				null, 
@@ -208,12 +208,12 @@ public class DosageVOTest extends TestCase {
 	}	
 	
 	public void testWrongOrderToXML() {
-		DosageVO d = new DosageVO();
+		Dosage20080601VO d = new Dosage20080601VO();
 		d.setDosageTimesIterationIntervalQuantity(1);
 		d.setDosageTimesStartDate(new GregorianCalendar(2008, 1, 1).getTime());
 		d.setDosageTimesEndDate(new GregorianCalendar(2008, 12, 31).getTime());
 		d.setDosageUnit("stk");		
-		d.addDosageTime(new DosageTimeVO(
+		d.addDosageTime(new DosageTime20080601VO(
 				123, 
 				2, 
 				new Date(0, 0, 0, 22, 22, 22), 
@@ -222,7 +222,7 @@ public class DosageVOTest extends TestCase {
 				null, null, 
 				false, false, false, false, false, true
 				));						
-		d.addDosageTime(new DosageTimeVO(
+		d.addDosageTime(new DosageTime20080601VO(
 				123, 
 				1, 
 				new Date(0, 0, 0, 11, 11, 11), 

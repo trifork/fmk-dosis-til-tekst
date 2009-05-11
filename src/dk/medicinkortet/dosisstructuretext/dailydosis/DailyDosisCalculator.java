@@ -243,17 +243,34 @@ public class DailyDosisCalculator {
 		maxValue = maxValue.setScale(DECIMAL_SCALE);
 		for(int nodeIndex=1; nodeIndex<dosageTimeElementStructures.size(); nodeIndex++) {
 			Node dosageTimeElementStructure = dosageTimeElementStructures.getNode(nodeIndex);
+
 			Node dosageQuantityStructure = dosageTimeElementStructure.findChildNode("*", "DosageQuantityStructure");
 			Node minimalDosageQuantityStructure = dosageTimeElementStructure.findChildNode("*", "MinimalDosageQuantityStructure");
-			Node maximalDosageQuantityStructure = dosageTimeElementStructure.findChildNode("*", "MaximalDosageQuantityStructure");			
-			if(dosageQuantityStructure!=null) {
-				BigDecimal value = getValue(dosageQuantityStructure);
+			Node maximalDosageQuantityStructure = dosageTimeElementStructure.findChildNode("*", "MaximalDosageQuantityStructure");		
+			Node dosageQuantityValue = dosageTimeElementStructure.findChildNode("*", "DosageQuantityValue");
+			Node minimalDosageQuantityValue = dosageTimeElementStructure.findChildNode("*", "MinimalDosageQuantityValue");
+			Node maximalDosageQuantityValue = dosageTimeElementStructure.findChildNode("*", "MaximalDosageQuantityValue");		
+			
+			if(dosageQuantityStructure!=null) { // 2008-06-01 schemas
+				BigDecimal value = getValue(dosageQuantityStructure.getChildNodeText("*", "DosageQuantityValue"));				
 				minValue = minValue.add(value);
 				maxValue = maxValue.add(value);
 			}
+			else if(minimalDosageQuantityStructure!=null&&maximalDosageQuantityStructure!=null) { // 2008-06-01 schemas
+				minValue = minValue.add(getValue(minimalDosageQuantityStructure.getChildNodeText("*", "DosageQuantityValue")));
+				maxValue = maxValue.add(getValue(maximalDosageQuantityStructure.getChildNodeText("*", "DosageQuantityValue")));
+			}
+			else if(dosageQuantityValue!=null) { // 2009-01-01 schemas
+				BigDecimal value = getValue(dosageQuantityValue.getText());				
+				minValue = minValue.add(value);
+				maxValue = maxValue.add(value);
+			}
+			else if(minimalDosageQuantityValue!=null&&maximalDosageQuantityValue!=null) { // 2009-01-01 schemas
+				minValue = minValue.add(getValue(minimalDosageQuantityValue.getText()));
+				maxValue = maxValue.add(getValue(maximalDosageQuantityValue.getText()));
+			}
 			else {
-				minValue = minValue.add(getValue(minimalDosageQuantityStructure));
-				maxValue = maxValue.add(getValue(maximalDosageQuantityStructure));
+				throw new CalculationException("Contains one or more dosage quantities only defined as free text");				
 			}
 		}		
 		return new BigDecimal[]{minValue, maxValue};		
@@ -269,7 +286,11 @@ public class DailyDosisCalculator {
 		String dosageQuantityValue = anyDosageQuantityStructure.getChildNodeText("*", "DosageQuantityValue");
 		if(dosageQuantityValue==null)
 			throw new CalculationException("Contains one or more dosage quantities only defined as free text");
-		BigDecimal d = new BigDecimal(dosageQuantityValue);
+		return getValue(dosageQuantityValue);
+	}
+	
+	private static BigDecimal getValue(String v) {
+		BigDecimal d = new BigDecimal(v);
 		d.setScale(DECIMAL_SCALE);
 		return d;
 	}
