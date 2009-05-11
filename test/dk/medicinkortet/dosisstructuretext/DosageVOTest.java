@@ -16,7 +16,7 @@ import dk.medicinkortet.dosisstructuretext.vo.DosageVO;
 
 public class DosageVOTest extends TestCase {
 
-	public void test1() throws Exception {
+	public void testSimpleToXML() throws Exception {
 		DosageVO d = new DosageVO();
 		d.setDosageTimesIterationIntervalQuantity(1);
 		d.setDosageTimesStartDate(new GregorianCalendar(2008, 1, 1).getTime());
@@ -41,7 +41,7 @@ public class DosageVOTest extends TestCase {
 					"\t\t<DosageDayElementStructure>\n"+
 						"\t\t\t<DosageDayIdentifier>1</DosageDayIdentifier>\n"+
 						"\t\t\t<AccordingToNeedDosageTimeElementStructure>\n"+
-							"\t\t\t\t<DosageTimeTime>23:30:50</DosageTimeTime>\n"+  // Det her er strengt taget ikke lovligt
+							"\t\t\t\t<DosageTimeTime>23:30:50</DosageTimeTime>\n"+  // Det her er strengt taget ikke lovligt iflg. skemadefinitionen
 							"\t\t\t\t<DosageQuantityStructure>\n"+
 								"\t\t\t\t\t<DosageQuantityValue>1</DosageQuantityValue>\n"+
 								"\t\t\t\t\t<DosageQuantityFreeText>mod smerter</DosageQuantityFreeText>\n"+
@@ -65,7 +65,7 @@ public class DosageVOTest extends TestCase {
 		
 	}
 
-	public void test2() {
+	public void testMultipleToXML() {
 		DosageVO d = new DosageVO();
 		d.setDosageTimesIterationIntervalQuantity(1);
 		d.setDosageTimesStartDate(new GregorianCalendar(2008, 1, 1).getTime());
@@ -125,7 +125,7 @@ public class DosageVOTest extends TestCase {
 			d.toXml());
 	}
 	
-	public void testMMAN() {
+	public void testMMANToXML() {
 		DosageVO d = new DosageVO();
 		d.setDosageTimesIterationIntervalQuantity(1);
 		d.setDosageTimesStartDate(new GregorianCalendar(2008, 1, 1).getTime());
@@ -207,7 +207,7 @@ public class DosageVOTest extends TestCase {
 			d.toXml());
 	}	
 	
-	public void testWrongOrder() {
+	public void testWrongOrderToXML() {
 		DosageVO d = new DosageVO();
 		d.setDosageTimesIterationIntervalQuantity(1);
 		d.setDosageTimesStartDate(new GregorianCalendar(2008, 1, 1).getTime());

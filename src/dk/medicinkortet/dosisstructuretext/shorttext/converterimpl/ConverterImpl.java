@@ -132,6 +132,25 @@ public abstract class ConverterImpl {
 		add(o3, n);
 		return n.allEquals();
 	}
+
+	/**
+	 * Helper method for converters: Determines if all the passed nodes in the objects are equal. 
+	 * The Node or Nodes in the arguments are added to one Nodes list and evaluated for equals.   
+	 * @param o0
+	 * @param o1
+	 * @param o2
+	 * @param o3
+	 * @param o4
+	 */
+	protected boolean allEquals(Object o0, Object o1, Object o2, Object o3, Object o4) {
+		Nodes n = new Nodes();
+		add(o0, n);
+		add(o1, n);
+		add(o2, n);
+		add(o3, n);
+		add(o4, n);
+		return n.allEquals();
+	}
 	
 	/**
 	 * If o is a Node it is added to the Nodes object n.

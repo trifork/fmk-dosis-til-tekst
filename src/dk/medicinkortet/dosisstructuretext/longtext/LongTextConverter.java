@@ -224,24 +224,25 @@ public class LongTextConverter {
 		Node dosageQuantityStructure = dosage.findChildNode("*", "DosageQuantityStructure");
 		Node minimalDosageQuantityStructure = dosage.findChildNode("*", "MinimalDosageQuantityStructure");
 		Node maximalDosageQuantityStructure = dosage.findChildNode("*", "MaximalDosageQuantityStructure");
-		if(dosageQuantityStructure!=null) 
-			s.append(makeFromDosageQuantityStructure(dosageQuantityStructure, dosageQuantityUnitText, insertText));
-		else 
-			s.append(makeFromMinMaxDosageQuantityStructure(minimalDosageQuantityStructure, maximalDosageQuantityStructure, dosageQuantityUnitText, insertText));							
 
+		String when = null;
 		if(name.equals("MorningDosageTimeElementStructure")) {
-			s.append(" morgen");		
+			when = "morgen";		
 		}
 		else if(name.equals("NoonDosageTimeElementStructure")) {
-			s.append(" middag");					
+			when = "middag";					
 		}
 		else if(name.equals("EveningDosageTimeElementStructure")) {
-			s.append(" aften");					
+			when = "aften";					
 		}
 		else if(name.equals("NightDosageTimeElementStructure")) {
-			s.append(" nat");					
-		}		
+			when = "nat";					
+		}				
 		
+		if(dosageQuantityStructure!=null) 
+			s.append(makeFromDosageQuantityStructure(dosageQuantityStructure, dosageQuantityUnitText, when, insertText));
+		else 
+			s.append(makeFromMinMaxDosageQuantityStructure(minimalDosageQuantityStructure, maximalDosageQuantityStructure, dosageQuantityUnitText, when, insertText));									
 		
 		return s;
 	}
@@ -253,7 +254,7 @@ public class LongTextConverter {
 	 * @param insertText
 	 * @return
 	 */
-	private static StringBuffer makeFromDosageQuantityStructure(Node dosageQuantityStructure, String dosageQuantityUnitText, String insertText) {
+	private static StringBuffer makeFromDosageQuantityStructure(Node dosageQuantityStructure, String dosageQuantityUnitText, String when, String insertText) {
 		StringBuffer s = new StringBuffer();
 		String dosageQuantityValue = dosageQuantityStructure.findChildNodeText("*", "DosageQuantityValue");
 		String dosageQuantityFreeText = dosageQuantityStructure.findChildNodeText("*", "DosageQuantityFreeText");
@@ -263,6 +264,9 @@ public class LongTextConverter {
 			s.append(TextHelper.unitToSingular(dosageQuantityUnitText));
 		else 
 			s.append(TextHelper.unitToPlural(dosageQuantityUnitText));
+		if(when!=null) {
+			s.append(" ").append(when);
+		}		
 		if(insertText!=null)
 			s.append(" ").append(insertText);
 		if(dosageQuantityFreeText!=null)
@@ -278,7 +282,7 @@ public class LongTextConverter {
 	 * @param insertText
 	 * @return
 	 */
-	private static StringBuffer makeFromMinMaxDosageQuantityStructure(Node minimalDosageQuantityStructure, Node maximalDosageQuantityStructure, String dosageQuantityUnitText, String insertText) {
+	private static StringBuffer makeFromMinMaxDosageQuantityStructure(Node minimalDosageQuantityStructure, Node maximalDosageQuantityStructure, String dosageQuantityUnitText, String when, String insertText) {
 		StringBuffer s = new StringBuffer();
 		String minimalDosageQuantityValue = minimalDosageQuantityStructure.findChildNodeText("*", "DosageQuantityValue");
 		String minimalDosageQuantityFreeText = minimalDosageQuantityStructure.findChildNodeText("*", "DosageQuantityFreeText");
@@ -306,6 +310,9 @@ public class LongTextConverter {
 				s.append(" ").append(maximalDosageQuantityFreeText);
 		}
 		s.append(" ").append(TextHelper.unitToPlural(dosageQuantityUnitText));
+		if(when!=null) {
+			s.append(" ").append(when);
+		}				
 		if(insertText!=null)
 			s.append(" ").append(insertText);
 		if(sameText&&minimalDosageQuantityFreeText!=null)

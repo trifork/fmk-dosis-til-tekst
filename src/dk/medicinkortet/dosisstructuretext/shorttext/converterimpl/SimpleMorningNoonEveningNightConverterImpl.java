@@ -4,6 +4,8 @@ import dk.medicinkortet.dosisstructuretext.TextHelper;
 import dk.medicinkortet.dosisstructuretext.simpelxml.Node;
 import dk.medicinkortet.dosisstructuretext.simpelxml.parser.XPathException;
 
+//// Currently not used!!!
+
 /**
  * Conversion of: Dosage limited to N days, the same every day, and according to need
  * <p>
@@ -31,7 +33,11 @@ public class SimpleMorningNoonEveningNightConverterImpl extends ConverterImpl {
 			return false;
 		if(dosageTimesStructure.queryForSize("//*:DosageQuantityValue") == 0)
 			return false;		
-		if(!allEquals(dosageTimesStructure.query("//*:DosageQuantityValue"))) // all equals, see the non-simple version otherwise
+		if(!allEquals(dosageTimesStructure.query("//*:DosageQuantityStructure//*:DosageQuantityValue"))) // all equals, see the non-simple version otherwise
+			return false;
+		if(!allEquals(dosageTimesStructure.query("//*:MinimalDosageQuantityStructure//*:DosageQuantityValue"))) // all equals, see the non-simple version otherwise
+			return false;
+		if(!allEquals(dosageTimesStructure.query("//*:MaximalDosageQuantityStructure//*:DosageQuantityValue"))) // all equals, see the non-simple version otherwise
 			return false;
 		if(!allEquals(dosageTimesStructure.query("//*:MorningDosageTimeElementStructure//*:DosageQuantityFreeText"), 
 				      dosageTimesStructure.query("//*:NoonDosageTimeElementStructure//*:DosageQuantityFreeText"),

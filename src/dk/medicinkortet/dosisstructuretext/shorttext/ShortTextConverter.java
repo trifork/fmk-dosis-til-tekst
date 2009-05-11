@@ -27,10 +27,10 @@ public class ShortTextConverter {
 	// Consider the order: The tests are evaluated in order, adding the most likely to succeed
 	// first improves performance
 	static {
+		//converterImpls.add(new SimpleMorningNoonEveningNightConverterImpl());
+		converterImpls.add(new MorningNoonEveningNightConverterImpl());
 		converterImpls.add(new RepeatedConverterImpl());		
 		converterImpls.add(new SimpleNonRepeatedConverterImpl());
-		converterImpls.add(new SimpleMorningNoonEveningNightConverterImpl());
-		converterImpls.add(new MorningNoonEveningNightConverterImpl());
 		converterImpls.add(new SimpleAccordingToNeedConverterImpl());
 		converterImpls.add(new LimitedNumberOfDaysConverterImpl());
 		converterImpls.add(new SimpleLimitedAccordingToNeedConverterImpl());
