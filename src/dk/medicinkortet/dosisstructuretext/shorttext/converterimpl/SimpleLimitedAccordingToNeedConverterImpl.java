@@ -60,11 +60,17 @@ public class SimpleLimitedAccordingToNeedConverterImpl extends ConverterImpl {
 		// String "efter behov"
 		append(" efter behov");
 		
-		// Optional free text
+		// Optional free text ver 1.0
 		String dosageQuantityFreeText = (String)dosageTimesStructure.query("//*:DosageQuantityFreeText[0]/text()");
 		if(dosageQuantityFreeText!=null) {
 			append(" ");
 			append(dosageQuantityFreeText);
+		}
+		// Optional free text ver 1.2
+		String dosageSupplementaryText = (String)dosageTimesStructure.query("//*:DosageSupplementaryText/text()");		
+		if(dosageSupplementaryText!=null) {
+			append(" ");
+			append(dosageSupplementaryText);
 		}
 		
 		// String "højst"

@@ -51,7 +51,7 @@ public class MorningNoonEveningNightConverterImpl extends ConverterImpl {
 			"//*:MorningDosageTimeElementStructure/*:MaximalDosageQuantityStructure/*:DosageQuantityValue/double()",
 			"//*:MorningDosageTimeElementStructure/*:MaximalDosageQuantityValue/double()");
 		boolean hasMorning = morning!=null || (morningMin!=null && morningMax!=null);
-		String morningFreeText = null;				
+		String morningFreeText = null; // ver 1.0				
 		if(dosageSupplementaryText==null) {
 			morningFreeText = join(				
 					(String)dosageTimesStructure.query("//*:MorningDosageTimeElementStructure//*:DosageQuantityFreeText[0]/text()"), 
@@ -60,7 +60,7 @@ public class MorningNoonEveningNightConverterImpl extends ConverterImpl {
 
 		Double noon = queryDoubles(dosageTimesStructure, 
 			"//*:NoonDosageTimeElementStructure/*:DosageQuantityStructure/*:DosageQuantityValue/double()",
-			"//*:NoonDosageTimeElementStructure/*:DosageQuantitValue/double()");			
+			"//*:NoonDosageTimeElementStructure/*:DosageQuantityValue/double()");			
 		Double noonMin = queryDoubles(dosageTimesStructure, 
 			"//*:NoonDosageTimeElementStructure/*:MinimalDosageQuantityStructure/*:DosageQuantityValue/double()",
 			"//*:NoonDosageTimeElementStructure/*:MinimalDosageQuantityValue/double()");
@@ -68,7 +68,7 @@ public class MorningNoonEveningNightConverterImpl extends ConverterImpl {
 			"//*:NoonDosageTimeElementStructure/*:MaximalDosageQuantityStructure/*:DosageQuantityValue/double()",
 			"//*:NoonDosageTimeElementStructure/*:MaximalDosageQuantityValue/double()");
 		boolean hasNoon = noon!=null || (noonMin!=null && noonMax!=null);
-		String noonFreeText = null;
+		String noonFreeText = null; // ver 1.0
 		if(dosageSupplementaryText==null) {		
 			noonFreeText = join( 
 				(String)dosageTimesStructure.query("//*:NoonDosageTimeElementStructure//*:DosageQuantityFreeText[0]/text()"),
@@ -85,7 +85,7 @@ public class MorningNoonEveningNightConverterImpl extends ConverterImpl {
 			"//*:EveningDosageTimeElementStructure/*:MaximalDosageQuantityStructure/*:DosageQuantityValue/double()",
 			"//*:EveningDosageTimeElementStructure/*:MaximalDosageQuantityValue/double()");
 		boolean hasEvening = evening!=null || (eveningMin!=null && eveningMax!=null);
-		String eveningFreeText = null; 
+		String eveningFreeText = null; // ver 1.0
 		if(dosageSupplementaryText==null) {		
 			eveningFreeText = join( 
 				(String)dosageTimesStructure.query("//*:EveningDosageTimeElementStructure//*:DosageQuantityFreeText[0]/text()"),
@@ -102,22 +102,29 @@ public class MorningNoonEveningNightConverterImpl extends ConverterImpl {
 			"//*:NightDosageTimeElementStructure/*:MaximalDosageQuantityStructure/*:DosageQuantityValue/double()", 
 			"//*:NightDosageTimeElementStructure/*:MaximalDosageQuantityValue/double()");							
 		boolean hasNight = night!=null || (nightMin!=null && nightMax!=null);
-		String nightFreeText = null; 
+		String nightFreeText = null; // ver 1.0
 		if(dosageSupplementaryText==null) {		
 			nightFreeText = join( 
 				(String)dosageTimesStructure.query("//*:NightDosageTimeElementStructure//*:DosageQuantityFreeText[0]/text()"),
 				(String)dosageTimesStructure.query("//*:NightDosageTimeElementStructure//*:DosageQuantityFreeText[1]/text()"));
 		}
 		
-		boolean allDosagesEqual = 
+		boolean allDosagesEqual1 = // ver 1.0 
 			allEquals(dosageTimesStructure.query("//*:DosageQuantityStructure")) &&
 			allEquals(dosageTimesStructure.query("//*:MinimalDosageQuantityStructure")) &&
 			allEquals(dosageTimesStructure.query("//*:MaximalDosageQuantityStructure")) &&
 			(dosageTimesStructure.queryForSize("//*:DosageQuantityStructure")==0 ||
 			   dosageTimesStructure.queryForSize("//*:MinimalDosageQuantityStructure")==0 &&
-			   dosageTimesStructure.queryForSize("//*:MaximalDosageQuantityStructure")==0)	;
+			   dosageTimesStructure.queryForSize("//*:MaximalDosageQuantityStructure")==0);
+		boolean allDosagesEqual2 = 
+			allEquals(dosageTimesStructure.query("//*:DosageQuantityValue")) &&
+			allEquals(dosageTimesStructure.query("//*:MinimalDosageQuantityValue")) &&
+			allEquals(dosageTimesStructure.query("//*:MaximalDosageQuantityValue")) &&
+			(dosageTimesStructure.queryForSize("//*:DosageQuantityValue")==0 ||
+			   dosageTimesStructure.queryForSize("//*:MinimalDosageQuantityValue")==0 &&
+			   dosageTimesStructure.queryForSize("//*:MaximalDosageQuantityValue")==0);
 		
-		boolean allTextsEqual = dosageSupplementaryText!=null || allEquals(
+		boolean allTextsEqual = dosageSupplementaryText!=null || allEquals( // first part ver 1.2, last part after || ver 1.0
 				dosageTimesStructure.query("//*:MorningDosageTimeElementStructure//*:DosageQuantityFreeText"), 
 			    dosageTimesStructure.query("//*:NoonDosageTimeElementStructure//*:DosageQuantityFreeText"),
 			    dosageTimesStructure.query("//*:EveningDosageTimeElementStructure//*:DosageQuantityFreeText"),
@@ -142,7 +149,7 @@ public class MorningNoonEveningNightConverterImpl extends ConverterImpl {
 				append(",");
 			else if(hasMorning&&(hasEvening||hasNight))
 				append(" og");
-			if(!(allDosagesEqual&&hasMorning)) {
+			if(!(allDosagesEqual1&&allDosagesEqual2&&hasMorning)) {
 				if(hasMorning)
 					append(" ");
 				append(value(noon, noonMin, noonMax));
@@ -164,7 +171,7 @@ public class MorningNoonEveningNightConverterImpl extends ConverterImpl {
 				append(" og");
 			else if((hasMorning||hasNoon)&&hasNight)
 				append(",");
-			if(!(allDosagesEqual&&(hasMorning||hasNoon))) {
+			if(!(allDosagesEqual1&&allDosagesEqual2&&(hasMorning||hasNoon))) {
 				 if(hasMorning||hasNoon)
 					append(" ");
 				append(value(evening, eveningMin, eveningMax));
@@ -184,7 +191,7 @@ public class MorningNoonEveningNightConverterImpl extends ConverterImpl {
 		if(hasNight) {
 			if(hasMorning||hasNoon||hasEvening)
 				append(" og");
-			if(!(allDosagesEqual&&(hasMorning||hasNoon||hasEvening))) {
+			if(!(allDosagesEqual1&&allDosagesEqual2&&(hasMorning||hasNoon||hasEvening))) {
 				if(hasMorning||hasNoon||hasEvening)
 					append(" ");
 				append(value(night, nightMin, nightMax));

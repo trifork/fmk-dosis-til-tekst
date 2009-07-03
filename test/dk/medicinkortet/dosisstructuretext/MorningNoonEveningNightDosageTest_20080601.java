@@ -13,7 +13,7 @@ import dk.medicinkortet.dosisstructuretext.vo.DosageTime20080601VO;
 import dk.medicinkortet.dosisstructuretext.vo.Dosage20080601VO;
 import dk.medicinkortet.dosisstructuretext.vo.DosageTime20090101VO;
 
-public class MorningNoonEveningNightDosageTest extends TestCase {
+public class MorningNoonEveningNightDosageTest_20080601 extends TestCase {
 
 	public void testMorningNoonEveningAndNight() throws Exception {
 		Dosage20080601VO d = new Dosage20080601VO();
