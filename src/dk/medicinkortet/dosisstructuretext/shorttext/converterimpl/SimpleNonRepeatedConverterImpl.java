@@ -33,7 +33,7 @@ public class SimpleNonRepeatedConverterImpl extends ConverterImpl {
 			return false;
 		if(dosageTimesStructure.queryForSize("//*:DosageQuantityValue") != 1)
 			return false;
-		if(dosageTimesStructure.queryForSize("//*:DosageQuantityFreeText") != 1)
+		if(dosageTimesStructure.queryForSize("//*:DosageSupplementaryText") != 1 && dosageTimesStructure.queryForSize("//*:DosageQuantityFreeText") != 1)
 			return false;
 		return true;
 	}
@@ -51,8 +51,14 @@ public class SimpleNonRepeatedConverterImpl extends ConverterImpl {
 		append(" ");
 
 		// free text
-		String dosageQuantityFreeText = (String)dosageTimesStructure.query("///*:DosageQuantityFreeText/text()");
-		append(dosageQuantityFreeText);
+		String dosageSupplementaryText = (String)dosageTimesStructure.query("//*:DosageSupplementaryText/text()");
+		if(dosageSupplementaryText!=null) {			
+			append(dosageSupplementaryText);
+		}
+		else {			
+			String dosageQuantityFreeText = (String)dosageTimesStructure.query("//*:DosageQuantityFreeText/text()");
+			append(dosageQuantityFreeText);
+		}
 	}
 	
 }
