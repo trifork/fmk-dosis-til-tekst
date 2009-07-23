@@ -10,9 +10,7 @@ import dk.medicinkortet.dosisstructuretext.shorttext.ShortTextConverter;
 import dk.medicinkortet.dosisstructuretext.shorttext.converterimpl.LimitedNumberOfDaysConverterImpl;
 import dk.medicinkortet.dosisstructuretext.simpelxml.Node;
 import dk.medicinkortet.dosisstructuretext.vo.Dosage20080601VO;
-import dk.medicinkortet.dosisstructuretext.vo.Dosage20090101VO;
 import dk.medicinkortet.dosisstructuretext.vo.DosageTime20080601VO;
-import dk.medicinkortet.dosisstructuretext.vo.DosageTime20090101VO;
 
 public class LimitedNumberOfDaysDosageTest_20080601 extends TestCase {
 
