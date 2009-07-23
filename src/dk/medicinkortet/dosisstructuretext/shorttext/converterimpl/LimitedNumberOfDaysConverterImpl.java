@@ -105,20 +105,22 @@ public class LimitedNumberOfDaysConverterImpl extends ConverterImpl {
 			append(" fra dag ");
 			append(fromDay.intValue());
 		}			
-		
-		String dosageQuantityFreeText = (String)dosageTimesStructure.query("//*:DosageTimeElementStructure[0]//*:DosageQuantityFreeText[0]/text()");
-		if(dosageQuantityFreeText!=null) { 
+
+				
+		String dosageSupplementaryText = (String)dosageTimesStructure.query("//*:DosageSupplementaryText/text()");
+		if(dosageSupplementaryText==null)
+			dosageSupplementaryText = (String)dosageTimesStructure.query("//*:DosageTimeElementStructure[0]//*:DosageQuantityFreeText[0]/text()");
+		if(dosageSupplementaryText!=null) { 
 			append(" ");
-			append(dosageQuantityFreeText);	
+			append(dosageSupplementaryText);	
 		}
 		
 		Nodes accordingToNeed = (Nodes)dosageTimesStructure.query("//*:AccordingToNeedDosageTimeElementStructure");
 		if(accordingToNeed!=null) {
 			append(" samt");
-			dosageQuantityFreeText = (String)accordingToNeed.getNode(0).query("//*:DosageQuantityFreeText/text()");
-			if(dosageQuantityFreeText!=null) {
+			if(dosageSupplementaryText!=null) {
 				append(" ");
-				append(dosageQuantityFreeText);
+				append(dosageSupplementaryText);
 			}
 			if(accordingToNeed.size()==1) {
 				append(" efter behov");
