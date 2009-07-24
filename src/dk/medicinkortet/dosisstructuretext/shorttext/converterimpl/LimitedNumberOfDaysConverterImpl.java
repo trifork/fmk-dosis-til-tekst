@@ -33,6 +33,8 @@ public class LimitedNumberOfDaysConverterImpl extends ConverterImpl {
 			return false;
 		if(dosageTimesStructure.queryForSize("//*:DosageQuantityValue") == 0)
 			return false;
+		if(!allEquals(dosageTimesStructure.query("//*:DosageQuantityValue")))
+			return false;
 		if(!allEquals(dosageTimesStructure.query("//*:DosageTimeElementStructure//*:DosageQuantityStructure")))
 			return false;
 		if(!allEquals(dosageTimesStructure.query("//*:MinimalDosageQuantityStructure")))
@@ -49,25 +51,40 @@ public class LimitedNumberOfDaysConverterImpl extends ConverterImpl {
 	
 	protected void doConvert(Node dosageTimesStructure) throws XPathException {
 		
-		// dosage
-		Object dosageOrDosageinterval = dosageTimesStructure.query("//*:DosageTimeElementStructure[0]//*:DosageQuantityValue/text()");
-		if(dosageOrDosageinterval instanceof String)
-			append(TextHelper.decimalToFraction((String)dosageOrDosageinterval));
-		else {
-			append(TextHelper.decimalToFraction(((String[])dosageOrDosageinterval)[0]));
+		// For FMK 1.2
+		String minimalDosageQuantityValue = (String)dosageTimesStructure.query("//*:DosageTimeElementStructure[0]/*:MinimalDosageQuantityValue/text()");
+		String maximalDosageQuantityValue = (String)dosageTimesStructure.query("//*:DosageTimeElementStructure[0]/*:MaximalDosageQuantityValue/text()");
+		String dosageQuantityValue = (String)dosageTimesStructure.query("//*:DosageTimeElementStructure[0]/*:DosageQuantityValue/text()");
+
+		// For FMK 1.0
+		if(minimalDosageQuantityValue==null&&maximalDosageQuantityValue==null&&dosageQuantityValue==null) {
+			minimalDosageQuantityValue = (String)dosageTimesStructure.query("//*:DosageTimeElementStructure[0]/*:MinimalDosageQuantityStructure/*:DosageQuantityValue/text()");
+			maximalDosageQuantityValue = (String)dosageTimesStructure.query("//*:DosageTimeElementStructure[0]/*:MaximalDosageQuantityStructure/*:DosageQuantityValue/text()");
+			dosageQuantityValue = (String)dosageTimesStructure.query("//*:DosageTimeElementStructure[0]/*:DosageQuantityStructure/*:DosageQuantityValue/text()");
+		}
+				
+		if(dosageQuantityValue!=null) {
+			append(TextHelper.decimalToFraction(dosageQuantityValue));
+		}
+		else if(minimalDosageQuantityValue!=null&&maximalDosageQuantityValue!=null) {
+			append(TextHelper.decimalToFraction(minimalDosageQuantityValue));
 			append("-");
-			append(TextHelper.decimalToFraction(((String[])dosageOrDosageinterval)[1]));
-		}			
+			append(TextHelper.decimalToFraction(maximalDosageQuantityValue));			
+		}
+		else {
+			throw new RuntimeException("Error getting dosage quantity values");			
+		}
 		append(" ");
 		
 		// dosage unit
 		String unit = (String)dosageTimesStructure.query("/*:DosageTimesStructure/*:DosageQuantityUnitText/text()");
-		if(dosageOrDosageinterval instanceof String && Double.parseDouble((String)dosageOrDosageinterval)==1.0) {
+		if(dosageQuantityValue!=null && Double.parseDouble(dosageQuantityValue)==1.0) {
 			append(TextHelper.unitToSingular(unit));
 		}
 		else {
 			append(TextHelper.unitToPlural(unit));				
-		}			
+		}		
+		
 		
 		int numberOfDosageTimeElementStructures = ((Nodes)dosageTimesStructure.query("//*:DosageDayElementStructure[0]/*:DosageTimeElementStructure")).size();
 		if(numberOfDosageTimeElementStructures>1) {
@@ -75,7 +92,9 @@ public class LimitedNumberOfDaysConverterImpl extends ConverterImpl {
 			append(numberOfDosageTimeElementStructures);
 			append(" gange");
 		}				
+		
 		int numberOfDosageDayElements = ((Nodes)dosageTimesStructure.query("//*:DosageDayElementStructure")).size();
+		int numberOfDosageTimeElements = ((Nodes)dosageTimesStructure.query("//*:DosageTimeElementStructure")).size();
 		int numberOfEntireWeeks = numberOfDosageDayElements/7;
 		if(7*numberOfEntireWeeks==numberOfDosageDayElements) {
 			if(numberOfEntireWeeks==1) {
@@ -90,8 +109,11 @@ public class LimitedNumberOfDaysConverterImpl extends ConverterImpl {
 			}
 		}
 		else {
-			if(numberOfDosageDayElements==1) {
+			if(numberOfDosageDayElements==1&&numberOfDosageTimeElements==1) {
 				append(" som engangsdosis");
+			}
+			else if(numberOfDosageDayElements==1&&numberOfDosageTimeElements>1) {
+				// "samme dag"
 			}
 			else { 
 				append(" daglig i ");
@@ -116,12 +138,9 @@ public class LimitedNumberOfDaysConverterImpl extends ConverterImpl {
 		}
 		
 		Nodes accordingToNeed = (Nodes)dosageTimesStructure.query("//*:AccordingToNeedDosageTimeElementStructure");
+		int numberOfaccordingToNeed = accordingToNeed==null ? 0 : accordingToNeed.size();
 		if(accordingToNeed!=null) {
 			append(" samt");
-			if(dosageSupplementaryText!=null) {
-				append(" ");
-				append(dosageSupplementaryText);
-			}
 			if(accordingToNeed.size()==1) {
 				append(" efter behov");
 			}
@@ -129,6 +148,10 @@ public class LimitedNumberOfDaysConverterImpl extends ConverterImpl {
 				append(" højst ");
 				append(accordingToNeed.size());
 				append(" gange efter behov");
+			}
+			if(dosageSupplementaryText!=null) {
+				append(" ");
+				append(dosageSupplementaryText);
 			}
 		}
 		
