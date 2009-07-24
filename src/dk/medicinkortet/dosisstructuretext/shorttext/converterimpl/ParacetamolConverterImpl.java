@@ -36,9 +36,15 @@ public class ParacetamolConverterImpl extends ConverterImpl {
 			return false;
 		if(!allEquals(dosageTimesStructure.query("//*:DosageQuantityFreeText")))
 			return false;
-		if(dosageTimesStructure.queryForSize("//*:MinimalDosageQuantityStructure") == 0)
+		if(dosageTimesStructure.queryForSize("//*:MinimalDosageQuantityValue") == 0 &&
+		   dosageTimesStructure.queryForSize("//*:MinimalDosageQuantityStructure") == 0 )
 			return false;
-		if(dosageTimesStructure.queryForSize("//*:MaximalDosageQuantityStructure") == 0)
+		if(dosageTimesStructure.queryForSize("//*:MaximalDosageQuantityValue") == 0 &&
+		   dosageTimesStructure.queryForSize("//*:MaximalDosageQuantityStructure") == 0)
+			return false;
+		if(!allEquals(dosageTimesStructure.query("//*:MinimalDosageQuantityValue")))
+			return false;
+		if(!allEquals(dosageTimesStructure.query("//*:MaximalDosageQuantityValue")))
 			return false;
 		if(!allEquals(dosageTimesStructure.query("//*:MinimalDosageQuantityStructure")))
 			return false;
@@ -48,18 +54,40 @@ public class ParacetamolConverterImpl extends ConverterImpl {
 	}
 	
 	protected void doConvert(Node dosageTimesStructure) throws XPathException {
-		// dosage
-		
-		append(TextHelper.decimalToFraction((String)dosageTimesStructure.query("//*:MinimalDosageQuantityStructure[0]/*:DosageQuantityValue/text()")));
-		append("-");
-		append(TextHelper.decimalToFraction((String)dosageTimesStructure.query("//*:MaximalDosageQuantityStructure[0]/*:DosageQuantityValue/text()")));
+
+		// For FMK 1.2
+		String minimalDosageQuantityValue = (String)dosageTimesStructure.query("//*:DosageTimeElementStructure[0]/*:MinimalDosageQuantityValue/text()");
+		String maximalDosageQuantityValue = (String)dosageTimesStructure.query("//*:DosageTimeElementStructure[0]/*:MaximalDosageQuantityValue/text()");
+		String dosageQuantityValue = (String)dosageTimesStructure.query("//*:DosageTimeElementStructure[0]/*:DosageQuantityValue/text()");
+
+		// For FMK 1.0
+		if(minimalDosageQuantityValue==null&&maximalDosageQuantityValue==null&&dosageQuantityValue==null) {
+			minimalDosageQuantityValue = (String)dosageTimesStructure.query("//*:DosageTimeElementStructure[0]/*:MinimalDosageQuantityStructure/*:DosageQuantityValue/text()");
+			maximalDosageQuantityValue = (String)dosageTimesStructure.query("//*:DosageTimeElementStructure[0]/*:MaximalDosageQuantityStructure/*:DosageQuantityValue/text()");
+			dosageQuantityValue = (String)dosageTimesStructure.query("//*:DosageTimeElementStructure[0]/*:DosageQuantityStructure/*:DosageQuantityValue/text()");
+		}
+				
+		if(dosageQuantityValue!=null) {
+			append(TextHelper.decimalToFraction(dosageQuantityValue));
+		}
+		else if(minimalDosageQuantityValue!=null&&maximalDosageQuantityValue!=null) {
+			append(TextHelper.decimalToFraction(minimalDosageQuantityValue));
+			append("-");
+			append(TextHelper.decimalToFraction(maximalDosageQuantityValue));			
+		}
+		else {
+			throw new RuntimeException("Error getting dosage quantity values");			
+		}
 		append(" ");
-		
+				
 		// dosage unit
-		if( ((Double)dosageTimesStructure.query("//*:DosageQuantityValue[0]/double()")).doubleValue() == 1.0 )
-			append(TextHelper.unitToSingular((String)dosageTimesStructure.query("//*:DosageQuantityUnitText/text()")));
-		else 
-			append(TextHelper.unitToPlural((String)dosageTimesStructure.query("//*:DosageQuantityUnitText/text()")));
+		String unit = (String)dosageTimesStructure.query("/*:DosageTimesStructure/*:DosageQuantityUnitText/text()");
+		if(dosageQuantityValue!=null && Double.parseDouble(dosageQuantityValue)==1.0) {
+			append(TextHelper.unitToSingular(unit));
+		}
+		else {
+			append(TextHelper.unitToPlural(unit));				
+		}
 		append(" ");
 		
 		// number of times daily
@@ -73,12 +101,20 @@ public class ParacetamolConverterImpl extends ConverterImpl {
 		// String "gange daglig"
 		append(" gange daglig");	
 		
-		// Optional free text
-		String dosageQuantityFreeText = (String)dosageTimesStructure.query("//*:DosageQuantityFreeText[0]/text()");
-		if(dosageQuantityFreeText!=null) {
+		// supplementary text for FMK 1.2
+		String dosageSupplementaryText = (String)dosageTimesStructure.query("//*:DosageSupplementaryText/text()");
+		if(dosageSupplementaryText!=null) {
 			append(" ");
-			append(dosageQuantityFreeText);
+			append(dosageSupplementaryText);
 		}
+		else { // free text for FMK 1.0 / 1.1
+			String dosageQuantityFreeText = (String)dosageTimesStructure.query("///*:DosageQuantityFreeText[0]/text()");
+			if(dosageQuantityFreeText!=null) {
+				append(" ");
+				append(dosageQuantityFreeText);
+			}
+		}
+
 				
 	}
 	
