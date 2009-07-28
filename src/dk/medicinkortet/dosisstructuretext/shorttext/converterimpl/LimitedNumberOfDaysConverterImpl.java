@@ -31,7 +31,7 @@ public class LimitedNumberOfDaysConverterImpl extends ConverterImpl {
 			return false;
 		if(dosageTimesStructure.queryForSize("//*:NightDosageTimeElementStructure") != 0)
 			return false;
-		if(dosageTimesStructure.queryForSize("//*:DosageQuantityValue") == 0)
+		if(dosageTimesStructure.queryForSize("//*:DosageQuantityValue") == 0 && dosageTimesStructure.queryForSize("//*:MinimalDosageQuantityValue") == 0)
 			return false;
 		if(!allEquals(dosageTimesStructure.query("//*:DosageQuantityValue")))
 			return false;
