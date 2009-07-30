@@ -16,13 +16,16 @@ import dk.medicinkortet.dosisstructuretext.simpelxml.parser.XPathException;
 public class SimpleMorningNoonEveningNightConverterImpl extends ConverterImpl {
 	
 	protected boolean doTest(Node dosageTimesStructure) throws XPathException {
-		if(dosageTimesStructure.queryForInt("//*:DosageTimesIterationIntervalQuantity/integer()") != 1)
+		Integer interval = dosageTimesStructure.queryForInteger("//*:DosageTimesIterationIntervalQuantity/integer()");
+		if(interval != null && interval != 1)
 			return false;
 		if(dosageTimesStructure.queryForSize("//*:DosageDayIdentifier") > 2)
-			return false;		
-		if(dosageTimesStructure.queryForInt("//*:DosageDayIdentifier[0]/integer()") > 1)
 			return false;
-		if(dosageTimesStructure.queryForSize("//*:DosageDayIdentifier") > 1 && dosageTimesStructure.queryForInt("//*:DosageDayIdentifier[1]/integer()") > 1)
+		Integer dayId0 = dosageTimesStructure.queryForInteger("//*:DosageDayIdentifier[0]/integer()");
+		if(dayId0 != null && dayId0 > 1)
+			return false;
+		Integer dayId1 = dosageTimesStructure.queryForInteger("//*:DosageDayIdentifier[1]/integer()");
+		if(dosageTimesStructure.queryForSize("//*:DosageDayIdentifier") > 1 && dayId1 != null && dayId1 > 1)
 			return false;
 		if(dosageTimesStructure.queryForSize("//*:MorningDosageTimeElementStructure") == 0 &&
 		   dosageTimesStructure.queryForSize("//*:NoonDosageTimeElementStructure") == 0 &&

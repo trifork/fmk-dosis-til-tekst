@@ -13,7 +13,8 @@ import dk.medicinkortet.dosisstructuretext.simpelxml.parser.XPathException;
 public class ParacetamolConverterImpl extends ConverterImpl {
 
 	protected boolean doTest(Node dosageTimesStructure) throws XPathException {
-		if(dosageTimesStructure.queryForInt("//*:DosageTimesIterationIntervalQuantity/integer()") != 1)
+		Integer interval = dosageTimesStructure.queryForInteger("//*:DosageTimesIterationIntervalQuantity/integer()");
+		if(interval != null && interval != 1)
 			return false;
 		if(dosageTimesStructure.queryForSize("///*:DosageTimesIterationIntervalQuantity") != 1)
 			return false;

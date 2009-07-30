@@ -14,9 +14,11 @@ import dk.medicinkortet.dosisstructuretext.simpelxml.parser.XPathException;
 public class RepeatedConverterImpl extends ConverterImpl {
 
 	protected boolean doTest(Node dosageTimesStructure) throws XPathException {
-		if(dosageTimesStructure.queryForInt("//*:DosageTimesIterationIntervalQuantity/integer()") == 0)
+		Integer interval = dosageTimesStructure.queryForInteger("//*:DosageTimesIterationIntervalQuantity/integer()");
+		if(interval != null && interval == 0)
 			return false;
-		if(dosageTimesStructure.queryForInt("//*:DosageDayIdentifier[0]/integer()") != 1)
+		Integer dayId = dosageTimesStructure.queryForInteger("//*:DosageDayIdentifier[0]/integer()");
+		if(dayId != null && dayId != 1)
 			return false;
 		if(dosageTimesStructure.queryForSize("//*:DosageTimeElementStructure") == 0)
 			return false;

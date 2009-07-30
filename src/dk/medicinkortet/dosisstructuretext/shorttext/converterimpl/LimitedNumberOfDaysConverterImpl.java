@@ -15,7 +15,8 @@ import dk.medicinkortet.dosisstructuretext.simpelxml.parser.XPathException;
 public class LimitedNumberOfDaysConverterImpl extends ConverterImpl {
 
 	protected boolean doTest(Node dosageTimesStructure) throws XPathException {
-		if(dosageTimesStructure.queryForInt("//*:DosageTimesIterationIntervalQuantity/integer()") != 0)
+		Integer interval = dosageTimesStructure.queryForInteger("//*:DosageTimesIterationIntervalQuantity/integer()");
+		if(interval != null && interval != 0)
 			return false;
 		if(!isSequence(dosageTimesStructure.query("//*:DosageDayIdentifier/integer()")))
 			return false;

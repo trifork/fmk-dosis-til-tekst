@@ -13,11 +13,13 @@ import dk.medicinkortet.dosisstructuretext.simpelxml.parser.XPathException;
 public class SimpleAccordingToNeedConverterImpl extends ConverterImpl {
 	
 	protected boolean doTest(Node dosageTimesStructure) throws XPathException {
-		if(dosageTimesStructure.queryForInt("//*:DosageTimesIterationIntervalQuantity/integer()") != 0)
+		Integer interval = dosageTimesStructure.queryForInteger("//*:DosageTimesIterationIntervalQuantity/integer()");
+		if(interval != null && interval != 0)
 			return false;
 		if(dosageTimesStructure.queryForSize("///*:DosageTimesIterationIntervalQuantity") != 1)
 			return false;
-		if(dosageTimesStructure.queryForInt("//*:DosageTimesIterationIntervalQuantity[0]/integer()") != 0)
+		Integer interval0 = dosageTimesStructure.queryForInteger("//*:DosageTimesIterationIntervalQuantity[0]/integer()");
+		if(interval0 != null && interval0 != 0)
 			return false;
 		if(dosageTimesStructure.queryForSize("//*:AccordingToNeedDosageTimeElementStructure") != 1)
 			return false;
