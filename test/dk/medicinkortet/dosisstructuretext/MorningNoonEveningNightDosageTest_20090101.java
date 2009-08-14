@@ -112,8 +112,168 @@ public class MorningNoonEveningNightDosageTest_20090101 extends TestCase {
 		assertEquals("2 stk middag, 3 stk aften og 4 stk nat ved måltid", result.getShortText());
 		assertEquals("Daglig 2 stk middag ved måltid + 3 stk aften ved måltid + 4 stk nat ved måltid", result.getLongText());
 		assertEquals(9.0, result.getAvgDailyDosis().doubleValue()); 				
+	}		
+	
+	public void testMorningNoonAndEvening() throws Exception {
+		Dosage20090101VO d = new Dosage20090101VO();
+		d.setDosageTimesIterationIntervalQuantity(1);
+		d.setDosageTimesStartDate(new GregorianCalendar(2008, 1, 1).getTime());
+		d.setDosageTimesEndDate(new GregorianCalendar(2008, 12, 31).getTime());
+		d.setDosageUnit("stk");		
+		d.addDosageTime(new DosageTime20090101VO(
+				123, 
+				1, 
+				null, 
+				new BigDecimal(1), 
+				null, null, 
+				false, true, false, false, false, false
+				));						
+		d.addDosageTime(new DosageTime20090101VO(
+				123, 
+				1, 
+				null, 
+				new BigDecimal(1), 
+				null, null, 
+				false, false, true, false, false, false
+				));						
+		d.addDosageTime(new DosageTime20090101VO(
+				123, 
+				1, 
+				null, 
+				new BigDecimal(1),
+				null, null, 
+				false, false, false, true, false, false
+				));								
+		
+		Node root = new Node(d.toXml());
+		DosisStructureText result = new DosisStructureText();
+		Validator.validate(root);
+		LongTextConverter.make(root, result);				
+		ShortTextConverter.make(root, result);
+		DailyDosisCalculator.calculateAvg(root, result);
+		
+		assertEquals(MorningNoonEveningNightConverterImpl.class.getName(), result.getShortTextFilter());
+		assertEquals("1 stk morgen, middag og aften", result.getShortText());
+		assertEquals("Daglig 1 stk morgen + 1 stk middag + 1 stk aften", result.getLongText());
+		assertEquals(3.0, result.getAvgDailyDosis().doubleValue()); 				
+	}	
+	
+	public void testMorningNoonAndNight() throws Exception {
+		Dosage20090101VO d = new Dosage20090101VO();
+		d.setDosageTimesIterationIntervalQuantity(1);
+		d.setDosageTimesStartDate(new GregorianCalendar(2008, 1, 1).getTime());
+		d.setDosageTimesEndDate(new GregorianCalendar(2008, 12, 31).getTime());
+		d.setDosageUnit("stk");		
+		d.addDosageTime(new DosageTime20090101VO(
+				123, 
+				1, 
+				null, 
+				new BigDecimal(1), 
+				null, null, 
+				false, true, false, false, false, false
+				));						
+		d.addDosageTime(new DosageTime20090101VO(
+				123, 
+				1, 
+				null, 
+				new BigDecimal(1), 
+				null, null, 
+				false, false, true, false, false, false
+				));						
+		d.addDosageTime(new DosageTime20090101VO(
+				123, 
+				1, 
+				null, 
+				new BigDecimal(1),
+				null, null, 
+				false, false, false, false, true, false
+				));								
+		
+		Node root = new Node(d.toXml());
+		DosisStructureText result = new DosisStructureText();
+		Validator.validate(root);
+		LongTextConverter.make(root, result);				
+		ShortTextConverter.make(root, result);
+		DailyDosisCalculator.calculateAvg(root, result);
+		
+		assertEquals(MorningNoonEveningNightConverterImpl.class.getName(), result.getShortTextFilter());
+		assertEquals("1 stk morgen, middag og nat", result.getShortText());
+		assertEquals("Daglig 1 stk morgen + 1 stk middag + 1 stk nat", result.getLongText());
+		assertEquals(3.0, result.getAvgDailyDosis().doubleValue()); 				
 	}	
 
+	public void testMorningAndNoon() throws Exception {
+		Dosage20090101VO d = new Dosage20090101VO();
+		d.setDosageTimesIterationIntervalQuantity(1);
+		d.setDosageTimesStartDate(new GregorianCalendar(2008, 1, 1).getTime());
+		d.setDosageTimesEndDate(new GregorianCalendar(2008, 12, 31).getTime());
+		d.setDosageUnit("stk");		
+		d.addDosageTime(new DosageTime20090101VO(
+				123, 
+				1, 
+				null, 
+				new BigDecimal(1), 
+				null, null, 
+				false, true, false, false, false, false
+				));						
+		d.addDosageTime(new DosageTime20090101VO(
+				123, 
+				1, 
+				null, 
+				new BigDecimal(1), 
+				null, null, 
+				false, false, true, false, false, false
+				));						
+		
+		Node root = new Node(d.toXml());
+		DosisStructureText result = new DosisStructureText();
+		Validator.validate(root);
+		LongTextConverter.make(root, result);				
+		ShortTextConverter.make(root, result);
+		DailyDosisCalculator.calculateAvg(root, result);
+		
+		assertEquals(MorningNoonEveningNightConverterImpl.class.getName(), result.getShortTextFilter());
+		assertEquals("1 stk morgen og middag", result.getShortText());
+		assertEquals("Daglig 1 stk morgen + 1 stk middag", result.getLongText());
+		assertEquals(2.0, result.getAvgDailyDosis().doubleValue()); 				
+	}	
+
+	public void testMorningAndEvening() throws Exception {
+		Dosage20090101VO d = new Dosage20090101VO();
+		d.setDosageTimesIterationIntervalQuantity(1);
+		d.setDosageTimesStartDate(new GregorianCalendar(2008, 1, 1).getTime());
+		d.setDosageTimesEndDate(new GregorianCalendar(2008, 12, 31).getTime());
+		d.setDosageUnit("stk");		
+		d.addDosageTime(new DosageTime20090101VO(
+				123, 
+				1, 
+				null, 
+				new BigDecimal(1), 
+				null, null, 
+				false, true, false, false, false, false
+				));						
+		d.addDosageTime(new DosageTime20090101VO(
+				123, 
+				1, 
+				null, 
+				new BigDecimal(1), 
+				null, null, 
+				false, false, false, true, false, false
+				));						
+		
+		Node root = new Node(d.toXml());
+		DosisStructureText result = new DosisStructureText();
+		Validator.validate(root);
+		LongTextConverter.make(root, result);				
+		ShortTextConverter.make(root, result);
+		DailyDosisCalculator.calculateAvg(root, result);
+		
+		assertEquals(MorningNoonEveningNightConverterImpl.class.getName(), result.getShortTextFilter());
+		assertEquals("1 stk morgen og aften", result.getShortText());
+		assertEquals("Daglig 1 stk morgen + 1 stk aften", result.getLongText());
+		assertEquals(2.0, result.getAvgDailyDosis().doubleValue()); 				
+	}		
+	
 	public void testMorningAndEveningWithIntervals() throws Exception {
 		Dosage20090101VO d = new Dosage20090101VO();
 		d.setDosageTimesIterationIntervalQuantity(1);

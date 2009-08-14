@@ -147,9 +147,9 @@ public class MorningNoonEveningNightConverterImpl extends ConverterImpl {
 		}
 		
 		if(hasNoon) { 
-			if(hasMorning&&hasEvening&&hasNight)
+			if(hasMorning&&(hasEvening||hasNight))
 				append(",");
-			else if(hasMorning&&(hasEvening||hasNight))
+			else if(hasMorning)
 				append(" og");
 			if(!(allDosagesEqual1&&allDosagesEqual2&&hasMorning)) {
 				if(hasMorning)
@@ -169,10 +169,10 @@ public class MorningNoonEveningNightConverterImpl extends ConverterImpl {
 		}
 
 		if(hasEvening) {
-			if((hasMorning||hasNoon)&&!hasNight)
-				append(" og");
-			else if((hasMorning||hasNoon)&&hasNight)
+			if((hasMorning||hasNoon)&&hasNight)
 				append(",");
+			else if(hasMorning||hasNoon)
+				append(" og");
 			if(!(allDosagesEqual1&&allDosagesEqual2&&(hasMorning||hasNoon))) {
 				 if(hasMorning||hasNoon)
 					append(" ");
