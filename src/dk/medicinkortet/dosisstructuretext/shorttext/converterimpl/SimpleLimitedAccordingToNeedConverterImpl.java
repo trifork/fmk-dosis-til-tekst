@@ -41,22 +41,40 @@ public class SimpleLimitedAccordingToNeedConverterImpl extends ConverterImpl {
 	}
 	
 	protected void doConvert(Node dosageTimesStructure) throws XPathException {
-		// dosage
-		Object dosageOrDosageinterval = dosageTimesStructure.query("//*:AccordingToNeedDosageTimeElementStructure[0]//*:DosageQuantityValue/text()");
-		if(dosageOrDosageinterval instanceof String)
-			append(TextHelper.decimalToFraction((String)dosageOrDosageinterval));
-		else {
-			append(TextHelper.decimalToFraction(((String[])dosageOrDosageinterval)[0]));
+		// For FMK 1.2
+		String minimalDosageQuantityValue = (String)dosageTimesStructure.query("//*:AccordingToNeedDosageTimeElementStructure[0]/*:MinimalDosageQuantityValue/text()");
+		String maximalDosageQuantityValue = (String)dosageTimesStructure.query("//*:AccordingToNeedDosageTimeElementStructure[0]/*:MaximalDosageQuantityValue/text()");
+		String dosageQuantityValue = (String)dosageTimesStructure.query("//*:AccordingToNeedDosageTimeElementStructure[0]/*:DosageQuantityValue/text()");
+
+		// For FMK 1.0
+		if(minimalDosageQuantityValue==null&&maximalDosageQuantityValue==null&&dosageQuantityValue==null) {
+			minimalDosageQuantityValue = (String)dosageTimesStructure.query("//*:AccordingToNeedDosageTimeElementStructure[0]/*:MinimalDosageQuantityStructure/*:DosageQuantityValue/text()");
+			maximalDosageQuantityValue = (String)dosageTimesStructure.query("//*:AccordingToNeedDosageTimeElementStructure[0]/*:MaximalDosageQuantityStructure/*:DosageQuantityValue/text()");
+			dosageQuantityValue = (String)dosageTimesStructure.query("//*:AccordingToNeedDosageTimeElementStructure[0]/*:DosageQuantityStructure/*:DosageQuantityValue/text()");
+		}
+				
+		if(dosageQuantityValue!=null) {
+			append(TextHelper.decimalToFraction(dosageQuantityValue));
+		}
+		else if(minimalDosageQuantityValue!=null&&maximalDosageQuantityValue!=null) {
+			append(TextHelper.decimalToFraction(minimalDosageQuantityValue));
 			append("-");
-			append(TextHelper.decimalToFraction(((String[])dosageOrDosageinterval)[1]));
-		}			
+			append(TextHelper.decimalToFraction(maximalDosageQuantityValue));			
+		}
+		else {
+			throw new RuntimeException("Error getting dosage quantity values");			
+		}
 		append(" ");
+
 		
 		// dosage unit
-		if( ((Double)dosageTimesStructure.query("//*:DosageQuantityValue[0]/double()")).doubleValue() == 1.0 )
-			append(TextHelper.unitToSingular((String)dosageTimesStructure.query("//*:DosageQuantityUnitText/text()")));
-		else 
-			append(TextHelper.unitToPlural((String)dosageTimesStructure.query("//*:DosageQuantityUnitText/text()")));
+		String unit = (String)dosageTimesStructure.query("/*:DosageTimesStructure/*:DosageQuantityUnitText/text()");
+		if(dosageQuantityValue!=null && Double.parseDouble(dosageQuantityValue)==1.0) {
+			append(TextHelper.unitToSingular(unit));
+		}
+		else {
+			append(TextHelper.unitToPlural(unit));				
+		}
 		
 		// String "efter behov"
 		append(" efter behov");
