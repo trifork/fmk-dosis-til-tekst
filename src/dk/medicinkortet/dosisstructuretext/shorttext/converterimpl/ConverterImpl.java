@@ -10,6 +10,8 @@ import dk.medicinkortet.dosisstructuretext.simpelxml.parser.XPathException;
  */
 public abstract class ConverterImpl {
 	
+	private static final int MAX_LENGTH_SHORT = 70;
+	
 	private StringBuffer shortText = null;
 		
 	/**
@@ -19,12 +21,16 @@ public abstract class ConverterImpl {
 	 * @return true if this converter has handled the conversion
 	 * @throws XPathException
 	 */
-	public boolean convert(Node dosageTimesStructure, DosisStructureText result) throws XPathException {
+	public final boolean convert(Node dosageTimesStructure, DosisStructureText result) throws XPathException {
 		if(!doTest(dosageTimesStructure))
 			return false;
 		shortText = new StringBuffer();
 		doConvert(dosageTimesStructure);
-		result.setShortText(getShortText());
+		if(getShortText()!=null && getShortText().length()<=MAX_LENGTH_SHORT) {
+			result.setShortText(getShortText());
+		} else {
+			result.setShortText(null);
+		}
 		result.setShortTextFilter(getClass().getName());
 		return true;
 	}
