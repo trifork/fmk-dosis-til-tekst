@@ -10,13 +10,11 @@ import dk.medicinkortet.dosisstructuretext.shorttext.ShortTextConverter;
 import dk.medicinkortet.dosisstructuretext.shorttext.converterimpl.SimpleLimitedAccordingToNeedConverterImpl;
 import dk.medicinkortet.dosisstructuretext.simpelxml.Node;
 import dk.medicinkortet.dosisstructuretext.vo.Dosage20080601VO;
-import dk.medicinkortet.dosisstructuretext.vo.Dosage20090101VO;
 import dk.medicinkortet.dosisstructuretext.vo.DosageTime20080601VO;
-import dk.medicinkortet.dosisstructuretext.vo.DosageTime20090101VO;
 
 public class SimpleLimitedAccordingToNeedDosageTest_20080601 extends TestCase {
 
-	public void test1pustVedAnfaldHøjst3GangeDaglig() throws Exception {
+	public void test1pustVedAnfaldHoejst3GangeDaglig() throws Exception {
 		Dosage20080601VO d = new Dosage20080601VO();
 		d.setDosageTimesIterationIntervalQuantity(1);
 		d.setDosageTimesStartDate(new GregorianCalendar(2008, 1, 1).getTime());

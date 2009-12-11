@@ -14,7 +14,7 @@ import dk.medicinkortet.dosisstructuretext.vo.DosageTime20090101VO;
 
 public class SimpleLimitedAccordingToNeedDosageTest_20090101 extends TestCase {
 
-	public void test1pustVedAnfaldHøjst3GangeDaglig() throws Exception {
+	public void test1pustVedAnfaldHoejst3GangeDaglig() throws Exception {
 		Dosage20090101VO d = new Dosage20090101VO();
 		d.setDosageTimesIterationIntervalQuantity(1);
 		d.setDosageTimesStartDate(new GregorianCalendar(2008, 1, 1).getTime());
