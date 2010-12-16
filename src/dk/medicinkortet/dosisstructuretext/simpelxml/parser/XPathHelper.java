@@ -1,6 +1,10 @@
 package dk.medicinkortet.dosisstructuretext.simpelxml.parser;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import dk.medicinkortet.dosisstructuretext.simpelxml.Node;
 import dk.medicinkortet.dosisstructuretext.simpelxml.Nodes;
@@ -113,7 +117,7 @@ public class XPathHelper {
 					return new Integer(node.getText());
 				}
 				else if(token.equals("/double()")) {
-					return new Double(node.getText());
+					return toDouble(node.getText());
 				}
 				else {
 					throw new XPathException("Unknown function \""+token+"\"");
@@ -176,21 +180,21 @@ public class XPathHelper {
 		}
 	}
 	
-	public static String getName(String token) {
+	private static String getName(String token) {
 		if(token.startsWith("//"))
 			token = token.substring(2);
 		else if(token.startsWith("/"))
 			token = token.substring(1);
 		int ix = token.indexOf(":");		
 		if(ix>0)
-			token = token.substring(ix+1);		
+			token = token.substring(ix+1);	
 		ix = token.indexOf("[");
 		if(ix>0)
 			token = token.substring(0, ix);
 		return token;
 	}	
 	
-	public static int getIndex(String token) {
+	private static int getIndex(String token) {
 		int ix = token.indexOf("[");
 		if(ix>0)
 			return Integer.parseInt(token.substring(ix+1, token.length()-1));
@@ -198,9 +202,21 @@ public class XPathHelper {
 			return -1;
 	}
 	
-	public static void main(String[] args) {
-		String t = "//*.DosageTimesStructure";
-		System.out.println("namespace="+XPathHelper.getNamespace(t));
-		System.out.println("name="+XPathHelper.getName(t));
+	/**
+	 * Helper method to get a Double from a String, forcing . as the decimal separator
+	 * @throws NumberFormatException if the passed string isn't formatted as #.#
+	 */
+	private static Double toDouble(String s) {
+		if(s.indexOf(",")>=0)
+			throw new NumberFormatException(s);
+		// Formatters are not thread safe, so create a new instance each time
+		DecimalFormat f = new DecimalFormat("#.#", DecimalFormatSymbols.getInstance(new Locale("en_US"))); 
+		try {
+			return f.parse(s).doubleValue();
+		}
+		catch(ParseException e) {
+			throw new NumberFormatException(s);
+		}
 	}
+	
 }

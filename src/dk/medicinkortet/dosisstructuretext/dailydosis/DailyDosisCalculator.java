@@ -100,16 +100,10 @@ public class DailyDosisCalculator {
 			avg = calculateFromRepeatedDosageTimesStructure(dosageTimesStructure, dosageTimesIterationInterval);
 		if(avg!=null) {
 			if(avg[0].equals(avg[1])) {
-				//result.setAvgDailyDosis(new Double(((double)avg[0])/100));
-				//result.setAvgDailyDosis(roundDecimals(avg[0]));
 				result.setAvgDailyDosis(avg[0]);
 				result.setUnit(dosageQuantityUnitText);
 			}
 			else {
-				//result.setMinAvgDailyDosis(new Double(((double)avg[0])/100));
-				//result.setMaxAvgDailyDosis(new Double(((double)avg[1])/100));
-				//result.setMinAvgDailyDosis(roundDecimals(avg[0]));
-				//result.setMaxAvgDailyDosis(roundDecimals(avg[1]));
 				result.setMinAvgDailyDosis(avg[0]);
 				result.setMaxAvgDailyDosis(avg[1]);				
 				result.setUnit(dosageQuantityUnitText);
@@ -118,7 +112,7 @@ public class DailyDosisCalculator {
 	}
 	
 	/**
-	 * Helper class to round to two decimals. 
+	 * Helper method to round to two decimals. 
 	 * As GWT doesn't support the java.math package we have to do the rounding ourselves using some tricky casting.
 	 * @param d
 	 * @return d rounded to two decimals

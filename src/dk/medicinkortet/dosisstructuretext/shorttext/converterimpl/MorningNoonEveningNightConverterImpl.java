@@ -42,7 +42,7 @@ public class MorningNoonEveningNightConverterImpl extends ConverterImpl {
 	protected void doConvert(Node dosageTimesStructure) throws XPathException {
 		String unit = (String)dosageTimesStructure.query("//*:DosageQuantityUnitText/text()");			
 		String dosageSupplementaryText = (String)dosageTimesStructure.query("//*:DosageSupplementaryText/text()");
-		
+
 		Double morning = queryDoubles(dosageTimesStructure,
 			"//*:MorningDosageTimeElementStructure/*:DosageQuantityStructure/*:DosageQuantityValue/double()", 
 			"//*:MorningDosageTimeElementStructure/*:DosageQuantityValue/double()");
@@ -259,7 +259,7 @@ public class MorningNoonEveningNightConverterImpl extends ConverterImpl {
 	}
 	
 	private Double nonnegative(Double d) {
-		if(d!=null&&d.doubleValue()<=0)
+		if(d!=null&&d.doubleValue()<0)
 			return null;
 		else
 			return d;
