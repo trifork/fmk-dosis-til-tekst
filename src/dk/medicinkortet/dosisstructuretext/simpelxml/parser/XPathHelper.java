@@ -1,11 +1,6 @@
 package dk.medicinkortet.dosisstructuretext.simpelxml.parser;
 
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Locale;
-
 import dk.medicinkortet.dosisstructuretext.simpelxml.Node;
 import dk.medicinkortet.dosisstructuretext.simpelxml.Nodes;
 
@@ -207,16 +202,59 @@ public class XPathHelper {
 	 * @throws NumberFormatException if the passed string isn't formatted as #.#
 	 */
 	private static Double toDouble(String s) {
-		if(s.indexOf(",")>=0)
+		// We cannot use java.text classes to get the decimal separator 
+		// as we have to support GWT so we have to use this hack!
+		// Fist make sure we have no thousands separator char in the string
+		if(countNonnumeric(s)>1)
 			throw new NumberFormatException(s);
-		// Formatters are not thread safe, so create a new instance each time
-		DecimalFormat f = new DecimalFormat("#.#", DecimalFormatSymbols.getInstance(new Locale("en_US"))); 
-		try {
-			return f.parse(s).doubleValue();
+		// Get the current locales decimal separator
+		char decimalSeparator = getLocalesDecimalSeparator();
+		// If the decimal separator isn't . replace it in the number string 
+		if(decimalSeparator!='.' && s.indexOf('.')>=0)
+			return new Double(s.replace('.', decimalSeparator));
+		// Else both the locales and the strings separator is .
+		else
+			return new Double(s);
+	
+// We cannot use the (much nicer) code below as java.text isn't available under GWT		
+//		// Formatters are not thread safe, so create a new instance each time
+//		DecimalFormat f = new DecimalFormat("#.#", DecimalFormatSymbols.getInstance(new Locale("en_US"))); 
+//		try {
+//			return f.parse(s).doubleValue();
+//		}
+//		catch(ParseException e) {
+//			throw new NumberFormatException(s);
+//		}
+		
+	}
+	
+	private static Character DECIMAL_SEPARATOR; 
+	
+	private static char getLocalesDecimalSeparator() {
+		// We cannot use java.text classes to get the decimal separator 
+		// as we have to support GWT so we have to use this hack!
+		if(DECIMAL_SEPARATOR==null) {
+			if((""+0.5).indexOf('.')>=0) {
+				DECIMAL_SEPARATOR = '.';
+			}
+			else if((""+0.5).indexOf(',')>=0) {
+				DECIMAL_SEPARATOR = ',';
+			}
+			else {
+				throw new RuntimeException("Cannot determine decimal separator");
+			}
 		}
-		catch(ParseException e) {
-			throw new NumberFormatException(s);
+		return DECIMAL_SEPARATOR;
+	}
+	
+	private static int countNonnumeric(String s) {
+		int count = 0;
+		for(int i=0; i<s.length(); i++) {
+			char c = s.charAt(i);
+			if(c<'0'||c>'9')
+				count++;
 		}
+		return count;
 	}
 	
 }
