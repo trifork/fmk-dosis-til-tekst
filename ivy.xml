@@ -11,10 +11,8 @@
 		<dependency org="junit" name="junit" rev="4.4" conf="test->default"/>
 		<dependency org="trifork" name="trifork-common" rev="latest.integration" conf="*->@"/>
 		
-		<dependency org="com.google.gwt" name="gwt-dev" rev="2.0.0" conf="build->default"/>
-		<dependency org="com.google.gwt" name="gwt-user" rev="2.0.0" /> 
-		<dependency org="com.google.gwt" name="gwt-math" rev="2.0.3" />
-		<dependency org="com.google.gwt" name="gwt-math-server" rev="2.0.3" />
+		<dependency org="com.google.gwt" name="gwt-dev" rev="2.2.0" conf="build->default"/>
+		<dependency org="com.google.gwt" name="gwt-user" rev="2.2.0" /> 
 		<dependency org="log4j" name="log4j" rev="1.2.9" transitive="false" conf="test->default" />
 		<dependency org="oro" name="oro" rev="2.0.8" transitive="false" conf="test->default"/>
 	</dependencies>

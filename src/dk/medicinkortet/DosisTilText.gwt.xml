@@ -1,7 +1,5 @@
 <module>
 	
-	<inherits name="com.googlecode.gwt.math.Math"/>
-
 	<source path="dosisstructuretext"/>
 	
 </module>
