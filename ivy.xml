@@ -1,0 +1,15 @@
+<ivy-module version="1.0">
+	<info module="dosis-til-text" organisation="trifork" status="integration" />
+
+	<configurations>
+		<conf name="deploy" />
+		<conf name="build" extends="deploy" />
+		<conf name="test" extends="deploy" />
+	</configurations>
+
+	<dependencies>
+		<dependency org="junit" name="junit" rev="4.4" conf="test->default"/>
+		<dependency org="trifork" name="trifork-common" rev="latest.integration" conf="*->@"/>
+		<dependency org="log4j" name="log4j" rev="1.2.9" transitive="false" conf="test->default" />
+	</dependencies>
+</ivy-module>
