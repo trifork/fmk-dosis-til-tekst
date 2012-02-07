@@ -26,20 +26,20 @@ public class TimedDoseWrapper extends DoseWrapper {
 		this.time = time;
 	}
 
-	public static TimedDoseWrapper makeDose(String time, double quantity) {
-		return new TimedDoseWrapper(time, toBigDecimal(quantity), null, null, null, null, null);
+	public static TimedDoseWrapper makeDose(String time, BigDecimal quantity) {
+		return new TimedDoseWrapper(time, quantity, null, null, null, null, null);
 	}
 
-	public static TimedDoseWrapper makeDose(String time, double quantity, String supplText) {
-		return new TimedDoseWrapper(time, toBigDecimal(quantity), null, null, supplText, null, null);
+	public static TimedDoseWrapper makeDose(String time, BigDecimal quantity, String supplText) {
+		return new TimedDoseWrapper(time, quantity, null, null, supplText, null, null);
 	}
 	
-	public static TimedDoseWrapper makeDose(String time, double minimalQuantity, double maximalQuantity) {
-		return new TimedDoseWrapper(time, null, toBigDecimal(minimalQuantity), toBigDecimal(maximalQuantity), null, null, null);
+	public static TimedDoseWrapper makeDose(String time, BigDecimal minimalQuantity, BigDecimal maximalQuantity) {
+		return new TimedDoseWrapper(time, null, minimalQuantity, maximalQuantity, null, null, null);
 	}	
 
-	public static TimedDoseWrapper makeDose(String time, double minimalQuantity, double maximalQuantity, String minimalSupplText, String maximalSupplText) {
-		return new TimedDoseWrapper(time, null, toBigDecimal(minimalQuantity), toBigDecimal(maximalQuantity), null, minimalSupplText, maximalSupplText);
+	public static TimedDoseWrapper makeDose(String time, BigDecimal minimalQuantity, BigDecimal maximalQuantity, String minimalSupplText, String maximalSupplText) {
+		return new TimedDoseWrapper(time, null, minimalQuantity, maximalQuantity, null, minimalSupplText, maximalSupplText);
 	}	
 	
 	public final static String LABEL = "kl.";  
