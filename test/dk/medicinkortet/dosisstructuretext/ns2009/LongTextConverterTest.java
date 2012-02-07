@@ -82,7 +82,7 @@ public class LongTextConverterTest {
 					0, "ml", "før behandling", TestHelper.toDate("2011-01-01"), null, 
 						DayWrapper.makeDay(
 							1, 
-							TimedDoseWrapper.makeDose("13:30:00", 1.0))));
+							TimedDoseWrapper.makeDose("13:30:00", new BigDecimal(1.0)))));
 		Assert.assertEquals(
 			"1 ml kl. 13:30:00 før behandling", 
 			LongTextConverter.convert(dosage));
@@ -101,8 +101,8 @@ public class LongTextConverterTest {
 					0, "ml", "før behandling", TestHelper.toDate("2011-01-01"), null, 
 						DayWrapper.makeDay(
 							1, 
-							TimedDoseWrapper.makeDose("13:30:00", 1.0), 
-							TimedDoseWrapper.makeDose("14:30:00", 2.0))));
+							TimedDoseWrapper.makeDose("13:30:00", new BigDecimal(1.0)), 
+							TimedDoseWrapper.makeDose("14:30:00", new BigDecimal(2.0)))));
 		Assert.assertEquals(
 			"1 ml kl. 13:30:00 før behandling + 2 ml kl. 14:30:00 før behandling", 
 			LongTextConverter.convert(dosage));

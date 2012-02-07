@@ -45,7 +45,7 @@ public class SimpleNonRepeatedConverterTest {
 				0, "stk", "før indlæggelse", TestHelper.toDate("2011-01-01"), TestHelper.toDate("2011-01-01"), 
 					DayWrapper.makeDay(
 						0, 
-						TimedDoseWrapper.makeDose("07:30", 1))));				
+						TimedDoseWrapper.makeDose("07:30", new BigDecimal(1)))));				
 		Assert.assertEquals(
 			"1 stk kl. 07:30 før indlæggelse", 
 			LongTextConverter.convert(dosage));
@@ -65,7 +65,7 @@ public class SimpleNonRepeatedConverterTest {
 				0, "stk", null, TestHelper.toDate("2011-01-01"), TestHelper.toDate("2011-01-01"), 
 					DayWrapper.makeDay(
 						0, 
-						TimedDoseWrapper.makeDose("07:30", 1))));				
+						TimedDoseWrapper.makeDose("07:30", new BigDecimal(1)))));				
 		Assert.assertEquals(
 			"1 stk kl. 07:30", 
 			LongTextConverter.convert(dosage));
