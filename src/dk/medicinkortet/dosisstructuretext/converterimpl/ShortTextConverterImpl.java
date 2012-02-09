@@ -22,12 +22,14 @@ public abstract class ShortTextConverterImpl {
 			return null;
 		}		
 	}
-
+	
 	protected String toValue(DoseWrapper dose, String unit) {
 		String s = toValue(dose);
 		if(s==null)
 			return null;
-		else if(dose.getLabel().length()==0)
+		if(s.equals("1"))
+			unit = TextHelper.unitToSingular(unit);
+		if(dose.getLabel().length()==0)
 			return s + " " + unit;
 		else 
 			return s + " " + unit + " " + dose.getLabel();

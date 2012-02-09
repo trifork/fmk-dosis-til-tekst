@@ -10,20 +10,18 @@ import java.util.Map;
 public class TextHelper {
 
 	private static final Map<String, String> decimalsToFractions = new HashMap<String, String>();
+	private static final Map<String, String> pluralToSingular = new HashMap<String, String>();
 	
 	static {
 		decimalsToFractions.put("0,5", "1/2");
 		decimalsToFractions.put("0,25", "1/4");
 		decimalsToFractions.put("0,75", "3/4");
 		decimalsToFractions.put("1,5", "1 1/2");
+		pluralToSingular.put("behandlinger", "behandling");
+		pluralToSingular.put("doser", "dosis");
+		pluralToSingular.put("dråber", "dråbe");
 	}
-	
-//	public static String formatQuantity(Double quantity) {
-//		// We replace . with , below using string replace as we want to make
-//		// sure we always use , no matter what the locale settings are
-//		return new DecimalFormat("########0.#########").format(quantity).replace('.', ',');
-//	}
-	
+		
 	public static String formatQuantity(BigDecimal quantity) {
 		// We replace . with , below using string replace as we want to make
 		// sure we always use , no matter what the locale settings are
@@ -45,6 +43,13 @@ public class TextHelper {
 		String s = formatQuantity(quantity);
 		if(decimalsToFractions.containsKey(s))
 			return decimalsToFractions.get(s);
+		else
+			return s;
+	}
+	
+	public static String unitToSingular(String s) {
+		if(pluralToSingular.containsKey(s))
+			return pluralToSingular.get(s);
 		else
 			return s;
 	}
