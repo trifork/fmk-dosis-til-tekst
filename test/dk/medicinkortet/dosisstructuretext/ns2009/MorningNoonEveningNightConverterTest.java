@@ -219,5 +219,28 @@ public class MorningNoonEveningNightConverterTest {
 				DailyDosisCalculator.calculate(dosage).getValue().doubleValue(), 
 				0.000000001); 				
 	}
+
+	@Test
+	public void test1DråbeNat() throws Exception {
+		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
+			StructuredDosageWrapper.makeStructuredDosage(
+				1, "dråber", null, TestHelper.toDate("2011-01-01"), TestHelper.toDate("2011-01-30"),
+				DayWrapper.makeDay(
+					1, 
+					NightDoseWrapper.makeDose(new BigDecimal(1))))); 				
+		Assert.assertEquals(
+			"Daglig 1 dråbe nat", 
+			LongTextConverter.convert(dosage));
+		Assert.assertEquals(
+			MorningNoonEveningNightConverterImpl.class, 
+			ShortTextConverter.getConverterClass(dosage));
+		Assert.assertEquals(
+			"1 dråbe nat", 
+			ShortTextConverter.convert(dosage));
+		Assert.assertEquals(
+				1.0, 
+				DailyDosisCalculator.calculate(dosage).getValue().doubleValue(), 
+				0.000000001); 				
+	}
 	
 }

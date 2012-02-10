@@ -67,8 +67,10 @@ public class MorningNoonEveningNightConverterImpl extends ShortTextConverterImpl
 				text.append(" og ");			
 			if(!day.allDosesHaveTheSameQuantity())
 				text.append(toValue(day.getNightDose(), dosageTimes.getUnit()));
-			else
+			else if(day.getMorningDose()!=null || day.getNoonDose()!=null || day.getEveningDose()!=null)
 				text.append(day.getNightDose().getLabel());
+			else
+				text.append(toValue(day.getNightDose(), dosageTimes.getUnit()));
 		}
 	
 		if(dosageTimes.getUniqueSupplText()!=null)
