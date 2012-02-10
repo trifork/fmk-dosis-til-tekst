@@ -43,8 +43,10 @@ public class MorningNoonEveningNightConverterImpl extends ShortTextConverterImpl
 				text.append(" og ");			
 			if(!day.allDosesHaveTheSameQuantity())
 				text.append(toValue(day.getNoonDose(), dosageTimes.getUnit()));
-			else
+			else if(day.getMorningDose()!=null)
 				text.append(day.getNoonDose().getLabel());
+			else 
+				text.append(toValue(day.getNoonDose(), dosageTimes.getUnit()));
 		}
 		
 		if(day.getEveningDose()!=null) {
@@ -54,8 +56,10 @@ public class MorningNoonEveningNightConverterImpl extends ShortTextConverterImpl
 				text.append(" og ");			
 			if(!day.allDosesHaveTheSameQuantity())
 				text.append(toValue(day.getEveningDose(), dosageTimes.getUnit()));
+			else if(day.getMorningDose()!=null || day.getNoonDose()!=null)
+				text.append(day.getEveningDose().getLabel());			
 			else
-				text.append(day.getEveningDose().getLabel());
+				text.append(toValue(day.getEveningDose(), dosageTimes.getUnit()));
 		}
 		
 		if(day.getNightDose()!=null) {

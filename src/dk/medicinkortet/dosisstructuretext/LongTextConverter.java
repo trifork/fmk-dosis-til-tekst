@@ -77,6 +77,8 @@ public class LongTextConverter {
 	private static Object convert(DoseWrapper dose, String unit, String supplText) {
 		StringBuilder s = new StringBuilder();
 		s.append(dose.getAnyDoseQuantityString());
+		if(s.toString().equals("1"))
+			unit = TextHelper.unitToSingular(unit);		
 		s.append(" ").append(unit);
 		if(dose.getLabel().length()>0)
 			s.append(" ").append(dose.getLabel());
