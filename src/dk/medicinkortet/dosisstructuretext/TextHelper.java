@@ -29,6 +29,8 @@ public class TextHelper {
 	}
 	
 	public static String trim(String number) {
+		if(number.indexOf('.')<0 && number.indexOf(',')<0)
+			return number;
 		if(number.length()==1 || number.charAt(number.length()-1)>'0')
 			return number;
 		else 

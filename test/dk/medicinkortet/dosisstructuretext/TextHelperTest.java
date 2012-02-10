@@ -10,8 +10,10 @@ public class TextHelperTest {
 
 	@Test
 	public void testTrim() {
+		assertEquals("400", TextHelper.trim("400"));
 		assertEquals("0", TextHelper.trim("0.000"));
 		assertEquals("0", TextHelper.trim("0,000"));
+		assertEquals("0", TextHelper.trim("0,"));
 		assertEquals("0.1", TextHelper.trim("0.100"));
 		assertEquals("0,01", TextHelper.trim("0,010"));
 	}

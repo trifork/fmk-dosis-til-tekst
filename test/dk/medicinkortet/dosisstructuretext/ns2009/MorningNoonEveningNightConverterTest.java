@@ -242,5 +242,28 @@ public class MorningNoonEveningNightConverterTest {
 				DailyDosisCalculator.calculate(dosage).getValue().doubleValue(), 
 				0.000000001); 				
 	}
+
+	@Test
+	public void test400MilligramNat() throws Exception {
+		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
+			StructuredDosageWrapper.makeStructuredDosage(
+				1, "milligram", null, TestHelper.toDate("2011-01-01"), TestHelper.toDate("2011-01-30"),
+				DayWrapper.makeDay(
+					1, 
+					NightDoseWrapper.makeDose(new BigDecimal(400.000))))); 				
+		Assert.assertEquals(
+			"Daglig 400 milligram nat", 
+			LongTextConverter.convert(dosage));
+		Assert.assertEquals(
+			MorningNoonEveningNightConverterImpl.class, 
+			ShortTextConverter.getConverterClass(dosage));
+		Assert.assertEquals(
+			"400 milligram nat", 
+			ShortTextConverter.convert(dosage));
+		Assert.assertEquals(
+				400.0, 
+				DailyDosisCalculator.calculate(dosage).getValue().doubleValue(), 
+				0.000000001); 				
+	}
 	
 }
