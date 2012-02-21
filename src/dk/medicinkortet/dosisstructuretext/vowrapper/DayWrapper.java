@@ -28,14 +28,14 @@ public class DayWrapper {
 	public DayWrapper(DosageDayElementStructure dosageDayElementStructure) {
 		this.dayNumber = dosageDayElementStructure.getDosageDayIdentifier();
 		for(DosageTimeElementStructure dose: dosageDayElementStructure.getDosageTimeElementStructures()) {
-			if(dose.getDosageTimeTime()==null) {
-				PlainDoseWrapper d = new PlainDoseWrapper(dose); // We keep doses in order, otherwise addAll would be nicer
-				plainDoses.add(d);
+			if(dose.getDosageTimeTime()!=null && dose.getDosageTimeTime().trim().length()>0) {
+				TimedDoseWrapper d = new TimedDoseWrapper(dose);
+				timedDoses.add(d);
 				allDoses.add(d);
 			}
 			else {
-				TimedDoseWrapper d = new TimedDoseWrapper(dose);
-				timedDoses.add(d);
+				PlainDoseWrapper d = new PlainDoseWrapper(dose); // We keep doses in order, otherwise addAll would be nicer
+				plainDoses.add(d);
 				allDoses.add(d);
 			}			
 		}
