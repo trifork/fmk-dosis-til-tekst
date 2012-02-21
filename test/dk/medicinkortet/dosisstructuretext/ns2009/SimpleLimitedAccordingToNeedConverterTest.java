@@ -38,7 +38,5 @@ public class SimpleLimitedAccordingToNeedConverterTest {
 				ShortTextConverter.convert(dosage));
 		Assert.assertTrue(DailyDosisCalculator.calculate(dosage).isNone()); 
 	}
-
-
 	
 }

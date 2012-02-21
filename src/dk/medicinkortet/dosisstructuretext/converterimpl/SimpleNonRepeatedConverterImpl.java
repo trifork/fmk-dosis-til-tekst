@@ -43,8 +43,6 @@ public class SimpleNonRepeatedConverterImpl extends ShortTextConverterImpl {
 		DayWrapper day = dosageTimes.getDays().get(0);
 		DoseWrapper dose = day.getAllDoses().get(0);
 		text.append(toValue(dose, dosageTimes.getUnit()));
-		if(dose instanceof TimedDoseWrapper)
-			text.append(" ").append(((TimedDoseWrapper)dose).getTime());
 		if(dosageTimes.getUniqueSupplText()!=null)
 			text.append(" ").append(dosageTimes.getUniqueSupplText());
 		return text.toString();

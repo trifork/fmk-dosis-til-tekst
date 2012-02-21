@@ -14,6 +14,7 @@ import dk.medicinkortet.dosisstructuretext.vowrapper.DayWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.StructuredDosageWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.PlainDoseWrapper;
+import dk.medicinkortet.dosisstructuretext.vowrapper.TimedDoseWrapper;
 
 public class LimitedNumberOfDaysConverterTest {
 	

@@ -348,5 +348,28 @@ public class RepeatedConverterTest {
 				DailyDosisCalculator.calculate(dosage).getValue().doubleValue(), 
 				0.000000001); 				
 	}
+	
+	@Test
+	public void test1stk2DagligKl0800() throws Exception {
+		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
+			StructuredDosageWrapper.makeStructuredDosage(
+				1, "stk", null, TestHelper.toDate("2011-01-01"), TestHelper.toDate("2011-01-30"), 
+				DayWrapper.makeDay(
+					1, 
+					TimedDoseWrapper.makeDose("08:00", new BigDecimal(1)))));
+		Assert.assertEquals(
+				"Daglig 1 stk kl. 08:00", 
+				LongTextConverter.convert(dosage));
+		Assert.assertEquals(
+				RepeatedConverterImpl.class, 
+				ShortTextConverter.getConverterClass(dosage));
+		Assert.assertEquals(
+				"1 stk kl. 08:00 daglig", 
+				ShortTextConverter.convert(dosage));
+		Assert.assertEquals(
+				1.0, 
+				DailyDosisCalculator.calculate(dosage).getValue().doubleValue(), 
+				0.000000001); 				
+	}
 		
 }

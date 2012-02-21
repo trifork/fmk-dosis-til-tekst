@@ -3,6 +3,7 @@ package dk.medicinkortet.dosisstructuretext.converterimpl;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DayWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.StructuredDosageWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
+import dk.medicinkortet.dosisstructuretext.vowrapper.TimedDoseWrapper;
 
 public class RepeatedConverterImpl extends ShortTextConverterImpl {
 
@@ -36,6 +37,9 @@ public class RepeatedConverterImpl extends ShortTextConverterImpl {
 		DayWrapper day = dosageTimes.getDays().get(0);
 		
 		text.append(toValue(day.getAllDoses().get(0), dosageTimes.getUnit()));
+		
+//		if(day.getAllDoses().get(0) instanceof TimedDoseWrapper)
+//			text.append(" "+((TimedDoseWrapper)day.getAllDoses().get(0)).getTime());
 		
 		if(dosageTimes.getIterationInterval()==1 && day.getNumberOfDoses()==1)
 			text.append(" daglig");

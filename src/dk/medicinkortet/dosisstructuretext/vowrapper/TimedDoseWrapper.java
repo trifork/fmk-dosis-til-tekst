@@ -46,7 +46,7 @@ public class TimedDoseWrapper extends DoseWrapper {
 	
 	@Override
 	public String getLabel() {
-		return LABEL;
+		return LABEL+" "+time;
 	}
 
 	public String getTime() {

@@ -82,8 +82,6 @@ public class LongTextConverter {
 		s.append(" ").append(unit);
 		if(dose.getLabel().length()>0)
 			s.append(" ").append(dose.getLabel());
-		if(dose instanceof TimedDoseWrapper) 
-			s.append(" ").append(((TimedDoseWrapper)dose).getTime());
 		if(supplText!=null)
 			s.append(" ").append(supplText);
 		// Handle suppl. text in 2008 namespace
