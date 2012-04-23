@@ -39,10 +39,13 @@ public class LongTextConverter {
 			// Not repeated dosage
 			appendDosageStart(s, dosageTimes);			
 			// If there is just one day with according to need dosages we don't want say when to stop
-			if(dosageTimes.getDays().size()==1 && dosageTimes.containsAccordingToNeedDosesOnly())
+			if(dosageTimes.getDays().size()==1 && dosageTimes.containsAccordingToNeedDosesOnly()) {
 				s.append(":\n");
-			else
-				s.append(" og ophører efter det angivne forløb:\n");
+			}
+			else {
+				s.append(" og ophører efter det angivne forløb");
+				appendNoteText(s, dosageTimes);				
+			}
 		}
 		else if(dosageTimes.getIterationInterval()==1) {
 			// Daily dosage

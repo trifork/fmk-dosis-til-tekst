@@ -114,7 +114,8 @@ public class LimitedNumberOfDaysConverterTest {
 					PlainDoseWrapper.makeDose(new BigDecimal(4)), 
 					PlainDoseWrapper.makeDose(new BigDecimal(1))))); 				
 		Assert.assertEquals(
-				"Doseringsforløbet starter lørdag den 1. januar 2011 og ophører efter det angivne forløb:\n"+
+				"Doseringsforløbet starter lørdag den 1. januar 2011 og ophører efter det angivne forløb.\n"+
+				"Bemærk at doseringen varierer:\n"+
 				"   Doseringsforløb:\n"+
 				"   Lørdag den 1. januar 2011: 4 stk ved måltid 2 gange\n"+
 				"   Søndag den 2. januar 2011: 4 stk ved måltid 2 gange\n"+
