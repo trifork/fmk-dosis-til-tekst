@@ -29,7 +29,9 @@ public class SimpleAccordingToNeedConverterTest {
 					DayWrapper.makeDay(0,
 						AccordingToNeedDoseWrapper.makeDose(new BigDecimal(2)))));
 		Assert.assertEquals(
-				"2 stk efter behov", 
+				"Doseringsforløbet starter lørdag den 1. januar 2011:\n"+
+				"   Doseringsforløb:\n"+
+				"   Efter behov: 2 stk efter behov",
 				LongTextConverter.convert(dosage));
 		Assert.assertEquals(
 				SimpleAccordingToNeedConverterImpl.class, 
@@ -52,7 +54,9 @@ public class SimpleAccordingToNeedConverterTest {
 					DayWrapper.makeDay(0,
 						AccordingToNeedDoseWrapper.makeDose(new BigDecimal(2)))));
 		Assert.assertEquals(
-				"2 stk efter behov ved smerter", 
+				"Doseringsforløbet starter lørdag den 1. januar 2011:\n"+
+				"   Doseringsforløb:\n"+
+				"   Efter behov: 2 stk efter behov ved smerter",
 				LongTextConverter.convert(dosage));
 		Assert.assertEquals(
 				SimpleAccordingToNeedConverterImpl.class, 
@@ -75,7 +79,9 @@ public class SimpleAccordingToNeedConverterTest {
 					DayWrapper.makeDay(0,
 						AccordingToNeedDoseWrapper.makeDose(new BigDecimal(1), new BigDecimal(2)))));
 		Assert.assertEquals(
-				"1-2 stk efter behov", 
+				"Doseringsforløbet starter lørdag den 1. januar 2011:\n"+
+				"   Doseringsforløb:\n"+
+				"   Efter behov: 1-2 stk efter behov",
 				LongTextConverter.convert(dosage));
 		Assert.assertEquals(
 				SimpleAccordingToNeedConverterImpl.class, 

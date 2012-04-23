@@ -27,7 +27,9 @@ public class SimpleNonRepeatedConverterTest {
 						0, 
 						PlainDoseWrapper.makeDose(new BigDecimal(1)))));				
 		Assert.assertEquals(
-			"1 plaster 5 timer før virkning ønskes", 
+			"Doseringsforløbet starter lørdag den 1. januar 2011 og ophører efter det angivne forløb:\n"+
+			"   Doseringsforløb:\n"+
+			"   Dag ikke angivet: 1 plaster 5 timer før virkning ønskes",
 			LongTextConverter.convert(dosage));
 		Assert.assertEquals(
 			SimpleNonRepeatedConverterImpl.class, 
@@ -47,7 +49,9 @@ public class SimpleNonRepeatedConverterTest {
 						0, 
 						TimedDoseWrapper.makeDose("07:30", new BigDecimal(1)))));				
 		Assert.assertEquals(
-			"1 stk kl. 07:30 før indlæggelse", 
+			"Doseringen foretages kun lørdag den 1. januar 2011:\n"+
+			"   Doseringsforløb:\n"+
+			"   Dag ikke angivet: 1 stk kl. 07:30 før indlæggelse",
 			LongTextConverter.convert(dosage));
 		Assert.assertEquals(
 			SimpleNonRepeatedConverterImpl.class, 
@@ -67,7 +71,9 @@ public class SimpleNonRepeatedConverterTest {
 						0, 
 						TimedDoseWrapper.makeDose("07:30", new BigDecimal(1)))));				
 		Assert.assertEquals(
-			"1 stk kl. 07:30", 
+			"Doseringen foretages kun lørdag den 1. januar 2011:\n"+
+			"   Doseringsforløb:\n"+
+			"   Dag ikke angivet: 1 stk kl. 07:30",
 			LongTextConverter.convert(dosage));
 		Assert.assertEquals(
 			SimpleNonRepeatedConverterImpl.class, 

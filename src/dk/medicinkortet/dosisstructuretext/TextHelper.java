@@ -9,6 +9,8 @@ import java.util.Map;
 
 public class TextHelper {
 
+	public static final String VERSION = "2012-04-20"; 
+	
 	private static final Map<String, String> decimalsToFractions = new HashMap<String, String>();
 	private static final Map<String, String> pluralToSingular = new HashMap<String, String>();
 	

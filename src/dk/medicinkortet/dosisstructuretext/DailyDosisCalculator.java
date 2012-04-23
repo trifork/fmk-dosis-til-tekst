@@ -25,6 +25,11 @@ public class DailyDosisCalculator {
 	}
 
 	private static DailyDosis calculateFromStructuredDosage(StructuredDosageWrapper dosageTimes) {
+		// If the dosage isn't repeated it doesn't make sense to calculate an average
+		// unless all daily doses are equal
+		if(dosageTimes.getIterationInterval()==0)
+			if(!dosageTimes.allDaysAreTheSame())
+				return new DailyDosis();
 		// If the structured dosage contains any doses according to need
 		// we cannot calculate an average dosis
 		if(dosageTimes.containsAccordingToNeedDose())

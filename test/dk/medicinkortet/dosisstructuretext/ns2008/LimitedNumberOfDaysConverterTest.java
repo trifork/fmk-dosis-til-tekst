@@ -38,11 +38,13 @@ public class LimitedNumberOfDaysConverterTest {
 					PlainDoseWrapper.makeDose(new BigDecimal(4)), 
 					PlainDoseWrapper.makeDose(new BigDecimal(4))))); 
 		Assert.assertEquals(
-			"Dag 1: 4 stk ved måltid 2 gange\n"+
-			"Dag 2: 4 stk ved måltid 2 gange\n"+
-			"Dag 3: 4 stk ved måltid 2 gange\n"+
-			"Dag 4: 4 stk ved måltid 2 gange", 
-			LongTextConverter.convert(dosage));
+				"Doseringsforløbet starter lørdag den 1. januar 2011 og ophører efter det angivne forløb:\n"+
+				"   Doseringsforløb:\n"+
+				"   Lørdag den 1. januar 2011: 4 stk ved måltid 2 gange\n"+
+				"   Søndag den 2. januar 2011: 4 stk ved måltid 2 gange\n"+
+				"   Mandag den 3. januar 2011: 4 stk ved måltid 2 gange\n"+
+				"   Tirsdag den 4. januar 2011: 4 stk ved måltid 2 gange",
+				LongTextConverter.convert(dosage));
 		Assert.assertEquals(
 			LimitedNumberOfDaysConverterImpl.class, 
 			ShortTextConverter.getConverterClass(dosage));
@@ -74,10 +76,12 @@ public class LimitedNumberOfDaysConverterTest {
 					PlainDoseWrapper.makeDose(new BigDecimal(4), new BigDecimal(6)), 
 					PlainDoseWrapper.makeDose(new BigDecimal(4), new BigDecimal(6))))); 
 		Assert.assertEquals(
-			"Dag 1: 4-6 stk ved måltid 2 gange\n"+
-			"Dag 2: 4-6 stk ved måltid 2 gange\n"+
-			"Dag 3: 4-6 stk ved måltid 2 gange\n"+
-			"Dag 4: 4-6 stk ved måltid 2 gange", 
+				"Doseringsforløbet starter lørdag den 1. januar 2011 og ophører efter det angivne forløb:\n"+
+				"   Doseringsforløb:\n"+
+				"   Lørdag den 1. januar 2011: 4-6 stk ved måltid 2 gange\n"+
+				"   Søndag den 2. januar 2011: 4-6 stk ved måltid 2 gange\n"+
+				"   Mandag den 3. januar 2011: 4-6 stk ved måltid 2 gange\n"+
+				"   Tirsdag den 4. januar 2011: 4-6 stk ved måltid 2 gange",
 			LongTextConverter.convert(dosage));
 		Assert.assertEquals(
 			LimitedNumberOfDaysConverterImpl.class, 
@@ -110,10 +114,12 @@ public class LimitedNumberOfDaysConverterTest {
 					PlainDoseWrapper.makeDose(new BigDecimal(4)), 
 					PlainDoseWrapper.makeDose(new BigDecimal(1))))); 				
 		Assert.assertEquals(
-				"Dag 1: 4 stk ved måltid 2 gange\n"+
-				"Dag 2: 4 stk ved måltid 2 gange\n"+
-				"Dag 3: 4 stk ved måltid 2 gange\n"+
-				"Dag 4: 4 stk ved måltid + 1 stk ved måltid", 
+				"Doseringsforløbet starter lørdag den 1. januar 2011 og ophører efter det angivne forløb:\n"+
+				"   Doseringsforløb:\n"+
+				"   Lørdag den 1. januar 2011: 4 stk ved måltid 2 gange\n"+
+				"   Søndag den 2. januar 2011: 4 stk ved måltid 2 gange\n"+
+				"   Mandag den 3. januar 2011: 4 stk ved måltid 2 gange\n"+
+				"   Tirsdag den 4. januar 2011: 4 stk ved måltid + 1 stk ved måltid",
 				LongTextConverter.convert(dosage));
 		Assert.assertNull(
 				ShortTextConverter.getConverterClass(dosage));

@@ -30,7 +30,9 @@ public class ParacetamolConverterTest {
 					PlainDoseWrapper.makeDose(new BigDecimal(1), new BigDecimal(2)), 
 					AccordingToNeedDoseWrapper.makeDose(new BigDecimal(1), new BigDecimal(2)))));		
 		Assert.assertEquals(
-			"Daglig 1-2 stk ved smerter + 1-2 stk ved smerter + 1-2 stk ved smerter + 1-2 stk efter behov ved smerter", 
+			"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages dagligt:\n"+
+			"   Doseringsforløb:\n"+
+			"   Lørdag den 1. januar 2011: 1-2 stk ved smerter + 1-2 stk ved smerter + 1-2 stk ved smerter + 1-2 stk efter behov ved smerter",
 			LongTextConverter.convert(dosage));
 		Assert.assertEquals(
 			ParacetamolConverterImpl.class, 

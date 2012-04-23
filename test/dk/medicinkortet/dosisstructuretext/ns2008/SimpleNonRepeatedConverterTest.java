@@ -47,7 +47,9 @@ public class SimpleNonRepeatedConverterTest {
 		DosageStructure dosage = makeDosage();
 		DosageWrapper w = new DosageWrapper(dosage);
 		Assert.assertEquals(
-				"1 stk 5 timer før virkning ønskes", 
+				"Doseringen foretages kun lørdag den 1. januar 2011:\n"+
+				"   Doseringsforløb:\n"+
+				"   Dag ikke angivet: 1 stk 5 timer før virkning ønskes",
 				LongTextConverter.convert(w));
 		Assert.assertEquals(
 				SimpleNonRepeatedConverterImpl.class, 

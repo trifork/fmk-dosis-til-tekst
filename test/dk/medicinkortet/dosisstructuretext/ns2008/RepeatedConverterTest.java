@@ -74,7 +74,9 @@ public class RepeatedConverterTest {
 		DosageStructure dosage = makeDosages(1, null, 3.0, 3.0);
 		DosageWrapper w = new DosageWrapper(dosage);
 		Assert.assertEquals(
-				"Daglig 3 stk 2 gange", 
+				"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages dagligt:\n"+
+				"   Doseringsforløb:\n"+
+				"   Lørdag den 1. januar 2011: 3 stk 2 gange",
 				LongTextConverter.convert(w));
 		Assert.assertEquals(
 				RepeatedConverterImpl.class, 
@@ -90,7 +92,9 @@ public class RepeatedConverterTest {
 		DosageStructure dosage = makeDosages(1, "ved måltid", 3.0, 3.0);
 		DosageWrapper w = new DosageWrapper(dosage);
 		Assert.assertEquals(
-				"Daglig 3 stk ved måltid 2 gange", 
+				"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages dagligt:\n"+
+				"   Doseringsforløb:\n"+
+				"   Lørdag den 1. januar 2011: 3 stk ved måltid ved måltid 2 gange",
 				LongTextConverter.convert(w));
 		Assert.assertEquals(
 				RepeatedConverterImpl.class, 
@@ -106,7 +110,9 @@ public class RepeatedConverterTest {
 		DosageStructure dosage = makeDosages(1, "ved måltid", 1.0);
 		DosageWrapper w = new DosageWrapper(dosage);
 		Assert.assertEquals(
-				"Daglig 1 stk ved måltid", 
+				"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages dagligt:\n"+
+				"   Doseringsforløb:\n"+
+				"   Lørdag den 1. januar 2011: 1 stk ved måltid",
 				LongTextConverter.convert(w));
 		Assert.assertEquals(
 				RepeatedConverterImpl.class, 
@@ -122,7 +128,9 @@ public class RepeatedConverterTest {
 		DosageStructure dosage = makeDosages(1, null, new Interval(1.0, 2.0), new Interval(1.0, 2.0));
 		DosageWrapper w = new DosageWrapper(dosage);
 		Assert.assertEquals(
-				"Daglig 1-2 stk 2 gange", 
+				"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages dagligt:\n"+
+				"   Doseringsforløb:\n"+
+				"   Lørdag den 1. januar 2011: 1-2 stk 2 gange",
 				LongTextConverter.convert(w));
 		Assert.assertEquals(
 				RepeatedConverterImpl.class, 
@@ -138,7 +146,9 @@ public class RepeatedConverterTest {
 		DosageStructure dosage = makeDosages(2, "ved måltid", 1.0);
 		DosageWrapper w = new DosageWrapper(dosage);
 		Assert.assertEquals(
-				"Hver 2. dag 1 stk ved måltid", 
+				"Doseringsforløbet starter lørdag den 1. januar 2011, forløbet gentages efter 2 dage:\n"+
+				"   Doseringsforløb:\n"+
+				"   Lørdag den 1. januar 2011: 1 stk ved måltid",
 				LongTextConverter.convert(w));
 		Assert.assertEquals(
 				RepeatedConverterImpl.class, 
@@ -155,7 +165,9 @@ public class RepeatedConverterTest {
 		DosageStructure dosage = makeDosages(7, "ved måltid", 1.0);
 		DosageWrapper w = new DosageWrapper(dosage);
 		Assert.assertEquals(
-				"Hver 7. dag 1 stk ved måltid", 
+				"Doseringsforløbet starter lørdag den 1. januar 2011, forløbet gentages efter 7 dage:\n"+
+				"   Doseringsforløb:\n"+
+				"   Lørdag den 1. januar 2011: 1 stk ved måltid",
 				LongTextConverter.convert(w));
 		Assert.assertEquals(
 				RepeatedConverterImpl.class, 
@@ -171,7 +183,9 @@ public class RepeatedConverterTest {
 		DosageStructure dosage = makeDosages(30, "ved måltid", 1.0);
 		DosageWrapper w = new DosageWrapper(dosage);
 		Assert.assertEquals(
-				"Hver 30. dag 1 stk ved måltid", 
+				"Doseringsforløbet starter lørdag den 1. januar 2011, forløbet gentages efter 30 dage:\n"+
+				"   Doseringsforløb:\n"+
+				"   Lørdag den 1. januar 2011: 1 stk ved måltid",
 				LongTextConverter.convert(w));
 		Assert.assertEquals(
 				RepeatedConverterImpl.class, 
@@ -187,7 +201,9 @@ public class RepeatedConverterTest {
 		DosageStructure dosage = makeDosages(7, "ved måltid", 2.5);
 		DosageWrapper w = new DosageWrapper(dosage);
 		Assert.assertEquals(
-				"Hver 7. dag 2,5 stk ved måltid", 
+				"Doseringsforløbet starter lørdag den 1. januar 2011, forløbet gentages efter 7 dage:\n"+
+				"   Doseringsforløb:\n"+
+				"   Lørdag den 1. januar 2011: 2,5 stk ved måltid",
 				LongTextConverter.convert(w));
 		Assert.assertEquals(
 				RepeatedConverterImpl.class, 
@@ -203,7 +219,9 @@ public class RepeatedConverterTest {
 		DosageStructure dosage = makeDosages(7, "ved måltid", 2.5, 2.5);
 		DosageWrapper w = new DosageWrapper(dosage);
 		Assert.assertEquals(
-				"Hver 7. dag 2,5 stk ved måltid 2 gange", 
+				"Doseringsforløbet starter lørdag den 1. januar 2011, forløbet gentages efter 7 dage:\n"+
+				"   Doseringsforløb:\n"+
+				"   Lørdag den 1. januar 2011: 2,5 stk ved måltid ved måltid 2 gange",
 				LongTextConverter.convert(w));
 		Assert.assertEquals(
 				RepeatedConverterImpl.class, 
@@ -218,7 +236,9 @@ public class RepeatedConverterTest {
 		DosageStructure dosage = makeDosages(30, "ved måltid", 2.5);
 		DosageWrapper w = new DosageWrapper(dosage);
 		Assert.assertEquals(
-				"Hver 30. dag 2,5 stk ved måltid", 
+				"Doseringsforløbet starter lørdag den 1. januar 2011, forløbet gentages efter 30 dage:\n"+
+				"   Doseringsforløb:\n"+
+				"   Lørdag den 1. januar 2011: 2,5 stk ved måltid",
 				LongTextConverter.convert(w));
 		Assert.assertEquals(
 				RepeatedConverterImpl.class, 
@@ -234,7 +254,9 @@ public class RepeatedConverterTest {
 		DosageStructure dosage = makeDosages(30, "ved måltid", 2.5, 2.5);
 		DosageWrapper w = new DosageWrapper(dosage);
 		Assert.assertEquals(
-				"Hver 30. dag 2,5 stk ved måltid 2 gange", 
+				"Doseringsforløbet starter lørdag den 1. januar 2011, forløbet gentages efter 30 dage:\n"+
+				"   Doseringsforløb:\n"+
+				"   Lørdag den 1. januar 2011: 2,5 stk ved måltid ved måltid 2 gange",
 				LongTextConverter.convert(w));
 		Assert.assertEquals(
 				RepeatedConverterImpl.class, 
@@ -249,7 +271,9 @@ public class RepeatedConverterTest {
 		DosageStructure dosage = makeDosages(5, "ved måltid", 2.5);
 		DosageWrapper w = new DosageWrapper(dosage);
 		Assert.assertEquals(
-				"Hver 5. dag 2,5 stk ved måltid", 
+				"Doseringsforløbet starter lørdag den 1. januar 2011, forløbet gentages efter 5 dage:\n"+
+				"   Doseringsforløb:\n"+
+				"   Lørdag den 1. januar 2011: 2,5 stk ved måltid",
 				LongTextConverter.convert(w));
 		Assert.assertEquals(
 				RepeatedConverterImpl.class, 
@@ -265,7 +289,9 @@ public class RepeatedConverterTest {
 		DosageStructure dosage = makeDosages(5, "ved måltid", 2.5, 2.5);
 		DosageWrapper w = new DosageWrapper(dosage);
 		Assert.assertEquals(
-				"Hver 5. dag 2,5 stk ved måltid 2 gange", 
+				"Doseringsforløbet starter lørdag den 1. januar 2011, forløbet gentages efter 5 dage:\n"+
+				"   Doseringsforløb:\n"+
+				"   Lørdag den 1. januar 2011: 2,5 stk ved måltid ved måltid 2 gange",
 				LongTextConverter.convert(w));
 		Assert.assertEquals(
 				RepeatedConverterImpl.class, 

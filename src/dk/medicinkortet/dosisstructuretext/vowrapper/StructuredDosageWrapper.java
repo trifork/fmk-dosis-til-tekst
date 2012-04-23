@@ -29,6 +29,7 @@ public class StructuredDosageWrapper {
 	private boolean allDosesHaveTheSameSupplText;
 	protected String uniqueSupplText;
 	protected Boolean areAllDosesTheSame;
+	protected Boolean areAllDaysTheSame;
 	
 	public StructuredDosageWrapper(DosageTimesStructure dosageTimesStructure) {
 		this(
@@ -138,6 +139,37 @@ public class StructuredDosageWrapper {
 		}
 		return areAllDosesTheSame;
 	}
+	
+	/**
+	 * Compares dosage quantities and the dosages label (the type of the dosage)
+	 * @return true if all days contains the same dosages
+	 */
+	public boolean allDaysAreTheSame() {
+		if(areAllDaysTheSame==null) {
+			areAllDaysTheSame = true;
+			DayWrapper day0 = null;
+			for(DayWrapper day: days) {
+				if(day0==null) {
+					day0 = day;
+				}
+				else {
+					if(day0.getNumberOfDoses()!=day.getNumberOfDoses()) {
+						areAllDaysTheSame = false;
+						break;						
+					}
+					else {
+						for(int d=0; d<day0.getNumberOfDoses(); d++) {
+							if(!day0.getAllDoses().get(d).theSameAs(day.getAllDoses().get(d))) {
+								areAllDaysTheSame = false;
+								break;						
+							}
+						}
+					}
+				}
+			}
+		}
+		return areAllDaysTheSame;
+	}	
 	
 	public boolean containsMorningNoonEveningNightToNeedDoses() {
 		for(DayWrapper day: days) {
@@ -278,6 +310,14 @@ public class StructuredDosageWrapper {
 		else 
 			return startDateTime;
 	}
+
+	public Date getStartDate() {
+		return startDate;
+	}	
+
+	public Date getStartDateTime() {
+		return startDateTime;
+	}	
 	
 	public Date getEndDateOrDateTime() {
 		if(endDate!=null)

@@ -32,7 +32,9 @@ public class MorningNoonEveningNightConverterTest {
 					EveningDoseWrapper.makeDose(new BigDecimal(3)), 
 					NightDoseWrapper.makeDose(new BigDecimal(4))))); 
 		Assert.assertEquals(
-			"Daglig 1 stk morgen ved måltid + 2 stk middag ved måltid + 3 stk aften ved måltid + 4 stk nat ved måltid", 
+			"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages dagligt:\n"+
+			"   Doseringsforløb:\n"+
+			"   Lørdag den 1. januar 2011: 1 stk morgen ved måltid + 2 stk middag ved måltid + 3 stk aften ved måltid + 4 stk nat ved måltid",
 			LongTextConverter.convert(dosage));
 		Assert.assertEquals(
 			MorningNoonEveningNightConverterImpl.class, 
@@ -58,7 +60,9 @@ public class MorningNoonEveningNightConverterTest {
 					EveningDoseWrapper.makeDose(new BigDecimal(2)), 
 					NightDoseWrapper.makeDose(new BigDecimal(2))))); 
 		Assert.assertEquals(
-			"Daglig 2 stk morgen ved måltid + 2 stk middag ved måltid + 2 stk aften ved måltid + 2 stk nat ved måltid", 
+			"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages dagligt:\n"+
+			"   Doseringsforløb:\n"+
+			"   Lørdag den 1. januar 2011: 2 stk morgen ved måltid + 2 stk middag ved måltid + 2 stk aften ved måltid + 2 stk nat ved måltid",
 			LongTextConverter.convert(dosage));
 		Assert.assertEquals(
 			MorningNoonEveningNightConverterImpl.class, 
@@ -83,7 +87,9 @@ public class MorningNoonEveningNightConverterTest {
 					EveningDoseWrapper.makeDose(new BigDecimal(3)), 
 					NightDoseWrapper.makeDose(new BigDecimal(4))))); 
 		Assert.assertEquals(
-			"Daglig 2 stk middag ved måltid + 3 stk aften ved måltid + 4 stk nat ved måltid", 
+			"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages dagligt:\n"+
+			"   Doseringsforløb:\n"+
+			"   Lørdag den 1. januar 2011: 2 stk middag ved måltid + 3 stk aften ved måltid + 4 stk nat ved måltid",
 			LongTextConverter.convert(dosage));
 		Assert.assertEquals(
 			MorningNoonEveningNightConverterImpl.class, 
@@ -108,7 +114,9 @@ public class MorningNoonEveningNightConverterTest {
 					NoonDoseWrapper.makeDose(new BigDecimal(2)), 
 					EveningDoseWrapper.makeDose(new BigDecimal(3))))); 
 		Assert.assertEquals(
-			"Daglig 1 stk morgen ved måltid + 2 stk middag ved måltid + 3 stk aften ved måltid", 
+			"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages dagligt:\n"+
+			"   Doseringsforløb:\n"+
+			"   Lørdag den 1. januar 2011: 1 stk morgen ved måltid + 2 stk middag ved måltid + 3 stk aften ved måltid",
 			LongTextConverter.convert(dosage));
 		Assert.assertEquals(
 			MorningNoonEveningNightConverterImpl.class, 
@@ -132,7 +140,9 @@ public class MorningNoonEveningNightConverterTest {
 					MorningDoseWrapper.makeDose(new BigDecimal(0), new BigDecimal(1)), 
 					NoonDoseWrapper.makeDose(new BigDecimal(2), new BigDecimal(3))))); 
 		Assert.assertEquals(
-			"Daglig 0-1 stk morgen ved måltid + 2-3 stk middag ved måltid", 
+			"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages dagligt:\n"+
+			"   Doseringsforløb:\n"+
+			"   Lørdag den 1. januar 2011: 0-1 stk morgen ved måltid + 2-3 stk middag ved måltid",
 			LongTextConverter.convert(dosage));
 		Assert.assertEquals(
 			MorningNoonEveningNightConverterImpl.class, 
@@ -182,7 +192,9 @@ public class MorningNoonEveningNightConverterTest {
 					NoonDoseWrapper.makeDose(new BigDecimal(1)), 
 					EveningDoseWrapper.makeDose(new BigDecimal(1))))); 				
 		Assert.assertEquals(
-			"Daglig 1 dråbe middag + 1 dråbe aften", 
+			"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages dagligt:\n"+
+			"   Doseringsforløb:\n"+
+			"   Lørdag den 1. januar 2011: 1 dråbe middag + 1 dråbe aften",
 			LongTextConverter.convert(dosage));
 		Assert.assertEquals(
 			MorningNoonEveningNightConverterImpl.class, 
@@ -206,7 +218,9 @@ public class MorningNoonEveningNightConverterTest {
 					EveningDoseWrapper.makeDose(new BigDecimal(1)), 
 					NightDoseWrapper.makeDose(new BigDecimal(1))))); 				
 		Assert.assertEquals(
-			"Daglig 1 dråbe aften + 1 dråbe nat", 
+			"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages dagligt:\n"+
+			"   Doseringsforløb:\n"+
+			"   Lørdag den 1. januar 2011: 1 dråbe aften + 1 dråbe nat",
 			LongTextConverter.convert(dosage));
 		Assert.assertEquals(
 			MorningNoonEveningNightConverterImpl.class, 
@@ -229,7 +243,9 @@ public class MorningNoonEveningNightConverterTest {
 					1, 
 					NightDoseWrapper.makeDose(new BigDecimal(1))))); 				
 		Assert.assertEquals(
-			"Daglig 1 dråbe nat", 
+			"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages dagligt:\n"+
+			"   Doseringsforløb:\n"+
+			"   Lørdag den 1. januar 2011: 1 dråbe nat",
 			LongTextConverter.convert(dosage));
 		Assert.assertEquals(
 			MorningNoonEveningNightConverterImpl.class, 
@@ -252,7 +268,9 @@ public class MorningNoonEveningNightConverterTest {
 					1, 
 					NightDoseWrapper.makeDose(new BigDecimal(400.000))))); 				
 		Assert.assertEquals(
-			"Daglig 400 milligram nat", 
+			"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages dagligt:\n"+
+			"   Doseringsforløb:\n"+
+			"   Lørdag den 1. januar 2011: 400 milligram nat",
 			LongTextConverter.convert(dosage));
 		Assert.assertEquals(
 			MorningNoonEveningNightConverterImpl.class, 

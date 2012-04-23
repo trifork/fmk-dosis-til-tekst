@@ -50,8 +50,10 @@ public class LongTextConverterTest {
 							MorningDoseWrapper.makeDose(new BigDecimal(1)), 
 							EveningDoseWrapper.makeDose(new BigDecimal(2)))));
 		Assert.assertEquals(
-			"Daglig 1 ml morgen ved måltid + 2 ml aften ved måltid", 
-			LongTextConverter.convert(dosage));
+				"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages dagligt:\n"+
+				"   Doseringsforløb:\n"+
+				"   Lørdag den 1. januar 2011: 1 ml morgen ved måltid + 2 ml aften ved måltid",
+				LongTextConverter.convert(dosage));
 		Assert.assertEquals(
 				3.0, 
 				DailyDosisCalculator.calculate(dosage).getValue().doubleValue(), 
@@ -70,7 +72,9 @@ public class LongTextConverterTest {
 							MorningDoseWrapper.makeDose(new BigDecimal(1), "ved måltid"), 
 							EveningDoseWrapper.makeDose(new BigDecimal(2), "ved måltid"))));
 		Assert.assertEquals(
-			"Daglig 1 milliliter morgen ved måltid + 2 milliliter aften ved måltid", 
+			"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages dagligt:\n"+
+			"   Doseringsforløb:\n"+
+			"   Lørdag den 1. januar 2011: 1 milliliter morgen ved måltid + 2 milliliter aften ved måltid",
 			LongTextConverter.convert(dosage));
 	}
 	
@@ -84,7 +88,9 @@ public class LongTextConverterTest {
 							1, 
 							TimedDoseWrapper.makeDose("13:30:00", new BigDecimal(1.0)))));
 		Assert.assertEquals(
-			"1 ml kl. 13:30:00 før behandling", 
+			"Doseringsforløbet starter lørdag den 1. januar 2011 og ophører efter det angivne forløb:\n"+
+			"   Doseringsforløb:\n"+
+			"   Lørdag den 1. januar 2011: 1 ml kl. 13:30:00 før behandling",
 			LongTextConverter.convert(dosage));
 		Assert.assertEquals(
 				1.0, 
@@ -104,7 +110,9 @@ public class LongTextConverterTest {
 							TimedDoseWrapper.makeDose("13:30:00", new BigDecimal(1.0)), 
 							TimedDoseWrapper.makeDose("14:30:00", new BigDecimal(2.0)))));
 		Assert.assertEquals(
-			"1 ml kl. 13:30:00 før behandling + 2 ml kl. 14:30:00 før behandling", 
+			"Doseringsforløbet starter lørdag den 1. januar 2011 og ophører efter det angivne forløb:\n"+
+			"   Doseringsforløb:\n"+
+			"   Lørdag den 1. januar 2011: 1 ml kl. 13:30:00 før behandling + 2 ml kl. 14:30:00 før behandling",
 			LongTextConverter.convert(dosage));
 		Assert.assertEquals(
 				3.0, 

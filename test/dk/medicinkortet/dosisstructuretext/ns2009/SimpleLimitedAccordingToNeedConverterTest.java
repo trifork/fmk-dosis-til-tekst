@@ -28,7 +28,9 @@ public class SimpleLimitedAccordingToNeedConverterTest {
 						AccordingToNeedDoseWrapper.makeDose(new BigDecimal(1)),
 						AccordingToNeedDoseWrapper.makeDose(new BigDecimal(1)))));
 		Assert.assertEquals(
-				"Daglig 1 pust efter behov ved anfald højst 3 gange", 
+				"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages dagligt:\n"+
+				"   Doseringsforløb:\n"+
+				"   Lørdag den 1. januar 2011: 1 pust efter behov ved anfald højst 3 gange",
 				LongTextConverter.convert(dosage));
 		Assert.assertEquals(
 				SimpleLimitedAccordingToNeedConverterImpl.class, 

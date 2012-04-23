@@ -134,7 +134,9 @@ public class MorningNoonEveningNightConverterTest {
 		DosageStructure dosage = makeDosages(1.0, 2.0, 3.0, 4.0);
 		DosageWrapper w = new DosageWrapper(dosage);
 		Assert.assertEquals(
-				"Daglig 1 stk morgen ved måltid + 2 stk middag ved måltid + 3 stk aften ved måltid + 4 stk nat ved måltid", 
+				"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages dagligt:\n"+
+				"   Doseringsforløb:\n"+
+				"   Lørdag den 1. januar 2011: 1 stk morgen ved måltid + 2 stk middag ved måltid + 3 stk aften ved måltid + 4 stk nat ved måltid",
 				LongTextConverter.convert(w));
 		Assert.assertEquals(
 				MorningNoonEveningNightConverterImpl.class, 
@@ -150,7 +152,9 @@ public class MorningNoonEveningNightConverterTest {
 		DosageStructure dosage = makeDosages(2.0, 2.0, 2.0, 2.0);
 		DosageWrapper w = new DosageWrapper(dosage);
 		Assert.assertEquals(
-				"Daglig 2 stk morgen ved måltid + 2 stk middag ved måltid + 2 stk aften ved måltid + 2 stk nat ved måltid", 
+				"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages dagligt:\n"+
+				"   Doseringsforløb:\n"+
+				"   Lørdag den 1. januar 2011: 2 stk morgen ved måltid + 2 stk middag ved måltid + 2 stk aften ved måltid + 2 stk nat ved måltid",
 				LongTextConverter.convert(w));
 		Assert.assertEquals(
 				MorningNoonEveningNightConverterImpl.class, 
@@ -166,8 +170,10 @@ public class MorningNoonEveningNightConverterTest {
 		DosageStructure dosage = makeDosages(null, 2.0, 3.0, 4.0);
 		DosageWrapper w = new DosageWrapper(dosage);
 		Assert.assertEquals(
-				"Daglig 2 stk middag ved måltid + 3 stk aften ved måltid + 4 stk nat ved måltid", 
-				LongTextConverter.convert(w));
+			"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages dagligt:\n"+
+			"   Doseringsforløb:\n"+
+			"   Lørdag den 1. januar 2011: 2 stk middag ved måltid + 3 stk aften ved måltid + 4 stk nat ved måltid",
+			LongTextConverter.convert(w));
 		Assert.assertEquals(
 				MorningNoonEveningNightConverterImpl.class, 
 				ShortTextConverter.getConverterClass(w));
@@ -182,7 +188,9 @@ public class MorningNoonEveningNightConverterTest {
 		DosageStructure dosage = makeDosages(1.0, 2.0, 3.0, null);
 		DosageWrapper w = new DosageWrapper(dosage);
 		Assert.assertEquals(
-				"Daglig 1 stk morgen ved måltid + 2 stk middag ved måltid + 3 stk aften ved måltid", 
+				"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages dagligt:\n"+
+				"   Doseringsforløb:\n"+
+				"   Lørdag den 1. januar 2011: 1 stk morgen ved måltid + 2 stk middag ved måltid + 3 stk aften ved måltid",
 				LongTextConverter.convert(w));
 		Assert.assertEquals(
 				MorningNoonEveningNightConverterImpl.class, 
@@ -198,7 +206,9 @@ public class MorningNoonEveningNightConverterTest {
 		DosageStructure dosage = makeDosagesWithMinMax(0.0, 1.0, 2.0, 3.0, null, null, null, null);
 		DosageWrapper w = new DosageWrapper(dosage);
 		Assert.assertEquals(
-				"Daglig 0-1 stk morgen ved måltid + 2-3 stk middag ved måltid", 
+				"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages dagligt:\n"+
+				"   Doseringsforløb:\n"+
+				"   Lørdag den 1. januar 2011: 0-1 stk morgen ved måltid + 2-3 stk middag ved måltid",
 				LongTextConverter.convert(w));
 		Assert.assertEquals(
 				MorningNoonEveningNightConverterImpl.class, 

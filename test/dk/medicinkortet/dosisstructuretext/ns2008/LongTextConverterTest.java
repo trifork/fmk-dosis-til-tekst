@@ -90,7 +90,11 @@ public class LongTextConverterTest {
 		day1.setEveningDosageTimeElementStructure(evening);
 		
 		DosageWrapper w = new DosageWrapper(dosageStructure);
-		Assert.assertEquals("Daglig 1 milliliter morgen ved måltid + 2 milliliter aften ved måltid", LongTextConverter.convert(w));
+		Assert.assertEquals(
+				"Doseringsforløbet starter tirsdag den 4. oktober 2011 og gentages dagligt:\n"+
+				"   Doseringsforløb:\n"+
+				"   Tirsdag den 4. oktober 2011: 1 milliliter morgen ved måltid + 2 milliliter aften ved måltid",
+				LongTextConverter.convert(w));
 	}
 	
 }

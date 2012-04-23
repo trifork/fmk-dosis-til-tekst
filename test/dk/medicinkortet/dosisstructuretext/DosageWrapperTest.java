@@ -30,7 +30,9 @@ public class DosageWrapperTest {
 						PlainDoseWrapper.makeDose(new BigDecimal(4)), 
 						PlainDoseWrapper.makeDose(new BigDecimal(4)))));
 		Assert.assertEquals(
-			"Daglig 4 stk mod smerter 2 gange", 
+			"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages dagligt:\n"+
+			"   Doseringsforløb:\n"+
+			"   Lørdag den 1. januar 2011: 4 stk mod smerter 2 gange", 
 			LongTextConverter.convert(dosage));
 	}
 
@@ -47,7 +49,9 @@ public class DosageWrapperTest {
 						PlainDoseWrapper.makeDose(new BigDecimal(4)), 
 						AccordingToNeedDoseWrapper.makeDose(new BigDecimal(4)))));
 		Assert.assertEquals(
-			"Daglig 4 stk mod smerter + 4 stk efter behov mod smerter", 
+			"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages dagligt:\n"+
+			"   Doseringsforløb:\n"+
+			"   Lørdag den 1. januar 2011: 4 stk mod smerter + 4 stk efter behov mod smerter",
 			LongTextConverter.convert(dosage));
 	}
 
@@ -65,7 +69,11 @@ public class DosageWrapperTest {
 					DayWrapper.makeDay(2, 
 						PlainDoseWrapper.makeDose(new BigDecimal(2)))));
 		Assert.assertEquals(
-			"Hver 2. dag\nDag 1: 1 stk mod smerter\nDag 2: 2 stk mod smerter", 
+			"Doseringsforløbet starter lørdag den 1. januar 2011, forløbet gentages efter 2 dage.\n"+
+			"Bemærk at doseringen varierer:\n"+
+			"   Doseringsforløb:\n"+
+			"   Lørdag den 1. januar 2011: 1 stk mod smerter\n"+
+			"   Søndag den 2. januar 2011: 2 stk mod smerter",
 			LongTextConverter.convert(dosage));
 	}
 
@@ -84,7 +92,9 @@ public class DosageWrapperTest {
 						EveningDoseWrapper.makeDose(new BigDecimal(1)), 
 						NightDoseWrapper.makeDose(new BigDecimal(1))))); 
 		Assert.assertEquals(
-			"Daglig 1 stk morgen mod smerter + 1 stk middag mod smerter + 1 stk aften mod smerter + 1 stk nat mod smerter", 
+			"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages dagligt:\n"+
+			"   Doseringsforløb:\n"+
+			"   Lørdag den 1. januar 2011: 1 stk morgen mod smerter + 1 stk middag mod smerter + 1 stk aften mod smerter + 1 stk nat mod smerter",				
 			LongTextConverter.convert(dosage));
 	}
 	
