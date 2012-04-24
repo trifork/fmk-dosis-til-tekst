@@ -18,7 +18,6 @@ public class LongTextConverter {
 	private static final String DAY_0_LABEL_PN_ONLY = "Efter behov";
 	private static final String DAY_0_LABEL_MIXED = "Dag ikke angivet";
 	
-	
 	public static String convert(DosageWrapper dosage) {
 		if(dosage.isAdministrationAccordingToSchema())
 			return "Dosering efter skema i lokalt system";
@@ -29,13 +28,12 @@ public class LongTextConverter {
 	}
 
 	private static String convert(StructuredDosageWrapper dosageTimes) {
-		StringBuilder s = new StringBuilder();
-		
+		StringBuilder s = new StringBuilder();		
 		if(dosageTimes.getStartDateOrDateTime().equals(dosageTimes.getEndDateOrDateTime())) { 
 			// Same day dosage
 			s.append("Doseringen foretages kun "+datesToLongText(dosageTimes.getStartDate(), dosageTimes.getStartDateTime())+":\n");
 		}
-		else if(dosageTimes.getIterationInterval()==0 /*&& dosageTimes.getDays().size()==1*/) {
+		else if(dosageTimes.getIterationInterval()==0) {
 			// Not repeated dosage
 			appendDosageStart(s, dosageTimes);			
 			// If there is just one day with according to need dosages we don't want say when to stop
@@ -52,21 +50,14 @@ public class LongTextConverter {
 			appendDosageStart(s, dosageTimes);
 			s.append(" og gentages dagligt:\n");
 		}
-		else if(dosageTimes.getIterationInterval()>1 && dosageTimes.getDays().size()==1) {
+		else if(dosageTimes.getIterationInterval()>1) {
+			// Dosage repeated after more than one day
 			appendDosageStart(s, dosageTimes);
 			appendRepetition(s, dosageTimes);
 			appendNoteText(s, dosageTimes);
 		}
-		else if(dosageTimes.getIterationInterval()>1 && dosageTimes.getDays().size()>1) {
-			appendDosageStart(s, dosageTimes);
-			appendRepetition(s, dosageTimes);
-			appendNoteText(s, dosageTimes);
-		}
-
 		s.append(INDENT+"Doseringsforløb:\n");
-
 		appendDays(s, dosageTimes);
-
 		return s.toString();	
 	}
 	
