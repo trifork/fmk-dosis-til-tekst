@@ -40,7 +40,10 @@ public class SimpleLimitedAccordingToNeedConverterImpl extends ShortTextConverte
 		text.append(toValue(day.getAccordingToNeedDoses().get(0), dosageTimes.getUnit()));
 		if(dosageTimes.getUniqueSupplText()!=null)
 			text.append(" ").append(dosageTimes.getUniqueSupplText());
-		text.append(" højst "+day.getNumberOfAccordingToNeedDoses()+" gange daglig");
+		if(day.getNumberOfAccordingToNeedDoses()==1)
+			text.append(" højst "+day.getNumberOfAccordingToNeedDoses()+" gang daglig");
+		else
+			text.append(" højst "+day.getNumberOfAccordingToNeedDoses()+" gange daglig");
 		return text.toString();
 	}
 

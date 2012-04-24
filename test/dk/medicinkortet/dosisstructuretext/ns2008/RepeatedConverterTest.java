@@ -94,7 +94,7 @@ public class RepeatedConverterTest {
 		Assert.assertEquals(
 				"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages dagligt:\n"+
 				"   Doseringsforløb:\n"+
-				"   Lørdag den 1. januar 2011: 3 stk ved måltid ved måltid 2 gange",
+				"   Lørdag den 1. januar 2011: 3 stk ved måltid 2 gange",
 				LongTextConverter.convert(w));
 		Assert.assertEquals(
 				RepeatedConverterImpl.class, 
@@ -221,7 +221,7 @@ public class RepeatedConverterTest {
 		Assert.assertEquals(
 				"Doseringsforløbet starter lørdag den 1. januar 2011, forløbet gentages efter 7 dage:\n"+
 				"   Doseringsforløb:\n"+
-				"   Lørdag den 1. januar 2011: 2,5 stk ved måltid ved måltid 2 gange",
+				"   Lørdag den 1. januar 2011: 2,5 stk ved måltid 2 gange",
 				LongTextConverter.convert(w));
 		Assert.assertEquals(
 				RepeatedConverterImpl.class, 
@@ -256,7 +256,7 @@ public class RepeatedConverterTest {
 		Assert.assertEquals(
 				"Doseringsforløbet starter lørdag den 1. januar 2011, forløbet gentages efter 30 dage:\n"+
 				"   Doseringsforløb:\n"+
-				"   Lørdag den 1. januar 2011: 2,5 stk ved måltid ved måltid 2 gange",
+				"   Lørdag den 1. januar 2011: 2,5 stk ved måltid 2 gange",
 				LongTextConverter.convert(w));
 		Assert.assertEquals(
 				RepeatedConverterImpl.class, 
@@ -291,7 +291,7 @@ public class RepeatedConverterTest {
 		Assert.assertEquals(
 				"Doseringsforløbet starter lørdag den 1. januar 2011, forløbet gentages efter 5 dage:\n"+
 				"   Doseringsforløb:\n"+
-				"   Lørdag den 1. januar 2011: 2,5 stk ved måltid ved måltid 2 gange",
+				"   Lørdag den 1. januar 2011: 2,5 stk ved måltid 2 gange",
 				LongTextConverter.convert(w));
 		Assert.assertEquals(
 				RepeatedConverterImpl.class, 

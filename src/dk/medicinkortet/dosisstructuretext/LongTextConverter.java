@@ -88,11 +88,17 @@ public class LongTextConverter {
 	private static String makeDaysDosage(StructuredDosageWrapper dosageTimes, DayWrapper day) {
 		StringBuilder s = new StringBuilder();
 		
-		if(day.getNumberOfDoses()>1 && day.allDosesAreTheSame()) {
-			s.append(makeOneDose(day.getDose(0), dosageTimes.getUnit(), dosageTimes.getUniqueSupplText()));
-			if(day.containsAccordingToNeedDosesOnly())
-				s.append(" højst");
-			s.append(" "+day.getNumberOfDoses()+" gange");
+		if(day.getNumberOfDoses()==1) {
+			s.append(makeOneDose(day.getDose(0), dosageTimes.getUnit(), dosageTimes.getSupplText()));
+			if(day.containsAccordingToNeedDosesOnly() && day.getDayNumber()>0)
+				s.append(" højst 1 gang daglig");
+		}
+		else if(day.getNumberOfDoses()>1 && day.allDosesAreTheSame()) {
+			s.append(makeOneDose(day.getDose(0), dosageTimes.getUnit(), dosageTimes.getSupplText()));
+			if(day.containsAccordingToNeedDosesOnly() && day.getDayNumber()>0)
+				s.append(" højst "+day.getNumberOfDoses()+" gange daglig");
+			else
+				s.append(" "+day.getNumberOfDoses()+" gange");
 		}
 		else {
 			for(int d=0; d<day.getNumberOfDoses(); d++) {
