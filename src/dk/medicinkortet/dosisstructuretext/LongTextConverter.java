@@ -15,8 +15,6 @@ public class LongTextConverter {
 	private static final String LONG_DATE_FORMAT = "EEEEEEE 'den' d'.' MMMMMMM yyyy";
 	private static final String LONG_DATE_TIME_FORMAT = "EEEEEEE 'den' d'.' MMMMMMM yyyy 'kl.' HH:mm:ss";
 	private static final String INDENT = "   ";
-	private static final String DAY_0_LABEL_PN_ONLY = "Efter behov";
-	private static final String DAY_0_LABEL_MIXED = "Dag ikke angivet";
 	
 	public static String convert(DosageWrapper dosage) {
 		if(dosage.isAdministrationAccordingToSchema())
@@ -78,9 +76,9 @@ public class LongTextConverter {
 	private static String makeDaysLabel(StructuredDosageWrapper dosageTimes, DayWrapper day) {
 		if(day.getDayNumber()==0) {
 			if(day.containsAccordingToNeedDosesOnly())
-				return DAY_0_LABEL_PN_ONLY+": ";
+				return "Efter behov: ";
 			else 
-				return DAY_0_LABEL_MIXED+": ";
+				return "Dag ikke angivet: ";
 		}
 		else {
 			return makeDayString(dosageTimes.getStartDateOrDateTime(), day.getDayNumber())+": ";
