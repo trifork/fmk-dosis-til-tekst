@@ -92,7 +92,7 @@ public class LongTextConverter {
 				return DAY_0_LABEL_MIXED+": ";
 		}
 		else {
-			return makeDayString(dosageTimes.getStartDate(), day.getDayNumber())+": ";
+			return makeDayString(dosageTimes.getStartDateOrDateTime(), day.getDayNumber())+": ";
 		}		
 	}
 
@@ -115,8 +115,8 @@ public class LongTextConverter {
 		return s.toString();
 	}
 
-	private static String makeDayString(Date startDate, int dayNumber) {
-		GregorianCalendar c = makeFromDateOnly(startDate);
+	private static String makeDayString(Date startDateOrDateTime, int dayNumber) {
+		GregorianCalendar c = makeFromDateOnly(startDateOrDateTime);
 		c.add(GregorianCalendar.DATE, dayNumber-1);
 		SimpleDateFormat f = new SimpleDateFormat(LONG_DATE_FORMAT, new Locale("da", "DK"));
 		String dateString = f.format(c.getTime());

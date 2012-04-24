@@ -14,5 +14,14 @@ public class TestHelper {
 			throw new RuntimeException(e);
 		}
 	}
+
+	public static Date toDateTime(String s) {
+		try {
+			return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(s);
+		} 
+		catch(ParseException e) {
+			throw new RuntimeException(e);
+		}
+	}
 	
 }

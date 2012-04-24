@@ -40,6 +40,27 @@ public class LongTextComplexConverterTest {
 				0.000000001); 				
 	}
 
+	@Test /* 1 tablet morgen with datetimes */
+	public void test1TabletMorgenWithDatetimes() throws Exception {
+		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
+			StructuredDosageWrapper.makeStructuredDosage(
+				1, "tablet", null, null, null, TestHelper.toDateTime("2012-04-18 08:30:00"), null, 
+				DayWrapper.makeDay(
+					1, 
+					MorningDoseWrapper.makeDose(new BigDecimal(1)))));
+		Assert.assertEquals(
+				"Doseringsforløbet starter onsdag den 18. april 2012 kl. 08:30:00 og gentages dagligt:\n"+
+				"   Doseringsforløb:\n"+
+				"   Onsdag den 18. april 2012: 1 tablet morgen", 
+				LongTextConverter.convert(dosage));
+//		System.out.println("\n\n\"1 tablet morgen\":\n"+LongTextConverter.convert(dosage));
+		Assert.assertEquals("1 tablet morgen", ShortTextConverter.convert(dosage));
+		Assert.assertEquals(
+				1, 
+				DailyDosisCalculator.calculate(dosage).getValue().doubleValue(), 
+				0.000000001); 				
+	}	
+	
 	@Test /* Hjerdyl */
 	public void testHjerdyl() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
