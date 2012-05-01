@@ -40,5 +40,27 @@ public class SimpleLimitedAccordingToNeedConverterTest {
 				ShortTextConverter.convert(dosage));
 		Assert.assertTrue(DailyDosisCalculator.calculate(dosage).isNone()); 
 	}
+
+	@Test
+	public void test1pustVedAnfaldHoejst1GangDaglig() {
+		DosageWrapper dosage = 
+			DosageWrapper.makeStructuredDosage(
+				StructuredDosageWrapper.makeStructuredDosage(
+					1, "pust", "ved anfald", TestHelper.toDate("2011-01-01"), TestHelper.toDate("2011-01-11"), 
+					DayWrapper.makeDay(1,
+						AccordingToNeedDoseWrapper.makeDose(new BigDecimal(1)))));
+		Assert.assertEquals(
+				"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages dagligt:\n"+
+				"   Doseringsforløb:\n"+
+				"   Lørdag den 1. januar 2011: 1 pust efter behov ved anfald højst 1 gang daglig",
+				LongTextConverter.convert(dosage));
+		Assert.assertEquals(
+				SimpleLimitedAccordingToNeedConverterImpl.class, 
+				ShortTextConverter.getConverterClass(dosage));
+		Assert.assertEquals(
+				"1 pust efter behov ved anfald højst 1 gang daglig", 
+				ShortTextConverter.convert(dosage));
+		Assert.assertTrue(DailyDosisCalculator.calculate(dosage).isNone()); 
+	}
 	
 }
