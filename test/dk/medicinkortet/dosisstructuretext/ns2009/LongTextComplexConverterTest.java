@@ -456,5 +456,37 @@ public class LongTextComplexConverterTest {
 		Assert.assertNull(DailyDosisCalculator.calculate(dosage).getValue()); 
 	}
 	
+	@Test 
+	public void test1TabletEfterBehov() throws Exception {
+		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
+			StructuredDosageWrapper.makeStructuredDosage(
+				0, "tablet", null, TestHelper.toDate("2012-05-29"), null, 
+				DayWrapper.makeDay(
+					0, 
+					AccordingToNeedDoseWrapper.makeDose(new BigDecimal(1)))));
+		Assert.assertEquals(
+				"Doseringsforløbet starter tirsdag den 29. maj 2012:\n"+
+				"   Doseringsforløb:\n"+
+				"   Efter behov: 1 tablet efter behov",
+				LongTextConverter.convert(dosage));
+		Assert.assertEquals("1 tablet efter behov", ShortTextConverter.convert(dosage));
+		Assert.assertNull(DailyDosisCalculator.calculate(dosage).getValue()); 
+	}
 	
+	@Test 
+	public void test1TabletEfterBehovHoejstEnGangDaglig() throws Exception {
+		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
+			StructuredDosageWrapper.makeStructuredDosage(
+				1, "tablet", null, TestHelper.toDate("2012-05-29"), null, 
+				DayWrapper.makeDay(
+					1, 
+					AccordingToNeedDoseWrapper.makeDose(new BigDecimal(1)))));
+		Assert.assertEquals(
+				"Doseringsforløbet starter tirsdag den 29. maj 2012 og gentages dagligt:\n"+
+				"   Doseringsforløb:\n"+
+				"   Tirsdag den 29. maj 2012: 1 tablet efter behov højst 1 gang daglig",
+				LongTextConverter.convert(dosage));
+		Assert.assertEquals("1 tablet efter behov højst 1 gang daglig", ShortTextConverter.convert(dosage));
+		Assert.assertNull(DailyDosisCalculator.calculate(dosage).getValue()); 
+	}
 }
