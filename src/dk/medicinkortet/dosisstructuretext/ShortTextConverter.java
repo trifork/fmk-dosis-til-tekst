@@ -25,6 +25,7 @@ package dk.medicinkortet.dosisstructuretext;
 import java.util.ArrayList;
 
 import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.AdministrationAccordingToSchemaConverterImpl;
+import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.MorningNoonEveningNightInNDaysConverterImp;
 import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.FreeTextConverterImpl;
 import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.LimitedNumberOfDaysConverterImpl;
 import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.MorningNoonEveningNightConverterImpl;
@@ -56,6 +57,7 @@ public class ShortTextConverter {
 		converters.add(new MorningNoonEveningNightConverterImpl());
 		converters.add(new RepeatedConverterImpl());		
 		converters.add(new SimpleNonRepeatedConverterImpl());
+		converters.add(new MorningNoonEveningNightInNDaysConverterImp());
 		converters.add(new SimpleAccordingToNeedConverterImpl());
 		converters.add(new LimitedNumberOfDaysConverterImpl());
 		converters.add(new SimpleLimitedAccordingToNeedConverterImpl());
