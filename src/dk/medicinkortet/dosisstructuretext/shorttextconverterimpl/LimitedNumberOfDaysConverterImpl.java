@@ -1,4 +1,26 @@
-package dk.medicinkortet.dosisstructuretext.converterimpl;
+/**
+* The contents of this file are subject to the Mozilla Public
+* License Version 1.1 (the "License"); you may not use this file
+* except in compliance with the License. You may obtain a copy of
+* the License at http://www.mozilla.org/MPL/
+*
+* Software distributed under the License is distributed on an "AS
+* IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
+* implied. See the License for the specific language governing
+* rights and limitations under the License.
+*
+* Contributor(s): Contributors are attributed in the source code
+* where applicable.
+*
+* The Original Code is "Dosis-til-tekst".
+*
+* The Initial Developer of the Original Code is Trifork Public A/S.
+*
+* Portions created for the FMK Project are Copyright 2011,
+* National Board of e-Health (NSI). All Rights Reserved.
+*/
+
+package dk.medicinkortet.dosisstructuretext.shorttextconverterimpl;
 
 import dk.medicinkortet.dosisstructuretext.vowrapper.DayWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.StructuredDosageWrapper;
@@ -22,7 +44,9 @@ public class LimitedNumberOfDaysConverterImpl extends ShortTextConverterImpl {
 			return false;
 		if(dosageTimes.getFirstDay().getDayNumber()==0)
 			return false;
-		if(dosageTimes.containsMorningNoonEveningNightToNeedDoses())
+		if(dosageTimes.startsAndEndsSameDay())
+			return false;
+		if(dosageTimes.containsMorningNoonEveningNightDoses())
 			return false;
 		if(!dosageTimes.allDosesAreTheSame())
 			return false;

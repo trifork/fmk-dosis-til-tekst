@@ -1,8 +1,31 @@
+/**
+* The contents of this file are subject to the Mozilla Public
+* License Version 1.1 (the "License"); you may not use this file
+* except in compliance with the License. You may obtain a copy of
+* the License at http://www.mozilla.org/MPL/
+*
+* Software distributed under the License is distributed on an "AS
+* IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
+* implied. See the License for the specific language governing
+* rights and limitations under the License.
+*
+* Contributor(s): Contributors are attributed in the source code
+* where applicable.
+*
+* The Original Code is "Dosis-til-tekst".
+*
+* The Initial Developer of the Original Code is Trifork Public A/S.
+*
+* Portions created for the FMK Project are Copyright 2011,
+* National Board of e-Health (NSI). All Rights Reserved.
+*/
+
 package dk.medicinkortet.dosisstructuretext.vowrapper;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.List;
 import dk.medicinkortet.dosisstructuretext.Interval;
@@ -171,9 +194,9 @@ public class StructuredDosageWrapper {
 		return areAllDaysTheSame;
 	}	
 	
-	public boolean containsMorningNoonEveningNightToNeedDoses() {
+	public boolean containsMorningNoonEveningNightDoses() {
 		for(DayWrapper day: days) {
-			if(day.containsMorningNoonEveningNightToNeedDoses())
+			if(day.containsMorningNoonEveningNightDoses())
 				return true;
 		}
 		return false;
@@ -190,6 +213,22 @@ public class StructuredDosageWrapper {
 	public boolean containsAccordingToNeedDose() {		
 		for(DayWrapper day: days) {
 			if(day.containsAccordingToNeedDose())
+				return true;
+		}
+		return false;
+	}	
+	
+	public boolean containsPlainDose() {		
+		for(DayWrapper day: days) {
+			if(day.containsPlainDose())
+				return true;
+		}
+		return false;
+	}	
+
+	public boolean containsTimedDose() {		
+		for(DayWrapper day: days) {
+			if(day.containsTimedDose())
 				return true;
 		}
 		return false;
@@ -394,5 +433,17 @@ public class StructuredDosageWrapper {
 		}
 		return allSum;
 	}
+
+	public boolean startsAndEndsSameDay() {
+		if(getStartDateOrDateTime()==null || getEndDateOrDateTime()==null)
+			return false;
+		GregorianCalendar cal1 = new GregorianCalendar();
+		cal1.setTime(getStartDateOrDateTime());
+		GregorianCalendar cal2 = new GregorianCalendar();
+		cal2.setTime(getEndDateOrDateTime());
+		return cal1.get(GregorianCalendar.YEAR) == cal2.get(GregorianCalendar.YEAR) &&
+				cal1.get(GregorianCalendar.DAY_OF_YEAR) == cal2.get(GregorianCalendar.DAY_OF_YEAR);
+	}	
+
 	
 }

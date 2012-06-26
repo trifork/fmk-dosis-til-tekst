@@ -1,18 +1,40 @@
+/**
+* The contents of this file are subject to the Mozilla Public
+* License Version 1.1 (the "License"); you may not use this file
+* except in compliance with the License. You may obtain a copy of
+* the License at http://www.mozilla.org/MPL/
+*
+* Software distributed under the License is distributed on an "AS
+* IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
+* implied. See the License for the specific language governing
+* rights and limitations under the License.
+*
+* Contributor(s): Contributors are attributed in the source code
+* where applicable.
+*
+* The Original Code is "Dosis-til-tekst".
+*
+* The Initial Developer of the Original Code is Trifork Public A/S.
+*
+* Portions created for the FMK Project are Copyright 2011,
+* National Board of e-Health (NSI). All Rights Reserved.
+*/
+
 package dk.medicinkortet.dosisstructuretext;
 
 import java.util.ArrayList;
 
-import dk.medicinkortet.dosisstructuretext.converterimpl.AdministrationAccordingToSchemaConverterImpl;
-import dk.medicinkortet.dosisstructuretext.converterimpl.FreeTextConverterImpl;
-import dk.medicinkortet.dosisstructuretext.converterimpl.LimitedNumberOfDaysConverterImpl;
-import dk.medicinkortet.dosisstructuretext.converterimpl.LimitedNumberOfDaysWithAccordingToNeedConverterImpl;
-import dk.medicinkortet.dosisstructuretext.converterimpl.MorningNoonEveningNightConverterImpl;
-import dk.medicinkortet.dosisstructuretext.converterimpl.ParacetamolConverterImpl;
-import dk.medicinkortet.dosisstructuretext.converterimpl.RepeatedConverterImpl;
-import dk.medicinkortet.dosisstructuretext.converterimpl.ShortTextConverterImpl;
-import dk.medicinkortet.dosisstructuretext.converterimpl.SimpleAccordingToNeedConverterImpl;
-import dk.medicinkortet.dosisstructuretext.converterimpl.SimpleLimitedAccordingToNeedConverterImpl;
-import dk.medicinkortet.dosisstructuretext.converterimpl.SimpleNonRepeatedConverterImpl;
+import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.AdministrationAccordingToSchemaConverterImpl;
+import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.FreeTextConverterImpl;
+import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.LimitedNumberOfDaysConverterImpl;
+import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.MorningNoonEveningNightConverterImpl;
+import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.ParacetamolConverterImpl;
+import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.RepeatedConverterImpl;
+import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.ShortTextConverterImpl;
+import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.SimpleAccordingToNeedConverterImpl;
+import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.SimpleLimitedAccordingToNeedConverterImpl;
+import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.SimpleNonRepeatedConverterImpl;
+import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.WeeklyMorningNoonEveningNightConverterImpl;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
 
 /**
@@ -37,7 +59,7 @@ public class ShortTextConverter {
 		converters.add(new SimpleAccordingToNeedConverterImpl());
 		converters.add(new LimitedNumberOfDaysConverterImpl());
 		converters.add(new SimpleLimitedAccordingToNeedConverterImpl());
-		converters.add(new LimitedNumberOfDaysWithAccordingToNeedConverterImpl());
+		converters.add(new WeeklyMorningNoonEveningNightConverterImpl());
 		converters.add(new ParacetamolConverterImpl());		
 	}
 	

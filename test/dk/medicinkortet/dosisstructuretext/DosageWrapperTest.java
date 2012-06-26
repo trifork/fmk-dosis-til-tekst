@@ -1,3 +1,25 @@
+/**
+* The contents of this file are subject to the Mozilla Public
+* License Version 1.1 (the "License"); you may not use this file
+* except in compliance with the License. You may obtain a copy of
+* the License at http://www.mozilla.org/MPL/
+*
+* Software distributed under the License is distributed on an "AS
+* IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
+* implied. See the License for the specific language governing
+* rights and limitations under the License.
+*
+* Contributor(s): Contributors are attributed in the source code
+* where applicable.
+*
+* The Original Code is "Dosis-til-tekst".
+*
+* The Initial Developer of the Original Code is Trifork Public A/S.
+*
+* Portions created for the FMK Project are Copyright 2011,
+* National Board of e-Health (NSI). All Rights Reserved.
+*/
+
 package dk.medicinkortet.dosisstructuretext;
 
 import java.math.BigDecimal;
@@ -30,9 +52,9 @@ public class DosageWrapperTest {
 						PlainDoseWrapper.makeDose(new BigDecimal(4)), 
 						PlainDoseWrapper.makeDose(new BigDecimal(4)))));
 		Assert.assertEquals(
-			"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages dagligt:\n"+
+			"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages hver dag:\n"+
 			"   Doseringsforløb:\n"+
-			"   Lørdag den 1. januar 2011: 4 stk mod smerter 2 gange", 
+			"   4 stk mod smerter 2 gange", 
 			LongTextConverter.convert(dosage));
 	}
 
@@ -49,9 +71,9 @@ public class DosageWrapperTest {
 						PlainDoseWrapper.makeDose(new BigDecimal(4)), 
 						AccordingToNeedDoseWrapper.makeDose(new BigDecimal(4)))));
 		Assert.assertEquals(
-			"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages dagligt:\n"+
+			"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages hver dag:\n"+
 			"   Doseringsforløb:\n"+
-			"   Lørdag den 1. januar 2011: 4 stk mod smerter + 4 stk efter behov mod smerter",
+			"   4 stk mod smerter + 4 stk efter behov mod smerter",
 			LongTextConverter.convert(dosage));
 	}
 
@@ -69,11 +91,11 @@ public class DosageWrapperTest {
 					DayWrapper.makeDay(2, 
 						PlainDoseWrapper.makeDose(new BigDecimal(2)))));
 		Assert.assertEquals(
-			"Doseringsforløbet starter lørdag den 1. januar 2011, forløbet gentages efter 2 dage.\n"+
+			"Doseringsforløbet starter lørdag den 1. januar 2011, forløbet gentages hver 2. dag.\n"+
 			"Bemærk at doseringen varierer:\n"+
 			"   Doseringsforløb:\n"+
-			"   Lørdag den 1. januar 2011: 1 stk mod smerter\n"+
-			"   Søndag den 2. januar 2011: 2 stk mod smerter",
+			"   Dag 1: 1 stk mod smerter\n"+
+			"   Dag 2: 2 stk mod smerter",
 			LongTextConverter.convert(dosage));
 	}
 
@@ -92,9 +114,9 @@ public class DosageWrapperTest {
 						EveningDoseWrapper.makeDose(new BigDecimal(1)), 
 						NightDoseWrapper.makeDose(new BigDecimal(1))))); 
 		Assert.assertEquals(
-			"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages dagligt:\n"+
+			"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages hver dag:\n"+
 			"   Doseringsforløb:\n"+
-			"   Lørdag den 1. januar 2011: 1 stk morgen mod smerter + 1 stk middag mod smerter + 1 stk aften mod smerter + 1 stk nat mod smerter",				
+			"   1 stk morgen mod smerter + 1 stk middag mod smerter + 1 stk aften mod smerter + 1 stk nat mod smerter",				
 			LongTextConverter.convert(dosage));
 	}
 	

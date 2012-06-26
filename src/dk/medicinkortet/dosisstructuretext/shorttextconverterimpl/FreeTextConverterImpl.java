@@ -20,30 +20,20 @@
 * National Board of e-Health (NSI). All Rights Reserved.
 */
 
-package dk.medicinkortet.dosisstructuretext;
+package dk.medicinkortet.dosisstructuretext.shorttextconverterimpl;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
 
-public class TestHelper {
+public class FreeTextConverterImpl extends ShortTextConverterImpl {
 
-	public static Date toDate(String s) {
-		try {
-			return new SimpleDateFormat("yyyy-MM-dd").parse(s);
-		} 
-		catch(ParseException e) {
-			throw new RuntimeException(e);
-		}
+	@Override
+	public boolean canConvert(DosageWrapper dosage) {
+		return dosage.getFreeText()!=null;
 	}
 
-	public static Date toDateTime(String s) {
-		try {
-			return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(s);
-		} 
-		catch(ParseException e) {
-			throw new RuntimeException(e);
-		}
+	@Override
+	public String doConvert(DosageWrapper dosage) {
+		return dosage.getFreeText();
 	}
-	
+
 }

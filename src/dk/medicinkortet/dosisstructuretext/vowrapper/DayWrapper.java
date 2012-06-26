@@ -1,7 +1,30 @@
+/**
+* The contents of this file are subject to the Mozilla Public
+* License Version 1.1 (the "License"); you may not use this file
+* except in compliance with the License. You may obtain a copy of
+* the License at http://www.mozilla.org/MPL/
+*
+* Software distributed under the License is distributed on an "AS
+* IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
+* implied. See the License for the specific language governing
+* rights and limitations under the License.
+*
+* Contributor(s): Contributors are attributed in the source code
+* where applicable.
+*
+* The Original Code is "Dosis-til-tekst".
+*
+* The Initial Developer of the Original Code is Trifork Public A/S.
+*
+* Portions created for the FMK Project are Copyright 2011,
+* National Board of e-Health (NSI). All Rights Reserved.
+*/
+
 package dk.medicinkortet.dosisstructuretext.vowrapper;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import dk.medicinkortet.dosisstructuretext.Interval;
@@ -127,6 +150,56 @@ public class DayWrapper {
 		return day;
 	}
 
+	public void removeDoses(Collection<DoseWrapper> doses) {
+		for(DoseWrapper dose :doses)
+			removeDose(dose);
+	}
+
+	public void removeDose(DoseWrapper dose) {
+		if(dose instanceof AccordingToNeedDoseWrapper) {
+			if(!accordingToNeedDoses.contains(dose))
+				throw new IllegalArgumentException();
+			accordingToNeedDoses.remove(dose);
+		}
+		else if(dose instanceof PlainDoseWrapper) {
+			if(!plainDoses.contains(dose))
+				throw new IllegalArgumentException();
+			plainDoses.remove(dose);
+		}
+		else if(dose instanceof TimedDoseWrapper) {
+			if(!timedDoses.contains(dose))
+				throw new IllegalArgumentException();
+			timedDoses.remove(dose);
+		}
+		else if(dose instanceof MorningDoseWrapper) {
+			if(!morningDose.equals(dose))
+				throw new IllegalArgumentException();
+			morningDose = null;
+		}
+		else if(dose instanceof NoonDoseWrapper) {
+			if(!noonDose.equals(dose))
+				throw new IllegalArgumentException();
+			noonDose = null;
+		}
+		else if(dose instanceof EveningDoseWrapper) {
+			if(!eveningDose.equals(dose))
+				throw new IllegalArgumentException();
+			eveningDose = null;
+		}
+		else if(dose instanceof NightDoseWrapper) {
+			if(!nightDose.equals(dose))
+				throw new IllegalArgumentException();
+			nightDose = null;
+		}
+		else {
+			throw new RuntimeException();
+		}
+		
+		if(!allDoses.contains(dose))
+			throw new IllegalArgumentException();
+		allDoses.remove(dose);		
+	}
+	
 	
 	public int getDayNumber() {
 		return dayNumber;
@@ -244,7 +317,7 @@ public class DayWrapper {
 		return false;
 	}
 
-	public boolean containsMorningNoonEveningNightToNeedDoses() {
+	public boolean containsMorningNoonEveningNightDoses() {
 		for(DoseWrapper dose: getAllDoses()) {
 			if(dose instanceof MorningDoseWrapper || dose instanceof NoonDoseWrapper 
 					|| dose instanceof EveningDoseWrapper || dose instanceof NightDoseWrapper) {
