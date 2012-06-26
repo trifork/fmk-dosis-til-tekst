@@ -376,4 +376,31 @@ public class MorningNoonEveningNightConverterTest {
 		Assert.assertEquals(DosageType.Fixed, DosageTypeCalculator.calculate(dosage));		
 	}	
 
+	@Test /* handle zero dosages stored in the database using the 2008-namespace, see https://jira.trifork.com/browse/FMK-872 */
+	public void testJiraFMK872() throws Exception {
+		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
+			StructuredDosageWrapper.makeStructuredDosage(
+				1, "tablet", null, null, null, TestHelper.toDate("2012-06-26"), null, 
+				DayWrapper.makeDay(
+					1, 
+					MorningDoseWrapper.makeDose(new BigDecimal(0)), 
+					EveningDoseWrapper.makeDose(new BigDecimal(0.0), new BigDecimal(0.0)))));
+		Assert.assertEquals(
+				"Doseringsforløbet starter tirsdag den 26. juni 2012 kl. 00:00:00 og gentages hver dag:\n"+
+				"   Doseringsforløb:\n"+
+				"   0-0 tablet aften",
+				LongTextConverter.convert(dosage));
+		Assert.assertEquals(
+				MorningNoonEveningNightConverterImpl.class, 
+				ShortTextConverter.getConverterClass(dosage));
+		Assert.assertEquals(
+				"0-0 tablet aften", 
+				ShortTextConverter.convert(dosage));
+		Assert.assertEquals(
+				0.0, 
+				DailyDosisCalculator.calculate(dosage).getValue().doubleValue(), 
+				0.000000001); 				
+		Assert.assertEquals(DosageType.Fixed, DosageTypeCalculator.calculate(dosage));		
+	}	
+
 }
