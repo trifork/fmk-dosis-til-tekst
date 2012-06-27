@@ -33,7 +33,7 @@ import dk.medicinkortet.dosisstructuretext.vowrapper.DoseWrapper;
 
 public class TextHelper {
 
-	public static final String VERSION = "2012-04-20"; 
+	public static final String VERSION = "2012-06-27"; 
 	
 	private static final Map<String, String> decimalsToFractions = new HashMap<String, String>();
 	private static final Map<String, String> singularToPlural = new HashMap<String, String>();
