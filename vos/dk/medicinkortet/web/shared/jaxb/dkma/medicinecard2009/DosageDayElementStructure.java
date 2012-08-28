@@ -1,4 +1,4 @@
-package dk.medicinkortet.web.shared.jaxb.dkma.medicinecard;
+package dk.medicinkortet.web.shared.jaxb.dkma.medicinecard2009;
 
 import java.util.ArrayList;
 import java.util.List;

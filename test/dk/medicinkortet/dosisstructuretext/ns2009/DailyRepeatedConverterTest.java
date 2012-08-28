@@ -35,10 +35,8 @@ import dk.medicinkortet.dosisstructuretext.ShortTextConverter;
 import dk.medicinkortet.dosisstructuretext.TestHelper;
 import dk.medicinkortet.dosisstructuretext.longtextconverterimpl.DailyRepeatedConverterImpl;
 import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.ParacetamolConverterImpl;
-import dk.medicinkortet.dosisstructuretext.vowrapper.AccordingToNeedDoseWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DayWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
-import dk.medicinkortet.dosisstructuretext.vowrapper.MorningDoseWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.PlainDoseWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.StructuredDosageWrapper;
 
@@ -53,7 +51,7 @@ public class DailyRepeatedConverterTest {
 					1, 
 					PlainDoseWrapper.makeDose(new BigDecimal(1)), 
 					PlainDoseWrapper.makeDose(new BigDecimal(1)), 
-					AccordingToNeedDoseWrapper.makeDose(new BigDecimal(1)))));
+					PlainDoseWrapper.makeDose(new BigDecimal(1), true))));
 		Assert.assertEquals(
 				DailyRepeatedConverterImpl.class, 
 				LongTextConverter.getConverterClass(dosage));

@@ -33,11 +33,11 @@ import dk.medicinkortet.dosisstructuretext.ShortTextConverter;
 import dk.medicinkortet.dosisstructuretext.TestHelper;
 import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.MorningNoonEveningNightConverterImpl;
 import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.SimpleLimitedAccordingToNeedConverterImpl;
-import dk.medicinkortet.dosisstructuretext.vowrapper.AccordingToNeedDoseWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DayWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.EveningDoseWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.MorningDoseWrapper;
+import dk.medicinkortet.dosisstructuretext.vowrapper.PlainDoseWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.StructuredDosageWrapper;
 
 public class ValidatorTest {
@@ -71,14 +71,15 @@ public class ValidatorTest {
 				0.000000001); 				
 	}	
 
+	@Test
 	public void testJiraFMK903Variant() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
 			StructuredDosageWrapper.makeStructuredDosage(
 				1, "stk", null, null, null, TestHelper.toDateTime("2012-04-13 20:06:00"), null, 
 				DayWrapper.makeDay(
 					1, 
-					AccordingToNeedDoseWrapper.makeDose(new BigDecimal(2)), 
-					AccordingToNeedDoseWrapper.makeDose(new BigDecimal(0)))));
+					PlainDoseWrapper.makeDose(new BigDecimal(2), true), 
+					PlainDoseWrapper.makeDose(new BigDecimal(0), true))));
 		Assert.assertEquals(
 				1, 
 				dosage.getDosageTimes().getFirstDay().getAccordingToNeedDoses().size());

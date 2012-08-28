@@ -34,7 +34,6 @@ import dk.medicinkortet.dosisstructuretext.LongTextConverter;
 import dk.medicinkortet.dosisstructuretext.ShortTextConverter;
 import dk.medicinkortet.dosisstructuretext.TestHelper;
 import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.ParacetamolConverterImpl;
-import dk.medicinkortet.dosisstructuretext.vowrapper.AccordingToNeedDoseWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DayWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.PlainDoseWrapper;
@@ -52,7 +51,7 @@ public class ParacetamolConverterTest {
 					PlainDoseWrapper.makeDose(new BigDecimal(1), new BigDecimal(2)), 
 					PlainDoseWrapper.makeDose(new BigDecimal(1), new BigDecimal(2)), 
 					PlainDoseWrapper.makeDose(new BigDecimal(1), new BigDecimal(2)), 
-					AccordingToNeedDoseWrapper.makeDose(new BigDecimal(1), new BigDecimal(2)))));		
+					PlainDoseWrapper.makeDose(new BigDecimal(1), new BigDecimal(2), true))));		
 		Assert.assertEquals(
 			"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages hver dag:\n"+
 			"   Doseringsforløb:\n"+

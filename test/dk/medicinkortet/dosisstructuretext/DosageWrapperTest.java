@@ -27,7 +27,6 @@ import java.math.BigDecimal;
 import org.junit.Assert;
 import org.junit.Test;
 
-import dk.medicinkortet.dosisstructuretext.vowrapper.AccordingToNeedDoseWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DayWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.EveningDoseWrapper;
@@ -69,7 +68,7 @@ public class DosageWrapperTest {
 					TestHelper.toDate("2011-01-01"), TestHelper.toDate("2011-01-14"), 
 					DayWrapper.makeDay(1,
 						PlainDoseWrapper.makeDose(new BigDecimal(4)), 
-						AccordingToNeedDoseWrapper.makeDose(new BigDecimal(4)))));
+						PlainDoseWrapper.makeDose(new BigDecimal(4), true))));
 		Assert.assertEquals(
 			"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages hver dag:\n"+
 			"   Doseringsforløb:\n"+

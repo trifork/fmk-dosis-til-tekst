@@ -8,7 +8,7 @@ import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
  * Conversion of simple but limited "according to need" dosage, with or without suppl. dosage free text
  * <p>
  * Example:<br>
- * 283: 1 pust ved anfald h&oslash;jst 3 gange daglig
+ * 283: 1 pust ved anfald højst 3 gange daglig
  */
 public class SimpleLimitedAccordingToNeedConverterImpl extends ShortTextConverterImpl {
 
@@ -38,6 +38,7 @@ public class SimpleLimitedAccordingToNeedConverterImpl extends ShortTextConverte
 		StringBuilder text = new StringBuilder();
 		DayWrapper day = dosageTimes.getDays().get(0);
 		text.append(toValue(day.getAccordingToNeedDoses().get(0), dosageTimes.getUnit()));
+		text.append(" efter behov");
 		if(dosageTimes.getUniqueSupplText()!=null)
 			text.append(" ").append(dosageTimes.getUniqueSupplText());
 		if(day.getNumberOfAccordingToNeedDoses()==1)

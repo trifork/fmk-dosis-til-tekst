@@ -1,10 +1,19 @@
-package dk.medicinkortet.web.shared.jaxb.dkma.medicinecard;
+package dk.medicinkortet.web.shared.jaxb.dkma.medicinecard2009;
 
-public class DosageDefinedTimeElementStructure {
+public class DosageTimeElementStructure {
 
+    protected String dosageTimeTime;
     protected Double minimalDosageQuantityValue;
     protected Double maximalDosageQuantityValue;
     protected Double dosageQuantityValue;
+
+    public String getDosageTimeTime() {
+        return dosageTimeTime;
+    }
+
+    public void setDosageTimeTime(String value) {
+        this.dosageTimeTime = value;
+    }
 
     public Double getMinimalDosageQuantityValue() {
         return minimalDosageQuantityValue;

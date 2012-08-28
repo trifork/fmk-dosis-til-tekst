@@ -40,6 +40,8 @@ public class ParacetamolConverterImpl extends ShortTextConverterImpl {
 		DayWrapper day = dosageTimes.getDays().get(0);
 		if(!day.containsAccordingToNeedDose())
 			return false;
+		if(day.containsAccordingToNeedDosesOnly())
+			return false;
 		if(!day.containsPlainDose())
 			return false;
 		if(day.getMorningDose()!=null || day.getNoonDose()!=null 
@@ -58,7 +60,7 @@ public class ParacetamolConverterImpl extends ShortTextConverterImpl {
 		StringBuilder text = new StringBuilder();
 		DayWrapper day = dosageTimes.getDays().get(0);
 		text.append(toValue(day.getAllDoses().get(0), dosageTimes.getUnit()));
-		text.append(" "+day.getNumberOfPlainDoses()+"-"+(day.getNumberOfPlainDoses()+day.getNumberOfAccordingToNeedDoses()));
+		text.append(" "+(day.getNumberOfPlainDoses()-day.getNumberOfAccordingToNeedDoses())+"-"+(day.getNumberOfPlainDoses()));
 		text.append(" gange daglig");
 		if(dosageTimes.getUniqueSupplText()!=null)
 			text.append(" ").append(dosageTimes.getUniqueSupplText());		

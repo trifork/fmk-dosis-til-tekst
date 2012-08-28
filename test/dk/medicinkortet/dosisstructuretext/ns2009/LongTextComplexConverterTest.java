@@ -33,16 +33,16 @@ import dk.medicinkortet.dosisstructuretext.DosageTypeCalculator;
 import dk.medicinkortet.dosisstructuretext.LongTextConverter;
 import dk.medicinkortet.dosisstructuretext.ShortTextConverter;
 import dk.medicinkortet.dosisstructuretext.TestHelper;
-import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.MorningNoonEveningNightConverterImpl;
+import dk.medicinkortet.dosisstructuretext.longtextconverterimpl.DefaultLongTextConverterImpl;
 import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.SimpleAccordingToNeedConverterImpl;
 import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.SimpleLimitedAccordingToNeedConverterImpl;
 import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.WeeklyMorningNoonEveningNightConverterImpl;
-import dk.medicinkortet.dosisstructuretext.vowrapper.AccordingToNeedDoseWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DayWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.EveningDoseWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.MorningDoseWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.NoonDoseWrapper;
+import dk.medicinkortet.dosisstructuretext.vowrapper.PlainDoseWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.StructuredDosageWrapper;
 
 /**
@@ -385,12 +385,18 @@ public class LongTextComplexConverterTest {
 				0, "sug", "ved anstrengelse", TestHelper.toDate("2012-04-18"), null, 
 				DayWrapper.makeDay(
 					0, 
-					AccordingToNeedDoseWrapper.makeDose(new BigDecimal(1), new BigDecimal(2)))));
+					PlainDoseWrapper.makeDose(new BigDecimal(1), new BigDecimal(2), true))));
+		Assert.assertEquals(
+				DefaultLongTextConverterImpl.class,
+				LongTextConverter.getConverterClass(dosage));
 		Assert.assertEquals(
 				"Doseringsforløbet starter onsdag den 18. april 2012:\n"+ 
 				"   Doseringsforløb:\n"+
 				"   Efter behov: 1-2 sug efter behov ved anstrengelse", 
 				LongTextConverter.convert(dosage));
+		Assert.assertEquals(
+				SimpleAccordingToNeedConverterImpl.class, 
+				ShortTextConverter.getConverterClass(dosage));
 		Assert.assertEquals(
 				"1-2 sug efter behov ved anstrengelse", 
 				ShortTextConverter.convert(dosage));
@@ -405,14 +411,17 @@ public class LongTextComplexConverterTest {
 				1, "tabletter", "ved smerter", TestHelper.toDate("2012-04-18"), null, 
 				DayWrapper.makeDay(
 					1, 
-					AccordingToNeedDoseWrapper.makeDose(new BigDecimal(1), new BigDecimal(2)), 
-					AccordingToNeedDoseWrapper.makeDose(new BigDecimal(1), new BigDecimal(2)), 
-					AccordingToNeedDoseWrapper.makeDose(new BigDecimal(1), new BigDecimal(2)))));
+					PlainDoseWrapper.makeDose(new BigDecimal(1), new BigDecimal(2), true), 
+					PlainDoseWrapper.makeDose(new BigDecimal(1), new BigDecimal(2), true), 
+					PlainDoseWrapper.makeDose(new BigDecimal(1), new BigDecimal(2), true))));
 		Assert.assertEquals(
 				"Doseringsforløbet starter onsdag den 18. april 2012 og gentages hver dag:\n"+
 				"   Doseringsforløb:\n"+
 				"   1-2 tabletter efter behov ved smerter højst 3 gange daglig", 
 				LongTextConverter.convert(dosage));
+		Assert.assertEquals(
+				SimpleLimitedAccordingToNeedConverterImpl.class, 
+				ShortTextConverter.getConverterClass(dosage));
 		Assert.assertEquals(
 				"1-2 tabletter efter behov ved smerter højst 3 gange daglig", 
 				ShortTextConverter.convert(dosage));
@@ -427,7 +436,7 @@ public class LongTextComplexConverterTest {
 				1, "tabletter", "ved smerter", TestHelper.toDate("2012-04-18"), null, 
 				DayWrapper.makeDay(
 					0, 
-					AccordingToNeedDoseWrapper.makeDose(new BigDecimal(1), new BigDecimal(2)))));
+					PlainDoseWrapper.makeDose(new BigDecimal(1), new BigDecimal(2), true))));
 		Assert.assertEquals(
 				"Doseringsforløbet starter onsdag den 18. april 2012 og gentages hver dag:\n"+
 				"   Doseringsforløb:\n"+
@@ -445,15 +454,15 @@ public class LongTextComplexConverterTest {
 				0, "ml", "mod smerter", TestHelper.toDate("2012-04-18"), null, 
 				DayWrapper.makeDay(
 					0, 
-					AccordingToNeedDoseWrapper.makeDose(new BigDecimal(1))),
+					PlainDoseWrapper.makeDose(new BigDecimal(1), true)),
 				DayWrapper.makeDay(
 					1, 
-					AccordingToNeedDoseWrapper.makeDose(new BigDecimal(20)),
-					AccordingToNeedDoseWrapper.makeDose(new BigDecimal(20))),
+					PlainDoseWrapper.makeDose(new BigDecimal(20), true),
+					PlainDoseWrapper.makeDose(new BigDecimal(20), true)),
 				DayWrapper.makeDay(
 					2, 
-					AccordingToNeedDoseWrapper.makeDose(new BigDecimal(20)),
-					AccordingToNeedDoseWrapper.makeDose(new BigDecimal(20)))));
+					PlainDoseWrapper.makeDose(new BigDecimal(20), true),
+					PlainDoseWrapper.makeDose(new BigDecimal(20), true))));
 		Assert.assertEquals(
 				"Doseringsforløbet starter onsdag den 18. april 2012 og ophører efter det angivne forløb.\n"+
 				"Bemærk at doseringen varierer og har et komplekst forløb:\n"+
@@ -474,13 +483,13 @@ public class LongTextComplexConverterTest {
 				2, "sug", "ved anstrengelse", TestHelper.toDate("2012-04-18"), null, 
 				DayWrapper.makeDay(
 					0, 
-					AccordingToNeedDoseWrapper.makeDose(new BigDecimal(1), new BigDecimal(2))),
+					PlainDoseWrapper.makeDose(new BigDecimal(1), new BigDecimal(2), true)),
 				DayWrapper.makeDay(
 					1, 
-					AccordingToNeedDoseWrapper.makeDose(new BigDecimal(1), new BigDecimal(2))),
+					PlainDoseWrapper.makeDose(new BigDecimal(1), new BigDecimal(2), true)),
 				DayWrapper.makeDay(
 					2, 
-					AccordingToNeedDoseWrapper.makeDose(new BigDecimal(1), new BigDecimal(2)))));
+					PlainDoseWrapper.makeDose(new BigDecimal(1), new BigDecimal(2), true))));
 		Assert.assertEquals(
 				"Doseringsforløbet starter onsdag den 18. april 2012, forløbet gentages efter 2 dage.\n"+
 				"Bemærk at doseringen har et komplekst forløb:\n"+
@@ -501,7 +510,7 @@ public class LongTextComplexConverterTest {
 				7, "tabletter", "ved smerter", TestHelper.toDate("2012-04-18"), null, 
 				DayWrapper.makeDay(
 					0, 
-					AccordingToNeedDoseWrapper.makeDose(new BigDecimal(1), new BigDecimal(2)))));
+					PlainDoseWrapper.makeDose(new BigDecimal(1), new BigDecimal(2), true))));
 		Assert.assertEquals(
 				"Doseringsforløbet starter onsdag den 18. april 2012, forløbet gentages efter 7 dage:\n"+
 				"   Doseringsforløb:\n"+
@@ -520,7 +529,7 @@ public class LongTextComplexConverterTest {
 				0, "tablet", null, TestHelper.toDate("2012-05-29"), null, 
 				DayWrapper.makeDay(
 					0, 
-					AccordingToNeedDoseWrapper.makeDose(new BigDecimal(1)))));
+					PlainDoseWrapper.makeDose(new BigDecimal(1), true))));
 		Assert.assertEquals(
 				"Doseringsforløbet starter tirsdag den 29. maj 2012:\n"+
 				"   Doseringsforløb:\n"+
@@ -538,7 +547,7 @@ public class LongTextComplexConverterTest {
 				1, "tablet", null, TestHelper.toDate("2012-05-29"), null, 
 				DayWrapper.makeDay(
 					1, 
-					AccordingToNeedDoseWrapper.makeDose(new BigDecimal(1)))));
+					PlainDoseWrapper.makeDose(new BigDecimal(1), true))));
 		Assert.assertEquals(
 				"Doseringsforløbet starter tirsdag den 29. maj 2012 og gentages hver dag:\n"+
 				"   Doseringsforløb:\n"+
@@ -556,7 +565,7 @@ public class LongTextComplexConverterTest {
 				1, "stk", null, null, null, TestHelper.toDateTime("2012-04-13 20:06:00"), null, 
 				DayWrapper.makeDay(
 					1, 
-					AccordingToNeedDoseWrapper.makeDose(new BigDecimal(2)))));
+					PlainDoseWrapper.makeDose(new BigDecimal(2), true))));
 		Assert.assertEquals(
 				"Doseringsforløbet starter fredag den 13. april 2012 kl. 20:06:00 og gentages hver dag:\n"+
 				"   Doseringsforløb:\n"+
@@ -575,8 +584,8 @@ public class LongTextComplexConverterTest {
 				1, "stk", null, null, null, TestHelper.toDateTime("2012-04-13 20:06:00"), null, 
 				DayWrapper.makeDay(
 					1, 
-					AccordingToNeedDoseWrapper.makeDose(new BigDecimal(2)), 
-					AccordingToNeedDoseWrapper.makeDose(new BigDecimal(2)))));
+					PlainDoseWrapper.makeDose(new BigDecimal(2), true), 
+					PlainDoseWrapper.makeDose(new BigDecimal(2), true))));
 		Assert.assertEquals(
 				"Doseringsforløbet starter fredag den 13. april 2012 kl. 20:06:00 og gentages hver dag:\n"+
 				"   Doseringsforløb:\n"+

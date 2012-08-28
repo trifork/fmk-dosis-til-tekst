@@ -24,38 +24,44 @@ package dk.medicinkortet.dosisstructuretext.vowrapper;
 
 import java.math.BigDecimal;
 
-import dk.medicinkortet.web.shared.jaxb.dkma.medicinecard.DosageDefinedTimeElementStructure;
-
 public class NightDoseWrapper extends DoseWrapper {
-
-	public NightDoseWrapper(DosageDefinedTimeElementStructure dose) {
-		super(dose);
+	
+	public NightDoseWrapper(dk.medicinkortet.web.shared.jaxb.dkma.medicinecard20120601.Dose dose) {
+		super(dose, dose.isAccordingToNeed());
+	}
+	
+	public NightDoseWrapper(dk.medicinkortet.web.shared.jaxb.dkma.medicinecard2009.DosageDefinedTimeElementStructure dose) {
+		super(dose, false);
 	}
 
 	public NightDoseWrapper(dk.medicinkortet.web.shared.jaxb.dkma.medicinecard2008.DosageDefinedTimeElementStructure dose) {
-		super(dose);
+		super(dose, false);
 	}
 
 	private NightDoseWrapper(
 			BigDecimal doseQuantity, BigDecimal minimalDoseQuantity, BigDecimal maximalDoseQuantity, 
-			String doseQuantityString, String minimalDoseQuantityString, String maximalDoseQuantityString) {
-		super(doseQuantity, minimalDoseQuantity, maximalDoseQuantity, doseQuantityString, minimalDoseQuantityString, maximalDoseQuantityString);
+			String doseQuantityString, String minimalDoseQuantityString, String maximalDoseQuantityString, boolean isAccordingToNeed) {
+		super(doseQuantity, minimalDoseQuantity, maximalDoseQuantity, doseQuantityString, minimalDoseQuantityString, maximalDoseQuantityString, isAccordingToNeed);
 	}
 
 	public static NightDoseWrapper makeDose(BigDecimal quantity) {
-		return new NightDoseWrapper(quantity, null, null, null, null, null);
+		return new NightDoseWrapper(quantity, null, null, null, null, null, false);
 	}
 
-	public static NightDoseWrapper makeDose(BigDecimal quantity, String supplText) {
-		return new NightDoseWrapper(quantity, null, null, supplText, null, null);
+	public static NightDoseWrapper makeDose(BigDecimal quantity, boolean isAccordingToNeed) {
+		return new NightDoseWrapper(quantity, null, null, null, null, null, isAccordingToNeed);
+	}
+
+	public static NightDoseWrapper makeDose(BigDecimal quantity, String supplText, boolean isAccordingToNeed) {
+		return new NightDoseWrapper(quantity, null, null, supplText, null, null, isAccordingToNeed);
 	}
 	
-	public static NightDoseWrapper makeDose(BigDecimal minimalQuantity, BigDecimal maximalQuantity) {
-		return new NightDoseWrapper(null, minimalQuantity, maximalQuantity, null, null, null);
+	public static NightDoseWrapper makeDose(BigDecimal minimalQuantity, BigDecimal maximalQuantity, boolean isAccordingToNeed) {
+		return new NightDoseWrapper(null, minimalQuantity, maximalQuantity, null, null, null, isAccordingToNeed);
 	}	
 
-	public static NightDoseWrapper makeDose(BigDecimal minimalQuantity, BigDecimal maximalQuantity, String minimalSupplText, String maximalSupplText) {
-		return new NightDoseWrapper(null, minimalQuantity, maximalQuantity, null, minimalSupplText, maximalSupplText);
+	public static NightDoseWrapper makeDose(BigDecimal minimalQuantity, BigDecimal maximalQuantity, String minimalSupplText, String maximalSupplText, boolean isAccordingToNeed) {
+		return new NightDoseWrapper(null, minimalQuantity, maximalQuantity, null, minimalSupplText, maximalSupplText, isAccordingToNeed);
 	}	
 	
 	public final static String LABEL = "nat";  

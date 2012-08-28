@@ -34,10 +34,10 @@ import dk.medicinkortet.dosisstructuretext.LongTextConverter;
 import dk.medicinkortet.dosisstructuretext.ShortTextConverter;
 import dk.medicinkortet.dosisstructuretext.TestHelper;
 import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.SimpleLimitedAccordingToNeedConverterImpl;
-import dk.medicinkortet.dosisstructuretext.vowrapper.AccordingToNeedDoseWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DayWrapper;
-import dk.medicinkortet.dosisstructuretext.vowrapper.StructuredDosageWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
+import dk.medicinkortet.dosisstructuretext.vowrapper.PlainDoseWrapper;
+import dk.medicinkortet.dosisstructuretext.vowrapper.StructuredDosageWrapper;
 
 public class SimpleLimitedAccordingToNeedConverterTest {
 	
@@ -48,9 +48,9 @@ public class SimpleLimitedAccordingToNeedConverterTest {
 				StructuredDosageWrapper.makeStructuredDosage(
 					1, "pust", "ved anfald", TestHelper.toDate("2011-01-01"), TestHelper.toDate("2011-01-11"), 
 					DayWrapper.makeDay(1,
-						AccordingToNeedDoseWrapper.makeDose(new BigDecimal(1)),
-						AccordingToNeedDoseWrapper.makeDose(new BigDecimal(1)),
-						AccordingToNeedDoseWrapper.makeDose(new BigDecimal(1)))));
+						PlainDoseWrapper.makeDose(new BigDecimal(1), true),
+						PlainDoseWrapper.makeDose(new BigDecimal(1), true),
+						PlainDoseWrapper.makeDose(new BigDecimal(1), true))));
 		Assert.assertEquals(
 				"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages hver dag:\n"+
 				"   Doseringsforløb:\n"+
@@ -73,7 +73,7 @@ public class SimpleLimitedAccordingToNeedConverterTest {
 				StructuredDosageWrapper.makeStructuredDosage(
 					1, "pust", "ved anfald", TestHelper.toDate("2011-01-01"), TestHelper.toDate("2011-01-11"), 
 					DayWrapper.makeDay(1,
-						AccordingToNeedDoseWrapper.makeDose(new BigDecimal(1)))));
+						PlainDoseWrapper.makeDose(new BigDecimal(1), true))));
 		Assert.assertEquals(
 				"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages hver dag:\n"+
 				"   Doseringsforløb:\n"+
@@ -96,7 +96,7 @@ public class SimpleLimitedAccordingToNeedConverterTest {
 				StructuredDosageWrapper.makeStructuredDosage(
 					1, "stk", null, TestHelper.toDate("2012-06-01"), null, 
 					DayWrapper.makeDay(1,
-						AccordingToNeedDoseWrapper.makeDose(new BigDecimal(1)))));
+						PlainDoseWrapper.makeDose(new BigDecimal(1), true))));
 		Assert.assertEquals(
 				"Doseringsforløbet starter fredag den 1. juni 2012 og gentages hver dag:\n"+
 				"   Doseringsforløb:\n"+

@@ -138,6 +138,8 @@ public abstract class LongTextConverterImpl {
 		s.append(" ").append(unit);
 		if(dose.getLabel().length()>0)
 			s.append(" ").append(dose.getLabel());
+		if(dose.isAccordingToNeed())
+			s.append(" efter behov");
 		if(supplText!=null)
 			s.append(" ").append(supplText);
 		// Handle suppl. text in 2008 namespace

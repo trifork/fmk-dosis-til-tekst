@@ -28,14 +28,19 @@ import java.util.Collection;
 import java.util.List;
 
 import dk.medicinkortet.dosisstructuretext.Interval;
-import dk.medicinkortet.web.shared.jaxb.dkma.medicinecard.DosageDayElementStructure;
-import dk.medicinkortet.web.shared.jaxb.dkma.medicinecard.DosageTimeElementStructure;
+import dk.medicinkortet.web.shared.jaxb.dkma.medicinecard2009.DosageTimeElementStructure;
+import dk.medicinkortet.web.shared.jaxb.dkma.medicinecard20120601.Dose;
 
 public class DayWrapper {
 		
 	// Wrapped values
 	private int dayNumber;
-	private List<AccordingToNeedDoseWrapper> accordingToNeedDoses = new ArrayList<AccordingToNeedDoseWrapper>();
+	private List<DoseWrapper> allDoses = new ArrayList<DoseWrapper>();	
+
+	// Doses were separate types before 2012-06-01. We keep them for now to maintain
+	// compatibility in the dosis-to-text conversion
+	// AccordingToNeed is merged into each type since 2012-06-01 schemas 
+	// private List<AccordingToNeedDoseWrapper> accordingToNeedDoses = new ArrayList<AccordingToNeedDoseWrapper>();
 	private List<PlainDoseWrapper> plainDoses = new ArrayList<PlainDoseWrapper>();
 	private List<TimedDoseWrapper> timedDoses = new ArrayList<TimedDoseWrapper>();
 	private MorningDoseWrapper morningDose;
@@ -44,11 +49,51 @@ public class DayWrapper {
 	private NightDoseWrapper nightDose;
 	
 	// Helper / cached values
-	private List<DoseWrapper> allDoses = new ArrayList<DoseWrapper>();	
 	private Boolean areAllDosesTheSame;
 	private Boolean areAllDosesHaveTheSameQuantity;
+	private ArrayList<DoseWrapper> accordingToNeedDoses;
+
+	public DayWrapper(dk.medicinkortet.web.shared.jaxb.dkma.medicinecard20120601.DosageDay dosageDay) {
+		this.dayNumber = dosageDay.getDayNumber();
+		for(Dose dose: dosageDay.getDoses()) {
+			DoseWrapper wrappedDose = wrap(dose);
+			allDoses.add(wrappedDose);
+		}
+	}
 	
-	public DayWrapper(DosageDayElementStructure dosageDayElementStructure) {
+	private DoseWrapper wrap(Dose dose) {
+		if(dose.getTime()==null) {
+			PlainDoseWrapper plainDose = new PlainDoseWrapper(dose);
+			plainDoses.add(plainDose);
+			return plainDose;
+		}
+		else {
+			if(dose.getTime().isMorning()) {
+				morningDose = new MorningDoseWrapper(dose);
+				return morningDose;
+			}
+			else if(dose.getTime().isNoon()) { 
+				noonDose = new NoonDoseWrapper(dose);
+				return noonDose;
+			}
+			else if(dose.getTime().isEvening()) {
+				eveningDose = new EveningDoseWrapper(dose);
+				return eveningDose;
+			}
+			else if(dose.getTime().isNight()) {
+				nightDose = new NightDoseWrapper(dose);
+				return nightDose;
+			}
+			else {
+				TimedDoseWrapper timedDose = new TimedDoseWrapper(dose);
+				timedDoses.add(timedDose);
+				return timedDose;
+			}
+		}
+	}
+
+
+	public DayWrapper(dk.medicinkortet.web.shared.jaxb.dkma.medicinecard2009.DosageDayElementStructure dosageDayElementStructure) {
 		this.dayNumber = dosageDayElementStructure.getDosageDayIdentifier();
 		for(DosageTimeElementStructure dose: dosageDayElementStructure.getDosageTimeElementStructures()) {
 			if(dose.getDosageTimeTime()!=null && dose.getDosageTimeTime().trim().length()>0) {
@@ -57,14 +102,15 @@ public class DayWrapper {
 				allDoses.add(d);
 			}
 			else {
-				PlainDoseWrapper d = new PlainDoseWrapper(dose); // We keep doses in order, otherwise addAll would be nicer
+				PlainDoseWrapper d = new PlainDoseWrapper(dose, false); // We keep doses in order, otherwise addAll would be nicer
 				plainDoses.add(d);
 				allDoses.add(d);
 			}			
 		}
 		for(DosageTimeElementStructure dose: dosageDayElementStructure.getAccordingToNeedDosageTimeElementStructures()) {
-			accordingToNeedDoses.add(new AccordingToNeedDoseWrapper(dose));
-			allDoses.addAll(accordingToNeedDoses);
+			PlainDoseWrapper d = new PlainDoseWrapper(dose, true);
+			plainDoses.add(d);
+			allDoses.add(d);
 		}
 		if(dosageDayElementStructure.getMorningDosageTimeElementStructure()!=null) {
 			morningDose = new MorningDoseWrapper(dosageDayElementStructure.getMorningDosageTimeElementStructure());
@@ -88,7 +134,7 @@ public class DayWrapper {
 		this.dayNumber = dosageDayElementStructure.getDosageDayIdentifier();
 		for(dk.medicinkortet.web.shared.jaxb.dkma.medicinecard2008.DosageTimeElementStructure dose: dosageDayElementStructure.getDosageTimeElementStructures()) {
 			if(dose.getDosageTimeTime()==null) {
-				PlainDoseWrapper d = new PlainDoseWrapper(dose); // We keep doses in order, otherwise addAll would be nicer
+				PlainDoseWrapper d = new PlainDoseWrapper(dose, false); // We keep doses in order, otherwise addAll would be nicer
 				plainDoses.add(d);
 				allDoses.add(d);
 			}
@@ -99,8 +145,9 @@ public class DayWrapper {
 			}			
 		}
 		for(dk.medicinkortet.web.shared.jaxb.dkma.medicinecard2008.DosageTimeElementStructure dose: dosageDayElementStructure.getAccordingToNeedDosageTimeElementStructures()) {
-			accordingToNeedDoses.add(new AccordingToNeedDoseWrapper(dose));
-			allDoses.addAll(accordingToNeedDoses);
+			PlainDoseWrapper d = new PlainDoseWrapper(dose, true);
+			plainDoses.add(d);
+			allDoses.add(d);
 		}
 		if(dosageDayElementStructure.getMorningDosageTimeElementStructure()!=null) {
 			morningDose = new MorningDoseWrapper(dosageDayElementStructure.getMorningDosageTimeElementStructure());
@@ -128,9 +175,7 @@ public class DayWrapper {
 		DayWrapper day = new DayWrapper();
 		day.dayNumber = dayNumber;
 		for(DoseWrapper dose: doses) {
-			if(dose instanceof AccordingToNeedDoseWrapper)
-				day.accordingToNeedDoses.add((AccordingToNeedDoseWrapper)dose);
-			else if(dose instanceof PlainDoseWrapper)
+			if(dose instanceof PlainDoseWrapper)
 				day.plainDoses.add((PlainDoseWrapper)dose);
 			else if(dose instanceof TimedDoseWrapper)
 				day.timedDoses.add((TimedDoseWrapper)dose);
@@ -156,12 +201,7 @@ public class DayWrapper {
 	}
 
 	public void removeDose(DoseWrapper dose) {
-		if(dose instanceof AccordingToNeedDoseWrapper) {
-			if(!accordingToNeedDoses.contains(dose))
-				throw new IllegalArgumentException();
-			accordingToNeedDoses.remove(dose);
-		}
-		else if(dose instanceof PlainDoseWrapper) {
+		if(dose instanceof PlainDoseWrapper) {
 			if(!plainDoses.contains(dose))
 				throw new IllegalArgumentException();
 			plainDoses.remove(dose);
@@ -212,14 +252,24 @@ public class DayWrapper {
 	public DoseWrapper getDose(int index) {
 		return allDoses.get(index);		
 	}
-	
-	public List<AccordingToNeedDoseWrapper> getAccordingToNeedDoses() {
-		 return accordingToNeedDoses;
-	}
+
 	
 	public int getNumberOfAccordingToNeedDoses() {
-		return accordingToNeedDoses.size();
+		return getAccordingToNeedDoses().size();
 	}
+	
+	public ArrayList<DoseWrapper> getAccordingToNeedDoses() {
+		// Since the 2012/06/01 namespace "according to need" is just a flag
+		if(accordingToNeedDoses==null) {
+			accordingToNeedDoses = new ArrayList<DoseWrapper>();
+			for(DoseWrapper d: allDoses) {
+				if(d.isAccordingToNeed())
+					accordingToNeedDoses.add(d);
+			}
+		}
+		return accordingToNeedDoses;
+	}
+
 	
 	public List<PlainDoseWrapper> getPlainDoses() {
 		return plainDoses;
@@ -292,7 +342,7 @@ public class DayWrapper {
 	
 	public boolean containsAccordingToNeedDose() {
 		for(DoseWrapper dose: getAllDoses()) {
-			if(dose instanceof AccordingToNeedDoseWrapper) {
+			if(dose.isAccordingToNeed()) {
 				return true;
 			}
 		}
@@ -329,7 +379,7 @@ public class DayWrapper {
 
 	public boolean containsAccordingToNeedDosesOnly() {
 		for(DoseWrapper dose: getAllDoses()) {
-			if(!(dose instanceof AccordingToNeedDoseWrapper)) {
+			if(!(dose.isAccordingToNeed())) {
 				return false;
 			}
 		}

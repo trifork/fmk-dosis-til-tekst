@@ -24,38 +24,53 @@ package dk.medicinkortet.dosisstructuretext.vowrapper;
 
 import java.math.BigDecimal;
 
-import dk.medicinkortet.web.shared.jaxb.dkma.medicinecard.DosageDefinedTimeElementStructure;
-
 public class MorningDoseWrapper extends DoseWrapper {
 
-	public MorningDoseWrapper(DosageDefinedTimeElementStructure dose) {
-		super(dose);
+	public MorningDoseWrapper(dk.medicinkortet.web.shared.jaxb.dkma.medicinecard20120601.Dose dose) {
+		super(dose, dose.isAccordingToNeed());
+	}
+	
+	public MorningDoseWrapper(dk.medicinkortet.web.shared.jaxb.dkma.medicinecard2009.DosageDefinedTimeElementStructure dose) {
+		super(dose, false);
 	}
 
 	public MorningDoseWrapper(dk.medicinkortet.web.shared.jaxb.dkma.medicinecard2008.DosageDefinedTimeElementStructure dose) {
-		super(dose);
+		super(dose, false);
 	}
 	
 	private MorningDoseWrapper(
 			BigDecimal doseQuantity, BigDecimal minimalDoseQuantity, BigDecimal maximalDoseQuantity, 
-			String doseQuantityString, String minimalDoseQuantityString, String maximalDoseQuantityString) {
-		super(doseQuantity, minimalDoseQuantity, maximalDoseQuantity, doseQuantityString, minimalDoseQuantityString, maximalDoseQuantityString);
+			String doseQuantityString, String minimalDoseQuantityString, String maximalDoseQuantityString, 
+			boolean isAccordingToNeed) {
+		super(doseQuantity, minimalDoseQuantity, maximalDoseQuantity, doseQuantityString, minimalDoseQuantityString, maximalDoseQuantityString, isAccordingToNeed);
 	}
 
 	public static MorningDoseWrapper makeDose(BigDecimal quantity) {
-		return new MorningDoseWrapper(quantity, null, null, null, null, null);
+		return new MorningDoseWrapper(quantity, null, null, null, null, null, false);
+	}
+
+	public static MorningDoseWrapper makeDose(BigDecimal quantity, boolean isAccordingToNeed) {
+		return new MorningDoseWrapper(quantity, null, null, null, null, null, isAccordingToNeed);
 	}
 
 	public static MorningDoseWrapper makeDose(BigDecimal quantity, String supplText) {
-		return new MorningDoseWrapper(quantity, null, null, supplText, null, null);
+		return new MorningDoseWrapper(quantity, null, null, supplText, null, null, false);
+	}
+
+	public static MorningDoseWrapper makeDose(BigDecimal quantity, String supplText, boolean isAccordingToNeed) {
+		return new MorningDoseWrapper(quantity, null, null, supplText, null, null, isAccordingToNeed);
 	}
 	
 	public static MorningDoseWrapper makeDose(BigDecimal minimalQuantity, BigDecimal maximalQuantity) {
-		return new MorningDoseWrapper(null, minimalQuantity, maximalQuantity, null, null, null);
+		return new MorningDoseWrapper(null, minimalQuantity, maximalQuantity, null, null, null, false);
 	}	
 
-	public static MorningDoseWrapper makeDose(double minimalQuantity, double maximalQuantity, String minimalSupplText, String maximalSupplText) {
-		return new MorningDoseWrapper(null, toBigDecimal(minimalQuantity), toBigDecimal(maximalQuantity), null, minimalSupplText, maximalSupplText);
+	public static MorningDoseWrapper makeDose(BigDecimal minimalQuantity, BigDecimal maximalQuantity, boolean isAccordingToNeed) {
+		return new MorningDoseWrapper(null, minimalQuantity, maximalQuantity, null, null, null, isAccordingToNeed);
+	}	
+
+	public static MorningDoseWrapper makeDose(double minimalQuantity, double maximalQuantity, String minimalSupplText, String maximalSupplText, boolean isAccordingToNeed) {
+		return new MorningDoseWrapper(null, toBigDecimal(minimalQuantity), toBigDecimal(maximalQuantity), null, minimalSupplText, maximalSupplText, isAccordingToNeed);
 	}	
 	
 	public final static String LABEL = "morgen";  

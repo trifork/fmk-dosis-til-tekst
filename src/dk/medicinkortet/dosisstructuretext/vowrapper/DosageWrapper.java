@@ -23,7 +23,6 @@
 package dk.medicinkortet.dosisstructuretext.vowrapper;
 
 import dk.medicinkortet.dosisstructuretext.Validator;
-import dk.medicinkortet.web.shared.jaxb.dkma.medicinecard.DosageStructure;
 
 /**
  * This class wraps a dosage structure in either the 2008/06/01 namespace or the 2009/01/01 namespace. 
@@ -38,10 +37,21 @@ public class DosageWrapper {
 	private StructuredDosageWrapper dosageTimes;
 	
 	/**
+	 * Initialises the dosage wrapper with a DosageStructure in the 2012/06/01 namespace.  
+	 * @param dosageStructure
+	 */
+	public DosageWrapper(dk.medicinkortet.web.shared.jaxb.dkma.medicinecard20120601.Dosage dosage) {
+		this(
+			dosage.getAdministrationAccordingToSchemaInLocalSystem()!=null, 
+			dosage.getFreeText(), 
+			dosage.getDosageStructure()!=null ? new StructuredDosageWrapper(dosage.getDosageStructure()) : null);
+	}
+
+	/**
 	 * Initialises the dosage wrapper with a DosageStructure in the 2009/01/01 namespace.  
 	 * @param dosageStructure
 	 */
-	public DosageWrapper(DosageStructure dosageStructure) {
+	public DosageWrapper(dk.medicinkortet.web.shared.jaxb.dkma.medicinecard2009.DosageStructure dosageStructure) {
 		this(
 			dosageStructure.getAdministrationAccordingToSchemeInLocalSystemIndicator()!=null, 
 			dosageStructure.getDosageFreeText(), 

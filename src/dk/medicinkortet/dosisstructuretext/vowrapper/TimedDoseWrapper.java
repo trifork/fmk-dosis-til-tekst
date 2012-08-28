@@ -24,44 +24,49 @@ package dk.medicinkortet.dosisstructuretext.vowrapper;
 
 import java.math.BigDecimal;
 
-import dk.medicinkortet.web.shared.jaxb.dkma.medicinecard.DosageTimeElementStructure;
 
 public class TimedDoseWrapper extends DoseWrapper {
 
 	private String time;
-	
-	public TimedDoseWrapper(DosageTimeElementStructure dose) {
-		super(dose);
+
+	public TimedDoseWrapper(dk.medicinkortet.web.shared.jaxb.dkma.medicinecard20120601.Dose dose) {
+		super(dose, dose.isAccordingToNeed());
+		this.time = dose.getTime().getTime();
+	}
+
+	public TimedDoseWrapper(dk.medicinkortet.web.shared.jaxb.dkma.medicinecard2009.DosageTimeElementStructure dose) {
+		super(dose, false);
 		this.time = dose.getDosageTimeTime();
 	}
 
 	public TimedDoseWrapper(dk.medicinkortet.web.shared.jaxb.dkma.medicinecard2008.DosageTimeElementStructure dose) {
-		super(dose);
+		super(dose, false);
 		this.time = dose.getDosageTimeTime();
 	}
 
 	private TimedDoseWrapper(
 			String time, 
 			BigDecimal doseQuantity, BigDecimal minimalDoseQuantity, BigDecimal maximalDoseQuantity, 
-			String doseQuantityString, String minimalDoseQuantityString, String maximalDoseQuantityString) {
-		super(doseQuantity, minimalDoseQuantity, maximalDoseQuantity, doseQuantityString, minimalDoseQuantityString, maximalDoseQuantityString);
+			String doseQuantityString, String minimalDoseQuantityString, String maximalDoseQuantityString, 
+			boolean isAccordingToNeed) {
+		super(doseQuantity, minimalDoseQuantity, maximalDoseQuantity, doseQuantityString, minimalDoseQuantityString, maximalDoseQuantityString, isAccordingToNeed);
 		this.time = time;
 	}
 
 	public static TimedDoseWrapper makeDose(String time, BigDecimal quantity) {
-		return new TimedDoseWrapper(time, quantity, null, null, null, null, null);
+		return new TimedDoseWrapper(time, quantity, null, null, null, null, null, false);
 	}
 
 	public static TimedDoseWrapper makeDose(String time, BigDecimal quantity, String supplText) {
-		return new TimedDoseWrapper(time, quantity, null, null, supplText, null, null);
+		return new TimedDoseWrapper(time, quantity, null, null, supplText, null, null, false);
 	}
 	
 	public static TimedDoseWrapper makeDose(String time, BigDecimal minimalQuantity, BigDecimal maximalQuantity) {
-		return new TimedDoseWrapper(time, null, minimalQuantity, maximalQuantity, null, null, null);
+		return new TimedDoseWrapper(time, null, minimalQuantity, maximalQuantity, null, null, null, false);
 	}	
 
 	public static TimedDoseWrapper makeDose(String time, BigDecimal minimalQuantity, BigDecimal maximalQuantity, String minimalSupplText, String maximalSupplText) {
-		return new TimedDoseWrapper(time, null, minimalQuantity, maximalQuantity, null, minimalSupplText, maximalSupplText);
+		return new TimedDoseWrapper(time, null, minimalQuantity, maximalQuantity, null, minimalSupplText, maximalSupplText, false);
 	}	
 	
 	public final static String LABEL = "kl.";  

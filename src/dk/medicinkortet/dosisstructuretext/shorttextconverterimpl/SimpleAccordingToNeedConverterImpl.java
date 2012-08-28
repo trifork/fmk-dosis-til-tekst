@@ -44,10 +44,7 @@ public class SimpleAccordingToNeedConverterImpl extends ShortTextConverterImpl {
 		if(dosageTimes.getDays().size()!=1)
 			return false;
 		DayWrapper day = dosageTimes.getDays().get(0);
-		if(!day.containsAccordingToNeedDose())
-			return false;
-		if(day.containsMorningNoonEveningNightDoses() || 
-				day.containsPlainDose() || day.containsTimedDose())
+		if(!day.containsAccordingToNeedDosesOnly())
 			return false;
 		if(day.getAccordingToNeedDoses().size()>1)
 			return false;
@@ -62,6 +59,7 @@ public class SimpleAccordingToNeedConverterImpl extends ShortTextConverterImpl {
 		StringBuilder text = new StringBuilder();
 		DayWrapper day = dosageTimes.getDays().get(0);
 		text.append(toValue(day.getAllDoses().get(0), dosageTimes.getUnit()));
+		text.append(" efter behov");
 		if(dosageTimes.getUniqueSupplText()!=null)
 			text.append(" ").append(dosageTimes.getUniqueSupplText());
 		return text.toString();

@@ -25,8 +25,6 @@ package dk.medicinkortet.dosisstructuretext.vowrapper;
 import java.math.BigDecimal;
 
 import dk.medicinkortet.dosisstructuretext.TextHelper;
-import dk.medicinkortet.web.shared.jaxb.dkma.medicinecard.DosageDefinedTimeElementStructure;
-import dk.medicinkortet.web.shared.jaxb.dkma.medicinecard.DosageTimeElementStructure;
 
 public abstract class DoseWrapper {
 	
@@ -39,60 +37,76 @@ public abstract class DoseWrapper {
 	private String maximalDoseQuantityString;
 	private String doseQuantityString;
 	
+	private boolean isAccordingToNeed;
+	
 	// Suppl. texts from the 2008 namespace. For newer namespaces this information
 	// is found on the dosage time level.
 	private String minimalSupplText;
 	private String maximalSupplText;
 	private String supplText;
 	
-	public DoseWrapper(DosageTimeElementStructure dose) {
+	public DoseWrapper(dk.medicinkortet.web.shared.jaxb.dkma.medicinecard20120601.Dose dose, boolean isAccordingToNeed) {
+		this(
+			toBigDecimal(dose.getQuantity()), 
+			toBigDecimal(dose.getMinimalQuantity()), 
+			toBigDecimal(dose.getMaximalQuantity()), 
+			null, null, null, 
+			isAccordingToNeed);
+	}
+
+	public DoseWrapper(dk.medicinkortet.web.shared.jaxb.dkma.medicinecard2009.DosageTimeElementStructure dose, boolean isAccordingToNeed) {
 		this(
 			toBigDecimal(dose.getDosageQuantityValue()), 
 			toBigDecimal(dose.getMinimalDosageQuantityValue()), 
 			toBigDecimal(dose.getMaximalDosageQuantityValue()), 
-			null, null, null);
+			null, null, null, 
+			isAccordingToNeed);
 	}
 	
-	public DoseWrapper(dk.medicinkortet.web.shared.jaxb.dkma.medicinecard2008.DosageTimeElementStructure dose) {
+	public DoseWrapper(dk.medicinkortet.web.shared.jaxb.dkma.medicinecard2008.DosageTimeElementStructure dose, boolean isAccordingToNeed) {
 		this(
 			dose.getDosageQuantityStructure()==null ? null: toBigDecimal(dose.getDosageQuantityStructure().getDosageQuantityValue()), 
 			dose.getMinimalDosageQuantityStructure()==null ? null: toBigDecimal(dose.getMinimalDosageQuantityStructure().getDosageQuantityValue()), 
 			dose.getMaximalDosageQuantityStructure()==null ? null: toBigDecimal(dose.getMaximalDosageQuantityStructure().getDosageQuantityValue()), 
 			dose.getDosageQuantityStructure()==null ? null: dose.getDosageQuantityStructure().getDosageQuantityFreeText(), 
 			dose.getMinimalDosageQuantityStructure()==null ? null: dose.getMinimalDosageQuantityStructure().getDosageQuantityFreeText(), 
-			dose.getMaximalDosageQuantityStructure()==null ? null: dose.getMaximalDosageQuantityStructure().getDosageQuantityFreeText()); 
+			dose.getMaximalDosageQuantityStructure()==null ? null: dose.getMaximalDosageQuantityStructure().getDosageQuantityFreeText(), 
+			isAccordingToNeed); 
 	}
 
-	public DoseWrapper(DosageDefinedTimeElementStructure dose) {
+	public DoseWrapper(dk.medicinkortet.web.shared.jaxb.dkma.medicinecard2009.DosageDefinedTimeElementStructure dose, boolean isAccordingToNeed) {
 		this(
 			toBigDecimal(dose.getDosageQuantityValue()), 
 			toBigDecimal(dose.getMinimalDosageQuantityValue()), 
 			toBigDecimal(dose.getMaximalDosageQuantityValue()), 
 			null, 
 			null, 
-			null);
+			null, 
+			isAccordingToNeed);
 	}
 
-	public DoseWrapper(dk.medicinkortet.web.shared.jaxb.dkma.medicinecard2008.DosageDefinedTimeElementStructure dose) {
+	public DoseWrapper(dk.medicinkortet.web.shared.jaxb.dkma.medicinecard2008.DosageDefinedTimeElementStructure dose, boolean isAccordingToNeed) {
 		this(
 			dose.getDosageQuantityStructure()==null ? null: toBigDecimal(dose.getDosageQuantityStructure().getDosageQuantityValue()), 
 			dose.getMinimalDosageQuantityStructure()==null ? null: toBigDecimal(dose.getMinimalDosageQuantityStructure().getDosageQuantityValue()), 
 			dose.getMaximalDosageQuantityStructure()==null ? null: toBigDecimal(dose.getMaximalDosageQuantityStructure().getDosageQuantityValue()), 
 			dose.getDosageQuantityStructure()==null ? null: dose.getDosageQuantityStructure().getDosageQuantityFreeText(), 
 			dose.getMinimalDosageQuantityStructure()==null ? null: dose.getMinimalDosageQuantityStructure().getDosageQuantityFreeText(), 
-			dose.getMaximalDosageQuantityStructure()==null ? null: dose.getMaximalDosageQuantityStructure().getDosageQuantityFreeText()); 
+			dose.getMaximalDosageQuantityStructure()==null ? null: dose.getMaximalDosageQuantityStructure().getDosageQuantityFreeText(), 
+			isAccordingToNeed); 
 	}
 	
 	protected DoseWrapper(
 			BigDecimal doseQuantity, BigDecimal minimalDoseQuantity, BigDecimal maximalDoseQuantity, 
-			String supplText, String minimalSupplText, String maximalSupplText) {
+			String supplText, String minimalSupplText, String maximalSupplText, 
+			boolean isAccordingToNeed) {
 		this.doseQuantity = doseQuantity;
 		this.minimalDoseQuantity = minimalDoseQuantity; 
 		this.maximalDoseQuantity = maximalDoseQuantity;
 		this.supplText = supplText;
 		this.minimalSupplText = minimalSupplText; 
 		this.maximalSupplText = maximalSupplText;
-
+		this.isAccordingToNeed = isAccordingToNeed;
 		if(minimalDoseQuantity!=null) 
 			minimalDoseQuantityString = TextHelper.formatQuantity(minimalDoseQuantity);
 		if(maximalDoseQuantity!=null)
@@ -147,6 +161,10 @@ public abstract class DoseWrapper {
 		return supplText;
 	}
 	
+	public boolean isAccordingToNeed() {
+		return isAccordingToNeed;
+	}
+	
 	public String getAnyDoseQuantityString() {
 		if(getDoseQuantityString()!=null)
 			return getDoseQuantityString();
@@ -156,6 +174,8 @@ public abstract class DoseWrapper {
 
 	public boolean theSameAs(DoseWrapper other) {
 		if(!getLabel().equals(other.getLabel()))
+			return false;
+		if(isAccordingToNeed!=other.isAccordingToNeed())
 			return false;
 		if(!equalsWhereNullsAreTrue(getMinimalDoseQuantityString(), other.getMinimalDoseQuantityString()))
 			return false;
