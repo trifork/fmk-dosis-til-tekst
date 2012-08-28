@@ -60,6 +60,10 @@ public class NightDoseWrapper extends DoseWrapper {
 		return new NightDoseWrapper(null, minimalQuantity, maximalQuantity, null, null, null, isAccordingToNeed);
 	}	
 
+	public static NightDoseWrapper makeDose(BigDecimal minimalQuantity, BigDecimal maximalQuantity) {
+		return new NightDoseWrapper(null, minimalQuantity, maximalQuantity, null, null, null, false);
+	}	
+
 	public static NightDoseWrapper makeDose(BigDecimal minimalQuantity, BigDecimal maximalQuantity, String minimalSupplText, String maximalSupplText, boolean isAccordingToNeed) {
 		return new NightDoseWrapper(null, minimalQuantity, maximalQuantity, null, minimalSupplText, maximalSupplText, isAccordingToNeed);
 	}	
