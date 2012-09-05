@@ -36,7 +36,7 @@ import dk.medicinkortet.dosisstructuretext.vowrapper.DayWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.EveningDoseWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.MorningDoseWrapper;
-import dk.medicinkortet.dosisstructuretext.vowrapper.StructuredDosageWrapper;
+import dk.medicinkortet.dosisstructuretext.vowrapper.DosageStructureWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.TimedDoseWrapper;
 import dk.medicinkortet.web.shared.jaxb.dkma.medicinecard2008.DosageQuantityUnitTextType;
 
@@ -63,7 +63,7 @@ public class LongTextConverterTest {
 	public void testNs2009DosageTimes() {
 		DosageWrapper dosage = 
 			DosageWrapper.makeStructuredDosage(
-				StructuredDosageWrapper.makeStructuredDosage(
+				DosageStructureWrapper.makeStructuredDosage(
 					1, "ml", "ved måltid", TestHelper.toDate("2011-01-01"), TestHelper.toDate("2011-01-30"), 
 						DayWrapper.makeDay(
 							1, 
@@ -85,7 +85,7 @@ public class LongTextConverterTest {
 	public void testNs2008DosageTimes() {
 		DosageWrapper dosage = 
 			DosageWrapper.makeStructuredDosage(
-				StructuredDosageWrapper.makeStructuredDosage(
+				DosageStructureWrapper.makeStructuredDosage(
 					1, DosageQuantityUnitTextType.MILLILITER, TestHelper.toDate("2011-01-01"), TestHelper.toDate("2011-01-30"), 
 						DayWrapper.makeDay(
 							1, 
@@ -103,7 +103,7 @@ public class LongTextConverterTest {
 	public void testNs2009Order() {
 		DosageWrapper dosage = 
 			DosageWrapper.makeStructuredDosage(
-				StructuredDosageWrapper.makeStructuredDosage(
+				DosageStructureWrapper.makeStructuredDosage(
 					0, "ml", "før behandling", TestHelper.toDate("2011-01-01"), null, 
 						DayWrapper.makeDay(
 							1, 
@@ -124,7 +124,7 @@ public class LongTextConverterTest {
 	public void testNs2009Order2() {
 		DosageWrapper dosage = 
 			DosageWrapper.makeStructuredDosage(
-				StructuredDosageWrapper.makeStructuredDosage(
+				DosageStructureWrapper.makeStructuredDosage(
 					0, "ml", "før behandling", TestHelper.toDate("2011-01-01"), null, 
 						DayWrapper.makeDay(
 							1, 

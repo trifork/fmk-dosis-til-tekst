@@ -20,7 +20,7 @@
 * National Board of e-Health (NSI). All Rights Reserved.
 */
 
-package dk.medicinkortet.dosisstructuretext.ns2009;
+package dk.medicinkortet.dosisstructuretext.ns20120601;
 
 import java.math.BigDecimal;
 
@@ -28,73 +28,67 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import dk.medicinkortet.dosisstructuretext.DailyDosisCalculator;
+import dk.medicinkortet.dosisstructuretext.DosageType;
+import dk.medicinkortet.dosisstructuretext.DosageTypeCalculator;
 import dk.medicinkortet.dosisstructuretext.LongTextConverter;
 import dk.medicinkortet.dosisstructuretext.ShortTextConverter;
 import dk.medicinkortet.dosisstructuretext.TestHelper;
-import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.MorningNoonEveningNightConverterImpl;
+import dk.medicinkortet.dosisstructuretext.longtextconverterimpl.DefaultLongTextConverterImpl;
+import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.SimpleAccordingToNeedConverterImpl;
 import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.SimpleLimitedAccordingToNeedConverterImpl;
+import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.WeeklyMorningNoonEveningNightConverterImpl;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DayWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.EveningDoseWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.MorningDoseWrapper;
+import dk.medicinkortet.dosisstructuretext.vowrapper.NoonDoseWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.PlainDoseWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DosageStructureWrapper;
 
-public class ValidatorTest {
-	
-	@Test
-	public void testJiraFMK903() throws Exception {
+/**
+ * The purpose of this test class is to test new functionality added in FMK 1.4 (2012/06/01 namespace). 
+ * The test of the general functionality is done in the testclass of the same name in the 
+ * dk.medicinkortet.dosisstructuretext.ns2009 package. 
+ */
+public class LongTextComplexConverterTest {
+
+	@Test 
+	public void testUnits() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
 			DosageStructureWrapper.makeStructuredDosage(
-				1, "stk", null, null, null, null, null, TestHelper.toDateTime("2012-04-13 20:06:00"), null, 
+				1, null, "tablet", "tabletter", null, TestHelper.toDate("2012-04-18"), null, null, null, 
 				DayWrapper.makeDay(
 					1, 
-					MorningDoseWrapper.makeDose(new BigDecimal(2)), 
-					EveningDoseWrapper.makeDose(new BigDecimal(0)))));
+					MorningDoseWrapper.makeDose(new BigDecimal(1), false))));
+		Assert.assertEquals(
+				"Doseringsforløbet starter onsdag den 18. april 2012 og gentages hver dag:\n"+
+				"   Doseringsforløb:\n"+
+				"   1 tablet morgen", 
+				LongTextConverter.convert(dosage));
+		Assert.assertEquals("1 tablet morgen", ShortTextConverter.convert(dosage));
 		Assert.assertEquals(
 				1, 
-				dosage.getDosageStructure().getFirstDay().getNumberOfDoses());
-		Assert.assertEquals(
-				"Doseringsforløbet starter fredag den 13. april 2012 kl. 20:06:00 og gentages hver dag:\n"+
-				"   Doseringsforløb:\n"+
-				"   2 stk morgen",
-				LongTextConverter.convert(dosage));
-		Assert.assertEquals(
-				MorningNoonEveningNightConverterImpl.class, 
-				ShortTextConverter.getConverterClass(dosage));
-		Assert.assertEquals(
-				"2 stk morgen", 
-				ShortTextConverter.convert(dosage));
-		Assert.assertEquals(
-				2.0, 
 				DailyDosisCalculator.calculate(dosage).getValue().doubleValue(), 
-				0.000000001); 				
-	}	
+				0.000000001);
+		Assert.assertEquals(DosageType.Fixed, DosageTypeCalculator.calculate(dosage));		
+	}
 
-	@Test
-	public void testJiraFMK903Variant() throws Exception {
+	@Test 
+	public void testAccordingToNeed() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
 			DosageStructureWrapper.makeStructuredDosage(
-				1, "stk", null, null, null, null, null, TestHelper.toDateTime("2012-04-13 20:06:00"), null, 
+				0, null, "tablet", "tabletter", null, TestHelper.toDate("2012-04-18"), null, null, null, 
 				DayWrapper.makeDay(
-					1, 
-					PlainDoseWrapper.makeDose(new BigDecimal(2), true), 
-					PlainDoseWrapper.makeDose(new BigDecimal(0), true))));
+					0, 
+					MorningDoseWrapper.makeDose(new BigDecimal(1), true))));
 		Assert.assertEquals(
-				1, 
-				dosage.getDosageStructure().getFirstDay().getAccordingToNeedDoses().size());
-		Assert.assertEquals(
-				"Doseringsforløbet starter fredag den 13. april 2012 kl. 20:06:00 og gentages hver dag:\n"+
+				"Doseringsforløbet starter onsdag den 18. april 2012:\n"+
 				"   Doseringsforløb:\n"+
-				"   2 stk efter behov højst 1 gang daglig",
+				"   Efter behov: 1 tablet morgen efter behov", 
 				LongTextConverter.convert(dosage));
-		Assert.assertEquals(
-				SimpleLimitedAccordingToNeedConverterImpl.class, 
-				ShortTextConverter.getConverterClass(dosage));
-		Assert.assertEquals(
-				"2 stk efter behov højst 1 gang daglig", 
-				ShortTextConverter.convert(dosage));
-		Assert.assertNull(DailyDosisCalculator.calculate(dosage).getValue()); 				
-	}	
-
+		Assert.assertEquals("1 tablet morgen efter behov", ShortTextConverter.convert(dosage));
+		Assert.assertNull(DailyDosisCalculator.calculate(dosage).getValue());
+		Assert.assertEquals(DosageType.AccordingToNeed, DosageTypeCalculator.calculate(dosage));		
+	}
+		
 }

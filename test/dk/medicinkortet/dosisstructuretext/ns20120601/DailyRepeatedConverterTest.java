@@ -20,7 +20,7 @@
 * National Board of e-Health (NSI). All Rights Reserved.
 */
 
-package dk.medicinkortet.dosisstructuretext.ns2009;
+package dk.medicinkortet.dosisstructuretext.ns20120601;
 
 import java.math.BigDecimal;
 
@@ -35,18 +35,27 @@ import dk.medicinkortet.dosisstructuretext.ShortTextConverter;
 import dk.medicinkortet.dosisstructuretext.TestHelper;
 import dk.medicinkortet.dosisstructuretext.longtextconverterimpl.DailyRepeatedConverterImpl;
 import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.ParacetamolConverterImpl;
+import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.SimpleLimitedAccordingToNeedConverterImpl;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DayWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.PlainDoseWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DosageStructureWrapper;
 
+/**
+ * The purpose of this test class is to test new functionality added in FMK 1.4 (2012/06/01 namespace). 
+ * The test of the general functionality is done in the testclass of the same name in the 
+ * dk.medicinkortet.dosisstructuretext.ns2009 package. 
+ */
 public class DailyRepeatedConverterTest {
 
 	@Test
-	public void test1Stk2til3GangeDgligVedMaaltid() throws Exception {
+	public void testUnits() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
 			DosageStructureWrapper.makeStructuredDosage(
-				1, "stk", "ved måltid", TestHelper.toDate("2011-01-01"), TestHelper.toDate("2011-01-30"), 
+				1, 
+				null, "tablet", "tabletter",  
+				"ved måltid", 
+				TestHelper.toDate("2011-01-01"), TestHelper.toDate("2011-01-30"), null, null, 
 				DayWrapper.makeDay(
 					1, 
 					PlainDoseWrapper.makeDose(new BigDecimal(1)), 
@@ -58,15 +67,47 @@ public class DailyRepeatedConverterTest {
 		Assert.assertEquals(
 				"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages hver dag:\n"+
 				"   Doseringsforløb:\n"+
-				"   1 stk ved måltid + 1 stk ved måltid + 1 stk efter behov ved måltid",
+				"   1 tablet ved måltid + 1 tablet ved måltid + 1 tablet efter behov ved måltid",
 				LongTextConverter.convert(dosage));
 		Assert.assertEquals(
 				ParacetamolConverterImpl.class, 
 				ShortTextConverter.getConverterClass(dosage));
 		Assert.assertEquals(
-				"1 stk 2-3 gange daglig ved måltid", 
+				"1 tablet 2-3 gange daglig ved måltid", 
 				ShortTextConverter.convert(dosage));
 		Assert.assertNull(DailyDosisCalculator.calculate(dosage).getValue());
 		Assert.assertEquals(DosageType.Combined, DosageTypeCalculator.calculate(dosage));
 	}
+	
+	@Test
+	public void testAccordingToNeed() throws Exception {
+		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
+			DosageStructureWrapper.makeStructuredDosage(
+				1, 
+				null, "tablet", "tabletter",   
+				"ved måltid", 
+				TestHelper.toDate("2011-01-01"), TestHelper.toDate("2011-01-30"), null, null, 
+				DayWrapper.makeDay(
+					1, 
+					PlainDoseWrapper.makeDose(new BigDecimal(1), false), 
+					PlainDoseWrapper.makeDose(new BigDecimal(1), false), 
+					PlainDoseWrapper.makeDose(new BigDecimal(1), true))));
+		Assert.assertEquals(
+				DailyRepeatedConverterImpl.class, 
+				LongTextConverter.getConverterClass(dosage));
+		Assert.assertEquals(
+				"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages hver dag:\n"+
+				"   Doseringsforløb:\n"+
+				"   1 tablet ved måltid + 1 tablet ved måltid + 1 tablet efter behov ved måltid",
+				LongTextConverter.convert(dosage));
+		Assert.assertEquals(
+				ParacetamolConverterImpl.class, 
+				ShortTextConverter.getConverterClass(dosage));
+		Assert.assertEquals(
+				"1 tablet 2-3 gange daglig ved måltid", 
+				ShortTextConverter.convert(dosage));
+		Assert.assertNull(DailyDosisCalculator.calculate(dosage).getValue());
+		Assert.assertEquals(DosageType.Combined, DosageTypeCalculator.calculate(dosage));
+	}
+
 }

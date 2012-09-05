@@ -25,12 +25,13 @@ package dk.medicinkortet.dosisstructuretext.shorttextconverterimpl;
 import dk.medicinkortet.dosisstructuretext.TextHelper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DoseWrapper;
+import dk.medicinkortet.dosisstructuretext.vowrapper.DosageStructureWrapper;
 
 public abstract class ShortTextConverterImpl {
 
-	abstract public boolean canConvert(DosageWrapper dosageTimes);
+	abstract public boolean canConvert(DosageWrapper dosageStructure);
 
-	abstract public String doConvert(DosageWrapper dosageTimes);
+	abstract public String doConvert(DosageWrapper dosageStructure);
 	
 	protected static String toValue(DoseWrapper dose) {
 		if(dose.getDoseQuantity()!=null) {
@@ -45,15 +46,14 @@ public abstract class ShortTextConverterImpl {
 		}		
 	}
 	
-	protected static String toValue(DoseWrapper dose, String unit) {
+	protected static String toValue(DoseWrapper dose, DosageStructureWrapper dosageStructure) {
 		String s = toValue(dose);
-		if(s==null)
-			return null;
-		unit = TextHelper.correctUnit(dose, unit);
+		String u = TextHelper.getUnit(dose, dosageStructure.getUnit(), dosageStructure.getUnitSingular(), dosageStructure.getUnitPlural());
 		if(dose.getLabel().length()==0)
-			return s + " " + unit;
+			return s + " " + u;
 		else 
-			return s + " " + unit + " " + dose.getLabel();
+			return s + " " + u + " " + dose.getLabel();
 	}
+	
 	
 }

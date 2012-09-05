@@ -32,49 +32,49 @@ import java.util.Locale;
 
 import dk.medicinkortet.dosisstructuretext.vowrapper.DayWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
-import dk.medicinkortet.dosisstructuretext.vowrapper.StructuredDosageWrapper;
+import dk.medicinkortet.dosisstructuretext.vowrapper.DosageStructureWrapper;
 
 public class WeeklyRepeatedConverterImpl extends LongTextConverterImpl {
 
 	@Override
 	public boolean canConvert(DosageWrapper dosage) {
-		if(dosage.getDosageTimes()==null)
+		if(dosage.getDosageStructure()==null)
 			return false;
-		StructuredDosageWrapper dosageTimes = dosage.getDosageTimes();
-		if(dosageTimes.getIterationInterval()!=7)
+		DosageStructureWrapper dosageStructure = dosage.getDosageStructure();
+		if(dosageStructure.getIterationInterval()!=7)
 			return false;
-		if(dosageTimes.getStartDateOrDateTime().equals(dosageTimes.getEndDateOrDateTime()))
+		if(dosageStructure.getStartDateOrDateTime().equals(dosageStructure.getEndDateOrDateTime()))
 			return false; 
-		if(dosageTimes.getDays().size()>7)
+		if(dosageStructure.getDays().size()>7)
 			return false;
-		if(dosageTimes.getFirstDay().getDayNumber()==0)
+		if(dosageStructure.getFirstDay().getDayNumber()==0)
 			return false;
-		if(dosageTimes.getMaxDay().getDayNumber()>7)
+		if(dosageStructure.getMaxDay().getDayNumber()>7)
 			return false;
-		if(!dosageTimes.allDosesHaveTheSameSupplText()) // Special case needed for 2008 NS as it may contain multiple texts 
+		if(!dosageStructure.allDosesHaveTheSameSupplText()) // Special case needed for 2008 NS as it may contain multiple texts 
 			return false;
 		return true;
 	}
 
 	@Override
 	public String doConvert(DosageWrapper dosage) {
-		return convert(dosage.getDosageTimes());
+		return convert(dosage.getDosageStructure());
 	}
 
-	public String convert(StructuredDosageWrapper dosageTimes) {
+	public String convert(DosageStructureWrapper dosageStructure) {
 		StringBuilder s = new StringBuilder();		
-		appendDosageStart(s, dosageTimes);
+		appendDosageStart(s, dosageStructure);
 		s.append(", forløbet gentages hver uge");
-		appendNoteText(s, dosageTimes);
+		appendNoteText(s, dosageStructure);
 		s.append(INDENT+"Doseringsforløb:\n");
-		appendDays(s, dosageTimes);
+		appendDays(s, dosageStructure);
 		return s.toString();	
 	}
 
 	@Override
-	protected int appendDays(StringBuilder s, StructuredDosageWrapper dosageTimes) {
+	protected int appendDays(StringBuilder s, DosageStructureWrapper dosageStructure) {
 		// Make a sorted list of weekdays
-		ArrayList<DayOfWeek> daysOfWeek = sortDaysOfWeek(dosageTimes);		
+		ArrayList<DayOfWeek> daysOfWeek = sortDaysOfWeek(dosageStructure);		
 		// Make text
 		int appendedLines = 0;
 		for(DayOfWeek e: daysOfWeek) {
@@ -82,16 +82,16 @@ public class WeeklyRepeatedConverterImpl extends LongTextConverterImpl {
 				s.append("\n");
 			appendedLines++;
 			s.append(INDENT+e.name+": ");
-			s.append(makeDaysDosage(dosageTimes, e.day));
+			s.append(makeDaysDosage(dosageStructure, e.day));
 		}		
 		return appendedLines;
 	}
 
-	public static ArrayList<DayOfWeek> sortDaysOfWeek(StructuredDosageWrapper dosageTimes) {
+	public static ArrayList<DayOfWeek> sortDaysOfWeek(DosageStructureWrapper dosageStructure) {
 		// First convert all days (up to 7) to day of week and DK name ((1, Mandag) etc).
 		ArrayList<DayOfWeek> daysOfWeek = new ArrayList<DayOfWeek>();
-		for(DayWrapper day: dosageTimes.getDays()) {
-			daysOfWeek.add(makeDayOfWeekAndName(dosageTimes.getStartDateOrDateTime(), day));
+		for(DayWrapper day: dosageStructure.getDays()) {
+			daysOfWeek.add(makeDayOfWeekAndName(dosageStructure.getStartDateOrDateTime(), day));
 		}
 		// Sort according to day of week (Monday always first)
 		Collections.sort(daysOfWeek, new Comparator<DayOfWeek>() {

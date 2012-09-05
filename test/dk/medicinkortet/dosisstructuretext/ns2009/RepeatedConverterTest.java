@@ -37,7 +37,7 @@ import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.RepeatedConver
 import dk.medicinkortet.dosisstructuretext.vowrapper.DayWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.PlainDoseWrapper;
-import dk.medicinkortet.dosisstructuretext.vowrapper.StructuredDosageWrapper;
+import dk.medicinkortet.dosisstructuretext.vowrapper.DosageStructureWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.TimedDoseWrapper;
 
 public class RepeatedConverterTest {
@@ -45,7 +45,7 @@ public class RepeatedConverterTest {
 	@Test
 	public void test3stk2gangeDaglig() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			StructuredDosageWrapper.makeStructuredDosage(
+			DosageStructureWrapper.makeStructuredDosage(
 				1, "stk", null, TestHelper.toDate("2011-01-01"), TestHelper.toDate("2011-01-30"), 
 				DayWrapper.makeDay(
 					1, 
@@ -72,7 +72,7 @@ public class RepeatedConverterTest {
 	@Test
 	public void test1stk3gangeDagligVedMaaltid() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			StructuredDosageWrapper.makeStructuredDosage(
+			DosageStructureWrapper.makeStructuredDosage(
 				1, "stk", "ved måltid", TestHelper.toDate("2011-01-01"), TestHelper.toDate("2011-01-30"), 
 				DayWrapper.makeDay(
 					1, 
@@ -99,7 +99,7 @@ public class RepeatedConverterTest {
 	@Test
 	public void test1stkDagligVedMaaltid() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-				StructuredDosageWrapper.makeStructuredDosage(
+				DosageStructureWrapper.makeStructuredDosage(
 					1, "stk", "ved måltid", TestHelper.toDate("2011-01-01"), TestHelper.toDate("2011-01-30"), 
 					DayWrapper.makeDay(
 						1, 
@@ -121,7 +121,7 @@ public class RepeatedConverterTest {
 	@Test
 	public void test1Til2stk2GangeDaglig() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-				StructuredDosageWrapper.makeStructuredDosage(
+				DosageStructureWrapper.makeStructuredDosage(
 					1, "stk", null, TestHelper.toDate("2011-01-01"), TestHelper.toDate("2011-01-30"), 
 					DayWrapper.makeDay(
 						1, 
@@ -152,7 +152,7 @@ public class RepeatedConverterTest {
 	@Test
 	public void test1stkHver2DagVedMaaltid() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			StructuredDosageWrapper.makeStructuredDosage(
+			DosageStructureWrapper.makeStructuredDosage(
 				2, "stk", "ved måltid", TestHelper.toDate("2011-01-01"), TestHelper.toDate("2011-01-30"), 
 				DayWrapper.makeDay(
 					1, 
@@ -179,7 +179,7 @@ public class RepeatedConverterTest {
 	@Test
 	public void test1stkOmUgenVedMaaltid() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			StructuredDosageWrapper.makeStructuredDosage(
+			DosageStructureWrapper.makeStructuredDosage(
 				7, "stk", "ved måltid", TestHelper.toDate("2011-01-01"), TestHelper.toDate("2011-01-30"), 
 				DayWrapper.makeDay(
 					1, 
@@ -205,7 +205,7 @@ public class RepeatedConverterTest {
 	@Test
 	public void test1stkOmMaanedenVedMaaltid() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			StructuredDosageWrapper.makeStructuredDosage(
+			DosageStructureWrapper.makeStructuredDosage(
 				30, "stk", "ved måltid", TestHelper.toDate("2011-01-01"), TestHelper.toDate("2013-01-01"), 
 				DayWrapper.makeDay(
 					1, 
@@ -231,7 +231,7 @@ public class RepeatedConverterTest {
 	@Test
 	public void test2_5stk1GangOmUgenVedMaaltid() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			StructuredDosageWrapper.makeStructuredDosage(
+			DosageStructureWrapper.makeStructuredDosage(
 				7, "stk", "ved måltid", TestHelper.toDate("2011-01-01"), TestHelper.toDate("2013-01-01"), 
 				DayWrapper.makeDay(
 					1, 
@@ -256,7 +256,7 @@ public class RepeatedConverterTest {
 	@Test
 	public void test2_5Stk2GangeSammeDag1GangOmUgenVedMaaltid() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			StructuredDosageWrapper.makeStructuredDosage(
+			DosageStructureWrapper.makeStructuredDosage(
 				7, "stk", "ved måltid", TestHelper.toDate("2011-01-01"), TestHelper.toDate("2013-01-01"), 
 				DayWrapper.makeDay(
 					1, 
@@ -283,7 +283,7 @@ public class RepeatedConverterTest {
 	@Test
 	public void test2_5stk1GangOmMaanedenVedMaaltid() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			StructuredDosageWrapper.makeStructuredDosage(
+			DosageStructureWrapper.makeStructuredDosage(
 				30, "stk", "ved måltid", TestHelper.toDate("2011-01-01"), TestHelper.toDate("2013-01-01"), 
 				DayWrapper.makeDay(
 					1,
@@ -309,7 +309,7 @@ public class RepeatedConverterTest {
 	@Test
 	public void test2_5Stk2GangeSammeDag1GangOmMaanedenVedMaaltid() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			StructuredDosageWrapper.makeStructuredDosage(
+			DosageStructureWrapper.makeStructuredDosage(
 				30, "stk", "ved måltid", TestHelper.toDate("2011-01-01"), TestHelper.toDate("2013-01-01"), 
 				DayWrapper.makeDay(
 					1, 
@@ -336,7 +336,7 @@ public class RepeatedConverterTest {
 	@Test
 	public void test2_5stkHver5DagVedMaaltid() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			StructuredDosageWrapper.makeStructuredDosage(
+			DosageStructureWrapper.makeStructuredDosage(
 				5, "stk", "ved måltid", TestHelper.toDate("2011-01-01"), TestHelper.toDate("2013-01-01"), 
 				DayWrapper.makeDay(
 					1, 
@@ -362,7 +362,7 @@ public class RepeatedConverterTest {
 	@Test
 	public void test2_5stk2GangeSammeDagHver5DagVedMaaltid() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			StructuredDosageWrapper.makeStructuredDosage(
+			DosageStructureWrapper.makeStructuredDosage(
 				5, "stk", "ved måltid", TestHelper.toDate("2011-01-01"), TestHelper.toDate("2013-01-01"), 
 				DayWrapper.makeDay(
 					1, 
@@ -389,7 +389,7 @@ public class RepeatedConverterTest {
 	@Test
 	public void test0_5stk1GangSammeDagHver5DagVedMaaltid() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			StructuredDosageWrapper.makeStructuredDosage(
+			DosageStructureWrapper.makeStructuredDosage(
 				5, "stk", "ved måltid", TestHelper.toDate("2011-01-01"), TestHelper.toDate("2013-01-01"), 
 				DayWrapper.makeDay(
 					1, 
@@ -416,7 +416,7 @@ public class RepeatedConverterTest {
 	@Test
 	public void test1stkDagligKl0800() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			StructuredDosageWrapper.makeStructuredDosage(
+			DosageStructureWrapper.makeStructuredDosage(
 				1, "stk", null, TestHelper.toDate("2011-01-01"), TestHelper.toDate("2011-01-30"), 
 				DayWrapper.makeDay(
 					1, 

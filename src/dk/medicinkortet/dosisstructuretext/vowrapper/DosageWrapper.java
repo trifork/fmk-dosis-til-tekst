@@ -34,7 +34,7 @@ public class DosageWrapper {
 	// Wrapped values
 	private boolean isAdministrationAccordingToSchema;
 	private String freeText;
-	private StructuredDosageWrapper dosageTimes;
+	private DosageStructureWrapper dosageStructure;
 	
 	/**
 	 * Initialises the dosage wrapper with a DosageStructure in the 2012/06/01 namespace.  
@@ -44,7 +44,7 @@ public class DosageWrapper {
 		this(
 			dosage.getAdministrationAccordingToSchemaInLocalSystem()!=null, 
 			dosage.getFreeText(), 
-			dosage.getDosageStructure()!=null ? new StructuredDosageWrapper(dosage.getDosageStructure()) : null);
+			dosage.getDosageStructure()!=null ? new DosageStructureWrapper(dosage.getDosageStructure()) : null);
 	}
 
 	/**
@@ -55,7 +55,7 @@ public class DosageWrapper {
 		this(
 			dosageStructure.getAdministrationAccordingToSchemeInLocalSystemIndicator()!=null, 
 			dosageStructure.getDosageFreeText(), 
-			dosageStructure.getDosageTimesStructure()!=null ? new StructuredDosageWrapper(dosageStructure.getDosageTimesStructure()) : null);
+			dosageStructure.getDosageTimesStructure()!=null ? new DosageStructureWrapper(dosageStructure.getDosageTimesStructure()) : null);
 	}
 
 	/**
@@ -66,18 +66,18 @@ public class DosageWrapper {
 		this(
 			dosageStructure.getAdministrationAccordingToSchemeInLocalSystemIndicator()!=null, 
 			dosageStructure.getDosageFreeText(), 
-			dosageStructure.getDosageTimesStructure()!=null ? new StructuredDosageWrapper(dosageStructure.getDosageTimesStructure()) : null); 
+			dosageStructure.getDosageTimesStructure()!=null ? new DosageStructureWrapper(dosageStructure.getDosageTimesStructure()) : null); 
 	}
 
-	public DosageWrapper(boolean isAdministrationAccordingToSchema, String freeText, StructuredDosageWrapper dosageTimes) {
+	public DosageWrapper(boolean isAdministrationAccordingToSchema, String freeText, DosageStructureWrapper dosageStructure) {
 		this.isAdministrationAccordingToSchema = isAdministrationAccordingToSchema;
 		this.freeText = freeText; 
-		this.dosageTimes = dosageTimes;
+		this.dosageStructure = dosageStructure;
 		Validator.validate(this);
 	}
 		
-	public static DosageWrapper makeStructuredDosage(StructuredDosageWrapper dosageTimes) {
-		return new DosageWrapper(false, null, dosageTimes);
+	public static DosageWrapper makeStructuredDosage(DosageStructureWrapper dosageStructure) {
+		return new DosageWrapper(false, null, dosageStructure);
 	}
 
 	public static DosageWrapper makeFreeTextDosage(String freeText) {
@@ -106,7 +106,7 @@ public class DosageWrapper {
 	 * @return Returns true if the dosage is structured
 	 */
 	public boolean isStructured() {
-		return getDosageTimes()!=null;
+		return getDosageStructure()!=null;
 	}
 
 	/**
@@ -120,8 +120,8 @@ public class DosageWrapper {
 	 * @return A wrapped DosageTimes object containing a structured dosage, or null if the 
 	 * dosage is not of this kind 
 	 */
-	public StructuredDosageWrapper getDosageTimes() {
-		return dosageTimes;
+	public DosageStructureWrapper getDosageStructure() {
+		return dosageStructure;
 	}
 	
 }

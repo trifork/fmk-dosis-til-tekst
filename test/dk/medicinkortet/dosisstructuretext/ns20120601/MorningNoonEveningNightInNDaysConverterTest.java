@@ -20,7 +20,7 @@
 * National Board of e-Health (NSI). All Rights Reserved.
 */
 
-package dk.medicinkortet.dosisstructuretext.ns2009;
+package dk.medicinkortet.dosisstructuretext.ns20120601;
 
 import java.math.BigDecimal;
 
@@ -43,28 +43,33 @@ import dk.medicinkortet.dosisstructuretext.vowrapper.PlainDoseWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DosageStructureWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.TimedDoseWrapper;
 
+/**
+ * The purpose of this test class is to test new functionality added in FMK 1.4 (2012/06/01 namespace). 
+ * The test of the general functionality is done in the testclass of the same name in the 
+ * dk.medicinkortet.dosisstructuretext.ns2009 package. 
+ */
 public class MorningNoonEveningNightInNDaysConverterTest {
 	
 	@Test
-	public void test1TabletMorgenI5Dage() throws Exception {
+	public void testUnits() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
 			DosageStructureWrapper.makeStructuredDosage(
-				0, "tabletter", "ved måltid", TestHelper.toDate("2011-01-01"), TestHelper.toDate("2011-01-05"), 
+				0, null, "tablet", "tabletter", "ved måltid", TestHelper.toDate("2011-01-01"), TestHelper.toDate("2011-01-05"), null, null, 
 					DayWrapper.makeDay(
 						1, 
-						MorningDoseWrapper.makeDose(new BigDecimal(1))),
+						MorningDoseWrapper.makeDose(new BigDecimal(1), false)),
 					DayWrapper.makeDay(
 						2, 
-						MorningDoseWrapper.makeDose(new BigDecimal(1))),
+						MorningDoseWrapper.makeDose(new BigDecimal(1), false)),
 					DayWrapper.makeDay(
 						3, 
-						MorningDoseWrapper.makeDose(new BigDecimal(1))),
+						MorningDoseWrapper.makeDose(new BigDecimal(1), false)),
 					DayWrapper.makeDay(
 						4, 
-						MorningDoseWrapper.makeDose(new BigDecimal(1))),
+						MorningDoseWrapper.makeDose(new BigDecimal(1), false)),
 					DayWrapper.makeDay(
 						5, 
-						MorningDoseWrapper.makeDose(new BigDecimal(1)))));				
+						MorningDoseWrapper.makeDose(new BigDecimal(1), false))));				
 		Assert.assertEquals(
 				DefaultLongTextConverterImpl.class, 
 				LongTextConverter.getConverterClass(dosage));
@@ -86,8 +91,50 @@ public class MorningNoonEveningNightInNDaysConverterTest {
 		Assert.assertEquals(
 				1.0, 
 				DailyDosisCalculator.calculate(dosage).getValue().doubleValue(), 
-				0.000000001);
+				0.000000001); 			
 		Assert.assertEquals(DosageType.Temporary, DosageTypeCalculator.calculate(dosage));						
+	}
+	
+	@Test
+	public void testAccordingToNeed() throws Exception {
+		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
+			DosageStructureWrapper.makeStructuredDosage(
+				0, null, "tablet", "tabletter", "ved måltid", TestHelper.toDate("2011-01-01"), TestHelper.toDate("2011-01-05"), null, null, 
+					DayWrapper.makeDay(
+						1, 
+						MorningDoseWrapper.makeDose(new BigDecimal(1), true)),
+					DayWrapper.makeDay(
+						2, 
+						MorningDoseWrapper.makeDose(new BigDecimal(1), true)),
+					DayWrapper.makeDay(
+						3, 
+						MorningDoseWrapper.makeDose(new BigDecimal(1), true)),
+					DayWrapper.makeDay(
+						4, 
+						MorningDoseWrapper.makeDose(new BigDecimal(1), true)),
+					DayWrapper.makeDay(
+						5, 
+						MorningDoseWrapper.makeDose(new BigDecimal(1), true))));				
+		Assert.assertEquals(
+				DefaultLongTextConverterImpl.class, 
+				LongTextConverter.getConverterClass(dosage));
+		Assert.assertEquals(
+				"Doseringsforløbet starter lørdag den 1. januar 2011 og ophører efter det angivne forløb:\n"+
+				"   Doseringsforløb:\n"+
+				"   Lørdag den 1. januar 2011: 1 tablet morgen efter behov ved måltid højst 1 gang daglig\n"+
+				"   Søndag den 2. januar 2011: 1 tablet morgen efter behov ved måltid højst 1 gang daglig\n"+
+				"   Mandag den 3. januar 2011: 1 tablet morgen efter behov ved måltid højst 1 gang daglig\n"+
+				"   Tirsdag den 4. januar 2011: 1 tablet morgen efter behov ved måltid højst 1 gang daglig\n"+
+				"   Onsdag den 5. januar 2011: 1 tablet morgen efter behov ved måltid højst 1 gang daglig",
+				LongTextConverter.convert(dosage));
+		Assert.assertEquals(
+				MorningNoonEveningNightInNDaysConverterImp.class, 
+				ShortTextConverter.getConverterClass(dosage));
+		Assert.assertEquals(
+				"1 tablet morgen efter behov ved måltid i 5 dage", 
+				ShortTextConverter.convert(dosage));
+		Assert.assertNull(DailyDosisCalculator.calculate(dosage).getValue());
+		Assert.assertEquals(DosageType.AccordingToNeed, DosageTypeCalculator.calculate(dosage));						
 	}
 		
 }

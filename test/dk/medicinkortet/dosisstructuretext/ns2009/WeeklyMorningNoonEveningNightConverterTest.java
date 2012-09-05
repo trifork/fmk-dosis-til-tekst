@@ -41,14 +41,14 @@ import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.EveningDoseWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.MorningDoseWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.PlainDoseWrapper;
-import dk.medicinkortet.dosisstructuretext.vowrapper.StructuredDosageWrapper;
+import dk.medicinkortet.dosisstructuretext.vowrapper.DosageStructureWrapper;
 
 public class WeeklyMorningNoonEveningNightConverterTest {
 
 	@Test /* TODO: This is a candidate for a short text converter */
 	public void testWeeklyPlain() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			StructuredDosageWrapper.makeStructuredDosage(
+			DosageStructureWrapper.makeStructuredDosage(
 				7, "stk", "ved måltid", TestHelper.toDate("2012-06-08"), TestHelper.toDate("2012-12-31"), 
 				DayWrapper.makeDay(
 					1, 
@@ -89,7 +89,7 @@ public class WeeklyMorningNoonEveningNightConverterTest {
 	@Test
 	public void testWeeklyMorningAndEvening() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			StructuredDosageWrapper.makeStructuredDosage(
+			DosageStructureWrapper.makeStructuredDosage(
 				7, "stk", "ved måltid", TestHelper.toDate("2012-06-08"), TestHelper.toDate("2012-12-31"), 
 				DayWrapper.makeDay(
 					1, 

@@ -36,7 +36,7 @@ import dk.medicinkortet.web.shared.jaxb.dkma.medicinecard20120601.DosageDay;
 /**
  * Wrapper for a structured dosage element. The corresponding wrapped xml element is DosageTimesStructure.  
  */
-public class StructuredDosageWrapper {
+public class DosageStructureWrapper {
 
 	// Mapped values
 	private int iterationInterval;
@@ -56,7 +56,7 @@ public class StructuredDosageWrapper {
 	protected Boolean areAllDosesTheSame;
 	protected Boolean areAllDaysTheSame;
 	
-	public StructuredDosageWrapper(dk.medicinkortet.web.shared.jaxb.dkma.medicinecard20120601.DosageStructure dosageStructure) {
+	public DosageStructureWrapper(dk.medicinkortet.web.shared.jaxb.dkma.medicinecard20120601.DosageStructure dosageStructure) {
 		this(
 			dosageStructure.getIterationInterval(),
 			dosageStructure.getUnitText(), 
@@ -72,7 +72,7 @@ public class StructuredDosageWrapper {
 			dosageStructure.getSupplementaryText()); // There is always a unique suppl. text in the 2009 namespace, as it is set on the structured dosage itesef
 	}
 
-	public StructuredDosageWrapper(dk.medicinkortet.web.shared.jaxb.dkma.medicinecard2009.DosageTimesStructure dosageTimesStructure) {
+	public DosageStructureWrapper(dk.medicinkortet.web.shared.jaxb.dkma.medicinecard2009.DosageTimesStructure dosageTimesStructure) {
 		this(
 			dosageTimesStructure.getDosageTimesIterationIntervalQuantity(),
 			dosageTimesStructure.getDosageQuantityUnitText(), 
@@ -87,7 +87,7 @@ public class StructuredDosageWrapper {
 			dosageTimesStructure.getDosageSupplementaryText()); // There is always a unique suppl. text in the 2009 namespace, as it is set on the structured dosage itesef
 	}
 
-	public StructuredDosageWrapper(dk.medicinkortet.web.shared.jaxb.dkma.medicinecard2008.DosageTimesStructure dosageTimesStructure) {
+	public DosageStructureWrapper(dk.medicinkortet.web.shared.jaxb.dkma.medicinecard2008.DosageTimesStructure dosageTimesStructure) {
 		this(
 			dosageTimesStructure.getDosageTimesIterationIntervalQuantity(),
 			dosageTimesStructure.getDosageQuantityUnitText().value(), 
@@ -105,8 +105,8 @@ public class StructuredDosageWrapper {
 	/**
 	 * Factory metod to create structured dosages
 	 */
-	public static StructuredDosageWrapper makeStructuredDosage(int iterationInterval, String unit, String supplText, Date startDate, Date endDate, DayWrapper... days) {
-		return new StructuredDosageWrapper(
+	public static DosageStructureWrapper makeStructuredDosage(int iterationInterval, String unit, String supplText, Date startDate, Date endDate, DayWrapper... days) {
+		return new DosageStructureWrapper(
 			iterationInterval, unit, null, null, supplText, 
 			startDate, endDate, null, null, 
 			wrap(days), 
@@ -117,9 +117,9 @@ public class StructuredDosageWrapper {
 	/**
 	 * Factory metod to create structured dosages
 	 */
-	public static StructuredDosageWrapper makeStructuredDosage(int iterationInterval, String unit, String supplText, Date startDate, Date endDate, Date startDateTime, Date endDateTime, DayWrapper... days) {
-		return new StructuredDosageWrapper(
-			iterationInterval, unit, null, null, supplText, 
+	public static DosageStructureWrapper makeStructuredDosage(int iterationInterval, String unit, String unitSingular, String unitPlural, String supplText, Date startDate, Date endDate, Date startDateTime, Date endDateTime, DayWrapper... days) {
+		return new DosageStructureWrapper(
+			iterationInterval, unit, unitSingular, unitPlural, supplText, 
 			startDate, endDate, startDateTime, endDateTime, 
 			wrap(days), 
 			true, 
@@ -129,8 +129,8 @@ public class StructuredDosageWrapper {
 	/**
 	 * Factory metod to create structured dosages in 2008 namespace
 	 */
-	public static StructuredDosageWrapper makeStructuredDosage(int iterationInterval, DosageQuantityUnitTextType unit, Date startDate, Date endDate, DayWrapper... days) {
-		return new StructuredDosageWrapper(
+	public static DosageStructureWrapper makeStructuredDosage(int iterationInterval, DosageQuantityUnitTextType unit, Date startDate, Date endDate, DayWrapper... days) {
+		return new DosageStructureWrapper(
 			iterationInterval, unit.value(), null, null, null, 
 			startDate, endDate, null, null, 
 			wrap(days),
@@ -138,7 +138,7 @@ public class StructuredDosageWrapper {
 			getUniqueSupplText(days)); 
 	}
 	
-	private StructuredDosageWrapper(
+	private DosageStructureWrapper(
 			int iterationInterval, String unit, String unitSingular, String unitPlural, String supplText, 
 			Date startDate, Date endDate, Date startDateTime, Date endDateTime,
 			List<DayWrapper> days, 
@@ -400,6 +400,18 @@ public class StructuredDosageWrapper {
 	
 	public String getUnit() {
 		return unit;
+	}
+	
+	public String getUnitSingular() {
+		return unitSingular;
+	}
+	
+	public String getUnitPlural() {
+		return unitPlural;
+	}
+
+	public boolean hasUnitOrUnits() {
+		return (unit!=null) || (unitSingular!=null && unitPlural!=null);
 	}
 	
 	public String getSupplText() {

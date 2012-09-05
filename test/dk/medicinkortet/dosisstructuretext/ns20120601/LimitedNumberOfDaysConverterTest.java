@@ -20,7 +20,7 @@
 * National Board of e-Health (NSI). All Rights Reserved.
 */
 
-package dk.medicinkortet.dosisstructuretext.ns2009;
+package dk.medicinkortet.dosisstructuretext.ns20120601;
 
 import java.math.BigDecimal;
 
@@ -40,13 +40,21 @@ import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.PlainDoseWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.TimedDoseWrapper;
 
+/**
+ * The purpose of this test class is to test new functionality added in FMK 1.4 (2012/06/01 namespace). 
+ * The test of the general functionality is done in the testclass of the same name in the 
+ * dk.medicinkortet.dosisstructuretext.ns2009 package. 
+ */
 public class LimitedNumberOfDaysConverterTest {
 	
 	@Test
-	public void test4Stk2GangeDagligI3DageVedMaaltid() throws Exception {
+	public void testUnits() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
 			DosageStructureWrapper.makeStructuredDosage(
-				0, "stk", "ved måltid", TestHelper.toDate("2011-01-01"), TestHelper.toDate("2011-01-04"), 
+				0, 
+				null, "måleskefuld", "måleskefulde", 
+				"ved måltid", 
+				TestHelper.toDate("2011-01-01"), TestHelper.toDate("2011-01-04"), null, null,  
 				DayWrapper.makeDay(
 					1, 
 					PlainDoseWrapper.makeDose(new BigDecimal(4)), 
@@ -66,16 +74,16 @@ public class LimitedNumberOfDaysConverterTest {
 		Assert.assertEquals(
 				"Doseringsforløbet starter lørdag den 1. januar 2011 og ophører efter det angivne forløb:\n"+
 				"   Doseringsforløb:\n"+
-				"   Lørdag den 1. januar 2011: 4 stk ved måltid 2 gange\n"+
-				"   Søndag den 2. januar 2011: 4 stk ved måltid 2 gange\n"+
-				"   Mandag den 3. januar 2011: 4 stk ved måltid 2 gange\n"+
-				"   Tirsdag den 4. januar 2011: 4 stk ved måltid 2 gange",
+				"   Lørdag den 1. januar 2011: 4 måleskefulde ved måltid 2 gange\n"+
+				"   Søndag den 2. januar 2011: 4 måleskefulde ved måltid 2 gange\n"+
+				"   Mandag den 3. januar 2011: 4 måleskefulde ved måltid 2 gange\n"+
+				"   Tirsdag den 4. januar 2011: 4 måleskefulde ved måltid 2 gange",
 				LongTextConverter.convert(dosage));
 		Assert.assertEquals(
 				LimitedNumberOfDaysConverterImpl.class, 
 				ShortTextConverter.getConverterClass(dosage));
 		Assert.assertEquals(
-				"4 stk 2 gange daglig i 4 dage ved måltid", 
+				"4 måleskefulde 2 gange daglig i 4 dage ved måltid", 
 				ShortTextConverter.convert(dosage));
 		Assert.assertEquals(
 				8.0, 
@@ -83,46 +91,46 @@ public class LimitedNumberOfDaysConverterTest {
 				0.000000001); 				
 		Assert.assertEquals(DosageType.Temporary, DosageTypeCalculator.calculate(dosage));
 	}
-
+	
 	@Test
-	public void test4Til6Stk2GangeDagligI3DageVedMaaltid() throws Exception {
+	public void testAccordingToNeed() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-				DosageStructureWrapper.makeStructuredDosage(
-					0, "stk", "ved måltid", TestHelper.toDate("2011-01-01"), TestHelper.toDate("2011-01-04"), 
-					DayWrapper.makeDay(
-						1, 
-						PlainDoseWrapper.makeDose(new BigDecimal(4), new BigDecimal(6)), 
-						PlainDoseWrapper.makeDose(new BigDecimal(4), new BigDecimal(6))), 
-					DayWrapper.makeDay(
-						2, 
-						PlainDoseWrapper.makeDose(new BigDecimal(4), new BigDecimal(6)), 
-						PlainDoseWrapper.makeDose(new BigDecimal(4), new BigDecimal(6))), 
-					DayWrapper.makeDay(
-						3, 
-						PlainDoseWrapper.makeDose(new BigDecimal(4), new BigDecimal(6)), 
-						PlainDoseWrapper.makeDose(new BigDecimal(4), new BigDecimal(6)))));		
+			DosageStructureWrapper.makeStructuredDosage(
+				0, 
+				null, "måleskefuld", "måleskefulde", 
+				"ved måltid", 
+				TestHelper.toDate("2011-01-01"), TestHelper.toDate("2011-01-04"), null, null,  
+				DayWrapper.makeDay(
+					1, 
+					PlainDoseWrapper.makeDose(new BigDecimal(4), true), 
+					PlainDoseWrapper.makeDose(new BigDecimal(4), true)), 
+				DayWrapper.makeDay(
+					2, 
+					PlainDoseWrapper.makeDose(new BigDecimal(4), true), 
+					PlainDoseWrapper.makeDose(new BigDecimal(4), true)), 
+				DayWrapper.makeDay(
+					3, 
+					PlainDoseWrapper.makeDose(new BigDecimal(4), true), 
+					PlainDoseWrapper.makeDose(new BigDecimal(4), true)), 
+				DayWrapper.makeDay(
+					4, 
+					PlainDoseWrapper.makeDose(new BigDecimal(4), true), 
+					PlainDoseWrapper.makeDose(new BigDecimal(4), true))));		
 		Assert.assertEquals(
 				"Doseringsforløbet starter lørdag den 1. januar 2011 og ophører efter det angivne forløb:\n"+
 				"   Doseringsforløb:\n"+
-				"   Lørdag den 1. januar 2011: 4-6 stk ved måltid 2 gange\n"+
-				"   Søndag den 2. januar 2011: 4-6 stk ved måltid 2 gange\n"+
-				"   Mandag den 3. januar 2011: 4-6 stk ved måltid 2 gange",
+				"   Lørdag den 1. januar 2011: 4 måleskefulde efter behov ved måltid højst 2 gange daglig\n"+
+				"   Søndag den 2. januar 2011: 4 måleskefulde efter behov ved måltid højst 2 gange daglig\n"+
+				"   Mandag den 3. januar 2011: 4 måleskefulde efter behov ved måltid højst 2 gange daglig\n"+
+				"   Tirsdag den 4. januar 2011: 4 måleskefulde efter behov ved måltid højst 2 gange daglig",
 				LongTextConverter.convert(dosage));
 		Assert.assertEquals(
 				LimitedNumberOfDaysConverterImpl.class, 
 				ShortTextConverter.getConverterClass(dosage));
 		Assert.assertEquals(
-				"4-6 stk 2 gange daglig i 3 dage ved måltid", 
+				"4 måleskefulde 2 gange daglig i 4 dage ved måltid", 
 				ShortTextConverter.convert(dosage));
-		Assert.assertEquals(
-				8.0, 
-				DailyDosisCalculator.calculate(dosage).getInterval().getMinimum().doubleValue(), 
-				0.000000001); 				
-		Assert.assertEquals(
-				12.0, 
-				DailyDosisCalculator.calculate(dosage).getInterval().getMaximum().doubleValue(), 
-				0.000000001); 				
-		Assert.assertEquals(DosageType.Temporary, DosageTypeCalculator.calculate(dosage));
+		Assert.assertNull(DailyDosisCalculator.calculate(dosage).getValue()); 				
+		Assert.assertEquals(DosageType.AccordingToNeed, DosageTypeCalculator.calculate(dosage));
 	}
-		
 }

@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DayWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DoseWrapper;
-import dk.medicinkortet.dosisstructuretext.vowrapper.StructuredDosageWrapper;
+import dk.medicinkortet.dosisstructuretext.vowrapper.DosageStructureWrapper;
 
 public class Validator {
 
@@ -39,18 +39,18 @@ public class Validator {
 			throw new IllegalArgumentException("The DosageStructure must only contain one child element");
 		
 		if(dosage.isStructured())
-			validate(dosage.getDosageTimes());
+			validate(dosage.getDosageStructure());
 	}
 
-	public static void validate(StructuredDosageWrapper dosageTimes) {
-		if(dosageTimes.getStartDateOrDateTime()==null)
+	public static void validate(DosageStructureWrapper dosageStructure) {
+		if(dosageStructure.getStartDateOrDateTime()==null)
 			throw new IllegalArgumentException("Start date or date time is required");
-		if(dosageTimes.getUnit()==null)
+		if(!dosageStructure.hasUnitOrUnits())
 			throw new IllegalArgumentException("Unit is required");
-		if(dosageTimes.getDays()==null || dosageTimes.getDays().size()==0)
+		if(dosageStructure.getDays()==null || dosageStructure.getDays().size()==0)
 			throw new IllegalArgumentException("At least one day is required");
 		int previousDayNumber = -1;
-		for(DayWrapper day: dosageTimes.getDays()) {
+		for(DayWrapper day: dosageStructure.getDays()) {
 			if(day.getDayNumber() <= previousDayNumber)
 				throw new IllegalArgumentException("Day numbers must be ascending, found day numbers "+previousDayNumber+" and "+day.getDayNumber());
 			previousDayNumber = day.getDayNumber();
@@ -64,9 +64,9 @@ public class Validator {
 				if(dose.getDoseQuantity()==null && ((dose.getMinimalDoseQuantity()==null && dose.getMaximalDoseQuantity()!=null) || (dose.getMinimalDoseQuantity()!=null && dose.getMaximalDoseQuantity()==null))) 
 					throw new IllegalArgumentException("Doses must not contain a min-max quantity with open interval ends, found for "+dose.getLabel()+" dose day "+day.getDayNumber());
 			}
-			if(dosageTimes.getIterationInterval()>0)
-				if(day.getDayNumber()>dosageTimes.getIterationInterval())
-					throw new IllegalArgumentException("If the iteration interval is not zero (i.e. the dose is iterated) the day number must not exceed the iteration interval, the iteration interval is "+dosageTimes.getIterationInterval()+" and a day number "+day.getDayNumber()+" was found");
+			if(dosageStructure.getIterationInterval()>0)
+				if(day.getDayNumber()>dosageStructure.getIterationInterval())
+					throw new IllegalArgumentException("If the iteration interval is not zero (i.e. the dose is iterated) the day number must not exceed the iteration interval, the iteration interval is "+dosageStructure.getIterationInterval()+" and a day number "+day.getDayNumber()+" was found");
 
 			// Remove doses with "0" dose quantity
 			ArrayList<DoseWrapper> toRemove = new ArrayList<DoseWrapper>();

@@ -24,45 +24,45 @@ package dk.medicinkortet.dosisstructuretext.longtextconverterimpl;
 
 import dk.medicinkortet.dosisstructuretext.vowrapper.DayWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
-import dk.medicinkortet.dosisstructuretext.vowrapper.StructuredDosageWrapper;
+import dk.medicinkortet.dosisstructuretext.vowrapper.DosageStructureWrapper;
 
 public class DailyRepeatedConverterImpl extends LongTextConverterImpl {
 
 	@Override
 	public boolean canConvert(DosageWrapper dosage) {
-		if(dosage.getDosageTimes()==null)
+		if(dosage.getDosageStructure()==null)
 			return false;
-		StructuredDosageWrapper dosageTimes = dosage.getDosageTimes();
-		if(dosageTimes.getIterationInterval()!=1)
+		DosageStructureWrapper dosageStructure = dosage.getDosageStructure();
+		if(dosageStructure.getIterationInterval()!=1)
 			return false;
-		if(dosageTimes.getStartDateOrDateTime().equals(dosageTimes.getEndDateOrDateTime()))
+		if(dosageStructure.getStartDateOrDateTime().equals(dosageStructure.getEndDateOrDateTime()))
 			return false; 
-		if(dosageTimes.getDays().size()!=1)
+		if(dosageStructure.getDays().size()!=1)
 			return false;
-		if(dosageTimes.getDays().get(0).getDayNumber()!=1)
+		if(dosageStructure.getDays().get(0).getDayNumber()!=1)
 			return false;
-		if(!dosageTimes.allDosesHaveTheSameSupplText()) // Special case needed for 2008 NS as it may contain multiple texts 
+		if(!dosageStructure.allDosesHaveTheSameSupplText()) // Special case needed for 2008 NS as it may contain multiple texts 
 			return false;
 		return true;
 	}
 
 	@Override
 	public String doConvert(DosageWrapper dosage) {
-		return convert(dosage.getDosageTimes());
+		return convert(dosage.getDosageStructure());
 	}
 
-	public String convert(StructuredDosageWrapper dosageTimes) {
+	public String convert(DosageStructureWrapper dosageStructure) {
 		StringBuilder s = new StringBuilder();		
-		appendDosageStart(s, dosageTimes);
+		appendDosageStart(s, dosageStructure);
 		s.append(" og gentages hver dag:\n");
 
 		s.append(INDENT+"Doseringsforløb:\n");
-		appendDays(s, dosageTimes);
+		appendDays(s, dosageStructure);
 		return s.toString();	
 	}
 	
 	@Override
-	protected String makeDaysLabel(StructuredDosageWrapper dosageTimes, DayWrapper day) {
+	protected String makeDaysLabel(DosageStructureWrapper dosageStructure, DayWrapper day) {
 		return "";
 	}
 

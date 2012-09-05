@@ -20,7 +20,7 @@
 * National Board of e-Health (NSI). All Rights Reserved.
 */
 
-package dk.medicinkortet.dosisstructuretext.ns2009;
+package dk.medicinkortet.dosisstructuretext.ns20120601;
 
 import java.math.BigDecimal;
 
@@ -39,84 +39,63 @@ import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.PlainDoseWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DosageStructureWrapper;
 
+/**
+ * The purpose of this test class is to test new functionality added in FMK 1.4 (2012/06/01 namespace). 
+ * The test of the general functionality is done in the testclass of the same name in the 
+ * dk.medicinkortet.dosisstructuretext.ns2009 package. 
+ */
 public class SimpleAccordingToNeedConverterTest {
 	
 	@Test
-	public void test2StkEfterBehov() throws Exception {
+	public void testUnits() throws Exception {
 		DosageWrapper dosage = 
 			DosageWrapper.makeStructuredDosage(
 				DosageStructureWrapper.makeStructuredDosage(
 					0, 
-					"stk", 
+					null, "tablet", "tabletter", 
 					null,
-					TestHelper.toDate("2011-01-01"), TestHelper.toDate("2011-01-11"), 
+					TestHelper.toDate("2011-01-01"), TestHelper.toDate("2011-01-11"), null, null, 
 					DayWrapper.makeDay(0,
 						PlainDoseWrapper.makeDose(new BigDecimal(2), true))));
 		Assert.assertEquals(
 				"Doseringsforløbet starter lørdag den 1. januar 2011:\n"+
 				"   Doseringsforløb:\n"+
-				"   Efter behov: 2 stk efter behov",
+				"   Efter behov: 2 tabletter efter behov",
 				LongTextConverter.convert(dosage));
 		Assert.assertEquals(
 				SimpleAccordingToNeedConverterImpl.class, 
 				ShortTextConverter.getConverterClass(dosage));
 		Assert.assertEquals(
-				"2 stk efter behov", 
+				"2 tabletter efter behov", 
+				ShortTextConverter.convert(dosage));
+		Assert.assertTrue(DailyDosisCalculator.calculate(dosage).isNone());
+		Assert.assertEquals(DosageType.AccordingToNeed, DosageTypeCalculator.calculate(dosage));				
+	}
+	
+	@Test
+	public void testAccordingToNeed() throws Exception {
+		DosageWrapper dosage = 
+			DosageWrapper.makeStructuredDosage(
+				DosageStructureWrapper.makeStructuredDosage(
+					0, 
+					null, "tablet", "tabletter", 
+					null,
+					TestHelper.toDate("2011-01-01"), TestHelper.toDate("2011-01-11"), null, null,
+					DayWrapper.makeDay(0,
+						PlainDoseWrapper.makeDose(new BigDecimal(2), true))));
+		Assert.assertEquals(
+				"Doseringsforløbet starter lørdag den 1. januar 2011:\n"+
+				"   Doseringsforløb:\n"+
+				"   Efter behov: 2 tabletter efter behov",
+				LongTextConverter.convert(dosage));
+		Assert.assertEquals(
+				SimpleAccordingToNeedConverterImpl.class, 
+				ShortTextConverter.getConverterClass(dosage));
+		Assert.assertEquals(
+				"2 tabletter efter behov", 
 				ShortTextConverter.convert(dosage));
 		Assert.assertTrue(DailyDosisCalculator.calculate(dosage).isNone());
 		Assert.assertEquals(DosageType.AccordingToNeed, DosageTypeCalculator.calculate(dosage));				
 	}
 
-	@Test
-	public void test2StkEfterBehovVedSmerter() throws Exception {
-		DosageWrapper dosage = 
-			DosageWrapper.makeStructuredDosage(
-				DosageStructureWrapper.makeStructuredDosage(
-					0, 
-					"stk", 
-					"ved smerter",
-					TestHelper.toDate("2011-01-01"), TestHelper.toDate("2011-01-11"), 
-					DayWrapper.makeDay(0,
-						PlainDoseWrapper.makeDose(new BigDecimal(2), true))));
-		Assert.assertEquals(
-				"Doseringsforløbet starter lørdag den 1. januar 2011:\n"+
-				"   Doseringsforløb:\n"+
-				"   Efter behov: 2 stk efter behov ved smerter",
-				LongTextConverter.convert(dosage));
-		Assert.assertEquals(
-				SimpleAccordingToNeedConverterImpl.class, 
-				ShortTextConverter.getConverterClass(dosage));
-		Assert.assertEquals(
-				"2 stk efter behov ved smerter", 
-				ShortTextConverter.convert(dosage));
-		Assert.assertTrue(DailyDosisCalculator.calculate(dosage).isNone()); 
-		Assert.assertEquals(DosageType.AccordingToNeed, DosageTypeCalculator.calculate(dosage));				
-	}
-
-	@Test
-	public void test1Til2StkEfterBehov() throws Exception {
-		DosageWrapper dosage = 
-			DosageWrapper.makeStructuredDosage(
-				DosageStructureWrapper.makeStructuredDosage(
-					0, 
-					"stk", 
-					null,
-					TestHelper.toDate("2011-01-01"), TestHelper.toDate("2011-01-11"), 
-					DayWrapper.makeDay(0,
-						PlainDoseWrapper.makeDose(new BigDecimal(1), new BigDecimal(2), true))));
-		Assert.assertEquals(
-				"Doseringsforløbet starter lørdag den 1. januar 2011:\n"+
-				"   Doseringsforløb:\n"+
-				"   Efter behov: 1-2 stk efter behov",
-				LongTextConverter.convert(dosage));
-		Assert.assertEquals(
-				SimpleAccordingToNeedConverterImpl.class, 
-				ShortTextConverter.getConverterClass(dosage));
-		Assert.assertEquals(
-				"1-2 stk efter behov", 
-				ShortTextConverter.convert(dosage));
-		Assert.assertTrue(DailyDosisCalculator.calculate(dosage).isNone()); 
-		Assert.assertEquals(DosageType.AccordingToNeed, DosageTypeCalculator.calculate(dosage));				
-	}
-	
 }

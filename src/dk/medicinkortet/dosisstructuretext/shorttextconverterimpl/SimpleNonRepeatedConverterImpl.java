@@ -25,7 +25,7 @@ package dk.medicinkortet.dosisstructuretext.shorttextconverterimpl;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DayWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DoseWrapper;
-import dk.medicinkortet.dosisstructuretext.vowrapper.StructuredDosageWrapper;
+import dk.medicinkortet.dosisstructuretext.vowrapper.DosageStructureWrapper;
 
 /**
  * Conversion of: Simple non repeated dosage (like "according to need") with suppl. 
@@ -38,34 +38,34 @@ public class SimpleNonRepeatedConverterImpl extends ShortTextConverterImpl {
 
 	@Override
 	public boolean canConvert(DosageWrapper dosage) {
-		if(dosage.getDosageTimes()==null)
+		if(dosage.getDosageStructure()==null)
 			return false;
-		StructuredDosageWrapper dosageTimes = dosage.getDosageTimes();
-		if(dosageTimes.getIterationInterval()!=0)
+		DosageStructureWrapper dosageStructure = dosage.getDosageStructure();
+		if(dosageStructure.getIterationInterval()!=0)
 			return false;		
-		if(dosageTimes.getDays().size()!=1)
+		if(dosageStructure.getDays().size()!=1)
 			return false;
-		DayWrapper day = dosageTimes.getDays().get(0);
-		if(day.getDayNumber()!=0 && (!(dosageTimes.startsAndEndsSameDay() && day.getDayNumber()==1)))
+		DayWrapper day = dosageStructure.getDays().get(0);
+		if(day.getDayNumber()!=0 && (!(dosageStructure.startsAndEndsSameDay() && day.getDayNumber()==1)))
 			return false;		
 		if(day.containsAccordingToNeedDose() || day.containsMorningNoonEveningNightDoses())
 			return false;
 		if(day.getNumberOfDoses()!=1)
 			return false;
-		if(!dosageTimes.allDosesHaveTheSameSupplText()) // Special case needed for 2008 NS as it may contain multiple texts 
+		if(!dosageStructure.allDosesHaveTheSameSupplText()) // Special case needed for 2008 NS as it may contain multiple texts 
 			return false;
 		return true;
 	}
 
 	@Override
 	public String doConvert(DosageWrapper dosage) {
-		StructuredDosageWrapper dosageTimes = dosage.getDosageTimes();
+		DosageStructureWrapper dosageStructure = dosage.getDosageStructure();
 		StringBuilder text = new StringBuilder();
-		DayWrapper day = dosageTimes.getDays().get(0);
+		DayWrapper day = dosageStructure.getDays().get(0);
 		DoseWrapper dose = day.getAllDoses().get(0);
-		text.append(toValue(dose, dosageTimes.getUnit()));
-		if(dosageTimes.getUniqueSupplText()!=null)
-			text.append(" ").append(dosageTimes.getUniqueSupplText());
+		text.append(toValue(dose, dosageStructure));
+		if(dosageStructure.getUniqueSupplText()!=null)
+			text.append(" ").append(dosageStructure.getUniqueSupplText());
 		return text.toString();
 	}
 	

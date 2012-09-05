@@ -26,30 +26,30 @@ import java.util.ArrayList;
 
 import dk.medicinkortet.dosisstructuretext.longtextconverterimpl.WeeklyRepeatedConverterImpl.DayOfWeek;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
-import dk.medicinkortet.dosisstructuretext.vowrapper.StructuredDosageWrapper;
+import dk.medicinkortet.dosisstructuretext.vowrapper.DosageStructureWrapper;
 
 public class WeeklyMorningNoonEveningNightConverterImpl extends ShortTextConverterImpl {
 
 	@Override
 	public boolean canConvert(DosageWrapper dosage) {
-		if(dosage.getDosageTimes()==null)
+		if(dosage.getDosageStructure()==null)
 			return false;
-		StructuredDosageWrapper dosageTimes = dosage.getDosageTimes();
-		if(dosageTimes.getIterationInterval()!=7)
+		DosageStructureWrapper dosageStructure = dosage.getDosageStructure();
+		if(dosageStructure.getIterationInterval()!=7)
 			return false;
-		if(dosageTimes.getStartDateOrDateTime().equals(dosageTimes.getEndDateOrDateTime()))
+		if(dosageStructure.getStartDateOrDateTime().equals(dosageStructure.getEndDateOrDateTime()))
 			return false; 
-		if(dosageTimes.getDays().size()>7)
+		if(dosageStructure.getDays().size()>7)
 			return false;
-		if(dosageTimes.getFirstDay().getDayNumber()==0)
+		if(dosageStructure.getFirstDay().getDayNumber()==0)
 			return false;
-		if(dosageTimes.getMaxDay().getDayNumber()>7)
+		if(dosageStructure.getMaxDay().getDayNumber()>7)
 			return false;
-		if(dosageTimes.containsAccordingToNeedDose() || dosageTimes.containsPlainDose() || dosageTimes.containsTimedDose())
+		if(dosageStructure.containsAccordingToNeedDose() || dosageStructure.containsPlainDose() || dosageStructure.containsTimedDose())
 			return false;
-		if(!dosageTimes.allDosesHaveTheSameSupplText()) // Special case needed for 2008 NS as it may contain multiple texts 
+		if(!dosageStructure.allDosesHaveTheSameSupplText()) // Special case needed for 2008 NS as it may contain multiple texts 
 			return false;
-		if(!dosage.getDosageTimes().allDaysAreTheSame()) // Otherwise the text is too long, and cannot fit into a short text
+		if(!dosage.getDosageStructure().allDaysAreTheSame()) // Otherwise the text is too long, and cannot fit into a short text
 			return false;
 		return true;		
 	}
@@ -57,16 +57,15 @@ public class WeeklyMorningNoonEveningNightConverterImpl extends ShortTextConvert
 	@Override
 	public String doConvert(DosageWrapper dosage) {
 		ArrayList<DayOfWeek> daysOfWeek = 
-				dk.medicinkortet.dosisstructuretext.longtextconverterimpl.WeeklyRepeatedConverterImpl.sortDaysOfWeek(dosage.getDosageTimes());
+				dk.medicinkortet.dosisstructuretext.longtextconverterimpl.WeeklyRepeatedConverterImpl.sortDaysOfWeek(dosage.getDosageStructure());
 		StringBuilder text = new StringBuilder();		
-		String unit = dosage.getDosageTimes().getUnit();
 		
 		DayOfWeek firstDay = daysOfWeek.get(0);
-		MorningNoonEveningNightConverterImpl.appendMorning(firstDay.day, text, unit);
-		MorningNoonEveningNightConverterImpl.appendNoon(firstDay.day, text, unit);
-		MorningNoonEveningNightConverterImpl.appendEvening(firstDay.day, text, unit);
-		MorningNoonEveningNightConverterImpl.appendNight(firstDay.day, text, unit);
-		MorningNoonEveningNightConverterImpl.appendSupplText(dosage.getDosageTimes().getUniqueSupplText(), text);
+		MorningNoonEveningNightConverterImpl.appendMorning(firstDay.day, text, dosage.getDosageStructure());
+		MorningNoonEveningNightConverterImpl.appendNoon(firstDay.day, text, dosage.getDosageStructure());
+		MorningNoonEveningNightConverterImpl.appendEvening(firstDay.day, text, dosage.getDosageStructure());
+		MorningNoonEveningNightConverterImpl.appendNight(firstDay.day, text, dosage.getDosageStructure());
+		MorningNoonEveningNightConverterImpl.appendSupplText(dosage.getDosageStructure().getUniqueSupplText(), text);
 		int i = 0;
 		for(DayOfWeek d: daysOfWeek) {
 			if(i==daysOfWeek.size()-1 && daysOfWeek.size()>1)

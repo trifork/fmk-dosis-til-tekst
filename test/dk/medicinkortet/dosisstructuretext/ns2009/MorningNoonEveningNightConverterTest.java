@@ -40,14 +40,14 @@ import dk.medicinkortet.dosisstructuretext.vowrapper.EveningDoseWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.MorningDoseWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.NightDoseWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.NoonDoseWrapper;
-import dk.medicinkortet.dosisstructuretext.vowrapper.StructuredDosageWrapper;
+import dk.medicinkortet.dosisstructuretext.vowrapper.DosageStructureWrapper;
 
 public class MorningNoonEveningNightConverterTest {
 	
 	@Test
 	public void testMorningNoonEveningAndNight() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			StructuredDosageWrapper.makeStructuredDosage(
+			DosageStructureWrapper.makeStructuredDosage(
 				1, "stk", "ved måltid", TestHelper.toDate("2011-01-01"), TestHelper.toDate("2011-01-30"),
 				DayWrapper.makeDay(
 					1, 
@@ -76,7 +76,7 @@ public class MorningNoonEveningNightConverterTest {
 	@Test
 	public void testMorningNoonEveningAndNightWithEqualDoses() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			StructuredDosageWrapper.makeStructuredDosage(
+			DosageStructureWrapper.makeStructuredDosage(
 				1, "stk", "ved måltid", TestHelper.toDate("2011-01-01"), TestHelper.toDate("2011-01-30"),
 				DayWrapper.makeDay(
 					1, 
@@ -105,7 +105,7 @@ public class MorningNoonEveningNightConverterTest {
 	@Test
 	public void testNoonEveningAndNight() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			StructuredDosageWrapper.makeStructuredDosage(
+			DosageStructureWrapper.makeStructuredDosage(
 				1, "stk", "ved måltid", TestHelper.toDate("2011-01-01"), TestHelper.toDate("2011-01-30"),
 				DayWrapper.makeDay(
 					1, 
@@ -133,7 +133,7 @@ public class MorningNoonEveningNightConverterTest {
 	@Test
 	public void testMorningNoonAndEvening() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			StructuredDosageWrapper.makeStructuredDosage(
+			DosageStructureWrapper.makeStructuredDosage(
 				1, "stk", "ved måltid", TestHelper.toDate("2011-01-01"), TestHelper.toDate("2011-01-30"),
 				DayWrapper.makeDay(
 					1, 
@@ -161,7 +161,7 @@ public class MorningNoonEveningNightConverterTest {
 	@Test
 	public void testMorningAndNoonWithZeroIntervals() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			StructuredDosageWrapper.makeStructuredDosage(
+			DosageStructureWrapper.makeStructuredDosage(
 				1, "stk", "ved måltid", TestHelper.toDate("2011-01-01"), TestHelper.toDate("2011-01-30"),
 				DayWrapper.makeDay(
 					1, 
@@ -191,7 +191,7 @@ public class MorningNoonEveningNightConverterTest {
 	
 	public void testNight() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			StructuredDosageWrapper.makeStructuredDosage(
+			DosageStructureWrapper.makeStructuredDosage(
 				1, "stk", "ved måltid", TestHelper.toDate("2011-01-01"), TestHelper.toDate("2011-01-30"),
 				DayWrapper.makeDay(
 					1, 
@@ -215,7 +215,7 @@ public class MorningNoonEveningNightConverterTest {
 	@Test
 	public void test1DråbeMiddagOgAften() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			StructuredDosageWrapper.makeStructuredDosage(
+			DosageStructureWrapper.makeStructuredDosage(
 				1, "dråber", null, TestHelper.toDate("2011-01-01"), TestHelper.toDate("2011-01-30"),
 				DayWrapper.makeDay(
 					1, 
@@ -242,7 +242,7 @@ public class MorningNoonEveningNightConverterTest {
 	@Test
 	public void test1DråbeAftenOgNat() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			StructuredDosageWrapper.makeStructuredDosage(
+			DosageStructureWrapper.makeStructuredDosage(
 				1, "dråber", null, TestHelper.toDate("2011-01-01"), TestHelper.toDate("2011-01-30"),
 				DayWrapper.makeDay(
 					1, 
@@ -269,7 +269,7 @@ public class MorningNoonEveningNightConverterTest {
 	@Test
 	public void test1DråbeNat() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			StructuredDosageWrapper.makeStructuredDosage(
+			DosageStructureWrapper.makeStructuredDosage(
 				1, "dråber", null, TestHelper.toDate("2011-01-01"), TestHelper.toDate("2011-01-30"),
 				DayWrapper.makeDay(
 					1, 
@@ -295,7 +295,7 @@ public class MorningNoonEveningNightConverterTest {
 	@Test
 	public void test400MilligramNat() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			StructuredDosageWrapper.makeStructuredDosage(
+			DosageStructureWrapper.makeStructuredDosage(
 				1, "milligram", null, TestHelper.toDate("2011-01-01"), TestHelper.toDate("2011-01-30"),
 				DayWrapper.makeDay(
 					1, 
@@ -321,8 +321,8 @@ public class MorningNoonEveningNightConverterTest {
 	@Test /* handle plurals, see https://jira.trifork.com/browse/FMK-943 */
 	public void testJiraFMK943() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			StructuredDosageWrapper.makeStructuredDosage(
-				1, "tablet", null, null, null, TestHelper.toDate("2012-06-26"), null, 
+			DosageStructureWrapper.makeStructuredDosage(
+				1, "tablet", null, null, null, null, null, TestHelper.toDate("2012-06-26"), null, 
 				DayWrapper.makeDay(
 					1, 
 					MorningDoseWrapper.makeDose(new BigDecimal(1)), 
@@ -348,8 +348,8 @@ public class MorningNoonEveningNightConverterTest {
 	@Test /* handle plurals, see https://jira.trifork.com/browse/FMK-943 */
 	public void testJiraFMK943Variant() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			StructuredDosageWrapper.makeStructuredDosage(
-				1, "tablet", null, null, null, TestHelper.toDate("2012-06-26"), null, 
+			DosageStructureWrapper.makeStructuredDosage(
+				1, "tablet", null, null, null, null, null, TestHelper.toDate("2012-06-26"), null, 
 				DayWrapper.makeDay(
 					1, 
 					MorningDoseWrapper.makeDose(new BigDecimal(0), new BigDecimal(1)), 
@@ -379,8 +379,8 @@ public class MorningNoonEveningNightConverterTest {
 	@Test /* handle zero dosages stored in the database using the 2008-namespace, see https://jira.trifork.com/browse/FMK-872 */
 	public void testJiraFMK872() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			StructuredDosageWrapper.makeStructuredDosage(
-				1, "tablet", null, null, null, TestHelper.toDate("2012-06-26"), null, 
+			DosageStructureWrapper.makeStructuredDosage(
+				1, "tablet", null, null, null, null, null, TestHelper.toDate("2012-06-26"), null, 
 				DayWrapper.makeDay(
 					1, 
 					MorningDoseWrapper.makeDose(new BigDecimal(0)), 

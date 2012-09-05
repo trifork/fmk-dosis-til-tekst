@@ -25,7 +25,7 @@ package dk.medicinkortet.dosisstructuretext;
 import java.math.BigDecimal;
 
 import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
-import dk.medicinkortet.dosisstructuretext.vowrapper.StructuredDosageWrapper;
+import dk.medicinkortet.dosisstructuretext.vowrapper.DosageStructureWrapper;
 
 /**
  * Class for calculating the avg. daily dosis from the dosage structure. 
@@ -43,37 +43,37 @@ public class DailyDosisCalculator {
 		else if(dosage.isFreeText())
 			return new DailyDosis();
 		else 
-			return calculateFromStructuredDosage(dosage.getDosageTimes());
+			return calculateFromStructuredDosage(dosage.getDosageStructure());
 	}
 
-	private static DailyDosis calculateFromStructuredDosage(StructuredDosageWrapper dosageTimes) {
+	private static DailyDosis calculateFromStructuredDosage(DosageStructureWrapper dosageStructure) {
 		// If the dosage isn't repeated it doesn't make sense to calculate an average
 		// unless all daily doses are equal
-		if(dosageTimes.getIterationInterval()==0)
-			if(!dosageTimes.allDaysAreTheSame())
+		if(dosageStructure.getIterationInterval()==0)
+			if(!dosageStructure.allDaysAreTheSame())
 				return new DailyDosis();
 		// If the structured dosage contains any doses according to need
 		// we cannot calculate an average dosis
-		if(dosageTimes.containsAccordingToNeedDose())
+		if(dosageStructure.containsAccordingToNeedDose())
 			return new DailyDosis();
 		// If there is a dosage for day zero (meaning not related to a specific day) 
 		// we cannot calculate an average dosis
-		if(dosageTimes.getDay(0)!=null)
+		if(dosageStructure.getDay(0)!=null)
 			return new DailyDosis();
 		// Otherwise we will calculate an average dosage. 
 		// If the iteration interval is zero, the dosage is not repeated. This means
 		// that the dosage for each day is given. 
-		if(dosageTimes.getIterationInterval()==0) 
+		if(dosageStructure.getIterationInterval()==0) 
 			return calculateAvg(
-					dosageTimes.getSumOfDoses(), 
-					new BigDecimal(dosageTimes.getMaxDay().getDayNumber()), 
-					dosageTimes.getUnit());
+					dosageStructure.getSumOfDoses(), 
+					new BigDecimal(dosageStructure.getMaxDay().getDayNumber()), 
+					dosageStructure.getUnit());
 		// Else the dosage is repeated, and the iteration interval states after how many days 
 		else
 			return calculateAvg(
-					dosageTimes.getSumOfDoses(), 
-					new BigDecimal(dosageTimes.getIterationInterval()), 
-					dosageTimes.getUnit());
+					dosageStructure.getSumOfDoses(), 
+					new BigDecimal(dosageStructure.getIterationInterval()), 
+					dosageStructure.getUnit());
 	}
 
 	

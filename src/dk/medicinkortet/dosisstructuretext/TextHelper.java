@@ -102,24 +102,38 @@ public class TextHelper {
 		else
 			return s;
 	}
+	
+	public static String getUnit(DoseWrapper dose, String unit, String unitSingular, String unitPlural) {
+		if(unit!=null)
+			return correctUnit(dose, unit);
+		else
+			return chooseUnit(dose, unitSingular, unitPlural);
+	}
 
-	public static String correctUnit(DoseWrapper dose, String unit) {
-		if(dose.getDoseQuantity()!=null) {
-			if(dose.getDoseQuantity().doubleValue()>1.0)
-				return unitToPlural(unit);
-			else 
-				return unitToSingular(unit);			
-		}
-		else if(dose.getMaximalDoseQuantity()!=null) {
-			if(dose.getMaximalDoseQuantity().doubleValue()>1.0)
-				return unitToPlural(unit);
-			else 
-				return unitToSingular(unit);
-		}
-		else {
-			return unit;
-		}
+	private static String correctUnit(DoseWrapper dose, String unit) {
+		if(hasPluralUnit(dose))
+			return unitToPlural(unit);
+		else 
+			return unitToSingular(unit);			
+	}
+
+	private static String chooseUnit(DoseWrapper dose, String unitSingular, String unitPlural) {
+		if(hasPluralUnit(dose))
+			return unitPlural;
+		else
+			return unitSingular;
 	}
 	
+	private static boolean hasPluralUnit(DoseWrapper dose) {
+		if(dose.getDoseQuantity()!=null) {
+			return dose.getDoseQuantity().doubleValue()>1.0;
+		}
+		else if(dose.getMaximalDoseQuantity()!=null) {
+			return dose.getMaximalDoseQuantity().doubleValue()>1.0;
+		}
+		else {
+			return false;
+		}
+	}
 	
 }

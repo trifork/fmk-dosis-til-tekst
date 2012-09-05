@@ -37,7 +37,7 @@ import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.SimpleNonRepea
 import dk.medicinkortet.dosisstructuretext.vowrapper.DayWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.PlainDoseWrapper;
-import dk.medicinkortet.dosisstructuretext.vowrapper.StructuredDosageWrapper;
+import dk.medicinkortet.dosisstructuretext.vowrapper.DosageStructureWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.TimedDoseWrapper;
 
 public class SimpleNonRepeatedConverterTest {
@@ -45,7 +45,7 @@ public class SimpleNonRepeatedConverterTest {
 	@Test
 	public void test1Plaster5TimerFoerVirkningOenskes() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			StructuredDosageWrapper.makeStructuredDosage(
+			DosageStructureWrapper.makeStructuredDosage(
 				0, "plaster", "5 timer før virkning ønskes", TestHelper.toDate("2011-01-01"), TestHelper.toDate("2011-01-30"), 
 					DayWrapper.makeDay(
 						0, 
@@ -68,7 +68,7 @@ public class SimpleNonRepeatedConverterTest {
 	@Test
 	public void test1StkKl0730FoerIndlaeggelse() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			StructuredDosageWrapper.makeStructuredDosage(
+			DosageStructureWrapper.makeStructuredDosage(
 				0, "stk", "før indlæggelse", TestHelper.toDate("2011-01-01"), TestHelper.toDate("2011-01-01"), 
 					DayWrapper.makeDay(
 						0, 
@@ -91,7 +91,7 @@ public class SimpleNonRepeatedConverterTest {
 	@Test
 	public void test1StkKl0730() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			StructuredDosageWrapper.makeStructuredDosage(
+			DosageStructureWrapper.makeStructuredDosage(
 				0, "stk", null, TestHelper.toDate("2011-01-01"), TestHelper.toDate("2011-01-01"), 
 					DayWrapper.makeDay(
 						1, 

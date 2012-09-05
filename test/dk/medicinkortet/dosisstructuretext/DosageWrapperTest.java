@@ -34,7 +34,7 @@ import dk.medicinkortet.dosisstructuretext.vowrapper.MorningDoseWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.NightDoseWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.NoonDoseWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.PlainDoseWrapper;
-import dk.medicinkortet.dosisstructuretext.vowrapper.StructuredDosageWrapper;
+import dk.medicinkortet.dosisstructuretext.vowrapper.DosageStructureWrapper;
 
 public class DosageWrapperTest {
 	
@@ -42,7 +42,7 @@ public class DosageWrapperTest {
 	public void testDaglig4StkModSmerter2Gange() throws Exception {
 		DosageWrapper dosage = 
 			DosageWrapper.makeStructuredDosage(
-				StructuredDosageWrapper.makeStructuredDosage(
+				DosageStructureWrapper.makeStructuredDosage(
 					1, 
 					"stk", 
 					"mod smerter",
@@ -61,7 +61,7 @@ public class DosageWrapperTest {
 	public void testDaglig4StkModSmerterPlus4StkEfterBehovModSmerter() throws Exception {
 		DosageWrapper dosage = 
 			DosageWrapper.makeStructuredDosage(
-				StructuredDosageWrapper.makeStructuredDosage(
+				DosageStructureWrapper.makeStructuredDosage(
 					1, 
 					"stk", 
 					"mod smerter",
@@ -80,7 +80,7 @@ public class DosageWrapperTest {
 	public void testHverAndenDagEtc() throws Exception {
 		DosageWrapper dosage = 
 			DosageWrapper.makeStructuredDosage(
-				StructuredDosageWrapper.makeStructuredDosage(
+				DosageStructureWrapper.makeStructuredDosage(
 					2, 
 					"stk", 
 					"mod smerter",
@@ -102,7 +102,7 @@ public class DosageWrapperTest {
 	public void testMorgenMiddagAftenNat() throws Exception {
 		DosageWrapper dosage = 
 			DosageWrapper.makeStructuredDosage(
-				StructuredDosageWrapper.makeStructuredDosage(
+				DosageStructureWrapper.makeStructuredDosage(
 					1, 
 					"stk", 
 					"mod smerter",

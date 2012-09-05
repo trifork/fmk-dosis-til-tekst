@@ -43,7 +43,7 @@ import dk.medicinkortet.dosisstructuretext.vowrapper.EveningDoseWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.MorningDoseWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.NoonDoseWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.PlainDoseWrapper;
-import dk.medicinkortet.dosisstructuretext.vowrapper.StructuredDosageWrapper;
+import dk.medicinkortet.dosisstructuretext.vowrapper.DosageStructureWrapper;
 
 /**
  * Examples of translation to long dosage text, as discussed on the FMK-teknik forum: 
@@ -54,7 +54,7 @@ public class LongTextComplexConverterTest {
 	@Test /* Dosage "1 tablet morgen" */
 	public void test1TabletMorgen() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			StructuredDosageWrapper.makeStructuredDosage(
+			DosageStructureWrapper.makeStructuredDosage(
 				1, "tablet", null, TestHelper.toDate("2012-04-18"), null, 
 				DayWrapper.makeDay(
 					1, 
@@ -75,8 +75,8 @@ public class LongTextComplexConverterTest {
 	@Test /* Dosage "1 tablet morgen" with datetimes */
 	public void test1TabletMorgenWithDatetimes() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			StructuredDosageWrapper.makeStructuredDosage(
-				1, "tablet", null, null, null, TestHelper.toDateTime("2012-04-18 08:30:00"), null, 
+			DosageStructureWrapper.makeStructuredDosage(
+				1, "tablet", null, null, null, null, null, TestHelper.toDateTime("2012-04-18 08:30:00"), null, 
 				DayWrapper.makeDay(
 					1, 
 					MorningDoseWrapper.makeDose(new BigDecimal(1)))));
@@ -96,7 +96,7 @@ public class LongTextComplexConverterTest {
 	@Test /* Dosage like the "Hjerdyl"-example */
 	public void testHjerdyl() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			StructuredDosageWrapper.makeStructuredDosage(
+			DosageStructureWrapper.makeStructuredDosage(
 				2, "tablet", null, TestHelper.toDate("2012-04-18"), null, 
 				DayWrapper.makeDay(
 					1, 
@@ -123,7 +123,7 @@ public class LongTextComplexConverterTest {
 	@Test /* Dosage like the "Alendronat" example */
 	public void testAledronat() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			StructuredDosageWrapper.makeStructuredDosage(
+			DosageStructureWrapper.makeStructuredDosage(
 				7, "tablet", null, TestHelper.toDate("2012-04-18"), null, 
 				DayWrapper.makeDay(
 					1, 
@@ -145,7 +145,7 @@ public class LongTextComplexConverterTest {
 	@Test /* Dosage like the "Marevan 14-dages skema 1+2 stk" example */
 	public void testMarevan14DagesSkema1_2Tablet() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-				StructuredDosageWrapper.makeStructuredDosage(
+				DosageStructureWrapper.makeStructuredDosage(
 					14, "stk", null, TestHelper.toDate("2012-04-19"), null, 
 					DayWrapper.makeDay(
 						1, // torsdag
@@ -221,7 +221,7 @@ public class LongTextComplexConverterTest {
 	@Test /* Dosage like the "Marevan ugeskema 1+2 stk" example */
 	public void testMarevanUgeskema1_2Tabletter() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			StructuredDosageWrapper.makeStructuredDosage(
+			DosageStructureWrapper.makeStructuredDosage(
 				7, "stk", null, TestHelper.toDate("2012-04-19"), null, 
 				DayWrapper.makeDay(
 					1, // torsdag
@@ -267,7 +267,7 @@ public class LongTextComplexConverterTest {
 	@Test /* Dosage like the "Naragan ugeskema 1 tablet" example */
 	public void testNaraganUgeskema1Tablet() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			StructuredDosageWrapper.makeStructuredDosage(
+			DosageStructureWrapper.makeStructuredDosage(
 				7, "tablet", null, TestHelper.toDate("2012-04-18"), null, 
 				DayWrapper.makeDay(
 					1, 
@@ -302,7 +302,7 @@ public class LongTextComplexConverterTest {
 	@Test /* Dosage like the "Naragan ugeskema 2 tabletter" example */
 	public void testNaraganUgeskema2Tabletter() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			StructuredDosageWrapper.makeStructuredDosage(
+			DosageStructureWrapper.makeStructuredDosage(
 				7, "tabletter", null, TestHelper.toDate("2012-04-18"), null, 
 				DayWrapper.makeDay(
 					2, 
@@ -333,7 +333,7 @@ public class LongTextComplexConverterTest {
 	@Test /* Dosage like the "Morfin nedtrapning" example */
 	public void testMorfinNedtrapning() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			StructuredDosageWrapper.makeStructuredDosage(
+			DosageStructureWrapper.makeStructuredDosage(
 				0, "stk", null, TestHelper.toDate("2012-04-18"), null, 
 				DayWrapper.makeDay(
 					1, 
@@ -381,7 +381,7 @@ public class LongTextComplexConverterTest {
 	@Test /* Dosage like the "Pulmicort" example */ 
 	public void testDag0Iterationsinterval0() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			StructuredDosageWrapper.makeStructuredDosage(
+			DosageStructureWrapper.makeStructuredDosage(
 				0, "sug", "ved anstrengelse", TestHelper.toDate("2012-04-18"), null, 
 				DayWrapper.makeDay(
 					0, 
@@ -407,7 +407,7 @@ public class LongTextComplexConverterTest {
 	@Test /* Dosage like the "Ipren" example */
 	public void testDag1Iterationsinterval1() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			StructuredDosageWrapper.makeStructuredDosage(
+			DosageStructureWrapper.makeStructuredDosage(
 				1, "tabletter", "ved smerter", TestHelper.toDate("2012-04-18"), null, 
 				DayWrapper.makeDay(
 					1, 
@@ -432,7 +432,7 @@ public class LongTextComplexConverterTest {
 	@Test /* Dosage like the "Ipren" example, with a minor variation */
 	public void testDag0Iterationsinterval1() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			StructuredDosageWrapper.makeStructuredDosage(
+			DosageStructureWrapper.makeStructuredDosage(
 				1, "tabletter", "ved smerter", TestHelper.toDate("2012-04-18"), null, 
 				DayWrapper.makeDay(
 					0, 
@@ -450,7 +450,7 @@ public class LongTextComplexConverterTest {
 	@Test /* Test dosage without meaning, this dosage must still be translated */
 	public void test012Iterationsinterval0() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			StructuredDosageWrapper.makeStructuredDosage(
+			DosageStructureWrapper.makeStructuredDosage(
 				0, "ml", "mod smerter", TestHelper.toDate("2012-04-18"), null, 
 				DayWrapper.makeDay(
 					0, 
@@ -479,7 +479,7 @@ public class LongTextComplexConverterTest {
 	@Test /* Test dosage without meaning, must still be translated */
 	public void testDag012Iterationsinterval2() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			StructuredDosageWrapper.makeStructuredDosage(
+			DosageStructureWrapper.makeStructuredDosage(
 				2, "sug", "ved anstrengelse", TestHelper.toDate("2012-04-18"), null, 
 				DayWrapper.makeDay(
 					0, 
@@ -506,7 +506,7 @@ public class LongTextComplexConverterTest {
 	@Test /* Weekly dosage */ 
 	public void testDag0Iterationsinterval7() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			StructuredDosageWrapper.makeStructuredDosage(
+			DosageStructureWrapper.makeStructuredDosage(
 				7, "tabletter", "ved smerter", TestHelper.toDate("2012-04-18"), null, 
 				DayWrapper.makeDay(
 					0, 
@@ -525,7 +525,7 @@ public class LongTextComplexConverterTest {
 	@Test /* Pure PN dosage */
 	public void test1TabletEfterBehov() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			StructuredDosageWrapper.makeStructuredDosage(
+			DosageStructureWrapper.makeStructuredDosage(
 				0, "tablet", null, TestHelper.toDate("2012-05-29"), null, 
 				DayWrapper.makeDay(
 					0, 
@@ -543,7 +543,7 @@ public class LongTextComplexConverterTest {
 	@Test /* Pure PN dosage with max */
 	public void test1TabletEfterBehovHoejstEnGangDaglig() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			StructuredDosageWrapper.makeStructuredDosage(
+			DosageStructureWrapper.makeStructuredDosage(
 				1, "tablet", null, TestHelper.toDate("2012-05-29"), null, 
 				DayWrapper.makeDay(
 					1, 
@@ -561,8 +561,8 @@ public class LongTextComplexConverterTest {
 	@Test /* Dosage "2 stk efter behov højst 1 gang daglig", see https://jira.trifork.com/browse/FMK-784*/
 	public void testJiraFMK784() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			StructuredDosageWrapper.makeStructuredDosage(
-				1, "stk", null, null, null, TestHelper.toDateTime("2012-04-13 20:06:00"), null, 
+			DosageStructureWrapper.makeStructuredDosage(
+				1, "stk", null, null, null, null, null, TestHelper.toDateTime("2012-04-13 20:06:00"), null, 
 				DayWrapper.makeDay(
 					1, 
 					PlainDoseWrapper.makeDose(new BigDecimal(2), true))));
@@ -580,8 +580,8 @@ public class LongTextComplexConverterTest {
 	@Test /* Dosage "2 stk efter behov højst 2 gange daglig", see https://jira.trifork.com/browse/FMK-784*/
 	public void testJiraFMK784Variant() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			StructuredDosageWrapper.makeStructuredDosage(
-				1, "stk", null, null, null, TestHelper.toDateTime("2012-04-13 20:06:00"), null, 
+			DosageStructureWrapper.makeStructuredDosage(
+				1, "stk", null, null, null, null, null, TestHelper.toDateTime("2012-04-13 20:06:00"), null, 
 				DayWrapper.makeDay(
 					1, 
 					PlainDoseWrapper.makeDose(new BigDecimal(2), true), 

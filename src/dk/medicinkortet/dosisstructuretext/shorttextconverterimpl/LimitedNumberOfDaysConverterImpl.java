@@ -23,7 +23,7 @@
 package dk.medicinkortet.dosisstructuretext.shorttextconverterimpl;
 
 import dk.medicinkortet.dosisstructuretext.vowrapper.DayWrapper;
-import dk.medicinkortet.dosisstructuretext.vowrapper.StructuredDosageWrapper;
+import dk.medicinkortet.dosisstructuretext.vowrapper.DosageStructureWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
 
 /**
@@ -37,32 +37,32 @@ public class LimitedNumberOfDaysConverterImpl extends ShortTextConverterImpl {
 
 	@Override
 	public boolean canConvert(DosageWrapper dosage) {
-		if(dosage.getDosageTimes()==null)
+		if(dosage.getDosageStructure()==null)
 			return false;
-		StructuredDosageWrapper dosageTimes = dosage.getDosageTimes();
-		if(dosageTimes.getIterationInterval()!=0)
+		DosageStructureWrapper dosageStructure = dosage.getDosageStructure();
+		if(dosageStructure.getIterationInterval()!=0)
 			return false;
-		if(dosageTimes.getFirstDay().getDayNumber()==0)
+		if(dosageStructure.getFirstDay().getDayNumber()==0)
 			return false;
-		if(dosageTimes.startsAndEndsSameDay())
+		if(dosageStructure.startsAndEndsSameDay())
 			return false;
-		if(dosageTimes.containsMorningNoonEveningNightDoses())
+		if(dosageStructure.containsMorningNoonEveningNightDoses())
 			return false;
-		if(!dosageTimes.allDosesAreTheSame())
+		if(!dosageStructure.allDosesAreTheSame())
 			return false;
 		return true;
 	}
 
 	@Override
 	public String doConvert(DosageWrapper dosage) {
-		StructuredDosageWrapper dosageTimes = dosage.getDosageTimes();
+		DosageStructureWrapper dosageStructure = dosage.getDosageStructure();
 		StringBuilder text = new StringBuilder();
-		DayWrapper day = dosageTimes.getFirstDay();
-		text.append(toValue(day.getAllDoses().get(0), dosageTimes.getUnit()));
+		DayWrapper day = dosageStructure.getFirstDay();
+		text.append(toValue(day.getAllDoses().get(0), dosageStructure));
 		text.append(" "+day.getAllDoses().size()+" gange daglig");
-		text.append(" i "+dosageTimes.getLastDay().getDayNumber()+" dage");
-		if(dosageTimes.getUniqueSupplText()!=null)
-			text.append(" ").append(dosageTimes.getUniqueSupplText());
+		text.append(" i "+dosageStructure.getLastDay().getDayNumber()+" dage");
+		if(dosageStructure.getUniqueSupplText()!=null)
+			text.append(" ").append(dosageStructure.getUniqueSupplText());
 		return text.toString();
 	}
 

@@ -37,14 +37,14 @@ import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.ParacetamolCon
 import dk.medicinkortet.dosisstructuretext.vowrapper.DayWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.PlainDoseWrapper;
-import dk.medicinkortet.dosisstructuretext.vowrapper.StructuredDosageWrapper;
+import dk.medicinkortet.dosisstructuretext.vowrapper.DosageStructureWrapper;
 
 public class ParacetamolConverterTest {
 	
 	@Test
 	public void test1Til2stk3Til4GangeDagligVedSmerter() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			StructuredDosageWrapper.makeStructuredDosage(
+			DosageStructureWrapper.makeStructuredDosage(
 				1, "stk", "ved smerter", TestHelper.toDate("2011-01-01"), TestHelper.toDate("2011-01-30"),
 				DayWrapper.makeDay(
 					1, 

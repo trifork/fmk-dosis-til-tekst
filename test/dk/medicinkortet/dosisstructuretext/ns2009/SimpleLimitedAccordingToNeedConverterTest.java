@@ -37,7 +37,7 @@ import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.SimpleLimitedA
 import dk.medicinkortet.dosisstructuretext.vowrapper.DayWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.PlainDoseWrapper;
-import dk.medicinkortet.dosisstructuretext.vowrapper.StructuredDosageWrapper;
+import dk.medicinkortet.dosisstructuretext.vowrapper.DosageStructureWrapper;
 
 public class SimpleLimitedAccordingToNeedConverterTest {
 	
@@ -45,7 +45,7 @@ public class SimpleLimitedAccordingToNeedConverterTest {
 	public void test1pustVedAnfaldHoejst3GangeDaglig() {
 		DosageWrapper dosage = 
 			DosageWrapper.makeStructuredDosage(
-				StructuredDosageWrapper.makeStructuredDosage(
+				DosageStructureWrapper.makeStructuredDosage(
 					1, "pust", "ved anfald", TestHelper.toDate("2011-01-01"), TestHelper.toDate("2011-01-11"), 
 					DayWrapper.makeDay(1,
 						PlainDoseWrapper.makeDose(new BigDecimal(1), true),
@@ -70,7 +70,7 @@ public class SimpleLimitedAccordingToNeedConverterTest {
 	public void test1pustVedAnfaldHoejst1GangDaglig() {
 		DosageWrapper dosage = 
 			DosageWrapper.makeStructuredDosage(
-				StructuredDosageWrapper.makeStructuredDosage(
+				DosageStructureWrapper.makeStructuredDosage(
 					1, "pust", "ved anfald", TestHelper.toDate("2011-01-01"), TestHelper.toDate("2011-01-11"), 
 					DayWrapper.makeDay(1,
 						PlainDoseWrapper.makeDose(new BigDecimal(1), true))));
@@ -93,7 +93,7 @@ public class SimpleLimitedAccordingToNeedConverterTest {
 	public void testStkEfterBehovHoejst1GangDaglig() {
 		DosageWrapper dosage = 
 			DosageWrapper.makeStructuredDosage(
-				StructuredDosageWrapper.makeStructuredDosage(
+				DosageStructureWrapper.makeStructuredDosage(
 					1, "stk", null, TestHelper.toDate("2012-06-01"), null, 
 					DayWrapper.makeDay(1,
 						PlainDoseWrapper.makeDose(new BigDecimal(1), true))));

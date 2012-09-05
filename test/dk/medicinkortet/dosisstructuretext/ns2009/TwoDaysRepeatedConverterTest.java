@@ -38,14 +38,14 @@ import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.RepeatedConver
 import dk.medicinkortet.dosisstructuretext.vowrapper.DayWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.PlainDoseWrapper;
-import dk.medicinkortet.dosisstructuretext.vowrapper.StructuredDosageWrapper;
+import dk.medicinkortet.dosisstructuretext.vowrapper.DosageStructureWrapper;
 
 public class TwoDaysRepeatedConverterTest {
 
 	@Test
 	public void test1Stk2GangeSammeDagHver2DagVedMaaltid() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			StructuredDosageWrapper.makeStructuredDosage(
+			DosageStructureWrapper.makeStructuredDosage(
 				2, "stk", "ved måltid", TestHelper.toDate("2011-01-01"), TestHelper.toDate("2011-01-30"), 
 				DayWrapper.makeDay(
 					1, 
@@ -75,7 +75,7 @@ public class TwoDaysRepeatedConverterTest {
 	@Test
 	public void test1Stk2GangeSammeDagHver2DagVedMaaltid_2() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			StructuredDosageWrapper.makeStructuredDosage(
+			DosageStructureWrapper.makeStructuredDosage(
 				2, "stk", "ved måltid", TestHelper.toDate("2011-01-01"), TestHelper.toDate("2011-01-30"), 
 				DayWrapper.makeDay(
 					2, 
@@ -105,7 +105,7 @@ public class TwoDaysRepeatedConverterTest {
 	@Test
 	public void testTwoDays() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			StructuredDosageWrapper.makeStructuredDosage(
+			DosageStructureWrapper.makeStructuredDosage(
 				2, "stk", "ved måltid", TestHelper.toDate("2011-01-01"), TestHelper.toDate("2011-01-30"), 
 				DayWrapper.makeDay(
 					1, 
