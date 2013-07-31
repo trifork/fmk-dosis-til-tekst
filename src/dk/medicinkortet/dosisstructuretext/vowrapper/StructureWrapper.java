@@ -3,6 +3,7 @@ package dk.medicinkortet.dosisstructuretext.vowrapper;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -39,7 +40,7 @@ public class StructureWrapper {
 			dosageTimesStructure.getDosageSupplementaryText(), 
 			wrap(dosageTimesStructure.getDosageTimesStartDate(), dosageTimesStructure.getDosageTimesStartDateTime()), 
 			wrap(dosageTimesStructure.getDosageTimesEndDate(), dosageTimesStructure.getDosageTimesEndDateTime()),
-			wrap2009(dosageTimesStructure.getDosageDayElementStructures()));
+			toSortedSet(dosageTimesStructure.getDosageDayElementStructures()));
 	}
 	
 	public StructureWrapper(dk.medicinkortet.web.shared.jaxb.dkma.medicinecard20120601.DosageStructure dosageStructure) {
@@ -48,28 +49,37 @@ public class StructureWrapper {
 			dosageStructure.getSupplementaryText(), 
 			wrap(dosageStructure.getStartDate(), dosageStructure.getStartDateTime()), 
 			wrap(dosageStructure.getEndDate(), dosageStructure.getEndDateTime()), 
-			wrap20120601(dosageStructure.getDosageDays()));
+			toSortedSet2(dosageStructure.getDosageDays()));
 	}
 	
 	/**
 	 * Factory metod to create structured dosages
 	 */
 	public static StructureWrapper makeStructure(int iterationInterval, String supplText, DateOrDateTimeWrapper startDateOrDateTime, DateOrDateTimeWrapper endDateOrDateTime, DayWrapper... days) {
-		return new StructureWrapper(
-			iterationInterval, supplText, 
-			startDateOrDateTime, endDateOrDateTime,
-			days);
+		TreeSet<DayWrapper> set = new TreeSet<DayWrapper>(DAY_COMPARATOR);
+		set.addAll(Arrays.asList(days));
+		return new StructureWrapper(iterationInterval, supplText, startDateOrDateTime, endDateOrDateTime, set);
 	}
 	
-	private static final SortedSet<DayWrapper> wrap2009(List<dk.medicinkortet.web.shared.jaxb.dkma.medicinecard2009.DosageDayElementStructure> dosageDayElements) {
-		TreeSet<DayWrapper> days = new TreeSet<DayWrapper>();  
+	public static StructureWrapper makeStructure(int iterationInterval, String supplText, DateOrDateTimeWrapper startDateOrDateTime, DateOrDateTimeWrapper endDateOrDateTime, Collection<DayWrapper> days) {
+		if(days instanceof SortedSet<?>)
+			return new StructureWrapper(iterationInterval, supplText, startDateOrDateTime, endDateOrDateTime, (SortedSet<DayWrapper>)days);
+		else {
+			TreeSet<DayWrapper> set = new TreeSet<DayWrapper>(DAY_COMPARATOR);
+			set.addAll(days);
+			return new StructureWrapper(iterationInterval, supplText, startDateOrDateTime, endDateOrDateTime, set);
+		}
+	}
+	
+	private static final SortedSet<DayWrapper> toSortedSet(List<dk.medicinkortet.web.shared.jaxb.dkma.medicinecard2009.DosageDayElementStructure> dosageDayElements) {
+		TreeSet<DayWrapper> days = new TreeSet<DayWrapper>(DAY_COMPARATOR);  
 		for(dk.medicinkortet.web.shared.jaxb.dkma.medicinecard2009.DosageDayElementStructure d: dosageDayElements) 
 			days.add(new DayWrapper(d));
 		return days;
 	}
 	
-	private static final SortedSet<DayWrapper> wrap20120601(List<dk.medicinkortet.web.shared.jaxb.dkma.medicinecard20120601.DosageDay> dosageDays) {
-		TreeSet<DayWrapper> days = new TreeSet<DayWrapper>();  
+	private static final SortedSet<DayWrapper> toSortedSet2(List<dk.medicinkortet.web.shared.jaxb.dkma.medicinecard20120601.DosageDay> dosageDays) {
+		TreeSet<DayWrapper> days = new TreeSet<DayWrapper>(DAY_COMPARATOR);  
 		for(dk.medicinkortet.web.shared.jaxb.dkma.medicinecard20120601.DosageDay d: dosageDays) 
 			days.add(new DayWrapper(d));
 		return days;
@@ -82,19 +92,6 @@ public class StructureWrapper {
 			return DateOrDateTimeWrapper.makeDateTime(dateTime);
 		else
 			return null; 
-	}
-
-	private StructureWrapper(
-			int iterationInterval, String supplText, 
-			DateOrDateTimeWrapper startDateOrDateTime, DateOrDateTimeWrapper endDateOrDateTime,
-			DayWrapper... days) {
-		this(iterationInterval, supplText, startDateOrDateTime, endDateOrDateTime, wrap(days));
-	}	
-	
-	private static SortedSet<DayWrapper> wrap(DayWrapper... days) {
-		TreeSet<DayWrapper> set = new TreeSet<>(DAY_COMPARATOR);
-		set.addAll(Arrays.asList(days));
-		return set;
 	}
 	
 	private StructureWrapper(

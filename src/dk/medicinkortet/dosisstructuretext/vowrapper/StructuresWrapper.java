@@ -30,27 +30,35 @@ public class StructuresWrapper {
 	public StructuresWrapper(dk.medicinkortet.web.shared.jaxb.dkma.medicinecard2009.DosageTimesStructure dosageTimesStructure) {
 		this(
 			UnitOrUnitsWrapper.makeUnit(dosageTimesStructure.getDosageQuantityUnitText()), 
-			new StructureWrapper(dosageTimesStructure));
+			toSortedSet(new StructureWrapper(dosageTimesStructure)));
 	}
 	
 	public StructuresWrapper(dk.medicinkortet.web.shared.jaxb.dkma.medicinecard20120601.DosageStructure dosageStructure) {
 		this(
 			new UnitOrUnitsWrapper(dosageStructure),
-			new StructureWrapper(dosageStructure));
+			toSortedSet(new StructureWrapper(dosageStructure)));
 	}
-
+	
+	private static SortedSet<StructureWrapper> toSortedSet(StructureWrapper structure) {
+		TreeSet<StructureWrapper> set = new TreeSet<StructureWrapper>(STRUCTURE_COMPARATOR);
+		set.add(structure);
+		return set;
+	}
+	
 	public static StructuresWrapper makeStructures(UnitOrUnitsWrapper unitOrUnits, StructureWrapper... structures) {
-		return new StructuresWrapper(unitOrUnits, structures);
-	}
-	
-	private StructuresWrapper(UnitOrUnitsWrapper unitOrUnits, StructureWrapper... structures) {
-		this(unitOrUnits, wrap(structures));
-	}
-	
-	private static SortedSet<StructureWrapper> wrap(StructureWrapper... structures) {
 		TreeSet<StructureWrapper> set = new TreeSet<StructureWrapper>(STRUCTURE_COMPARATOR);
 		set.addAll(Arrays.asList(structures));
-		return set;
+		return new StructuresWrapper(unitOrUnits, set);
+	}
+
+	public static StructuresWrapper makeStructures(UnitOrUnitsWrapper unitOrUnits, Collection<StructureWrapper> structures) {
+		if(structures instanceof SortedSet<?>)
+			return new StructuresWrapper(unitOrUnits, (SortedSet<StructureWrapper>)structures);
+		else {
+			TreeSet<StructureWrapper> set = new TreeSet<StructureWrapper>(STRUCTURE_COMPARATOR);
+			set.addAll(structures);		
+			return new StructuresWrapper(unitOrUnits, set); 
+		}
 	}
 
 	private StructuresWrapper(UnitOrUnitsWrapper unitOrUnits, SortedSet<StructureWrapper> structures) {
