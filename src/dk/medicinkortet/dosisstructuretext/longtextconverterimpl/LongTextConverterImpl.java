@@ -28,10 +28,12 @@ import java.util.GregorianCalendar;
 import java.util.Locale;
 
 import dk.medicinkortet.dosisstructuretext.TextHelper;
+import dk.medicinkortet.dosisstructuretext.vowrapper.DateOrDateTimeWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DayWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DoseWrapper;
-import dk.medicinkortet.dosisstructuretext.vowrapper.DosageStructureWrapper;
+import dk.medicinkortet.dosisstructuretext.vowrapper.StructureWrapper;
+import dk.medicinkortet.dosisstructuretext.vowrapper.UnitOrUnitsWrapper;
 
 public abstract class LongTextConverterImpl {
 	
@@ -44,38 +46,36 @@ public abstract class LongTextConverterImpl {
 
 	abstract public String doConvert(DosageWrapper dosageStructure);
 
-	protected void appendDosageStart(StringBuilder s, DosageStructureWrapper dosageStructure) {
-		s.append("Doseringsforløbet starter "+datesToLongText(dosageStructure.getStartDate(), dosageStructure.getStartDateTime()));
+	protected void appendDosageStart(StringBuilder s, StructureWrapper dosageStructure) {
+		s.append("Doseringsforløbet starter "+datesToLongText(dosageStructure.getStartDateOrDateTime()));
 	}
 	
-	protected String datesToLongText(Date startDate, Date startDateTime) {
-		if(startDate==null && startDateTime==null)
+	protected String datesToLongText(DateOrDateTimeWrapper startDateOrDateTime) {
+		if(startDateOrDateTime==null)
 			throw new IllegalArgumentException();
-		if(startDate!=null) {
+		if(startDateOrDateTime.getDate()!=null) {
 			SimpleDateFormat f = new SimpleDateFormat(LONG_DATE_FORMAT, new Locale("da", "DK"));
-			return f.format(startDate);
+			return f.format(startDateOrDateTime.getDate());
 		}
 		else { 
 			SimpleDateFormat f = new SimpleDateFormat(LONG_DATE_TIME_FORMAT, new Locale("da", "DK"));
-			return f.format(startDateTime);
+			return f.format(startDateOrDateTime.getDateTime());
 		}
 	}
 	
-	protected int appendDays(StringBuilder s, DosageStructureWrapper dosageStructure) {
+	protected int appendDays(StringBuilder s, UnitOrUnitsWrapper unitOrUnits, StructureWrapper structure) {
 		int appendedLines = 0;
-		for(int dayIndex=0; dayIndex<dosageStructure.getDays().size(); dayIndex++) {
+		for(DayWrapper day: structure.getDays()) {
 			appendedLines++;
-			if(dayIndex>0)
+			if(appendedLines>1)
 				s.append("\n");
-			s.append(INDENT+makeDaysLabel(
-					dosageStructure,
-					dosageStructure.getDays().get(dayIndex)));
-			s.append(makeDaysDosage(dosageStructure, dosageStructure.getDays().get(dayIndex)));
+			s.append(INDENT+makeDaysLabel(structure, day));
+			s.append(makeDaysDosage(unitOrUnits, structure, day));
 		}		
 		return appendedLines;
 	}
 	
-	protected String makeDaysLabel(DosageStructureWrapper dosageStructure, DayWrapper day) {
+	protected String makeDaysLabel(StructureWrapper structure, DayWrapper day) {
 		if(day.getDayNumber()==0) {
 			if(day.containsAccordingToNeedDosesOnly())
 				return "Efter behov: ";
@@ -83,20 +83,20 @@ public abstract class LongTextConverterImpl {
 				return "Dag ikke angivet: ";
 		}
 		else {
-			return makeDayString(dosageStructure.getStartDateOrDateTime(), day.getDayNumber())+": ";
+			return makeDayString(structure.getStartDateOrDateTime(), day.getDayNumber())+": ";
 		}		
 	}
 
-	protected String makeDaysDosage(DosageStructureWrapper dosageStructure, DayWrapper day) {
+	protected String makeDaysDosage(UnitOrUnitsWrapper unitOrUnits, StructureWrapper structure, DayWrapper day) {
 		StringBuilder s = new StringBuilder();
 		
 		if(day.getNumberOfDoses()==1) {
-			s.append(makeOneDose(day.getDose(0), dosageStructure.getUnit(), dosageStructure.getUnitSingular(), dosageStructure.getUnitPlural(), dosageStructure.getSupplText()));
+			s.append(makeOneDose(day.getDose(0), unitOrUnits, structure.getSupplText()));
 			if(day.containsAccordingToNeedDosesOnly() && day.getDayNumber()>0)
 				s.append(" højst 1 gang daglig");
 		}
 		else if(day.getNumberOfDoses()>1 && day.allDosesAreTheSame()) {
-			s.append(makeOneDose(day.getDose(0), dosageStructure.getUnit(), dosageStructure.getUnitSingular(), dosageStructure.getUnitPlural(), dosageStructure.getSupplText()));
+			s.append(makeOneDose(day.getDose(0), unitOrUnits, structure.getSupplText()));
 			if(day.containsAccordingToNeedDosesOnly() && day.getDayNumber()>0)
 				s.append(" højst "+day.getNumberOfDoses()+" gange daglig");
 			else
@@ -104,7 +104,7 @@ public abstract class LongTextConverterImpl {
 		}
 		else {
 			for(int d=0; d<day.getNumberOfDoses(); d++) {
-				s.append(makeOneDose(day.getDose(d), dosageStructure.getUnit(), dosageStructure.getUnitSingular(), dosageStructure.getUnitPlural(), dosageStructure.getSupplText()));
+				s.append(makeOneDose(day.getDose(d), unitOrUnits, structure.getSupplText()));
 				if(d<day.getNumberOfDoses()-1)
 					s.append(" + ");
 			}
@@ -112,8 +112,8 @@ public abstract class LongTextConverterImpl {
 		return s.toString();
 	}
 
-	protected String makeDayString(Date startDateOrDateTime, int dayNumber) {
-		GregorianCalendar c = makeFromDateOnly(startDateOrDateTime);
+	protected String makeDayString(DateOrDateTimeWrapper startDateOrDateTime, int dayNumber) {
+		GregorianCalendar c = makeFromDateOnly(startDateOrDateTime.getDateOrDateTime());
 		c.add(GregorianCalendar.DATE, dayNumber-1);
 		SimpleDateFormat f = new SimpleDateFormat(LONG_DATE_FORMAT, new Locale("da", "DK"));
 		String dateString = f.format(c.getTime());
@@ -131,53 +131,38 @@ public abstract class LongTextConverterImpl {
 		return c;
 	}
 	
-	protected StringBuilder makeOneDose(DoseWrapper dose, String unit, String unitSingular, String unitPlural, String supplText) {
+	protected StringBuilder makeOneDose(DoseWrapper dose, UnitOrUnitsWrapper unitOrUnits, String supplText) {
 		StringBuilder s = new StringBuilder();
 		s.append(dose.getAnyDoseQuantityString());
-		s.append(" ").append(TextHelper.getUnit(dose, unit, unitSingular, unitPlural));
+		s.append(" ").append(TextHelper.getUnit(dose, unitOrUnits));
 		if(dose.getLabel().length()>0)
 			s.append(" ").append(dose.getLabel());
 		if(dose.isAccordingToNeed())
 			s.append(" efter behov");
 		if(supplText!=null)
 			s.append(" ").append(supplText);
-		// Handle suppl. text in 2008 namespace
-		if(dose.getSupplText()!=null)
-			s.append(" ").append(dose.getSupplText());
-		else if(dose.getMinimalSupplText()!=null && dose.getMaximalSupplText()!=null && dose.getMinimalSupplText().equals(dose.getMaximalSupplText())) 
-			s.append(" ").append(dose.getMinimalSupplText());			
-		else if(dose.getMinimalSupplText()!=null && dose.getMaximalSupplText()!=null && !dose.getMinimalSupplText().equals(dose.getMaximalSupplText())) 
-			s.append(" ").append(dose.getMinimalSupplText()).append(" / ").append(dose.getMaximalSupplText());			
-		else if(dose.getMinimalSupplText()!=null)
-			s.append(" ").append(dose.getMinimalSupplText());
-		else if(dose.getMaximalSupplText()!=null)
-			s.append(" ").append(dose.getMaximalSupplText());
 		return s;
 	}
 
-	protected void appendNoteText(StringBuilder s, DosageStructureWrapper dosageStructure) {
-		if(isVarying(dosageStructure) && isComplex(dosageStructure))
+	protected void appendNoteText(StringBuilder s, StructureWrapper structure) {
+		if(isVarying(structure) && isComplex(structure))
 			s.append(".\nBemærk at doseringen varierer og har et komplekst forløb:\n");
-		else if(isVarying(dosageStructure))
+		else if(isVarying(structure))
 			s.append(".\nBemærk at doseringen varierer:\n");
-		else if(isComplex(dosageStructure))
+		else if(isComplex(structure))
 			s.append(".\nBemærk at doseringen har et komplekst forløb:\n");
 		else
 			s.append(":\n");
 	}
 	
-	protected boolean isComplex(DosageStructureWrapper dosageStructure) {
-		if(dosageStructure.getDays().size()==1)
+	protected boolean isComplex(StructureWrapper structure) {
+		if(structure.getDays().size()==1)
 			return false;
-		for(int d=1; d<dosageStructure.getDays().size(); d++) {
-			if(dosageStructure.getDays().get(d-1).getDayNumber()!=d)
-				return true;
-		}
-		return false;
+		return !structure.daysAreInUninteruptedSequenceFromOne();
 	}
 	
-	protected boolean isVarying(DosageStructureWrapper dosageStructure) {
-		return !dosageStructure.allDaysAreTheSame();
+	protected boolean isVarying(StructureWrapper structure) {
+		return !structure.allDaysAreTheSame();
 	}	
 	
 }

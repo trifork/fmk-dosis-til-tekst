@@ -30,30 +30,35 @@ import org.junit.Test;
 import dk.medicinkortet.dosisstructuretext.DailyDosisCalculator;
 import dk.medicinkortet.dosisstructuretext.LongTextConverter;
 import dk.medicinkortet.dosisstructuretext.ShortTextConverter;
-import dk.medicinkortet.dosisstructuretext.TestHelper;
 import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.MorningNoonEveningNightConverterImpl;
 import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.SimpleLimitedAccordingToNeedConverterImpl;
+import dk.medicinkortet.dosisstructuretext.vowrapper.DateOrDateTimeWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DayWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.EveningDoseWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.MorningDoseWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.PlainDoseWrapper;
-import dk.medicinkortet.dosisstructuretext.vowrapper.DosageStructureWrapper;
+import dk.medicinkortet.dosisstructuretext.vowrapper.StructureWrapper;
+import dk.medicinkortet.dosisstructuretext.vowrapper.StructuresWrapper;
+import dk.medicinkortet.dosisstructuretext.vowrapper.UnitOrUnitsWrapper;
 
 public class ValidatorTest {
 	
 	@Test
 	public void testJiraFMK903() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			DosageStructureWrapper.makeStructuredDosage(
-				1, "stk", null, null, null, null, null, TestHelper.toDateTime("2012-04-13 20:06:00"), null, 
+			StructuresWrapper.makeStructures(
+				UnitOrUnitsWrapper.makeUnit("stk"), 
+				StructureWrapper.makeStructure(
+				1, null, DateOrDateTimeWrapper.makeDateTime("2012-04-13 20:06:00"), null, 
 				DayWrapper.makeDay(
 					1, 
 					MorningDoseWrapper.makeDose(new BigDecimal(2)), 
-					EveningDoseWrapper.makeDose(new BigDecimal(0)))));
+					EveningDoseWrapper.makeDose(new BigDecimal(0))))));
+		StructureWrapper s = dosage.getStructures().getStructures().first();
 		Assert.assertEquals(
 				1, 
-				dosage.getDosageStructure().getFirstDay().getNumberOfDoses());
+				s.getDays().first().getNumberOfDoses());
 		Assert.assertEquals(
 				"Doseringsforløbet starter fredag den 13. april 2012 kl. 20:06:00 og gentages hver dag:\n"+
 				"   Doseringsforløb:\n"+
@@ -74,15 +79,18 @@ public class ValidatorTest {
 	@Test
 	public void testJiraFMK903Variant() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			DosageStructureWrapper.makeStructuredDosage(
-				1, "stk", null, null, null, null, null, TestHelper.toDateTime("2012-04-13 20:06:00"), null, 
-				DayWrapper.makeDay(
-					1, 
-					PlainDoseWrapper.makeDose(new BigDecimal(2), true), 
-					PlainDoseWrapper.makeDose(new BigDecimal(0), true))));
+			StructuresWrapper.makeStructures(
+				UnitOrUnitsWrapper.makeUnit("stk"), 
+				StructureWrapper.makeStructure(
+					1, null, DateOrDateTimeWrapper.makeDateTime("2012-04-13 20:06:00"), null, 
+					DayWrapper.makeDay(
+						1, 
+						PlainDoseWrapper.makeDose(new BigDecimal(2), true), 
+						PlainDoseWrapper.makeDose(new BigDecimal(0), true)))));
+		StructureWrapper s = dosage.getStructures().getStructures().first();
 		Assert.assertEquals(
 				1, 
-				dosage.getDosageStructure().getFirstDay().getAccordingToNeedDoses().size());
+				s.getDays().first().getAccordingToNeedDoses().size());
 		Assert.assertEquals(
 				"Doseringsforløbet starter fredag den 13. april 2012 kl. 20:06:00 og gentages hver dag:\n"+
 				"   Doseringsforløb:\n"+

@@ -24,23 +24,25 @@ package dk.medicinkortet.dosisstructuretext;
 
 import java.math.BigDecimal;
 
+import dk.medicinkortet.dosisstructuretext.vowrapper.UnitOrUnitsWrapper;
+
 public class DailyDosis {
 	
 	private BigDecimal value;
 	private Interval<BigDecimal> interval;
-	private String unit;
+	private UnitOrUnitsWrapper unitOrUnits;
 	
 	public DailyDosis() {
 	}
 
-	public DailyDosis(BigDecimal value, String unit) {
+	public DailyDosis(BigDecimal value, UnitOrUnitsWrapper unitOrUnits) {
 		this.value = value;
-		this.unit = unit;
+		this.unitOrUnits = unitOrUnits;
 	}
 	
-	public DailyDosis(Interval<BigDecimal> interval, String unit) {
+	public DailyDosis(Interval<BigDecimal> interval, UnitOrUnitsWrapper unitOrUnits) {
 		this.interval = interval;
-		this.unit = unit;
+		this.unitOrUnits = unitOrUnits;
 	}
 	
 	public BigDecimal getValue() {
@@ -51,10 +53,10 @@ public class DailyDosis {
 		return interval;
 	}
 	
-	public String getUnit() {
-		return unit;
+	public UnitOrUnitsWrapper getUnitOrUnits() {
+		return unitOrUnits;
 	}
-	
+
 	public boolean isValue() {
 		return value!=null;
 	}

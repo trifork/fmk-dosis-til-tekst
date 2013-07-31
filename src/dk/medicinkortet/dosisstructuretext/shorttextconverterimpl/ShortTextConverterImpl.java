@@ -25,7 +25,7 @@ package dk.medicinkortet.dosisstructuretext.shorttextconverterimpl;
 import dk.medicinkortet.dosisstructuretext.TextHelper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DoseWrapper;
-import dk.medicinkortet.dosisstructuretext.vowrapper.DosageStructureWrapper;
+import dk.medicinkortet.dosisstructuretext.vowrapper.UnitOrUnitsWrapper;
 
 public abstract class ShortTextConverterImpl {
 
@@ -46,9 +46,9 @@ public abstract class ShortTextConverterImpl {
 		}		
 	}
 	
-	protected static String toValue(DoseWrapper dose, DosageStructureWrapper dosageStructure) {
+	protected static String toValue(DoseWrapper dose, UnitOrUnitsWrapper unitOrUnits) {
 		String s = toValue(dose);
-		String u = TextHelper.getUnit(dose, dosageStructure.getUnit(), dosageStructure.getUnitSingular(), dosageStructure.getUnitPlural());
+		String u = TextHelper.getUnit(dose, unitOrUnits);
 		if(dose.getLabel().length()==0)
 			return s + " " + u;
 		else 

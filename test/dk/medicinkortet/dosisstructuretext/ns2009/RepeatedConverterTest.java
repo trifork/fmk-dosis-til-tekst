@@ -32,25 +32,30 @@ import dk.medicinkortet.dosisstructuretext.DosageType;
 import dk.medicinkortet.dosisstructuretext.DosageTypeCalculator;
 import dk.medicinkortet.dosisstructuretext.LongTextConverter;
 import dk.medicinkortet.dosisstructuretext.ShortTextConverter;
-import dk.medicinkortet.dosisstructuretext.TestHelper;
+import dk.medicinkortet.dosisstructuretext.longtextconverterimpl.TwoDaysRepeatedConverterImpl;
 import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.RepeatedConverterImpl;
+import dk.medicinkortet.dosisstructuretext.vowrapper.DateOrDateTimeWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DayWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.PlainDoseWrapper;
-import dk.medicinkortet.dosisstructuretext.vowrapper.DosageStructureWrapper;
+import dk.medicinkortet.dosisstructuretext.vowrapper.StructureWrapper;
+import dk.medicinkortet.dosisstructuretext.vowrapper.StructuresWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.TimedDoseWrapper;
+import dk.medicinkortet.dosisstructuretext.vowrapper.UnitOrUnitsWrapper;
 
 public class RepeatedConverterTest {
 	
 	@Test
 	public void test3stk2gangeDaglig() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			DosageStructureWrapper.makeStructuredDosage(
-				1, "stk", null, TestHelper.toDate("2011-01-01"), TestHelper.toDate("2011-01-30"), 
-				DayWrapper.makeDay(
-					1, 
-					PlainDoseWrapper.makeDose(new BigDecimal(3)), 
-					PlainDoseWrapper.makeDose(new BigDecimal(3)))));
+			StructuresWrapper.makeStructures(
+				UnitOrUnitsWrapper.makeUnit("stk"), 
+				StructureWrapper.makeStructure(
+					1, null, DateOrDateTimeWrapper.makeDate("2011-01-01"), DateOrDateTimeWrapper.makeDate("2011-01-30"), 
+					DayWrapper.makeDay(
+						1, 
+						PlainDoseWrapper.makeDose(new BigDecimal(3)), 
+						PlainDoseWrapper.makeDose(new BigDecimal(3))))));
 		Assert.assertEquals(
 				"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages hver dag:\n"+
 				"   Doseringsforløb:\n"+
@@ -72,12 +77,14 @@ public class RepeatedConverterTest {
 	@Test
 	public void test1stk3gangeDagligVedMaaltid() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			DosageStructureWrapper.makeStructuredDosage(
-				1, "stk", "ved måltid", TestHelper.toDate("2011-01-01"), TestHelper.toDate("2011-01-30"), 
-				DayWrapper.makeDay(
-					1, 
-					PlainDoseWrapper.makeDose(new BigDecimal(3)), 
-					PlainDoseWrapper.makeDose(new BigDecimal(3)))));
+			StructuresWrapper.makeStructures(
+				UnitOrUnitsWrapper.makeUnit("stk"), 
+				StructureWrapper.makeStructure(
+					1, "ved måltid", DateOrDateTimeWrapper.makeDate("2011-01-01"), DateOrDateTimeWrapper.makeDate("2011-01-30"), 
+					DayWrapper.makeDay(
+						1, 
+						PlainDoseWrapper.makeDose(new BigDecimal(3)), 
+						PlainDoseWrapper.makeDose(new BigDecimal(3))))));
 		Assert.assertEquals(
 				"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages hver dag:\n"+
 				"   Doseringsforløb:\n"+
@@ -99,11 +106,13 @@ public class RepeatedConverterTest {
 	@Test
 	public void test1stkDagligVedMaaltid() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-				DosageStructureWrapper.makeStructuredDosage(
-					1, "stk", "ved måltid", TestHelper.toDate("2011-01-01"), TestHelper.toDate("2011-01-30"), 
+			StructuresWrapper.makeStructures(
+				UnitOrUnitsWrapper.makeUnit("stk"), 
+				StructureWrapper.makeStructure(
+					1, "ved måltid", DateOrDateTimeWrapper.makeDate("2011-01-01"), DateOrDateTimeWrapper.makeDate("2011-01-30"), 
 					DayWrapper.makeDay(
 						1, 
-						PlainDoseWrapper.makeDose(new BigDecimal(1)))));
+						PlainDoseWrapper.makeDose(new BigDecimal(1))))));
 		Assert.assertEquals(
 				"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages hver dag:\n"+
 				"   Doseringsforløb:\n"+
@@ -121,12 +130,14 @@ public class RepeatedConverterTest {
 	@Test
 	public void test1Til2stk2GangeDaglig() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-				DosageStructureWrapper.makeStructuredDosage(
-					1, "stk", null, TestHelper.toDate("2011-01-01"), TestHelper.toDate("2011-01-30"), 
+			StructuresWrapper.makeStructures(
+				UnitOrUnitsWrapper.makeUnit("stk"), 
+				StructureWrapper.makeStructure(
+					1, null, DateOrDateTimeWrapper.makeDate("2011-01-01"), DateOrDateTimeWrapper.makeDate("2011-01-30"), 
 					DayWrapper.makeDay(
 						1, 
 						PlainDoseWrapper.makeDose(new BigDecimal(1), new BigDecimal(2)), 
-						PlainDoseWrapper.makeDose(new BigDecimal(1), new BigDecimal(2)))));
+						PlainDoseWrapper.makeDose(new BigDecimal(1), new BigDecimal(2))))));
 		Assert.assertEquals(
 				"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages hver dag:\n"+
 				"   Doseringsforløb:\n"+
@@ -152,11 +163,16 @@ public class RepeatedConverterTest {
 	@Test
 	public void test1stkHver2DagVedMaaltid() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			DosageStructureWrapper.makeStructuredDosage(
-				2, "stk", "ved måltid", TestHelper.toDate("2011-01-01"), TestHelper.toDate("2011-01-30"), 
-				DayWrapper.makeDay(
-					1, 
-					PlainDoseWrapper.makeDose(new BigDecimal(1)))));
+			StructuresWrapper.makeStructures(
+				UnitOrUnitsWrapper.makeUnit("stk"), 
+				StructureWrapper.makeStructure(
+					2, "ved måltid", DateOrDateTimeWrapper.makeDate("2011-01-01"), DateOrDateTimeWrapper.makeDate("2011-01-30"), 
+					DayWrapper.makeDay(
+						1, 
+						PlainDoseWrapper.makeDose(new BigDecimal(1))))));
+		Assert.assertEquals(
+				TwoDaysRepeatedConverterImpl.class, 
+				LongTextConverter.getConverterClass(dosage));
 		Assert.assertEquals(
 				"Doseringsforløbet starter lørdag den 1. januar 2011, forløbet gentages hver 2. dag:\n"+
 				"   Doseringsforløb:\n"+
@@ -179,11 +195,13 @@ public class RepeatedConverterTest {
 	@Test
 	public void test1stkOmUgenVedMaaltid() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			DosageStructureWrapper.makeStructuredDosage(
-				7, "stk", "ved måltid", TestHelper.toDate("2011-01-01"), TestHelper.toDate("2011-01-30"), 
-				DayWrapper.makeDay(
-					1, 
-					PlainDoseWrapper.makeDose(new BigDecimal(1)))));
+			StructuresWrapper.makeStructures(
+				UnitOrUnitsWrapper.makeUnit("stk"), 
+				StructureWrapper.makeStructure(
+					7, "ved måltid", DateOrDateTimeWrapper.makeDate("2011-01-01"), DateOrDateTimeWrapper.makeDate("2011-01-30"), 
+					DayWrapper.makeDay(
+						1, 
+						PlainDoseWrapper.makeDose(new BigDecimal(1))))));
 		Assert.assertEquals(
 				"Doseringsforløbet starter lørdag den 1. januar 2011, forløbet gentages hver uge:\n"+
 				"   Doseringsforløb:\n"+
@@ -205,11 +223,13 @@ public class RepeatedConverterTest {
 	@Test
 	public void test1stkOmMaanedenVedMaaltid() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			DosageStructureWrapper.makeStructuredDosage(
-				30, "stk", "ved måltid", TestHelper.toDate("2011-01-01"), TestHelper.toDate("2013-01-01"), 
-				DayWrapper.makeDay(
-					1, 
-					PlainDoseWrapper.makeDose(new BigDecimal(1)))));
+			StructuresWrapper.makeStructures(
+				UnitOrUnitsWrapper.makeUnit("stk"), 
+				StructureWrapper.makeStructure(
+					30, "ved måltid", DateOrDateTimeWrapper.makeDate("2011-01-01"), DateOrDateTimeWrapper.makeDate("2013-01-01"), 
+					DayWrapper.makeDay(
+						1, 
+						PlainDoseWrapper.makeDose(new BigDecimal(1))))));
 		Assert.assertEquals(
 				"Doseringsforløbet starter lørdag den 1. januar 2011, forløbet gentages efter 30 dage:\n"+
 				"   Doseringsforløb:\n"+
@@ -231,11 +251,13 @@ public class RepeatedConverterTest {
 	@Test
 	public void test2_5stk1GangOmUgenVedMaaltid() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			DosageStructureWrapper.makeStructuredDosage(
-				7, "stk", "ved måltid", TestHelper.toDate("2011-01-01"), TestHelper.toDate("2013-01-01"), 
-				DayWrapper.makeDay(
-					1, 
-					PlainDoseWrapper.makeDose(new BigDecimal(2.5)))));
+			StructuresWrapper.makeStructures(
+				UnitOrUnitsWrapper.makeUnit("stk"), 
+				StructureWrapper.makeStructure(
+					7, "ved måltid", DateOrDateTimeWrapper.makeDate("2011-01-01"), DateOrDateTimeWrapper.makeDate("2013-01-01"), 
+					DayWrapper.makeDay(
+						1, 
+						PlainDoseWrapper.makeDose(new BigDecimal(2.5))))));
 		Assert.assertEquals(
 				"Doseringsforløbet starter lørdag den 1. januar 2011, forløbet gentages hver uge:\n"+
 				"   Doseringsforløb:\n"+
@@ -256,12 +278,14 @@ public class RepeatedConverterTest {
 	@Test
 	public void test2_5Stk2GangeSammeDag1GangOmUgenVedMaaltid() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			DosageStructureWrapper.makeStructuredDosage(
-				7, "stk", "ved måltid", TestHelper.toDate("2011-01-01"), TestHelper.toDate("2013-01-01"), 
-				DayWrapper.makeDay(
-					1, 
-					PlainDoseWrapper.makeDose(new BigDecimal(2.5)), 
-					PlainDoseWrapper.makeDose(new BigDecimal(2.5)))));
+			StructuresWrapper.makeStructures(
+				UnitOrUnitsWrapper.makeUnit("stk"), 
+				StructureWrapper.makeStructure(
+					7, "ved måltid", DateOrDateTimeWrapper.makeDate("2011-01-01"), DateOrDateTimeWrapper.makeDate("2013-01-01"), 
+					DayWrapper.makeDay(
+						1, 
+						PlainDoseWrapper.makeDose(new BigDecimal(2.5)), 
+						PlainDoseWrapper.makeDose(new BigDecimal(2.5))))));
 		Assert.assertEquals(
 				"Doseringsforløbet starter lørdag den 1. januar 2011, forløbet gentages hver uge:\n"+
 				"   Doseringsforløb:\n"+
@@ -283,11 +307,13 @@ public class RepeatedConverterTest {
 	@Test
 	public void test2_5stk1GangOmMaanedenVedMaaltid() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			DosageStructureWrapper.makeStructuredDosage(
-				30, "stk", "ved måltid", TestHelper.toDate("2011-01-01"), TestHelper.toDate("2013-01-01"), 
-				DayWrapper.makeDay(
-					1,
-					PlainDoseWrapper.makeDose(new BigDecimal(2.5)))));
+			StructuresWrapper.makeStructures(
+				UnitOrUnitsWrapper.makeUnit("stk"), 
+				StructureWrapper.makeStructure(
+					30, "ved måltid", DateOrDateTimeWrapper.makeDate("2011-01-01"), DateOrDateTimeWrapper.makeDate("2013-01-01"), 
+					DayWrapper.makeDay(
+						1,
+						PlainDoseWrapper.makeDose(new BigDecimal(2.5))))));
 		Assert.assertEquals(
 				"Doseringsforløbet starter lørdag den 1. januar 2011, forløbet gentages efter 30 dage:\n"+
 				"   Doseringsforløb:\n"+
@@ -309,12 +335,14 @@ public class RepeatedConverterTest {
 	@Test
 	public void test2_5Stk2GangeSammeDag1GangOmMaanedenVedMaaltid() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			DosageStructureWrapper.makeStructuredDosage(
-				30, "stk", "ved måltid", TestHelper.toDate("2011-01-01"), TestHelper.toDate("2013-01-01"), 
-				DayWrapper.makeDay(
-					1, 
-					PlainDoseWrapper.makeDose(new BigDecimal(2.5)), 
-					PlainDoseWrapper.makeDose(new BigDecimal(2.5)))));
+			StructuresWrapper.makeStructures(
+				UnitOrUnitsWrapper.makeUnit("stk"), 
+				StructureWrapper.makeStructure(
+					30, "ved måltid", DateOrDateTimeWrapper.makeDate("2011-01-01"), DateOrDateTimeWrapper.makeDate("2013-01-01"), 
+					DayWrapper.makeDay(
+						1, 
+						PlainDoseWrapper.makeDose(new BigDecimal(2.5)), 
+						PlainDoseWrapper.makeDose(new BigDecimal(2.5))))));
 		Assert.assertEquals(
 				"Doseringsforløbet starter lørdag den 1. januar 2011, forløbet gentages efter 30 dage:\n"+
 				"   Doseringsforløb:\n"+
@@ -336,11 +364,13 @@ public class RepeatedConverterTest {
 	@Test
 	public void test2_5stkHver5DagVedMaaltid() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			DosageStructureWrapper.makeStructuredDosage(
-				5, "stk", "ved måltid", TestHelper.toDate("2011-01-01"), TestHelper.toDate("2013-01-01"), 
-				DayWrapper.makeDay(
-					1, 
-					PlainDoseWrapper.makeDose(new BigDecimal(2.5)))));
+			StructuresWrapper.makeStructures(
+				UnitOrUnitsWrapper.makeUnit("stk"), 
+				StructureWrapper.makeStructure(
+					5, "ved måltid", DateOrDateTimeWrapper.makeDate("2011-01-01"), DateOrDateTimeWrapper.makeDate("2013-01-01"), 
+					DayWrapper.makeDay(
+						1, 
+						PlainDoseWrapper.makeDose(new BigDecimal(2.5))))));
 		Assert.assertEquals(
 				"Doseringsforløbet starter lørdag den 1. januar 2011, forløbet gentages efter 5 dage:\n"+
 				"   Doseringsforløb:\n"+
@@ -362,12 +392,14 @@ public class RepeatedConverterTest {
 	@Test
 	public void test2_5stk2GangeSammeDagHver5DagVedMaaltid() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			DosageStructureWrapper.makeStructuredDosage(
-				5, "stk", "ved måltid", TestHelper.toDate("2011-01-01"), TestHelper.toDate("2013-01-01"), 
-				DayWrapper.makeDay(
-					1, 
-					PlainDoseWrapper.makeDose(new BigDecimal(2.5)), 
-					PlainDoseWrapper.makeDose(new BigDecimal(2.5)))));
+			StructuresWrapper.makeStructures(
+				UnitOrUnitsWrapper.makeUnit("stk"), 
+				StructureWrapper.makeStructure(
+					5, "ved måltid", DateOrDateTimeWrapper.makeDate("2011-01-01"), DateOrDateTimeWrapper.makeDate("2013-01-01"), 
+					DayWrapper.makeDay(
+						1, 
+						PlainDoseWrapper.makeDose(new BigDecimal(2.5)), 
+						PlainDoseWrapper.makeDose(new BigDecimal(2.5))))));
 		Assert.assertEquals(
 				"Doseringsforløbet starter lørdag den 1. januar 2011, forløbet gentages efter 5 dage:\n"+
 				"   Doseringsforløb:\n"+
@@ -389,12 +421,14 @@ public class RepeatedConverterTest {
 	@Test
 	public void test0_5stk1GangSammeDagHver5DagVedMaaltid() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			DosageStructureWrapper.makeStructuredDosage(
-				5, "stk", "ved måltid", TestHelper.toDate("2011-01-01"), TestHelper.toDate("2013-01-01"), 
-				DayWrapper.makeDay(
-					1, 
-					PlainDoseWrapper.makeDose(new BigDecimal(0.5)), 
-					PlainDoseWrapper.makeDose(new BigDecimal(0.5)))));
+			StructuresWrapper.makeStructures(
+				UnitOrUnitsWrapper.makeUnit("stk"), 
+				StructureWrapper.makeStructure(
+					5, "ved måltid", DateOrDateTimeWrapper.makeDate("2011-01-01"), DateOrDateTimeWrapper.makeDate("2013-01-01"), 
+					DayWrapper.makeDay(
+						1, 
+						PlainDoseWrapper.makeDose(new BigDecimal(0.5)), 
+						PlainDoseWrapper.makeDose(new BigDecimal(0.5))))));
 		Assert.assertEquals(
 				"Doseringsforløbet starter lørdag den 1. januar 2011, forløbet gentages efter 5 dage:\n"+
 				"   Doseringsforløb:\n"+
@@ -416,11 +450,13 @@ public class RepeatedConverterTest {
 	@Test
 	public void test1stkDagligKl0800() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			DosageStructureWrapper.makeStructuredDosage(
-				1, "stk", null, TestHelper.toDate("2011-01-01"), TestHelper.toDate("2011-01-30"), 
-				DayWrapper.makeDay(
-					1, 
-					TimedDoseWrapper.makeDose("08:00", new BigDecimal(1)))));
+			StructuresWrapper.makeStructures(
+				UnitOrUnitsWrapper.makeUnit("stk"), 
+				StructureWrapper.makeStructure(
+					1, null, DateOrDateTimeWrapper.makeDate("2011-01-01"), DateOrDateTimeWrapper.makeDate("2011-01-30"), 
+					DayWrapper.makeDay(
+						1, 
+						TimedDoseWrapper.makeDose("08:00", new BigDecimal(1))))));
 		Assert.assertEquals(
 				"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages hver dag:\n"+
 				"   Doseringsforløb:\n"+

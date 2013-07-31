@@ -34,37 +34,45 @@ public class NightDoseWrapper extends DoseWrapper {
 		super(dose, false);
 	}
 
-	public NightDoseWrapper(dk.medicinkortet.web.shared.jaxb.dkma.medicinecard2008.DosageDefinedTimeElementStructure dose) {
-		super(dose, false);
-	}
-
 	private NightDoseWrapper(
 			BigDecimal doseQuantity, BigDecimal minimalDoseQuantity, BigDecimal maximalDoseQuantity, 
 			String doseQuantityString, String minimalDoseQuantityString, String maximalDoseQuantityString, boolean isAccordingToNeed) {
-		super(doseQuantity, minimalDoseQuantity, maximalDoseQuantity, doseQuantityString, minimalDoseQuantityString, maximalDoseQuantityString, isAccordingToNeed);
+		super(doseQuantity, minimalDoseQuantity, maximalDoseQuantity, isAccordingToNeed);
 	}
 
 	public static NightDoseWrapper makeDose(BigDecimal quantity) {
+		if(isZero(quantity))
+			return null;
 		return new NightDoseWrapper(quantity, null, null, null, null, null, false);
 	}
 
 	public static NightDoseWrapper makeDose(BigDecimal quantity, boolean isAccordingToNeed) {
+		if(isZero(quantity))
+			return null;
 		return new NightDoseWrapper(quantity, null, null, null, null, null, isAccordingToNeed);
 	}
 
 	public static NightDoseWrapper makeDose(BigDecimal quantity, String supplText, boolean isAccordingToNeed) {
+		if(isZero(quantity))
+			return null;
 		return new NightDoseWrapper(quantity, null, null, supplText, null, null, isAccordingToNeed);
 	}
 	
 	public static NightDoseWrapper makeDose(BigDecimal minimalQuantity, BigDecimal maximalQuantity, boolean isAccordingToNeed) {
+		if(isZero(minimalQuantity, maximalQuantity))
+			return null;
 		return new NightDoseWrapper(null, minimalQuantity, maximalQuantity, null, null, null, isAccordingToNeed);
 	}	
 
 	public static NightDoseWrapper makeDose(BigDecimal minimalQuantity, BigDecimal maximalQuantity) {
+		if(isZero(minimalQuantity, maximalQuantity))
+			return null;
 		return new NightDoseWrapper(null, minimalQuantity, maximalQuantity, null, null, null, false);
 	}	
 
 	public static NightDoseWrapper makeDose(BigDecimal minimalQuantity, BigDecimal maximalQuantity, String minimalSupplText, String maximalSupplText, boolean isAccordingToNeed) {
+		if(isZero(minimalQuantity, maximalQuantity))
+			return null;
 		return new NightDoseWrapper(null, minimalQuantity, maximalQuantity, null, minimalSupplText, maximalSupplText, isAccordingToNeed);
 	}	
 	

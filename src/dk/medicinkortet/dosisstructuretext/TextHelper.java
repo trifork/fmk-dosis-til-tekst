@@ -23,13 +23,13 @@
 package dk.medicinkortet.dosisstructuretext;
 
 import java.math.BigDecimal;
-import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import dk.medicinkortet.dosisstructuretext.vowrapper.DoseWrapper;
+import dk.medicinkortet.dosisstructuretext.vowrapper.UnitOrUnitsWrapper;
 
 public class TextHelper {
 
@@ -103,11 +103,13 @@ public class TextHelper {
 			return s;
 	}
 	
-	public static String getUnit(DoseWrapper dose, String unit, String unitSingular, String unitPlural) {
-		if(unit!=null)
-			return correctUnit(dose, unit);
-		else
-			return chooseUnit(dose, unitSingular, unitPlural);
+	public static String getUnit(DoseWrapper dose, UnitOrUnitsWrapper unitOrUnits) {
+		if(unitOrUnits.getUnit()!=null)
+			return correctUnit(dose, unitOrUnits.getUnit());
+		else if(unitOrUnits.getUnitSingular()!=null && unitOrUnits.getUnitPlural()!=null)
+			return chooseUnit(dose, unitOrUnits.getUnitSingular(), unitOrUnits.getUnitPlural());
+		else 
+			return null;
 	}
 
 	private static String correctUnit(DoseWrapper dose, String unit) {
@@ -126,10 +128,10 @@ public class TextHelper {
 	
 	private static boolean hasPluralUnit(DoseWrapper dose) {
 		if(dose.getDoseQuantity()!=null) {
-			return dose.getDoseQuantity().doubleValue()>1.0;
+			return dose.getDoseQuantity().doubleValue()>1.0 || dose.getDoseQuantity().doubleValue()<0.000000001d;
 		}
 		else if(dose.getMaximalDoseQuantity()!=null) {
-			return dose.getMaximalDoseQuantity().doubleValue()>1.0;
+			return dose.getMaximalDoseQuantity().doubleValue()>1.0 || dose.getMaximalDoseQuantity().doubleValue()<0.000000001d;
 		}
 		else {
 			return false;

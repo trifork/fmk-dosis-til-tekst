@@ -23,95 +23,96 @@
 package dk.medicinkortet.dosisstructuretext.shorttextconverterimpl;
 
 import dk.medicinkortet.dosisstructuretext.vowrapper.DayWrapper;
-import dk.medicinkortet.dosisstructuretext.vowrapper.DosageStructureWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
+import dk.medicinkortet.dosisstructuretext.vowrapper.StructureWrapper;
+import dk.medicinkortet.dosisstructuretext.vowrapper.UnitOrUnitsWrapper;
 
 public class MorningNoonEveningNightConverterImpl extends ShortTextConverterImpl {
 
 	@Override
 	public boolean canConvert(DosageWrapper dosage) {
-		if(dosage.getDosageStructure()==null)
+		if(dosage.getStructures()==null)
 			return false;
-		DosageStructureWrapper dosageStructure = dosage.getDosageStructure();
-		if(dosageStructure.getIterationInterval()!=1)
+		if(dosage.getStructures().getStructures().size()!=1)
+			return false;	
+		StructureWrapper structure = dosage.getStructures().getStructures().first();
+		if(structure.getIterationInterval()!=1)
 			return false;
-		if(dosageStructure.getDays().size()!=1)
+		if(structure.getDays().size()!=1)
 			return false;
-		DayWrapper day = dosageStructure.getDays().get(0);
+		DayWrapper day = structure.getDays().first();
 		if(day.getDayNumber()!=1)
 			return false;
 		if(day.containsPlainDose() || day.containsTimedDose())
-			return false;
-		if(!dosageStructure.allDosesHaveTheSameSupplText()) // Special case needed for 2008 NS as it may contain multiple texts 
 			return false;
 		return true;
 	}
 	
 	@Override
 	public String doConvert(DosageWrapper dosage) {
-		DosageStructureWrapper dosageStructure = dosage.getDosageStructure();
+		StructureWrapper structure = dosage.getStructures().getStructures().first();
 		StringBuilder text = new StringBuilder();
-		DayWrapper day = dosageStructure.getDays().get(0);
-		appendMorning(day, text, dosageStructure);
-		appendNoon(day, text, dosageStructure);
-		appendEvening(day, text, dosageStructure);
-		appendNight(day, text, dosageStructure);
-		appendSupplText(dosageStructure.getUniqueSupplText(), text);
+		DayWrapper day = structure.getDays().first();
+		appendMorning(day, text, dosage.getStructures().getUnitOrUnits());
+		appendNoon(day, text, dosage.getStructures().getUnitOrUnits());
+		appendEvening(day, text, dosage.getStructures().getUnitOrUnits());
+		appendNight(day, text, dosage.getStructures().getUnitOrUnits());
+		appendSupplText(structure.getSupplText(), text);
 		return text.toString();
 	}
 
-	public static void appendMorning(DayWrapper day, StringBuilder text, DosageStructureWrapper dosageStructure) {
+	public static void appendMorning(DayWrapper day, StringBuilder text, UnitOrUnitsWrapper unitOrUnits) {
 		if(day.getMorningDose()!=null) {
-			text.append(toValue(day.getMorningDose(), dosageStructure));
+			text.append(toValue(day.getMorningDose(), unitOrUnits));
 			if(day.getMorningDose().isAccordingToNeed())
 				text.append(" efter behov");
 		}		
 	}
 	
-	public static void appendNoon(DayWrapper day, StringBuilder text, DosageStructureWrapper dosageStructure) {
+	public static void appendNoon(DayWrapper day, StringBuilder text, UnitOrUnitsWrapper unitOrUnits) {
 		if(day.getNoonDose()!=null) {
 			if(day.getMorningDose()!=null && (day.getEveningDose()!=null || day.getNightDose()!=null))
 				text.append(", ");
 			else if(day.getMorningDose()!=null)
 				text.append(" og ");			
 			if(!day.allDosesHaveTheSameQuantity())
-				text.append(toValue(day.getNoonDose(), dosageStructure));
+				text.append(toValue(day.getNoonDose(), unitOrUnits));
 			else if(day.getMorningDose()!=null)
 				text.append(day.getNoonDose().getLabel());
 			else 
-				text.append(toValue(day.getNoonDose(), dosageStructure));
+				text.append(toValue(day.getNoonDose(), unitOrUnits));
 			if(day.getNoonDose().isAccordingToNeed())
 				text.append(" efter behov");
 		}
 	}
 	
-	public static void appendEvening(DayWrapper day, StringBuilder text, DosageStructureWrapper dosageStructure) {
+	public static void appendEvening(DayWrapper day, StringBuilder text, UnitOrUnitsWrapper unitOrUnits) {
 		if(day.getEveningDose()!=null) {
 			if((day.getMorningDose()!=null || day.getNoonDose()!=null) && day.getNightDose()!=null)
 				text.append(", ");
 			else if(day.getMorningDose()!=null || day.getNoonDose()!=null)
 				text.append(" og ");			
 			if(!day.allDosesHaveTheSameQuantity())
-				text.append(toValue(day.getEveningDose(), dosageStructure));
+				text.append(toValue(day.getEveningDose(), unitOrUnits));
 			else if(day.getMorningDose()!=null || day.getNoonDose()!=null)
 				text.append(day.getEveningDose().getLabel());			
 			else
-				text.append(toValue(day.getEveningDose(), dosageStructure));
+				text.append(toValue(day.getEveningDose(), unitOrUnits));
 			if(day.getEveningDose().isAccordingToNeed())
 				text.append(" efter behov");			
 		}		
 	}
 	
-	public static void appendNight(DayWrapper day, StringBuilder text, DosageStructureWrapper dosageStructure) {
+	public static void appendNight(DayWrapper day, StringBuilder text, UnitOrUnitsWrapper unitOrUnits) {
 		if(day.getNightDose()!=null) {
 			if(day.getMorningDose()!=null || day.getNoonDose()!=null || day.getEveningDose()!=null)
 				text.append(" og ");			
 			if(!day.allDosesHaveTheSameQuantity())
-				text.append(toValue(day.getNightDose(), dosageStructure));
+				text.append(toValue(day.getNightDose(), unitOrUnits));
 			else if(day.getMorningDose()!=null || day.getNoonDose()!=null || day.getEveningDose()!=null)
 				text.append(day.getNightDose().getLabel());
 			else
-				text.append(toValue(day.getNightDose(), dosageStructure));
+				text.append(toValue(day.getNightDose(), unitOrUnits));
 			if(day.getNightDose().isAccordingToNeed())
 				text.append(" efter behov");			
 		}		

@@ -32,9 +32,9 @@ import dk.medicinkortet.dosisstructuretext.Validator;
 public class DosageWrapper {
 
 	// Wrapped values
-	private boolean isAdministrationAccordingToSchema;
-	private String freeText;
-	private DosageStructureWrapper dosageStructure;
+	private AdministrationAccordingToSchema administrationAccordingToSchema;
+	private FreeText freeText;
+	private StructuresWrapper structures;
 	
 	/**
 	 * Initialises the dosage wrapper with a DosageStructure in the 2012/06/01 namespace.  
@@ -42,57 +42,83 @@ public class DosageWrapper {
 	 */
 	public DosageWrapper(dk.medicinkortet.web.shared.jaxb.dkma.medicinecard20120601.Dosage dosage) {
 		this(
-			dosage.getAdministrationAccordingToSchemaInLocalSystem()!=null, 
-			dosage.getFreeText(), 
-			dosage.getDosageStructure()!=null ? new DosageStructureWrapper(dosage.getDosageStructure()) : null);
+			wrapAdministrationAccordingToSchemaInLocalSystem(dosage.getAdministrationAccordingToSchemaInLocalSystem()), 
+			wrapFreeText(dosage.getFreeText()), 
+			wrapStructures(dosage.getDosageStructure()));
 	}
 
+	private static AdministrationAccordingToSchema wrapAdministrationAccordingToSchemaInLocalSystem(dk.medicinkortet.web.shared.jaxb.dkma.medicinecard20120601.AdministrationAccordingToSchemaInLocalSystem administrationAccordingToSchemaInLocalSystem) {
+		if(administrationAccordingToSchemaInLocalSystem==null)
+			return null;
+		else
+			return new AdministrationAccordingToSchema(null, null, true, null, null, true);
+	}
+	
+	private static FreeText wrapFreeText(String text) {
+		if(text==null)
+			return null;
+		else
+			return new FreeText(null, null, true, null, null, true, text);
+	}
+	
+	private static StructuresWrapper wrapStructures(dk.medicinkortet.web.shared.jaxb.dkma.medicinecard20120601.DosageStructure dosageStructure) {
+		if(dosageStructure==null)
+			return null;
+		else 
+			return new StructuresWrapper(dosageStructure);
+	}	
+	
 	/**
 	 * Initialises the dosage wrapper with a DosageStructure in the 2009/01/01 namespace.  
 	 * @param dosageStructure
 	 */
 	public DosageWrapper(dk.medicinkortet.web.shared.jaxb.dkma.medicinecard2009.DosageStructure dosageStructure) {
 		this(
-			dosageStructure.getAdministrationAccordingToSchemeInLocalSystemIndicator()!=null, 
-			dosageStructure.getDosageFreeText(), 
-			dosageStructure.getDosageTimesStructure()!=null ? new DosageStructureWrapper(dosageStructure.getDosageTimesStructure()) : null);
-	}
+			wrapAdministrationAccordingToSchemaInLocalSystem(dosageStructure.getAdministrationAccordingToSchemeInLocalSystemIndicator()), 
+			wrapFreeText(dosageStructure.getDosageFreeText()), 
+			wrapStructures(dosageStructure.getDosageTimesStructure()));
+	}	
 
-	/**
-	 * Initialises the dosage wrapper with a DosageStructure in the 2008/06/01 namespace.  
-	 * @param dosageStructure
-	 */
-	public DosageWrapper(dk.medicinkortet.web.shared.jaxb.dkma.medicinecard2008.DosageStructure dosageStructure) {
-		this(
-			dosageStructure.getAdministrationAccordingToSchemeInLocalSystemIndicator()!=null, 
-			dosageStructure.getDosageFreeText(), 
-			dosageStructure.getDosageTimesStructure()!=null ? new DosageStructureWrapper(dosageStructure.getDosageTimesStructure()) : null); 
+	private static AdministrationAccordingToSchema wrapAdministrationAccordingToSchemaInLocalSystem(dk.medicinkortet.web.shared.jaxb.dkma.medicinecard2008.AdministrationAccordingToSchemeInLocalSystemIndicator administrationAccordingToSchemaInLocalSystem) {
+		if(administrationAccordingToSchemaInLocalSystem==null)
+			return null;
+		else
+			return new AdministrationAccordingToSchema(null, null, true, null, null, true);
 	}
-
-	public DosageWrapper(boolean isAdministrationAccordingToSchema, String freeText, DosageStructureWrapper dosageStructure) {
-		this.isAdministrationAccordingToSchema = isAdministrationAccordingToSchema;
+	
+	private static StructuresWrapper wrapStructures(dk.medicinkortet.web.shared.jaxb.dkma.medicinecard2009.DosageTimesStructure dosageTimesStructure) {
+		if(dosageTimesStructure==null)
+			return null;
+		else 
+			return new StructuresWrapper(dosageTimesStructure);
+	}	
+	
+	private DosageWrapper(AdministrationAccordingToSchema administrationAccordingToSchema, FreeText freeText, StructuresWrapper structures) {
+		this.administrationAccordingToSchema = administrationAccordingToSchema;
 		this.freeText = freeText; 
-		this.dosageStructure = dosageStructure;
+		this.structures = structures;
 		Validator.validate(this);
 	}
 		
-	public static DosageWrapper makeStructuredDosage(DosageStructureWrapper dosageStructure) {
-		return new DosageWrapper(false, null, dosageStructure);
+	public static DosageWrapper makeStructuredDosage(StructuresWrapper structures) {
+		System.out.println("a -->"+structures.getStructures().size());
+		
+		return new DosageWrapper(null, null, structures);
 	}
 
 	public static DosageWrapper makeFreeTextDosage(String freeText) {
-		return new DosageWrapper(false, freeText, null);
+		return new DosageWrapper(null, new FreeText(null, null, true, null, null, true, freeText), null);
 	}
 
 	public static DosageWrapper makeAdministrationAccordingToSchemaDosage() {
-		return new DosageWrapper(true, null, null);
+		return new DosageWrapper(new AdministrationAccordingToSchema(null, null, true, null, null, true), null, null);
 	}
 	
 	/**
-	 * @return Returns true if the dosage is "according to schema..." (a "PN" dosage).
+	 * @return Returns true if the dosage is "according to schema..." 
 	 */
 	public boolean isAdministrationAccordingToSchema() {
-		return isAdministrationAccordingToSchema;
+		return getAdministrationAccordingToSchema()!=null;
 	}
 	
 	/**
@@ -106,22 +132,29 @@ public class DosageWrapper {
 	 * @return Returns true if the dosage is structured
 	 */
 	public boolean isStructured() {
-		return getDosageStructure()!=null;
+		return getStructures()!=null;
 	}
 
 	/**
 	 * @return The free text dosage, or null if the dosage is not of this kind 
 	 */
-	public String getFreeText() {
+	public FreeText getFreeText() {
 		return freeText;
+	}
+	
+	/**
+	 * @return "according to schema..." dosage
+	 */
+	public AdministrationAccordingToSchema getAdministrationAccordingToSchema() {
+		return administrationAccordingToSchema;
 	}
 	
 	/**
 	 * @return A wrapped DosageTimes object containing a structured dosage, or null if the 
 	 * dosage is not of this kind 
 	 */
-	public DosageStructureWrapper getDosageStructure() {
-		return dosageStructure;
+	public StructuresWrapper getStructures() {
+		return structures;
 	}
 	
 }

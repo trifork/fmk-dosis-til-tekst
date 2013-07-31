@@ -32,16 +32,16 @@ import dk.medicinkortet.dosisstructuretext.DosageType;
 import dk.medicinkortet.dosisstructuretext.DosageTypeCalculator;
 import dk.medicinkortet.dosisstructuretext.LongTextConverter;
 import dk.medicinkortet.dosisstructuretext.ShortTextConverter;
-import dk.medicinkortet.dosisstructuretext.TestHelper;
 import dk.medicinkortet.dosisstructuretext.longtextconverterimpl.DailyRepeatedConverterImpl;
 import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.MorningNoonEveningNightConverterImpl;
+import dk.medicinkortet.dosisstructuretext.vowrapper.DateOrDateTimeWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DayWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.EveningDoseWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.MorningDoseWrapper;
-import dk.medicinkortet.dosisstructuretext.vowrapper.NightDoseWrapper;
-import dk.medicinkortet.dosisstructuretext.vowrapper.NoonDoseWrapper;
-import dk.medicinkortet.dosisstructuretext.vowrapper.DosageStructureWrapper;
+import dk.medicinkortet.dosisstructuretext.vowrapper.StructureWrapper;
+import dk.medicinkortet.dosisstructuretext.vowrapper.StructuresWrapper;
+import dk.medicinkortet.dosisstructuretext.vowrapper.UnitOrUnitsWrapper;
 
 /**
  * The purpose of this test class is to test new functionality added in FMK 1.4 (2012/06/01 namespace). 
@@ -53,15 +53,14 @@ public class MorningNoonEveningNightConverterTest {
 	@Test
 	public void testUnits() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			DosageStructureWrapper.makeStructuredDosage(
-				1, 
-				null, "tablet", "tabletter", 
-				"ved måltid", 
-				TestHelper.toDate("2011-01-01"), TestHelper.toDate("2011-01-30"), null, null,
-				DayWrapper.makeDay(
-					1, 
-					MorningDoseWrapper.makeDose(new BigDecimal(1)), 
-					EveningDoseWrapper.makeDose(new BigDecimal(2))))); 
+			StructuresWrapper.makeStructures(
+				UnitOrUnitsWrapper.makeUnits("tablet", "tabletter"), 
+				StructureWrapper.makeStructure(
+					1, "ved måltid", DateOrDateTimeWrapper.makeDate("2011-01-01"), DateOrDateTimeWrapper.makeDate("2011-01-30"), 
+					DayWrapper.makeDay(
+						1, 
+						MorningDoseWrapper.makeDose(new BigDecimal(1)), 
+						EveningDoseWrapper.makeDose(new BigDecimal(2)))))); 
 		Assert.assertEquals(
 				DailyRepeatedConverterImpl.class, 
 				LongTextConverter.getConverterClass(dosage));
@@ -86,15 +85,14 @@ public class MorningNoonEveningNightConverterTest {
 	@Test
 	public void testAccordingToNeed() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			DosageStructureWrapper.makeStructuredDosage(
-				1, 
-				null, "tablet", "tabletter", 
-				"ved måltid", 
-				TestHelper.toDate("2011-01-01"), TestHelper.toDate("2011-01-30"), null, null,
-				DayWrapper.makeDay(
-					1, 
-					MorningDoseWrapper.makeDose(new BigDecimal(1), true), 
-					EveningDoseWrapper.makeDose(new BigDecimal(2), true)))); 
+			StructuresWrapper.makeStructures(
+				UnitOrUnitsWrapper.makeUnits("tablet", "tabletter"),  
+				StructureWrapper.makeStructure(
+					1, "ved måltid", DateOrDateTimeWrapper.makeDate("2011-01-01"), DateOrDateTimeWrapper.makeDate("2011-01-30"), 
+					DayWrapper.makeDay(
+						1, 
+						MorningDoseWrapper.makeDose(new BigDecimal(1), true), 
+						EveningDoseWrapper.makeDose(new BigDecimal(2), true))))); 
 		Assert.assertEquals(
 				DailyRepeatedConverterImpl.class, 
 				LongTextConverter.getConverterClass(dosage));

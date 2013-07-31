@@ -26,72 +26,72 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 
+import dk.medicinkortet.dosisstructuretext.vowrapper.DateOrDateTimeWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DayWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
-import dk.medicinkortet.dosisstructuretext.vowrapper.DosageStructureWrapper;
+import dk.medicinkortet.dosisstructuretext.vowrapper.StructureWrapper;
+import dk.medicinkortet.dosisstructuretext.vowrapper.UnitOrUnitsWrapper;
 
 public class WeeklyRepeatedConverterImpl extends LongTextConverterImpl {
 
 	@Override
 	public boolean canConvert(DosageWrapper dosage) {
-		if(dosage.getDosageStructure()==null)
+		if(dosage.getStructures()==null)
 			return false;
-		DosageStructureWrapper dosageStructure = dosage.getDosageStructure();
-		if(dosageStructure.getIterationInterval()!=7)
+		if(dosage.getStructures().getStructures().size()!=1)
+			return false;	
+		StructureWrapper structure = dosage.getStructures().getStructures().first();
+		if(structure.getIterationInterval()!=7)
 			return false;
-		if(dosageStructure.getStartDateOrDateTime().equals(dosageStructure.getEndDateOrDateTime()))
+		if(structure.getStartDateOrDateTime().equals(structure.getEndDateOrDateTime()))
 			return false; 
-		if(dosageStructure.getDays().size()>7)
+		if(structure.getDays().size()>7)
 			return false;
-		if(dosageStructure.getFirstDay().getDayNumber()==0)
+		if(structure.getDays().first().getDayNumber()==0)
 			return false;
-		if(dosageStructure.getMaxDay().getDayNumber()>7)
-			return false;
-		if(!dosageStructure.allDosesHaveTheSameSupplText()) // Special case needed for 2008 NS as it may contain multiple texts 
+		if(structure.getDays().last().getDayNumber()>7)
 			return false;
 		return true;
 	}
 
 	@Override
 	public String doConvert(DosageWrapper dosage) {
-		return convert(dosage.getDosageStructure());
+		return convert(dosage.getStructures().getUnitOrUnits(), dosage.getStructures().getStructures().first());
 	}
 
-	public String convert(DosageStructureWrapper dosageStructure) {
+	public String convert(UnitOrUnitsWrapper unitOrUnits, StructureWrapper structure) {
 		StringBuilder s = new StringBuilder();		
-		appendDosageStart(s, dosageStructure);
+		appendDosageStart(s, structure);
 		s.append(", forløbet gentages hver uge");
-		appendNoteText(s, dosageStructure);
+		appendNoteText(s, structure);
 		s.append(INDENT+"Doseringsforløb:\n");
-		appendDays(s, dosageStructure);
+		appendDays(s, unitOrUnits, structure);
 		return s.toString();	
 	}
 
 	@Override
-	protected int appendDays(StringBuilder s, DosageStructureWrapper dosageStructure) {
+	protected int appendDays(StringBuilder s, UnitOrUnitsWrapper unitOrUnits, StructureWrapper structure) {
 		// Make a sorted list of weekdays
-		ArrayList<DayOfWeek> daysOfWeek = sortDaysOfWeek(dosageStructure);		
-		// Make text
+		ArrayList<DayOfWeek> daysOfWeek = sortDaysOfWeek(structure);
 		int appendedLines = 0;
 		for(DayOfWeek e: daysOfWeek) {
 			if(appendedLines>0)
 				s.append("\n");
 			appendedLines++;
 			s.append(INDENT+e.name+": ");
-			s.append(makeDaysDosage(dosageStructure, e.day));
+			s.append(makeDaysDosage(unitOrUnits, structure, e.day));
 		}		
 		return appendedLines;
 	}
 
-	public static ArrayList<DayOfWeek> sortDaysOfWeek(DosageStructureWrapper dosageStructure) {
+	public static ArrayList<DayOfWeek> sortDaysOfWeek(StructureWrapper structure) {
 		// First convert all days (up to 7) to day of week and DK name ((1, Mandag) etc).
 		ArrayList<DayOfWeek> daysOfWeek = new ArrayList<DayOfWeek>();
-		for(DayWrapper day: dosageStructure.getDays()) {
-			daysOfWeek.add(makeDayOfWeekAndName(dosageStructure.getStartDateOrDateTime(), day));
+		for(DayWrapper day: structure.getDays()) {
+			daysOfWeek.add(makeDayOfWeekAndName(structure.getStartDateOrDateTime(), day));
 		}
 		// Sort according to day of week (Monday always first)
 		Collections.sort(daysOfWeek, new Comparator<DayOfWeek>() {
@@ -109,10 +109,10 @@ public class WeeklyRepeatedConverterImpl extends LongTextConverterImpl {
 		public DayWrapper day;
 	}
 	
-	private static DayOfWeek makeDayOfWeekAndName(Date startDateOrDateTime, DayWrapper day) {
+	private static DayOfWeek makeDayOfWeekAndName(DateOrDateTimeWrapper startDateOrDateTime, DayWrapper day) {
 		DayOfWeek d = new DayOfWeek();
 		d.day = day;
-		GregorianCalendar c = makeFromDateOnly(startDateOrDateTime);
+		GregorianCalendar c = makeFromDateOnly(startDateOrDateTime.getDateOrDateTime());
 		c.add(GregorianCalendar.DATE, day.getDayNumber()-1);
 		SimpleDateFormat f = new SimpleDateFormat(DAY_FORMAT, new Locale("da", "DK"));
 		d.dayOfWeek = usToDkDayOfWeek(c.get(GregorianCalendar.DAY_OF_WEEK));

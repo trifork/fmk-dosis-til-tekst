@@ -34,26 +34,28 @@ public class PlainDoseWrapper extends DoseWrapper {
 		super(dose, isAccordingToNeed);
 	}
 
-	public PlainDoseWrapper(dk.medicinkortet.web.shared.jaxb.dkma.medicinecard2008.DosageTimeElementStructure dose, boolean isAccordingToNeed) {
-		super(dose, isAccordingToNeed);
-	}
-
 	private PlainDoseWrapper(
 			BigDecimal doseQuantity, BigDecimal minimalDoseQuantity, BigDecimal maximalDoseQuantity, 
 			String doseQuantityString, String minimalDoseQuantityString, String maximalDoseQuantityString, 
 			boolean isAccordingToNeed) {
-		super(doseQuantity, minimalDoseQuantity, maximalDoseQuantity, doseQuantityString, minimalDoseQuantityString, maximalDoseQuantityString, isAccordingToNeed);
+		super(doseQuantity, minimalDoseQuantity, maximalDoseQuantity, isAccordingToNeed);
 	}
 
 	public static PlainDoseWrapper makeDose(BigDecimal quantity) {
+		if(isZero(quantity))
+			return null;
 		return new PlainDoseWrapper(quantity, null, null, null, null, null, false);
 	}
 
 	public static PlainDoseWrapper makeDose(BigDecimal quantity, boolean isAccordingToNeed) {
+		if(isZero(quantity))
+			return null;
 		return new PlainDoseWrapper(quantity, null, null, null, null, null, isAccordingToNeed);
 	}
 
 	public static PlainDoseWrapper makeDose(BigDecimal quantity, String supplText, boolean isAccordingToNeed) {
+		if(isZero(quantity))
+			return null;
 		return new PlainDoseWrapper(quantity, null, null, supplText, null, null, isAccordingToNeed);
 	}
 	
@@ -62,14 +64,20 @@ public class PlainDoseWrapper extends DoseWrapper {
 	}	
 
 	public static PlainDoseWrapper makeDose(BigDecimal minimalQuantity, BigDecimal maximalQuantity, boolean isAccordingToNeed) {
+		if(isZero(minimalQuantity, maximalQuantity))
+			return null;
 		return new PlainDoseWrapper(null, minimalQuantity, maximalQuantity, null, null, null, isAccordingToNeed);
 	}	
 
 	public static PlainDoseWrapper makeDose(BigDecimal minimalQuantity, BigDecimal maximalQuantity, String minimalSupplText, String maximalSupplText) {
+		if(isZero(minimalQuantity, maximalQuantity))
+			return null;
 		return new PlainDoseWrapper(null, minimalQuantity, maximalQuantity, null, minimalSupplText, maximalSupplText, false);
 	}	
 
 	public static PlainDoseWrapper makeDose(BigDecimal minimalQuantity, BigDecimal maximalQuantity, String minimalSupplText, String maximalSupplText, boolean isAccordingToNeed) {
+		if(isZero(minimalQuantity, maximalQuantity))
+			return null;
 		return new PlainDoseWrapper(null, minimalQuantity, maximalQuantity, null, minimalSupplText, maximalSupplText, isAccordingToNeed);
 	}	
 		

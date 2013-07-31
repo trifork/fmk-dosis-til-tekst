@@ -23,60 +23,61 @@
 package dk.medicinkortet.dosisstructuretext.longtextconverterimpl;
 
 import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
-import dk.medicinkortet.dosisstructuretext.vowrapper.DosageStructureWrapper;
+import dk.medicinkortet.dosisstructuretext.vowrapper.StructureWrapper;
+import dk.medicinkortet.dosisstructuretext.vowrapper.UnitOrUnitsWrapper;
 
 public class DefaultLongTextConverterImpl extends LongTextConverterImpl {
 
 
 	@Override
 	public boolean canConvert(DosageWrapper dosageStructure) {
-		// The default converter must handle all cases, to ensure that we always create a long 
+		// The default converter must handle all cases with a single periode, to ensure that we always create a long 
 		// dosage text. This converter is added last in the LongTextConverters list of possible 
 		// converters.
-		return true;
+		return dosageStructure.getStructures().getStructures().size()==1;
 	}
 
 	@Override
 	public String doConvert(DosageWrapper dosage) {
-		return convert(dosage.getDosageStructure());
+		return convert(dosage.getStructures().getUnitOrUnits(), dosage.getStructures().getStructures().first());
 	}
 
-	private String convert(DosageStructureWrapper dosageStructure) {
+	private String convert(UnitOrUnitsWrapper unitOrUnits, StructureWrapper structure) {
 		StringBuilder s = new StringBuilder();		
-		if(dosageStructure.getStartDateOrDateTime().equals(dosageStructure.getEndDateOrDateTime())) { 
+		if(structure.getStartDateOrDateTime().equals(structure.getEndDateOrDateTime())) { 
 			// Same day dosage
-			s.append("Doseringen foretages kun "+datesToLongText(dosageStructure.getStartDate(), dosageStructure.getStartDateTime())+":\n");
+			s.append("Doseringen foretages kun "+datesToLongText(structure.getStartDateOrDateTime())+":\n");
 		}
-		else if(dosageStructure.getIterationInterval()==0) {
+		else if(structure.getIterationInterval()==0) {
 			// Not repeated dosage
-			appendDosageStart(s, dosageStructure);			
+			appendDosageStart(s, structure);			
 			// If there is just one day with according to need dosages we don't want say when to stop
-			if(dosageStructure.getDays().size()==1 && dosageStructure.containsAccordingToNeedDosesOnly()) {
+			if(structure.getDays().size()==1 && structure.containsAccordingToNeedDosesOnly()) {
 				s.append(":\n");
 			}
 			else {
 				s.append(" og ophører efter det angivne forløb");
-				appendNoteText(s, dosageStructure);				
+				appendNoteText(s, structure);				
 			}
 		}
-		else if(dosageStructure.getIterationInterval()==1) {
+		else if(structure.getIterationInterval()==1) {
 			// Daily dosage
-			appendDosageStart(s, dosageStructure);
+			appendDosageStart(s, structure);
 			s.append(" og gentages hver dag:\n");
 		}
-		else if(dosageStructure.getIterationInterval()>1) {
+		else if(structure.getIterationInterval()>1) {
 			// Dosage repeated after more than one day
-			appendDosageStart(s, dosageStructure);
-			appendRepetition(s, dosageStructure);
-			appendNoteText(s, dosageStructure);
+			appendDosageStart(s, structure);
+			appendRepetition(s, structure);
+			appendNoteText(s, structure);
 		}
 		s.append(INDENT+"Doseringsforløb:\n");
-		appendDays(s, dosageStructure);
+		appendDays(s, unitOrUnits, structure);
 		return s.toString();	
 	}
 	
-	private void appendRepetition(StringBuilder s, DosageStructureWrapper dosageStructure) {
-		s.append(", forløbet gentages efter "+dosageStructure.getIterationInterval()+" dage");
+	private void appendRepetition(StringBuilder s, StructureWrapper structure) {
+		s.append(", forløbet gentages efter "+structure.getIterationInterval()+" dage");
 	}
 			
 }

@@ -130,43 +130,6 @@ public class DayWrapper {
 		}			
 	}
 
-	public DayWrapper(dk.medicinkortet.web.shared.jaxb.dkma.medicinecard2008.DosageDayElementStructure dosageDayElementStructure) {
-		this.dayNumber = dosageDayElementStructure.getDosageDayIdentifier();
-		for(dk.medicinkortet.web.shared.jaxb.dkma.medicinecard2008.DosageTimeElementStructure dose: dosageDayElementStructure.getDosageTimeElementStructures()) {
-			if(dose.getDosageTimeTime()==null) {
-				PlainDoseWrapper d = new PlainDoseWrapper(dose, false); // We keep doses in order, otherwise addAll would be nicer
-				plainDoses.add(d);
-				allDoses.add(d);
-			}
-			else {
-				TimedDoseWrapper d = new TimedDoseWrapper(dose);
-				timedDoses.add(d);
-				allDoses.add(d);
-			}			
-		}
-		for(dk.medicinkortet.web.shared.jaxb.dkma.medicinecard2008.DosageTimeElementStructure dose: dosageDayElementStructure.getAccordingToNeedDosageTimeElementStructures()) {
-			PlainDoseWrapper d = new PlainDoseWrapper(dose, true);
-			plainDoses.add(d);
-			allDoses.add(d);
-		}
-		if(dosageDayElementStructure.getMorningDosageTimeElementStructure()!=null) {
-			morningDose = new MorningDoseWrapper(dosageDayElementStructure.getMorningDosageTimeElementStructure());
-			allDoses.add(morningDose);
-		}
-		if(dosageDayElementStructure.getNoonDosageTimeElementStructure()!=null) {
-			noonDose = new NoonDoseWrapper(dosageDayElementStructure.getNoonDosageTimeElementStructure());
-			allDoses.add(noonDose);
-		}
-		if(dosageDayElementStructure.getEveningDosageTimeElementStructure()!=null) {
-			eveningDose = new EveningDoseWrapper(dosageDayElementStructure.getEveningDosageTimeElementStructure());
-			allDoses.add(eveningDose);
-		}
-		if(dosageDayElementStructure.getNightDosageTimeElementStructure()!=null) {
-			nightDose = new NightDoseWrapper(dosageDayElementStructure.getNightDosageTimeElementStructure());
-			allDoses.add(nightDose);
-		}			
-	}
-
 	private DayWrapper() {
 		
 	}
@@ -175,71 +138,26 @@ public class DayWrapper {
 		DayWrapper day = new DayWrapper();
 		day.dayNumber = dayNumber;
 		for(DoseWrapper dose: doses) {
-			if(dose instanceof PlainDoseWrapper)
-				day.plainDoses.add((PlainDoseWrapper)dose);
-			else if(dose instanceof TimedDoseWrapper)
-				day.timedDoses.add((TimedDoseWrapper)dose);
-			else if(dose instanceof MorningDoseWrapper)
-				day.morningDose = (MorningDoseWrapper)dose;
-			else if(dose instanceof NoonDoseWrapper)
-				day.noonDose = (NoonDoseWrapper)dose;
-			else if(dose instanceof EveningDoseWrapper)
-				day.eveningDose = (EveningDoseWrapper)dose;
-			else if(dose instanceof NightDoseWrapper)
-				day.nightDose = (NightDoseWrapper)dose;
-			else 
-				throw new RuntimeException();
-			day.allDoses.add(dose);
+			if(dose!=null) {		
+				if(dose instanceof PlainDoseWrapper)
+					day.plainDoses.add((PlainDoseWrapper)dose);
+				else if(dose instanceof TimedDoseWrapper)
+					day.timedDoses.add((TimedDoseWrapper)dose);
+				else if(dose instanceof MorningDoseWrapper)
+					day.morningDose = (MorningDoseWrapper)dose;
+				else if(dose instanceof NoonDoseWrapper)
+					day.noonDose = (NoonDoseWrapper)dose;
+				else if(dose instanceof EveningDoseWrapper)
+					day.eveningDose = (EveningDoseWrapper)dose;
+				else if(dose instanceof NightDoseWrapper)
+					day.nightDose = (NightDoseWrapper)dose;
+				else 
+					throw new RuntimeException();
+				day.allDoses.add(dose);
+			}
 		}
-		
 		return day;
 	}
-
-	public void removeDoses(Collection<DoseWrapper> doses) {
-		for(DoseWrapper dose :doses)
-			removeDose(dose);
-	}
-
-	public void removeDose(DoseWrapper dose) {
-		if(dose instanceof PlainDoseWrapper) {
-			if(!plainDoses.contains(dose))
-				throw new IllegalArgumentException();
-			plainDoses.remove(dose);
-		}
-		else if(dose instanceof TimedDoseWrapper) {
-			if(!timedDoses.contains(dose))
-				throw new IllegalArgumentException();
-			timedDoses.remove(dose);
-		}
-		else if(dose instanceof MorningDoseWrapper) {
-			if(!morningDose.equals(dose))
-				throw new IllegalArgumentException();
-			morningDose = null;
-		}
-		else if(dose instanceof NoonDoseWrapper) {
-			if(!noonDose.equals(dose))
-				throw new IllegalArgumentException();
-			noonDose = null;
-		}
-		else if(dose instanceof EveningDoseWrapper) {
-			if(!eveningDose.equals(dose))
-				throw new IllegalArgumentException();
-			eveningDose = null;
-		}
-		else if(dose instanceof NightDoseWrapper) {
-			if(!nightDose.equals(dose))
-				throw new IllegalArgumentException();
-			nightDose = null;
-		}
-		else {
-			throw new RuntimeException();
-		}
-		
-		if(!allDoses.contains(dose))
-			throw new IllegalArgumentException();
-		allDoses.remove(dose);		
-	}
-	
 	
 	public int getDayNumber() {
 		return dayNumber;

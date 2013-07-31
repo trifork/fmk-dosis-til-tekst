@@ -39,18 +39,11 @@ public abstract class DoseWrapper {
 	
 	private boolean isAccordingToNeed;
 	
-	// Suppl. texts from the 2008 namespace. For newer namespaces this information
-	// is found on the dosage time level.
-	private String minimalSupplText;
-	private String maximalSupplText;
-	private String supplText;
-	
 	public DoseWrapper(dk.medicinkortet.web.shared.jaxb.dkma.medicinecard20120601.Dose dose, boolean isAccordingToNeed) {
 		this(
 			toBigDecimal(dose.getQuantity()), 
 			toBigDecimal(dose.getMinimalQuantity()), 
 			toBigDecimal(dose.getMaximalQuantity()), 
-			null, null, null, 
 			isAccordingToNeed);
 	}
 
@@ -59,19 +52,7 @@ public abstract class DoseWrapper {
 			toBigDecimal(dose.getDosageQuantityValue()), 
 			toBigDecimal(dose.getMinimalDosageQuantityValue()), 
 			toBigDecimal(dose.getMaximalDosageQuantityValue()), 
-			null, null, null, 
 			isAccordingToNeed);
-	}
-	
-	public DoseWrapper(dk.medicinkortet.web.shared.jaxb.dkma.medicinecard2008.DosageTimeElementStructure dose, boolean isAccordingToNeed) {
-		this(
-			dose.getDosageQuantityStructure()==null ? null: toBigDecimal(dose.getDosageQuantityStructure().getDosageQuantityValue()), 
-			dose.getMinimalDosageQuantityStructure()==null ? null: toBigDecimal(dose.getMinimalDosageQuantityStructure().getDosageQuantityValue()), 
-			dose.getMaximalDosageQuantityStructure()==null ? null: toBigDecimal(dose.getMaximalDosageQuantityStructure().getDosageQuantityValue()), 
-			dose.getDosageQuantityStructure()==null ? null: dose.getDosageQuantityStructure().getDosageQuantityFreeText(), 
-			dose.getMinimalDosageQuantityStructure()==null ? null: dose.getMinimalDosageQuantityStructure().getDosageQuantityFreeText(), 
-			dose.getMaximalDosageQuantityStructure()==null ? null: dose.getMaximalDosageQuantityStructure().getDosageQuantityFreeText(), 
-			isAccordingToNeed); 
 	}
 
 	public DoseWrapper(dk.medicinkortet.web.shared.jaxb.dkma.medicinecard2009.DosageDefinedTimeElementStructure dose, boolean isAccordingToNeed) {
@@ -79,33 +60,15 @@ public abstract class DoseWrapper {
 			toBigDecimal(dose.getDosageQuantityValue()), 
 			toBigDecimal(dose.getMinimalDosageQuantityValue()), 
 			toBigDecimal(dose.getMaximalDosageQuantityValue()), 
-			null, 
-			null, 
-			null, 
 			isAccordingToNeed);
-	}
-
-	public DoseWrapper(dk.medicinkortet.web.shared.jaxb.dkma.medicinecard2008.DosageDefinedTimeElementStructure dose, boolean isAccordingToNeed) {
-		this(
-			dose.getDosageQuantityStructure()==null ? null: toBigDecimal(dose.getDosageQuantityStructure().getDosageQuantityValue()), 
-			dose.getMinimalDosageQuantityStructure()==null ? null: toBigDecimal(dose.getMinimalDosageQuantityStructure().getDosageQuantityValue()), 
-			dose.getMaximalDosageQuantityStructure()==null ? null: toBigDecimal(dose.getMaximalDosageQuantityStructure().getDosageQuantityValue()), 
-			dose.getDosageQuantityStructure()==null ? null: dose.getDosageQuantityStructure().getDosageQuantityFreeText(), 
-			dose.getMinimalDosageQuantityStructure()==null ? null: dose.getMinimalDosageQuantityStructure().getDosageQuantityFreeText(), 
-			dose.getMaximalDosageQuantityStructure()==null ? null: dose.getMaximalDosageQuantityStructure().getDosageQuantityFreeText(), 
-			isAccordingToNeed); 
 	}
 	
 	protected DoseWrapper(
-			BigDecimal doseQuantity, BigDecimal minimalDoseQuantity, BigDecimal maximalDoseQuantity, 
-			String supplText, String minimalSupplText, String maximalSupplText, 
+			BigDecimal doseQuantity, BigDecimal minimalDoseQuantity, BigDecimal maximalDoseQuantity,  
 			boolean isAccordingToNeed) {
 		this.doseQuantity = doseQuantity;
 		this.minimalDoseQuantity = minimalDoseQuantity; 
 		this.maximalDoseQuantity = maximalDoseQuantity;
-		this.supplText = supplText;
-		this.minimalSupplText = minimalSupplText; 
-		this.maximalSupplText = maximalSupplText;
 		this.isAccordingToNeed = isAccordingToNeed;
 		if(minimalDoseQuantity!=null) 
 			minimalDoseQuantityString = TextHelper.formatQuantity(minimalDoseQuantity);
@@ -125,6 +88,20 @@ public abstract class DoseWrapper {
 		return v;		
 	}
 	    
+	protected static boolean isZero(BigDecimal quantity) {
+		if(quantity==null)
+			return true;
+		else
+			return quantity.doubleValue()<0.000000001;
+	}	
+	
+	protected static boolean isZero(BigDecimal minimalQuantity, BigDecimal maximalQuantity) {
+		if(minimalQuantity==null && maximalQuantity==null)
+			return true;
+		else
+			return maximalQuantity.doubleValue()<0.000000001;
+	}	
+	
 	public BigDecimal getMinimalDoseQuantity() {
 		return minimalDoseQuantity;
 	}
@@ -148,19 +125,7 @@ public abstract class DoseWrapper {
 	public String getDoseQuantityString() {
 		return doseQuantityString;
 	}
-	
-	public String getMinimalSupplText() {
-		return minimalSupplText;
-	}
-	
-	public String getMaximalSupplText() {
-		return maximalSupplText;
-	}
-	
-	public String getSupplText() {
-		return supplText;
-	}
-	
+		
 	public boolean isAccordingToNeed() {
 		return isAccordingToNeed;
 	}

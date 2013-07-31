@@ -33,7 +33,7 @@ public class FreeTextConverterImpl extends ShortTextConverterImpl {
 
 	@Override
 	public String doConvert(DosageWrapper dosage) {
-		return dosage.getFreeText();
+		return dosage.getFreeText().getText();
 	}
 
 }

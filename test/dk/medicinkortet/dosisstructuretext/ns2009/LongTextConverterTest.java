@@ -31,14 +31,15 @@ import dk.medicinkortet.dosisstructuretext.DailyDosisCalculator;
 import dk.medicinkortet.dosisstructuretext.DosageType;
 import dk.medicinkortet.dosisstructuretext.DosageTypeCalculator;
 import dk.medicinkortet.dosisstructuretext.LongTextConverter;
-import dk.medicinkortet.dosisstructuretext.TestHelper;
+import dk.medicinkortet.dosisstructuretext.vowrapper.DateOrDateTimeWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DayWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.EveningDoseWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.MorningDoseWrapper;
-import dk.medicinkortet.dosisstructuretext.vowrapper.DosageStructureWrapper;
+import dk.medicinkortet.dosisstructuretext.vowrapper.StructureWrapper;
+import dk.medicinkortet.dosisstructuretext.vowrapper.StructuresWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.TimedDoseWrapper;
-import dk.medicinkortet.web.shared.jaxb.dkma.medicinecard2008.DosageQuantityUnitTextType;
+import dk.medicinkortet.dosisstructuretext.vowrapper.UnitOrUnitsWrapper;
 
 public class LongTextConverterTest {
 	
@@ -63,12 +64,14 @@ public class LongTextConverterTest {
 	public void testNs2009DosageTimes() {
 		DosageWrapper dosage = 
 			DosageWrapper.makeStructuredDosage(
-				DosageStructureWrapper.makeStructuredDosage(
-					1, "ml", "ved måltid", TestHelper.toDate("2011-01-01"), TestHelper.toDate("2011-01-30"), 
+				StructuresWrapper.makeStructures(
+					UnitOrUnitsWrapper.makeUnit("ml"), 
+					StructureWrapper.makeStructure(
+						1, "ved måltid", DateOrDateTimeWrapper.makeDate("2011-01-01"), DateOrDateTimeWrapper.makeDate("2011-01-30"), 
 						DayWrapper.makeDay(
 							1, 
 							MorningDoseWrapper.makeDose(new BigDecimal(1)), 
-							EveningDoseWrapper.makeDose(new BigDecimal(2)))));
+							EveningDoseWrapper.makeDose(new BigDecimal(2))))));
 		Assert.assertEquals(
 				"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages hver dag:\n"+
 				"   Doseringsforløb:\n"+
@@ -82,32 +85,16 @@ public class LongTextConverterTest {
 	}
 	
 	@Test
-	public void testNs2008DosageTimes() {
-		DosageWrapper dosage = 
-			DosageWrapper.makeStructuredDosage(
-				DosageStructureWrapper.makeStructuredDosage(
-					1, DosageQuantityUnitTextType.MILLILITER, TestHelper.toDate("2011-01-01"), TestHelper.toDate("2011-01-30"), 
-						DayWrapper.makeDay(
-							1, 
-							MorningDoseWrapper.makeDose(new BigDecimal(1), "ved måltid"), 
-							EveningDoseWrapper.makeDose(new BigDecimal(2), "ved måltid"))));
-		Assert.assertEquals(
-			"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages hver dag:\n"+
-			"   Doseringsforløb:\n"+
-			"   1 milliliter morgen ved måltid + 2 milliliter aften ved måltid",
-			LongTextConverter.convert(dosage));
-		Assert.assertEquals(DosageType.Temporary, DosageTypeCalculator.calculate(dosage));		
-	}
-	
-	@Test
 	public void testNs2009Order() {
 		DosageWrapper dosage = 
 			DosageWrapper.makeStructuredDosage(
-				DosageStructureWrapper.makeStructuredDosage(
-					0, "ml", "før behandling", TestHelper.toDate("2011-01-01"), null, 
+				StructuresWrapper.makeStructures(
+					UnitOrUnitsWrapper.makeUnit("ml"), 
+					StructureWrapper.makeStructure(
+						0, "før behandling", DateOrDateTimeWrapper.makeDate("2011-01-01"), null, 
 						DayWrapper.makeDay(
 							1, 
-							TimedDoseWrapper.makeDose("13:30:00", new BigDecimal(1.0)))));
+							TimedDoseWrapper.makeDose("13:30:00", new BigDecimal(1.0))))));
 		Assert.assertEquals(
 			"Doseringsforløbet starter lørdag den 1. januar 2011 og ophører efter det angivne forløb:\n"+
 			"   Doseringsforløb:\n"+
@@ -124,12 +111,14 @@ public class LongTextConverterTest {
 	public void testNs2009Order2() {
 		DosageWrapper dosage = 
 			DosageWrapper.makeStructuredDosage(
-				DosageStructureWrapper.makeStructuredDosage(
-					0, "ml", "før behandling", TestHelper.toDate("2011-01-01"), null, 
+				StructuresWrapper.makeStructures(
+					UnitOrUnitsWrapper.makeUnit("ml"), 
+					StructureWrapper.makeStructure(
+						0, "før behandling", DateOrDateTimeWrapper.makeDate("2011-01-01"), null, 
 						DayWrapper.makeDay(
 							1, 
 							TimedDoseWrapper.makeDose("13:30:00", new BigDecimal(1.0)), 
-							TimedDoseWrapper.makeDose("14:30:00", new BigDecimal(2.0)))));
+							TimedDoseWrapper.makeDose("14:30:00", new BigDecimal(2.0))))));
 		Assert.assertEquals(
 			"Doseringsforløbet starter lørdag den 1. januar 2011 og ophører efter det angivne forløb:\n"+
 			"   Doseringsforløb:\n"+

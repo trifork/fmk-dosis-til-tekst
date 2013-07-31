@@ -24,20 +24,22 @@ package dk.medicinkortet.dosisstructuretext.shorttextconverterimpl;
 
 import dk.medicinkortet.dosisstructuretext.vowrapper.DayWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
-import dk.medicinkortet.dosisstructuretext.vowrapper.DosageStructureWrapper;
+import dk.medicinkortet.dosisstructuretext.vowrapper.StructureWrapper;
 
 public class RepeatedConverterImpl extends ShortTextConverterImpl {
 
 	@Override
 	public boolean canConvert(DosageWrapper dosage) {
-		if(dosage.getDosageStructure()==null)
+		if(dosage.getStructures()==null)
 			return false;
-		DosageStructureWrapper dosageStructure = dosage.getDosageStructure();
-		if(dosageStructure.getIterationInterval()==0)
+		if(dosage.getStructures().getStructures().size()!=1)
+			return false;	
+		StructureWrapper structure = dosage.getStructures().getStructures().first();
+		if(structure.getIterationInterval()==0)
 			return false;
-		if(dosageStructure.getDays().size()!=1)
+		if(structure.getDays().size()!=1)
 			return false;
-		DayWrapper day = dosageStructure.getDays().get(0);
+		DayWrapper day = structure.getDays().first();
 		if(day.containsAccordingToNeedDose())
 			return false;
 		if(day.getMorningDose()!=null || day.getNoonDose()!=null 
@@ -45,44 +47,42 @@ public class RepeatedConverterImpl extends ShortTextConverterImpl {
 			return false;
 		if(!day.allDosesAreTheSame())
 			return false;
-		if(!dosageStructure.allDosesHaveTheSameSupplText()) // Special case needed for 2008 NS as it may contain multiple texts 
-			return false;
 		return true;
 	}
 
 	@Override
 	public String doConvert(DosageWrapper dosage) {
-		DosageStructureWrapper dosageStructure = dosage.getDosageStructure();
+		StructureWrapper structure = dosage.getStructures().getStructures().first();
 		
 		StringBuilder text = new StringBuilder();
-		DayWrapper day = dosageStructure.getDays().get(0);
+		DayWrapper day = structure.getDays().first();
 		
-		text.append(toValue(day.getAllDoses().get(0), dosageStructure));
+		text.append(toValue(day.getAllDoses().get(0), dosage.getStructures().getUnitOrUnits()));
 		
 //		if(day.getAllDoses().get(0) instanceof TimedDoseWrapper)
 //			text.append(" "+((TimedDoseWrapper)day.getAllDoses().get(0)).getTime());
 		
-		if(dosageStructure.getIterationInterval()==1 && day.getNumberOfDoses()==1)
+		if(structure.getIterationInterval()==1 && day.getNumberOfDoses()==1)
 			text.append(" daglig");
-		else if(dosageStructure.getIterationInterval()==1 && day.getNumberOfDoses()>1)
+		else if(structure.getIterationInterval()==1 && day.getNumberOfDoses()>1)
 			text.append(" "+day.getNumberOfDoses()+" gange daglig");
-		else if(numberOfWholeWeeks(dosageStructure.getIterationInterval())==1 && day.getNumberOfDoses()==1)
+		else if(numberOfWholeWeeks(structure.getIterationInterval())==1 && day.getNumberOfDoses()==1)
 			text.append(" 1 gang om ugen");
-		else if(numberOfWholeWeeks(dosageStructure.getIterationInterval())==1 && day.getNumberOfDoses()>1)
+		else if(numberOfWholeWeeks(structure.getIterationInterval())==1 && day.getNumberOfDoses()>1)
 			text.append(" "+day.getNumberOfDoses()+" gange samme dag 1 gang om ugen");
-		else if(numberOfWholeMonths(dosageStructure.getIterationInterval())==1 && day.getNumberOfDoses()==1)
+		else if(numberOfWholeMonths(structure.getIterationInterval())==1 && day.getNumberOfDoses()==1)
 			text.append(" 1 gang om måneden");
-		else if(numberOfWholeMonths(dosageStructure.getIterationInterval())==1 && day.getNumberOfDoses()>=1)
+		else if(numberOfWholeMonths(structure.getIterationInterval())==1 && day.getNumberOfDoses()>=1)
 			text.append(" "+day.getNumberOfDoses()+" gange samme dag 1 gang om måneden");
-		else if(dosageStructure.getIterationInterval()>1 && day.getNumberOfDoses()==1)
-			text.append(" hver "+dosageStructure.getIterationInterval()+". dag");
-		else if(dosageStructure.getIterationInterval()>1 && day.getNumberOfDoses()>=1)
-			text.append(" "+day.getNumberOfDoses()+" gange samme dag hver "+dosageStructure.getIterationInterval()+". dag");
+		else if(structure.getIterationInterval()>1 && day.getNumberOfDoses()==1)
+			text.append(" hver "+structure.getIterationInterval()+". dag");
+		else if(structure.getIterationInterval()>1 && day.getNumberOfDoses()>=1)
+			text.append(" "+day.getNumberOfDoses()+" gange samme dag hver "+structure.getIterationInterval()+". dag");
 		else
 			return null; // Something unexpected happened!
 		
-		if(dosageStructure.getUniqueSupplText()!=null)
-			text.append(" ").append(dosageStructure.getUniqueSupplText());
+		if(structure.getSupplText()!=null)
+			text.append(" ").append(structure.getSupplText());
 		
 		return text.toString();
 	}

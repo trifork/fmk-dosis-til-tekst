@@ -32,40 +32,42 @@ import dk.medicinkortet.dosisstructuretext.DosageType;
 import dk.medicinkortet.dosisstructuretext.DosageTypeCalculator;
 import dk.medicinkortet.dosisstructuretext.LongTextConverter;
 import dk.medicinkortet.dosisstructuretext.ShortTextConverter;
-import dk.medicinkortet.dosisstructuretext.TestHelper;
-import dk.medicinkortet.dosisstructuretext.longtextconverterimpl.TwoDaysRepeatedConverterImpl;
 import dk.medicinkortet.dosisstructuretext.longtextconverterimpl.WeeklyRepeatedConverterImpl;
-import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.RepeatedConverterImpl;
+import dk.medicinkortet.dosisstructuretext.vowrapper.DateOrDateTimeWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DayWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.EveningDoseWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.MorningDoseWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.PlainDoseWrapper;
-import dk.medicinkortet.dosisstructuretext.vowrapper.DosageStructureWrapper;
+import dk.medicinkortet.dosisstructuretext.vowrapper.StructureWrapper;
+import dk.medicinkortet.dosisstructuretext.vowrapper.StructuresWrapper;
+import dk.medicinkortet.dosisstructuretext.vowrapper.UnitOrUnitsWrapper;
 
 public class WeeklyMorningNoonEveningNightConverterTest {
 
 	@Test /* TODO: This is a candidate for a short text converter */
 	public void testWeeklyPlain() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			DosageStructureWrapper.makeStructuredDosage(
-				7, "stk", "ved måltid", TestHelper.toDate("2012-06-08"), TestHelper.toDate("2012-12-31"), 
-				DayWrapper.makeDay(
-					1, 
-					PlainDoseWrapper.makeDose(new BigDecimal(1)), 
-					PlainDoseWrapper.makeDose(new BigDecimal(1))),
-				DayWrapper.makeDay(
-					3, 
-					PlainDoseWrapper.makeDose(new BigDecimal(1)), 
-					PlainDoseWrapper.makeDose(new BigDecimal(1))),
-				DayWrapper.makeDay(
-					5, 
-					PlainDoseWrapper.makeDose(new BigDecimal(1)), 
-					PlainDoseWrapper.makeDose(new BigDecimal(1))),
-				DayWrapper.makeDay(
-					7, 
-					PlainDoseWrapper.makeDose(new BigDecimal(1)), 
-					PlainDoseWrapper.makeDose(new BigDecimal(1)))));
+			StructuresWrapper.makeStructures(
+				UnitOrUnitsWrapper.makeUnit("stk"), 
+				StructureWrapper.makeStructure(
+					7, "ved måltid", DateOrDateTimeWrapper.makeDate("2012-06-08"), DateOrDateTimeWrapper.makeDate("2012-12-31"), 
+					DayWrapper.makeDay(
+						1, 
+						PlainDoseWrapper.makeDose(new BigDecimal(1)), 
+						PlainDoseWrapper.makeDose(new BigDecimal(1))),
+					DayWrapper.makeDay(
+						3, 
+						PlainDoseWrapper.makeDose(new BigDecimal(1)), 
+						PlainDoseWrapper.makeDose(new BigDecimal(1))),
+					DayWrapper.makeDay(
+						5, 
+						PlainDoseWrapper.makeDose(new BigDecimal(1)), 
+						PlainDoseWrapper.makeDose(new BigDecimal(1))),
+					DayWrapper.makeDay(
+						7, 
+						PlainDoseWrapper.makeDose(new BigDecimal(1)), 
+						PlainDoseWrapper.makeDose(new BigDecimal(1))))));
 		Assert.assertEquals(
 				WeeklyRepeatedConverterImpl.class, 
 				LongTextConverter.getConverterClass(dosage));
@@ -89,24 +91,26 @@ public class WeeklyMorningNoonEveningNightConverterTest {
 	@Test
 	public void testWeeklyMorningAndEvening() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			DosageStructureWrapper.makeStructuredDosage(
-				7, "stk", "ved måltid", TestHelper.toDate("2012-06-08"), TestHelper.toDate("2012-12-31"), 
-				DayWrapper.makeDay(
-					1, 
-					MorningDoseWrapper.makeDose(new BigDecimal(1)), 
-					EveningDoseWrapper.makeDose(new BigDecimal(1))),
-				DayWrapper.makeDay(
-					3, 
-					MorningDoseWrapper.makeDose(new BigDecimal(1)), 
-					EveningDoseWrapper.makeDose(new BigDecimal(1))),
-				DayWrapper.makeDay(
-					5, 
-					MorningDoseWrapper.makeDose(new BigDecimal(1)), 
-					EveningDoseWrapper.makeDose(new BigDecimal(1))),
-				DayWrapper.makeDay(
-					7, 
-					MorningDoseWrapper.makeDose(new BigDecimal(1)), 
-					EveningDoseWrapper.makeDose(new BigDecimal(1)))));
+			StructuresWrapper.makeStructures(
+				UnitOrUnitsWrapper.makeUnit("stk"), 
+				StructureWrapper.makeStructure(
+					7, "ved måltid", DateOrDateTimeWrapper.makeDate("2012-06-08"), DateOrDateTimeWrapper.makeDate("2012-12-31"), 
+					DayWrapper.makeDay(
+						1, 
+						MorningDoseWrapper.makeDose(new BigDecimal(1)), 
+						EveningDoseWrapper.makeDose(new BigDecimal(1))),
+					DayWrapper.makeDay(
+						3, 
+						MorningDoseWrapper.makeDose(new BigDecimal(1)), 
+						EveningDoseWrapper.makeDose(new BigDecimal(1))),
+					DayWrapper.makeDay(
+						5, 
+						MorningDoseWrapper.makeDose(new BigDecimal(1)), 
+						EveningDoseWrapper.makeDose(new BigDecimal(1))),
+					DayWrapper.makeDay(
+						7, 
+						MorningDoseWrapper.makeDose(new BigDecimal(1)), 
+						EveningDoseWrapper.makeDose(new BigDecimal(1))))));
 		Assert.assertEquals(
 				WeeklyRepeatedConverterImpl.class, 
 				LongTextConverter.getConverterClass(dosage));

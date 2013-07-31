@@ -24,8 +24,7 @@ package dk.medicinkortet.dosisstructuretext.shorttextconverterimpl;
 
 import dk.medicinkortet.dosisstructuretext.vowrapper.DayWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
-import dk.medicinkortet.dosisstructuretext.vowrapper.DoseWrapper;
-import dk.medicinkortet.dosisstructuretext.vowrapper.DosageStructureWrapper;
+import dk.medicinkortet.dosisstructuretext.vowrapper.StructureWrapper;
 
 /**
  * Conversion of: Non repeated morning, noon, evening, night-dosage where all dosages are equal
@@ -34,42 +33,39 @@ public class MorningNoonEveningNightInNDaysConverterImp extends ShortTextConvert
 
 	@Override
 	public boolean canConvert(DosageWrapper dosage) {
-		if(dosage.getDosageStructure()==null)
+		if(dosage.getStructures()==null)
 			return false;
-		DosageStructureWrapper dosageStructure = dosage.getDosageStructure();
-		if(dosageStructure.getIterationInterval()!=0)
+		if(dosage.getStructures().getStructures().size()!=1)
+			return false;	
+		StructureWrapper structure = dosage.getStructures().getStructures().first();
+		if(structure.getIterationInterval()!=0)
 			return false;		
-		if(dosageStructure.getDays().size()<2)
+		if(structure.getDays().size()<2)
 			return false;
-		if(dosageStructure.startsAndEndsSameDay())
+		if(structure.startsAndEndsSameDay())
 			return false;
-		if(dosageStructure.containsPlainDose())
+		if(structure.containsPlainDose())
 			return false;
-		if(dosageStructure.containsTimedDose())
+		if(structure.containsTimedDose())
 			return false;
-		if(!dosageStructure.allDaysAreTheSame())
+		if(!structure.allDaysAreTheSame())
 			return false;
-		for(int dayNumber=1; dayNumber<=dosageStructure.getDays().size(); dayNumber++) {
-			DayWrapper day = dosageStructure.getDays().get(dayNumber-1);
-			if(day.getDayNumber()!=dayNumber)
-				return false;
-		}
-		if(!dosageStructure.allDosesHaveTheSameSupplText()) // Special case needed for 2008 NS as it may contain multiple texts 
+		if(!structure.daysAreInUninteruptedSequenceFromOne())
 			return false;
 		return true;
 	}
 
 	@Override
 	public String doConvert(DosageWrapper dosage) {
-		DosageStructureWrapper dosageStructure = dosage.getDosageStructure();
+		StructureWrapper structure = dosage.getStructures().getStructures().first();
 		StringBuilder text = new StringBuilder();
-		DayWrapper day = dosageStructure.getDays().get(0);
-		MorningNoonEveningNightConverterImpl.appendMorning(day, text, dosageStructure);
-		MorningNoonEveningNightConverterImpl.appendNoon(day, text, dosageStructure);
-		MorningNoonEveningNightConverterImpl.appendEvening(day, text, dosageStructure);
-		MorningNoonEveningNightConverterImpl.appendNight(day, text, dosageStructure);
-		MorningNoonEveningNightConverterImpl.appendSupplText(dosageStructure.getUniqueSupplText(), text);
-		text.append(" i "+dosage.getDosageStructure().getLastDay().getDayNumber()+" dage");
+		DayWrapper day = structure.getDays().first();
+		MorningNoonEveningNightConverterImpl.appendMorning(day, text, dosage.getStructures().getUnitOrUnits());
+		MorningNoonEveningNightConverterImpl.appendNoon(day, text, dosage.getStructures().getUnitOrUnits());
+		MorningNoonEveningNightConverterImpl.appendEvening(day, text, dosage.getStructures().getUnitOrUnits());
+		MorningNoonEveningNightConverterImpl.appendNight(day, text, dosage.getStructures().getUnitOrUnits());
+		MorningNoonEveningNightConverterImpl.appendSupplText(structure.getSupplText(), text);
+		text.append(" i "+dosage.getStructures().getStructures().first().getDays().last().getDayNumber()+" dage");
 		return text.toString();
 	}
 	

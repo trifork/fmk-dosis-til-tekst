@@ -32,37 +32,41 @@ import dk.medicinkortet.dosisstructuretext.DosageType;
 import dk.medicinkortet.dosisstructuretext.DosageTypeCalculator;
 import dk.medicinkortet.dosisstructuretext.LongTextConverter;
 import dk.medicinkortet.dosisstructuretext.ShortTextConverter;
-import dk.medicinkortet.dosisstructuretext.TestHelper;
 import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.LimitedNumberOfDaysConverterImpl;
+import dk.medicinkortet.dosisstructuretext.vowrapper.DateOrDateTimeWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DayWrapper;
-import dk.medicinkortet.dosisstructuretext.vowrapper.DosageStructureWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.PlainDoseWrapper;
-import dk.medicinkortet.dosisstructuretext.vowrapper.TimedDoseWrapper;
+import dk.medicinkortet.dosisstructuretext.vowrapper.StructureWrapper;
+import dk.medicinkortet.dosisstructuretext.vowrapper.StructuresWrapper;
+import dk.medicinkortet.dosisstructuretext.vowrapper.UnitOrUnitsWrapper;
 
 public class LimitedNumberOfDaysConverterTest {
 	
 	@Test
 	public void test4Stk2GangeDagligI3DageVedMaaltid() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			DosageStructureWrapper.makeStructuredDosage(
-				0, "stk", "ved måltid", TestHelper.toDate("2011-01-01"), TestHelper.toDate("2011-01-04"), 
-				DayWrapper.makeDay(
-					1, 
-					PlainDoseWrapper.makeDose(new BigDecimal(4)), 
-					PlainDoseWrapper.makeDose(new BigDecimal(4))), 
-				DayWrapper.makeDay(
-					2, 
-					PlainDoseWrapper.makeDose(new BigDecimal(4)), 
-					PlainDoseWrapper.makeDose(new BigDecimal(4))), 
-				DayWrapper.makeDay(
-					3, 
-					PlainDoseWrapper.makeDose(new BigDecimal(4)), 
-					PlainDoseWrapper.makeDose(new BigDecimal(4))), 
-				DayWrapper.makeDay(
-					4, 
-					PlainDoseWrapper.makeDose(new BigDecimal(4)), 
-					PlainDoseWrapper.makeDose(new BigDecimal(4)))));		
+			StructuresWrapper.makeStructures(
+				UnitOrUnitsWrapper.makeUnit("stk"), 
+				StructureWrapper.makeStructure(
+					0, "ved måltid", 
+					DateOrDateTimeWrapper.makeDate("2011-01-01"), DateOrDateTimeWrapper.makeDate("2011-01-04"), 
+					DayWrapper.makeDay(
+						1, 
+						PlainDoseWrapper.makeDose(new BigDecimal(4)), 
+						PlainDoseWrapper.makeDose(new BigDecimal(4))), 
+					DayWrapper.makeDay(
+						2, 
+						PlainDoseWrapper.makeDose(new BigDecimal(4)), 
+						PlainDoseWrapper.makeDose(new BigDecimal(4))), 
+					DayWrapper.makeDay(
+						3, 
+						PlainDoseWrapper.makeDose(new BigDecimal(4)), 
+						PlainDoseWrapper.makeDose(new BigDecimal(4))), 
+					DayWrapper.makeDay(
+						4, 
+						PlainDoseWrapper.makeDose(new BigDecimal(4)), 
+						PlainDoseWrapper.makeDose(new BigDecimal(4))))));		
 		Assert.assertEquals(
 				"Doseringsforløbet starter lørdag den 1. januar 2011 og ophører efter det angivne forløb:\n"+
 				"   Doseringsforløb:\n"+
@@ -87,8 +91,10 @@ public class LimitedNumberOfDaysConverterTest {
 	@Test
 	public void test4Til6Stk2GangeDagligI3DageVedMaaltid() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-				DosageStructureWrapper.makeStructuredDosage(
-					0, "stk", "ved måltid", TestHelper.toDate("2011-01-01"), TestHelper.toDate("2011-01-04"), 
+			StructuresWrapper.makeStructures(
+				UnitOrUnitsWrapper.makeUnit("stk"), 
+				StructureWrapper.makeStructure(
+					0, "ved måltid", DateOrDateTimeWrapper.makeDate("2011-01-01"), DateOrDateTimeWrapper.makeDate("2011-01-04"), 
 					DayWrapper.makeDay(
 						1, 
 						PlainDoseWrapper.makeDose(new BigDecimal(4), new BigDecimal(6)), 
@@ -100,7 +106,7 @@ public class LimitedNumberOfDaysConverterTest {
 					DayWrapper.makeDay(
 						3, 
 						PlainDoseWrapper.makeDose(new BigDecimal(4), new BigDecimal(6)), 
-						PlainDoseWrapper.makeDose(new BigDecimal(4), new BigDecimal(6)))));		
+						PlainDoseWrapper.makeDose(new BigDecimal(4), new BigDecimal(6))))));		
 		Assert.assertEquals(
 				"Doseringsforløbet starter lørdag den 1. januar 2011 og ophører efter det angivne forløb:\n"+
 				"   Doseringsforløb:\n"+

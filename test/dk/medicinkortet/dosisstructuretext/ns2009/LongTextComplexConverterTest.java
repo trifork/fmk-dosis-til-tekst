@@ -32,18 +32,20 @@ import dk.medicinkortet.dosisstructuretext.DosageType;
 import dk.medicinkortet.dosisstructuretext.DosageTypeCalculator;
 import dk.medicinkortet.dosisstructuretext.LongTextConverter;
 import dk.medicinkortet.dosisstructuretext.ShortTextConverter;
-import dk.medicinkortet.dosisstructuretext.TestHelper;
 import dk.medicinkortet.dosisstructuretext.longtextconverterimpl.DefaultLongTextConverterImpl;
 import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.SimpleAccordingToNeedConverterImpl;
 import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.SimpleLimitedAccordingToNeedConverterImpl;
 import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.WeeklyMorningNoonEveningNightConverterImpl;
+import dk.medicinkortet.dosisstructuretext.vowrapper.DateOrDateTimeWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DayWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.EveningDoseWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.MorningDoseWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.NoonDoseWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.PlainDoseWrapper;
-import dk.medicinkortet.dosisstructuretext.vowrapper.DosageStructureWrapper;
+import dk.medicinkortet.dosisstructuretext.vowrapper.StructureWrapper;
+import dk.medicinkortet.dosisstructuretext.vowrapper.StructuresWrapper;
+import dk.medicinkortet.dosisstructuretext.vowrapper.UnitOrUnitsWrapper;
 
 /**
  * Examples of translation to long dosage text, as discussed on the FMK-teknik forum: 
@@ -54,11 +56,13 @@ public class LongTextComplexConverterTest {
 	@Test /* Dosage "1 tablet morgen" */
 	public void test1TabletMorgen() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			DosageStructureWrapper.makeStructuredDosage(
-				1, "tablet", null, TestHelper.toDate("2012-04-18"), null, 
-				DayWrapper.makeDay(
-					1, 
-					MorningDoseWrapper.makeDose(new BigDecimal(1)))));
+			StructuresWrapper.makeStructures(
+				UnitOrUnitsWrapper.makeUnit("tablet"), 
+				StructureWrapper.makeStructure(
+					1, null, DateOrDateTimeWrapper.makeDate("2012-04-18"), null, 
+					DayWrapper.makeDay(
+						1, 
+						MorningDoseWrapper.makeDose(new BigDecimal(1))))));
 		Assert.assertEquals(
 				"Doseringsforløbet starter onsdag den 18. april 2012 og gentages hver dag:\n"+
 				"   Doseringsforløb:\n"+
@@ -75,11 +79,13 @@ public class LongTextComplexConverterTest {
 	@Test /* Dosage "1 tablet morgen" with datetimes */
 	public void test1TabletMorgenWithDatetimes() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			DosageStructureWrapper.makeStructuredDosage(
-				1, "tablet", null, null, null, null, null, TestHelper.toDateTime("2012-04-18 08:30:00"), null, 
+			StructuresWrapper.makeStructures(
+				UnitOrUnitsWrapper.makeUnit("tablet"), 
+				StructureWrapper.makeStructure(
+				1, null, DateOrDateTimeWrapper.makeDateTime("2012-04-18 08:30:00"), null, 
 				DayWrapper.makeDay(
 					1, 
-					MorningDoseWrapper.makeDose(new BigDecimal(1)))));
+					MorningDoseWrapper.makeDose(new BigDecimal(1))))));
 		Assert.assertEquals(
 				"Doseringsforløbet starter onsdag den 18. april 2012 kl. 08:30:00 og gentages hver dag:\n"+
 				"   Doseringsforløb:\n"+
@@ -96,15 +102,17 @@ public class LongTextComplexConverterTest {
 	@Test /* Dosage like the "Hjerdyl"-example */
 	public void testHjerdyl() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			DosageStructureWrapper.makeStructuredDosage(
-				2, "tablet", null, TestHelper.toDate("2012-04-18"), null, 
+			StructuresWrapper.makeStructures(
+				UnitOrUnitsWrapper.makeUnit("tablet"), 
+				StructureWrapper.makeStructure(
+				2, null, DateOrDateTimeWrapper.makeDate("2012-04-18"), null, 
 				DayWrapper.makeDay(
 					1, 
 					MorningDoseWrapper.makeDose(new BigDecimal(1))), 
 				DayWrapper.makeDay(
 					2, 
 					MorningDoseWrapper.makeDose(new BigDecimal(1)), 
-					EveningDoseWrapper.makeDose(new BigDecimal(1)))));
+					EveningDoseWrapper.makeDose(new BigDecimal(1))))));
 		Assert.assertEquals(
 				"Doseringsforløbet starter onsdag den 18. april 2012, forløbet gentages hver 2. dag.\n"+
 				"Bemærk at doseringen varierer:\n"+
@@ -123,11 +131,13 @@ public class LongTextComplexConverterTest {
 	@Test /* Dosage like the "Alendronat" example */
 	public void testAledronat() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			DosageStructureWrapper.makeStructuredDosage(
-				7, "tablet", null, TestHelper.toDate("2012-04-18"), null, 
+			StructuresWrapper.makeStructures(
+				UnitOrUnitsWrapper.makeUnit("tablet"), 
+				StructureWrapper.makeStructure(
+				7, null, DateOrDateTimeWrapper.makeDate("2012-04-18"), null, 
 				DayWrapper.makeDay(
 					1, 
-					MorningDoseWrapper.makeDose(new BigDecimal(1)))));
+					MorningDoseWrapper.makeDose(new BigDecimal(1))))));
 		Assert.assertEquals(
 				"Doseringsforløbet starter onsdag den 18. april 2012, forløbet gentages hver uge:\n"+
 				"   Doseringsforløb:\n"+
@@ -145,8 +155,10 @@ public class LongTextComplexConverterTest {
 	@Test /* Dosage like the "Marevan 14-dages skema 1+2 stk" example */
 	public void testMarevan14DagesSkema1_2Tablet() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-				DosageStructureWrapper.makeStructuredDosage(
-					14, "stk", null, TestHelper.toDate("2012-04-19"), null, 
+			StructuresWrapper.makeStructures(
+				UnitOrUnitsWrapper.makeUnit("stk"), 
+				StructureWrapper.makeStructure(
+					14, null, DateOrDateTimeWrapper.makeDate("2012-04-19"), null, 
 					DayWrapper.makeDay(
 						1, // torsdag
 						MorningDoseWrapper.makeDose(new BigDecimal(2))), 
@@ -188,9 +200,7 @@ public class LongTextComplexConverterTest {
 						MorningDoseWrapper.makeDose(new BigDecimal(2))),	
 					DayWrapper.makeDay(
 						14, 
-						MorningDoseWrapper.makeDose(new BigDecimal(1)))	
-						
-						));
+						MorningDoseWrapper.makeDose(new BigDecimal(1))))));
 		Assert.assertEquals(
 				"Doseringsforløbet starter torsdag den 19. april 2012, forløbet gentages efter 14 dage.\n"+
 				"Bemærk at doseringen varierer:\n"+
@@ -221,29 +231,31 @@ public class LongTextComplexConverterTest {
 	@Test /* Dosage like the "Marevan ugeskema 1+2 stk" example */
 	public void testMarevanUgeskema1_2Tabletter() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			DosageStructureWrapper.makeStructuredDosage(
-				7, "stk", null, TestHelper.toDate("2012-04-19"), null, 
-				DayWrapper.makeDay(
-					1, // torsdag
-					MorningDoseWrapper.makeDose(new BigDecimal(2))), 
-				DayWrapper.makeDay(
-					2, 
-					MorningDoseWrapper.makeDose(new BigDecimal(1))), 
-				DayWrapper.makeDay(
-					3, // lørdag
-					MorningDoseWrapper.makeDose(new BigDecimal(2))), 
-				DayWrapper.makeDay(
-					4, 
-					MorningDoseWrapper.makeDose(new BigDecimal(1))), 
-				DayWrapper.makeDay(
-					5, // mandag
-					MorningDoseWrapper.makeDose(new BigDecimal(2))), 
-				DayWrapper.makeDay(
-					6, 
-					MorningDoseWrapper.makeDose(new BigDecimal(1))), 
-				DayWrapper.makeDay(
-					7, // onsdag
-					MorningDoseWrapper.makeDose(new BigDecimal(1)))	));
+			StructuresWrapper.makeStructures(
+				UnitOrUnitsWrapper.makeUnit("stk"), 
+				StructureWrapper.makeStructure(
+					7, null, DateOrDateTimeWrapper.makeDate("2012-04-19"), null, 
+					DayWrapper.makeDay(
+						1, // torsdag
+						MorningDoseWrapper.makeDose(new BigDecimal(2))), 
+					DayWrapper.makeDay(
+						2, 
+						MorningDoseWrapper.makeDose(new BigDecimal(1))), 
+					DayWrapper.makeDay(
+						3, // lørdag
+						MorningDoseWrapper.makeDose(new BigDecimal(2))), 
+					DayWrapper.makeDay(
+						4, 
+						MorningDoseWrapper.makeDose(new BigDecimal(1))), 
+					DayWrapper.makeDay(
+						5, // mandag
+						MorningDoseWrapper.makeDose(new BigDecimal(2))), 
+					DayWrapper.makeDay(
+						6, 
+						MorningDoseWrapper.makeDose(new BigDecimal(1))), 
+					DayWrapper.makeDay(
+						7, // onsdag
+						MorningDoseWrapper.makeDose(new BigDecimal(1))))));
 		Assert.assertEquals(
 				"Doseringsforløbet starter torsdag den 19. april 2012, forløbet gentages hver uge.\n"+
 				"Bemærk at doseringen varierer:\n"+
@@ -267,20 +279,22 @@ public class LongTextComplexConverterTest {
 	@Test /* Dosage like the "Naragan ugeskema 1 tablet" example */
 	public void testNaraganUgeskema1Tablet() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			DosageStructureWrapper.makeStructuredDosage(
-				7, "tablet", null, TestHelper.toDate("2012-04-18"), null, 
-				DayWrapper.makeDay(
-					1, 
-					MorningDoseWrapper.makeDose(new BigDecimal(1))), 
-				DayWrapper.makeDay(
-					3, 
-					MorningDoseWrapper.makeDose(new BigDecimal(1))), 
-				DayWrapper.makeDay(
-					5, 
-					MorningDoseWrapper.makeDose(new BigDecimal(1))), 
-				DayWrapper.makeDay(
-					7, 
-					MorningDoseWrapper.makeDose(new BigDecimal(1)))));
+			StructuresWrapper.makeStructures(
+				UnitOrUnitsWrapper.makeUnit("tablet"), 
+				StructureWrapper.makeStructure(
+					7, null, DateOrDateTimeWrapper.makeDate("2012-04-18"), null, 
+					DayWrapper.makeDay(
+						1, 
+						MorningDoseWrapper.makeDose(new BigDecimal(1))), 
+					DayWrapper.makeDay(
+						3, 
+						MorningDoseWrapper.makeDose(new BigDecimal(1))), 
+					DayWrapper.makeDay(
+						5, 
+						MorningDoseWrapper.makeDose(new BigDecimal(1))), 
+					DayWrapper.makeDay(
+						7, 
+						MorningDoseWrapper.makeDose(new BigDecimal(1))))));
 		Assert.assertEquals(
 				"Doseringsforløbet starter onsdag den 18. april 2012, forløbet gentages hver uge.\n"+
 				"Bemærk at doseringen har et komplekst forløb:\n"+
@@ -302,17 +316,19 @@ public class LongTextComplexConverterTest {
 	@Test /* Dosage like the "Naragan ugeskema 2 tabletter" example */
 	public void testNaraganUgeskema2Tabletter() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			DosageStructureWrapper.makeStructuredDosage(
-				7, "tabletter", null, TestHelper.toDate("2012-04-18"), null, 
-				DayWrapper.makeDay(
-					2, 
-					MorningDoseWrapper.makeDose(new BigDecimal(2))), 
-				DayWrapper.makeDay(
-					4, 
-					MorningDoseWrapper.makeDose(new BigDecimal(2))), 
-				DayWrapper.makeDay(
-					6, 
-					MorningDoseWrapper.makeDose(new BigDecimal(2)))));
+			StructuresWrapper.makeStructures(
+				UnitOrUnitsWrapper.makeUnit("tabletter"), 
+				StructureWrapper.makeStructure(
+					7, null, DateOrDateTimeWrapper.makeDate("2012-04-18"), null, 
+					DayWrapper.makeDay(
+						2, 
+						MorningDoseWrapper.makeDose(new BigDecimal(2))), 
+					DayWrapper.makeDay(
+						4, 
+						MorningDoseWrapper.makeDose(new BigDecimal(2))), 
+					DayWrapper.makeDay(
+						6, 
+						MorningDoseWrapper.makeDose(new BigDecimal(2))))));
 		Assert.assertEquals(
 				"Doseringsforløbet starter onsdag den 18. april 2012, forløbet gentages hver uge.\n"+
 				"Bemærk at doseringen har et komplekst forløb:\n"+
@@ -333,34 +349,36 @@ public class LongTextComplexConverterTest {
 	@Test /* Dosage like the "Morfin nedtrapning" example */
 	public void testMorfinNedtrapning() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			DosageStructureWrapper.makeStructuredDosage(
-				0, "stk", null, TestHelper.toDate("2012-04-18"), null, 
-				DayWrapper.makeDay(
-					1, 
-					MorningDoseWrapper.makeDose(new BigDecimal(2)), 
-					NoonDoseWrapper.makeDose(new BigDecimal(2)),
-					EveningDoseWrapper.makeDose(new BigDecimal(2))), 
-				DayWrapper.makeDay(
-					2, 
-					MorningDoseWrapper.makeDose(new BigDecimal(2)), 
-					NoonDoseWrapper.makeDose(new BigDecimal(1)),
-					EveningDoseWrapper.makeDose(new BigDecimal(2))), 
-				DayWrapper.makeDay(
-					3, 
-					MorningDoseWrapper.makeDose(new BigDecimal(1)), 
-					NoonDoseWrapper.makeDose(new BigDecimal(1)),
-					EveningDoseWrapper.makeDose(new BigDecimal(2))), 
-				DayWrapper.makeDay(
-					4, 
-					MorningDoseWrapper.makeDose(new BigDecimal(1)), 
-					EveningDoseWrapper.makeDose(new BigDecimal(1))), 
-				DayWrapper.makeDay(
-					5, 
-					MorningDoseWrapper.makeDose(new BigDecimal(1)), 
-					EveningDoseWrapper.makeDose(new BigDecimal(1))), 
-				DayWrapper.makeDay(
-					6, 
-					EveningDoseWrapper.makeDose(new BigDecimal(1)))));
+			StructuresWrapper.makeStructures(
+				UnitOrUnitsWrapper.makeUnit("stk"), 
+				StructureWrapper.makeStructure(
+					0, null, DateOrDateTimeWrapper.makeDate("2012-04-18"), null, 
+					DayWrapper.makeDay(
+						1, 
+						MorningDoseWrapper.makeDose(new BigDecimal(2)), 
+						NoonDoseWrapper.makeDose(new BigDecimal(2)),
+						EveningDoseWrapper.makeDose(new BigDecimal(2))), 
+					DayWrapper.makeDay(
+						2, 
+						MorningDoseWrapper.makeDose(new BigDecimal(2)), 
+						NoonDoseWrapper.makeDose(new BigDecimal(1)),
+						EveningDoseWrapper.makeDose(new BigDecimal(2))), 
+					DayWrapper.makeDay(
+						3, 
+						MorningDoseWrapper.makeDose(new BigDecimal(1)), 
+						NoonDoseWrapper.makeDose(new BigDecimal(1)),
+						EveningDoseWrapper.makeDose(new BigDecimal(2))), 
+					DayWrapper.makeDay(
+						4, 
+						MorningDoseWrapper.makeDose(new BigDecimal(1)), 
+						EveningDoseWrapper.makeDose(new BigDecimal(1))), 
+					DayWrapper.makeDay(
+						5, 
+						MorningDoseWrapper.makeDose(new BigDecimal(1)), 
+						EveningDoseWrapper.makeDose(new BigDecimal(1))), 
+					DayWrapper.makeDay(
+						6, 
+						EveningDoseWrapper.makeDose(new BigDecimal(1))))));
 		Assert.assertEquals(
 				"Doseringsforløbet starter onsdag den 18. april 2012 og ophører efter det angivne forløb.\n"+
 				"Bemærk at doseringen varierer:\n"+
@@ -381,11 +399,13 @@ public class LongTextComplexConverterTest {
 	@Test /* Dosage like the "Pulmicort" example */ 
 	public void testDag0Iterationsinterval0() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			DosageStructureWrapper.makeStructuredDosage(
-				0, "sug", "ved anstrengelse", TestHelper.toDate("2012-04-18"), null, 
-				DayWrapper.makeDay(
-					0, 
-					PlainDoseWrapper.makeDose(new BigDecimal(1), new BigDecimal(2), true))));
+			StructuresWrapper.makeStructures(
+				UnitOrUnitsWrapper.makeUnit("sug"), 
+				StructureWrapper.makeStructure(
+					0, "ved anstrengelse", DateOrDateTimeWrapper.makeDate("2012-04-18"), null, 
+					DayWrapper.makeDay(
+						0, 
+						PlainDoseWrapper.makeDose(new BigDecimal(1), new BigDecimal(2), true)))));
 		Assert.assertEquals(
 				DefaultLongTextConverterImpl.class,
 				LongTextConverter.getConverterClass(dosage));
@@ -407,13 +427,15 @@ public class LongTextComplexConverterTest {
 	@Test /* Dosage like the "Ipren" example */
 	public void testDag1Iterationsinterval1() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			DosageStructureWrapper.makeStructuredDosage(
-				1, "tabletter", "ved smerter", TestHelper.toDate("2012-04-18"), null, 
-				DayWrapper.makeDay(
-					1, 
-					PlainDoseWrapper.makeDose(new BigDecimal(1), new BigDecimal(2), true), 
-					PlainDoseWrapper.makeDose(new BigDecimal(1), new BigDecimal(2), true), 
-					PlainDoseWrapper.makeDose(new BigDecimal(1), new BigDecimal(2), true))));
+			StructuresWrapper.makeStructures(
+				UnitOrUnitsWrapper.makeUnit("tabletter"), 
+				StructureWrapper.makeStructure(
+					1, "ved smerter", DateOrDateTimeWrapper.makeDate("2012-04-18"), null, 
+					DayWrapper.makeDay(
+						1, 
+						PlainDoseWrapper.makeDose(new BigDecimal(1), new BigDecimal(2), true), 
+						PlainDoseWrapper.makeDose(new BigDecimal(1), new BigDecimal(2), true), 
+						PlainDoseWrapper.makeDose(new BigDecimal(1), new BigDecimal(2), true)))));
 		Assert.assertEquals(
 				"Doseringsforløbet starter onsdag den 18. april 2012 og gentages hver dag:\n"+
 				"   Doseringsforløb:\n"+
@@ -432,11 +454,13 @@ public class LongTextComplexConverterTest {
 	@Test /* Dosage like the "Ipren" example, with a minor variation */
 	public void testDag0Iterationsinterval1() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			DosageStructureWrapper.makeStructuredDosage(
-				1, "tabletter", "ved smerter", TestHelper.toDate("2012-04-18"), null, 
-				DayWrapper.makeDay(
-					0, 
-					PlainDoseWrapper.makeDose(new BigDecimal(1), new BigDecimal(2), true))));
+			StructuresWrapper.makeStructures(
+				UnitOrUnitsWrapper.makeUnit("tabletter"), 
+				StructureWrapper.makeStructure(
+					1, "ved smerter", DateOrDateTimeWrapper.makeDate("2012-04-18"), null, 
+					DayWrapper.makeDay(
+						0, 
+						PlainDoseWrapper.makeDose(new BigDecimal(1), new BigDecimal(2), true)))));
 		Assert.assertEquals(
 				"Doseringsforløbet starter onsdag den 18. april 2012 og gentages hver dag:\n"+
 				"   Doseringsforløb:\n"+
@@ -450,19 +474,21 @@ public class LongTextComplexConverterTest {
 	@Test /* Test dosage without meaning, this dosage must still be translated */
 	public void test012Iterationsinterval0() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			DosageStructureWrapper.makeStructuredDosage(
-				0, "ml", "mod smerter", TestHelper.toDate("2012-04-18"), null, 
-				DayWrapper.makeDay(
-					0, 
-					PlainDoseWrapper.makeDose(new BigDecimal(1), true)),
-				DayWrapper.makeDay(
-					1, 
-					PlainDoseWrapper.makeDose(new BigDecimal(20), true),
-					PlainDoseWrapper.makeDose(new BigDecimal(20), true)),
-				DayWrapper.makeDay(
-					2, 
-					PlainDoseWrapper.makeDose(new BigDecimal(20), true),
-					PlainDoseWrapper.makeDose(new BigDecimal(20), true))));
+			StructuresWrapper.makeStructures(
+				UnitOrUnitsWrapper.makeUnit("ml"), 
+				StructureWrapper.makeStructure(
+					0, "mod smerter", DateOrDateTimeWrapper.makeDate("2012-04-18"), null, 
+					DayWrapper.makeDay(
+						0, 
+						PlainDoseWrapper.makeDose(new BigDecimal(1), true)),
+					DayWrapper.makeDay(
+						1, 
+						PlainDoseWrapper.makeDose(new BigDecimal(20), true),
+						PlainDoseWrapper.makeDose(new BigDecimal(20), true)),
+					DayWrapper.makeDay(
+						2, 
+						PlainDoseWrapper.makeDose(new BigDecimal(20), true),
+						PlainDoseWrapper.makeDose(new BigDecimal(20), true)))));
 		Assert.assertEquals(
 				"Doseringsforløbet starter onsdag den 18. april 2012 og ophører efter det angivne forløb.\n"+
 				"Bemærk at doseringen varierer og har et komplekst forløb:\n"+
@@ -479,17 +505,19 @@ public class LongTextComplexConverterTest {
 	@Test /* Test dosage without meaning, must still be translated */
 	public void testDag012Iterationsinterval2() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			DosageStructureWrapper.makeStructuredDosage(
-				2, "sug", "ved anstrengelse", TestHelper.toDate("2012-04-18"), null, 
-				DayWrapper.makeDay(
-					0, 
-					PlainDoseWrapper.makeDose(new BigDecimal(1), new BigDecimal(2), true)),
-				DayWrapper.makeDay(
-					1, 
-					PlainDoseWrapper.makeDose(new BigDecimal(1), new BigDecimal(2), true)),
-				DayWrapper.makeDay(
-					2, 
-					PlainDoseWrapper.makeDose(new BigDecimal(1), new BigDecimal(2), true))));
+			StructuresWrapper.makeStructures(
+				UnitOrUnitsWrapper.makeUnit("sug"), 
+				StructureWrapper.makeStructure(
+					2, "ved anstrengelse", DateOrDateTimeWrapper.makeDate("2012-04-18"), null, 
+					DayWrapper.makeDay(
+						0, 
+						PlainDoseWrapper.makeDose(new BigDecimal(1), new BigDecimal(2), true)),
+					DayWrapper.makeDay(
+						1, 
+						PlainDoseWrapper.makeDose(new BigDecimal(1), new BigDecimal(2), true)),
+					DayWrapper.makeDay(
+						2, 
+						PlainDoseWrapper.makeDose(new BigDecimal(1), new BigDecimal(2), true)))));
 		Assert.assertEquals(
 				"Doseringsforløbet starter onsdag den 18. april 2012, forløbet gentages efter 2 dage.\n"+
 				"Bemærk at doseringen har et komplekst forløb:\n"+
@@ -506,11 +534,13 @@ public class LongTextComplexConverterTest {
 	@Test /* Weekly dosage */ 
 	public void testDag0Iterationsinterval7() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			DosageStructureWrapper.makeStructuredDosage(
-				7, "tabletter", "ved smerter", TestHelper.toDate("2012-04-18"), null, 
-				DayWrapper.makeDay(
-					0, 
-					PlainDoseWrapper.makeDose(new BigDecimal(1), new BigDecimal(2), true))));
+			StructuresWrapper.makeStructures(
+				UnitOrUnitsWrapper.makeUnit("tabletter"), 
+				StructureWrapper.makeStructure(
+					7, "ved smerter", DateOrDateTimeWrapper.makeDate("2012-04-18"), null, 
+					DayWrapper.makeDay(
+						0, 
+						PlainDoseWrapper.makeDose(new BigDecimal(1), new BigDecimal(2), true)))));
 		Assert.assertEquals(
 				"Doseringsforløbet starter onsdag den 18. april 2012, forløbet gentages efter 7 dage:\n"+
 				"   Doseringsforløb:\n"+
@@ -525,11 +555,13 @@ public class LongTextComplexConverterTest {
 	@Test /* Pure PN dosage */
 	public void test1TabletEfterBehov() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			DosageStructureWrapper.makeStructuredDosage(
-				0, "tablet", null, TestHelper.toDate("2012-05-29"), null, 
-				DayWrapper.makeDay(
-					0, 
-					PlainDoseWrapper.makeDose(new BigDecimal(1), true))));
+			StructuresWrapper.makeStructures(
+				UnitOrUnitsWrapper.makeUnit("tablet"), 
+				StructureWrapper.makeStructure(
+					0, null, DateOrDateTimeWrapper.makeDate("2012-05-29"), null, 
+					DayWrapper.makeDay(
+						0, 
+						PlainDoseWrapper.makeDose(new BigDecimal(1), true)))));
 		Assert.assertEquals(
 				"Doseringsforløbet starter tirsdag den 29. maj 2012:\n"+
 				"   Doseringsforløb:\n"+
@@ -543,11 +575,13 @@ public class LongTextComplexConverterTest {
 	@Test /* Pure PN dosage with max */
 	public void test1TabletEfterBehovHoejstEnGangDaglig() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			DosageStructureWrapper.makeStructuredDosage(
-				1, "tablet", null, TestHelper.toDate("2012-05-29"), null, 
+			StructuresWrapper.makeStructures(
+				UnitOrUnitsWrapper.makeUnit("tablet"), 
+				StructureWrapper.makeStructure(
+				1, null, DateOrDateTimeWrapper.makeDate("2012-05-29"), null, 
 				DayWrapper.makeDay(
 					1, 
-					PlainDoseWrapper.makeDose(new BigDecimal(1), true))));
+					PlainDoseWrapper.makeDose(new BigDecimal(1), true)))));
 		Assert.assertEquals(
 				"Doseringsforløbet starter tirsdag den 29. maj 2012 og gentages hver dag:\n"+
 				"   Doseringsforløb:\n"+
@@ -561,11 +595,13 @@ public class LongTextComplexConverterTest {
 	@Test /* Dosage "2 stk efter behov højst 1 gang daglig", see https://jira.trifork.com/browse/FMK-784*/
 	public void testJiraFMK784() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			DosageStructureWrapper.makeStructuredDosage(
-				1, "stk", null, null, null, null, null, TestHelper.toDateTime("2012-04-13 20:06:00"), null, 
-				DayWrapper.makeDay(
-					1, 
-					PlainDoseWrapper.makeDose(new BigDecimal(2), true))));
+			StructuresWrapper.makeStructures(
+				UnitOrUnitsWrapper.makeUnit("stk"), 
+				StructureWrapper.makeStructure(
+					1, null, DateOrDateTimeWrapper.makeDateTime("2012-04-13 20:06:00"), null, 
+					DayWrapper.makeDay(
+						1, 
+						PlainDoseWrapper.makeDose(new BigDecimal(2), true)))));
 		Assert.assertEquals(
 				"Doseringsforløbet starter fredag den 13. april 2012 kl. 20:06:00 og gentages hver dag:\n"+
 				"   Doseringsforløb:\n"+
@@ -580,12 +616,14 @@ public class LongTextComplexConverterTest {
 	@Test /* Dosage "2 stk efter behov højst 2 gange daglig", see https://jira.trifork.com/browse/FMK-784*/
 	public void testJiraFMK784Variant() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			DosageStructureWrapper.makeStructuredDosage(
-				1, "stk", null, null, null, null, null, TestHelper.toDateTime("2012-04-13 20:06:00"), null, 
-				DayWrapper.makeDay(
-					1, 
-					PlainDoseWrapper.makeDose(new BigDecimal(2), true), 
-					PlainDoseWrapper.makeDose(new BigDecimal(2), true))));
+			StructuresWrapper.makeStructures(
+				UnitOrUnitsWrapper.makeUnit("stk"), 
+				StructureWrapper.makeStructure(
+					1, null, DateOrDateTimeWrapper.makeDateTime("2012-04-13 20:06:00"), null, 
+					DayWrapper.makeDay(
+						1, 
+						PlainDoseWrapper.makeDose(new BigDecimal(2), true), 
+						PlainDoseWrapper.makeDose(new BigDecimal(2), true)))));
 		Assert.assertEquals(
 				"Doseringsforløbet starter fredag den 13. april 2012 kl. 20:06:00 og gentages hver dag:\n"+
 				"   Doseringsforløb:\n"+

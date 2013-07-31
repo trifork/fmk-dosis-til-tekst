@@ -32,29 +32,33 @@ import dk.medicinkortet.dosisstructuretext.DosageType;
 import dk.medicinkortet.dosisstructuretext.DosageTypeCalculator;
 import dk.medicinkortet.dosisstructuretext.LongTextConverter;
 import dk.medicinkortet.dosisstructuretext.ShortTextConverter;
-import dk.medicinkortet.dosisstructuretext.TestHelper;
 import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.MorningNoonEveningNightConverterImpl;
+import dk.medicinkortet.dosisstructuretext.vowrapper.DateOrDateTimeWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DayWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.EveningDoseWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.MorningDoseWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.NightDoseWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.NoonDoseWrapper;
-import dk.medicinkortet.dosisstructuretext.vowrapper.DosageStructureWrapper;
+import dk.medicinkortet.dosisstructuretext.vowrapper.StructureWrapper;
+import dk.medicinkortet.dosisstructuretext.vowrapper.StructuresWrapper;
+import dk.medicinkortet.dosisstructuretext.vowrapper.UnitOrUnitsWrapper;
 
 public class MorningNoonEveningNightConverterTest {
 	
 	@Test
 	public void testMorningNoonEveningAndNight() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			DosageStructureWrapper.makeStructuredDosage(
-				1, "stk", "ved måltid", TestHelper.toDate("2011-01-01"), TestHelper.toDate("2011-01-30"),
-				DayWrapper.makeDay(
-					1, 
-					MorningDoseWrapper.makeDose(new BigDecimal(1)), 
-					NoonDoseWrapper.makeDose(new BigDecimal(2)), 
-					EveningDoseWrapper.makeDose(new BigDecimal(3)), 
-					NightDoseWrapper.makeDose(new BigDecimal(4))))); 
+			StructuresWrapper.makeStructures(
+				UnitOrUnitsWrapper.makeUnit("stk"), 
+				StructureWrapper.makeStructure(
+					1, "ved måltid", DateOrDateTimeWrapper.makeDate("2011-01-01"), DateOrDateTimeWrapper.makeDate("2011-01-30"),
+					DayWrapper.makeDay(
+						1, 
+						MorningDoseWrapper.makeDose(new BigDecimal(1)), 
+						NoonDoseWrapper.makeDose(new BigDecimal(2)), 
+						EveningDoseWrapper.makeDose(new BigDecimal(3)), 
+						NightDoseWrapper.makeDose(new BigDecimal(4)))))); 
 		Assert.assertEquals(
 			"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages hver dag:\n"+
 			"   Doseringsforløb:\n"+
@@ -76,14 +80,16 @@ public class MorningNoonEveningNightConverterTest {
 	@Test
 	public void testMorningNoonEveningAndNightWithEqualDoses() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			DosageStructureWrapper.makeStructuredDosage(
-				1, "stk", "ved måltid", TestHelper.toDate("2011-01-01"), TestHelper.toDate("2011-01-30"),
-				DayWrapper.makeDay(
-					1, 
-					MorningDoseWrapper.makeDose(new BigDecimal(2)), 
-					NoonDoseWrapper.makeDose(new BigDecimal(2)), 
-					EveningDoseWrapper.makeDose(new BigDecimal(2)), 
-					NightDoseWrapper.makeDose(new BigDecimal(2))))); 
+			StructuresWrapper.makeStructures(
+				UnitOrUnitsWrapper.makeUnit("stk"), 
+				StructureWrapper.makeStructure(
+					1, "ved måltid", DateOrDateTimeWrapper.makeDate("2011-01-01"), DateOrDateTimeWrapper.makeDate("2011-01-30"),
+					DayWrapper.makeDay(
+						1, 
+						MorningDoseWrapper.makeDose(new BigDecimal(2)), 
+						NoonDoseWrapper.makeDose(new BigDecimal(2)), 
+						EveningDoseWrapper.makeDose(new BigDecimal(2)), 
+						NightDoseWrapper.makeDose(new BigDecimal(2)))))); 
 		Assert.assertEquals(
 			"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages hver dag:\n"+
 			"   Doseringsforløb:\n"+
@@ -105,13 +111,15 @@ public class MorningNoonEveningNightConverterTest {
 	@Test
 	public void testNoonEveningAndNight() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			DosageStructureWrapper.makeStructuredDosage(
-				1, "stk", "ved måltid", TestHelper.toDate("2011-01-01"), TestHelper.toDate("2011-01-30"),
-				DayWrapper.makeDay(
-					1, 
-					NoonDoseWrapper.makeDose(new BigDecimal(2)), 
-					EveningDoseWrapper.makeDose(new BigDecimal(3)), 
-					NightDoseWrapper.makeDose(new BigDecimal(4))))); 
+			StructuresWrapper.makeStructures(
+				UnitOrUnitsWrapper.makeUnit("stk"), 
+				StructureWrapper.makeStructure(
+					1, "ved måltid", DateOrDateTimeWrapper.makeDate("2011-01-01"), DateOrDateTimeWrapper.makeDate("2011-01-30"),
+					DayWrapper.makeDay(
+						1, 
+						NoonDoseWrapper.makeDose(new BigDecimal(2)), 
+						EveningDoseWrapper.makeDose(new BigDecimal(3)), 
+						NightDoseWrapper.makeDose(new BigDecimal(4)))))); 
 		Assert.assertEquals(
 			"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages hver dag:\n"+
 			"   Doseringsforløb:\n"+
@@ -133,13 +141,15 @@ public class MorningNoonEveningNightConverterTest {
 	@Test
 	public void testMorningNoonAndEvening() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			DosageStructureWrapper.makeStructuredDosage(
-				1, "stk", "ved måltid", TestHelper.toDate("2011-01-01"), TestHelper.toDate("2011-01-30"),
-				DayWrapper.makeDay(
-					1, 
-					MorningDoseWrapper.makeDose(new BigDecimal(1)), 
-					NoonDoseWrapper.makeDose(new BigDecimal(2)), 
-					EveningDoseWrapper.makeDose(new BigDecimal(3))))); 
+			StructuresWrapper.makeStructures(
+				UnitOrUnitsWrapper.makeUnit("stk"), 
+				StructureWrapper.makeStructure(
+					1, "ved måltid", DateOrDateTimeWrapper.makeDate("2011-01-01"), DateOrDateTimeWrapper.makeDate("2011-01-30"),
+					DayWrapper.makeDay(
+						1, 
+						MorningDoseWrapper.makeDose(new BigDecimal(1)), 
+						NoonDoseWrapper.makeDose(new BigDecimal(2)), 
+						EveningDoseWrapper.makeDose(new BigDecimal(3)))))); 
 		Assert.assertEquals(
 			"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages hver dag:\n"+
 			"   Doseringsforløb:\n"+
@@ -161,12 +171,14 @@ public class MorningNoonEveningNightConverterTest {
 	@Test
 	public void testMorningAndNoonWithZeroIntervals() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			DosageStructureWrapper.makeStructuredDosage(
-				1, "stk", "ved måltid", TestHelper.toDate("2011-01-01"), TestHelper.toDate("2011-01-30"),
-				DayWrapper.makeDay(
-					1, 
-					MorningDoseWrapper.makeDose(new BigDecimal(0), new BigDecimal(1)), 
-					NoonDoseWrapper.makeDose(new BigDecimal(2), new BigDecimal(3))))); 
+			StructuresWrapper.makeStructures(
+				UnitOrUnitsWrapper.makeUnit("stk"), 
+				StructureWrapper.makeStructure(
+					1, "ved måltid", DateOrDateTimeWrapper.makeDate("2011-01-01"), DateOrDateTimeWrapper.makeDate("2011-01-30"),
+					DayWrapper.makeDay(
+						1, 
+						MorningDoseWrapper.makeDose(new BigDecimal(0), new BigDecimal(1)), 
+						NoonDoseWrapper.makeDose(new BigDecimal(2), new BigDecimal(3)))))); 
 		Assert.assertEquals(
 			"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages hver dag:\n"+
 			"   Doseringsforløb:\n"+
@@ -191,11 +203,13 @@ public class MorningNoonEveningNightConverterTest {
 	
 	public void testNight() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			DosageStructureWrapper.makeStructuredDosage(
-				1, "stk", "ved måltid", TestHelper.toDate("2011-01-01"), TestHelper.toDate("2011-01-30"),
-				DayWrapper.makeDay(
-					1, 
-					NightDoseWrapper.makeDose(new BigDecimal(2))))); 				
+			StructuresWrapper.makeStructures(
+				UnitOrUnitsWrapper.makeUnit("stk"), 
+				StructureWrapper.makeStructure(
+					1, "ved måltid", DateOrDateTimeWrapper.makeDate("2011-01-01"), DateOrDateTimeWrapper.makeDate("2011-01-30"),
+					DayWrapper.makeDay(
+						1, 
+						NightDoseWrapper.makeDose(new BigDecimal(2)))))); 				
 		Assert.assertEquals(
 			"Daglig 2 stk nat ved måltid", 
 			LongTextConverter.convert(dosage));
@@ -215,12 +229,14 @@ public class MorningNoonEveningNightConverterTest {
 	@Test
 	public void test1DråbeMiddagOgAften() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			DosageStructureWrapper.makeStructuredDosage(
-				1, "dråber", null, TestHelper.toDate("2011-01-01"), TestHelper.toDate("2011-01-30"),
-				DayWrapper.makeDay(
-					1, 
-					NoonDoseWrapper.makeDose(new BigDecimal(1)), 
-					EveningDoseWrapper.makeDose(new BigDecimal(1))))); 				
+			StructuresWrapper.makeStructures(
+				UnitOrUnitsWrapper.makeUnit("dråber"), 
+				StructureWrapper.makeStructure(
+					1, null, DateOrDateTimeWrapper.makeDate("2011-01-01"), DateOrDateTimeWrapper.makeDate("2011-01-30"),
+					DayWrapper.makeDay(
+						1, 
+						NoonDoseWrapper.makeDose(new BigDecimal(1)), 
+						EveningDoseWrapper.makeDose(new BigDecimal(1)))))); 				
 		Assert.assertEquals(
 			"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages hver dag:\n"+
 			"   Doseringsforløb:\n"+
@@ -242,12 +258,14 @@ public class MorningNoonEveningNightConverterTest {
 	@Test
 	public void test1DråbeAftenOgNat() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			DosageStructureWrapper.makeStructuredDosage(
-				1, "dråber", null, TestHelper.toDate("2011-01-01"), TestHelper.toDate("2011-01-30"),
-				DayWrapper.makeDay(
-					1, 
-					EveningDoseWrapper.makeDose(new BigDecimal(1)), 
-					NightDoseWrapper.makeDose(new BigDecimal(1))))); 				
+			StructuresWrapper.makeStructures(
+				UnitOrUnitsWrapper.makeUnit("dråber"), 
+				StructureWrapper.makeStructure(
+					1, null, DateOrDateTimeWrapper.makeDate("2011-01-01"), DateOrDateTimeWrapper.makeDate("2011-01-30"),
+					DayWrapper.makeDay(
+						1, 
+						EveningDoseWrapper.makeDose(new BigDecimal(1)), 
+						NightDoseWrapper.makeDose(new BigDecimal(1)))))); 				
 		Assert.assertEquals(
 			"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages hver dag:\n"+
 			"   Doseringsforløb:\n"+
@@ -269,11 +287,13 @@ public class MorningNoonEveningNightConverterTest {
 	@Test
 	public void test1DråbeNat() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			DosageStructureWrapper.makeStructuredDosage(
-				1, "dråber", null, TestHelper.toDate("2011-01-01"), TestHelper.toDate("2011-01-30"),
-				DayWrapper.makeDay(
-					1, 
-					NightDoseWrapper.makeDose(new BigDecimal(1))))); 				
+			StructuresWrapper.makeStructures(
+				UnitOrUnitsWrapper.makeUnit("dråber"), 
+				StructureWrapper.makeStructure(
+					1, null, DateOrDateTimeWrapper.makeDate("2011-01-01"), DateOrDateTimeWrapper.makeDate("2011-01-30"),
+					DayWrapper.makeDay(
+						1, 
+						NightDoseWrapper.makeDose(new BigDecimal(1)))))); 				
 		Assert.assertEquals(
 			"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages hver dag:\n"+
 			"   Doseringsforløb:\n"+
@@ -295,11 +315,13 @@ public class MorningNoonEveningNightConverterTest {
 	@Test
 	public void test400MilligramNat() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			DosageStructureWrapper.makeStructuredDosage(
-				1, "milligram", null, TestHelper.toDate("2011-01-01"), TestHelper.toDate("2011-01-30"),
-				DayWrapper.makeDay(
-					1, 
-					NightDoseWrapper.makeDose(new BigDecimal(400.000))))); 				
+			StructuresWrapper.makeStructures(
+				UnitOrUnitsWrapper.makeUnit("milligram"), 
+				StructureWrapper.makeStructure(
+					1, null, DateOrDateTimeWrapper.makeDate("2011-01-01"), DateOrDateTimeWrapper.makeDate("2011-01-30"),
+					DayWrapper.makeDay(
+						1, 
+						NightDoseWrapper.makeDose(new BigDecimal(400.000)))))); 				
 		Assert.assertEquals(
 			"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages hver dag:\n"+
 			"   Doseringsforløb:\n"+
@@ -321,12 +343,14 @@ public class MorningNoonEveningNightConverterTest {
 	@Test /* handle plurals, see https://jira.trifork.com/browse/FMK-943 */
 	public void testJiraFMK943() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			DosageStructureWrapper.makeStructuredDosage(
-				1, "tablet", null, null, null, null, null, TestHelper.toDate("2012-06-26"), null, 
-				DayWrapper.makeDay(
-					1, 
-					MorningDoseWrapper.makeDose(new BigDecimal(1)), 
-					EveningDoseWrapper.makeDose(new BigDecimal(2)))));
+			StructuresWrapper.makeStructures(
+				UnitOrUnitsWrapper.makeUnit("tablet"), 
+				StructureWrapper.makeStructure(
+					1, null, DateOrDateTimeWrapper.makeDateTime("2012-06-26 00:00:00"), null, 
+					DayWrapper.makeDay(
+						1, 
+						MorningDoseWrapper.makeDose(new BigDecimal(1)), 
+						EveningDoseWrapper.makeDose(new BigDecimal(2))))));
 		Assert.assertEquals(
 				"Doseringsforløbet starter tirsdag den 26. juni 2012 kl. 00:00:00 og gentages hver dag:\n"+
 				"   Doseringsforløb:\n"+
@@ -348,12 +372,14 @@ public class MorningNoonEveningNightConverterTest {
 	@Test /* handle plurals, see https://jira.trifork.com/browse/FMK-943 */
 	public void testJiraFMK943Variant() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			DosageStructureWrapper.makeStructuredDosage(
-				1, "tablet", null, null, null, null, null, TestHelper.toDate("2012-06-26"), null, 
-				DayWrapper.makeDay(
-					1, 
-					MorningDoseWrapper.makeDose(new BigDecimal(0), new BigDecimal(1)), 
-					EveningDoseWrapper.makeDose(new BigDecimal(0.5), new BigDecimal(1.5)))));
+			StructuresWrapper.makeStructures(
+				UnitOrUnitsWrapper.makeUnit("tablet"), 
+				StructureWrapper.makeStructure(
+					1, null, DateOrDateTimeWrapper.makeDateTime("2012-06-26 00:00:00"), null, 
+					DayWrapper.makeDay(
+						1, 
+						MorningDoseWrapper.makeDose(new BigDecimal(0), new BigDecimal(1)), 
+						EveningDoseWrapper.makeDose(new BigDecimal(0.5), new BigDecimal(1.5))))));
 		Assert.assertEquals(
 				"Doseringsforløbet starter tirsdag den 26. juni 2012 kl. 00:00:00 og gentages hver dag:\n"+
 				"   Doseringsforløb:\n"+
@@ -379,25 +405,28 @@ public class MorningNoonEveningNightConverterTest {
 	@Test /* handle zero dosages stored in the database using the 2008-namespace, see https://jira.trifork.com/browse/FMK-872 */
 	public void testJiraFMK872() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			DosageStructureWrapper.makeStructuredDosage(
-				1, "tablet", null, null, null, null, null, TestHelper.toDate("2012-06-26"), null, 
-				DayWrapper.makeDay(
-					1, 
-					MorningDoseWrapper.makeDose(new BigDecimal(0)), 
-					EveningDoseWrapper.makeDose(new BigDecimal(0.0), new BigDecimal(0.0)))));
+			StructuresWrapper.makeStructures(
+				UnitOrUnitsWrapper.makeUnit("tablet"), 
+				StructureWrapper.makeStructure(
+					1, null, DateOrDateTimeWrapper.makeDateTime("2012-06-26 00:00:00"), null, 
+					DayWrapper.makeDay(
+						1, 
+						MorningDoseWrapper.makeDose(new BigDecimal(0)), 
+						NoonDoseWrapper.makeDose(new BigDecimal("42.117")),
+						EveningDoseWrapper.makeDose(new BigDecimal(0.0), new BigDecimal(0.0))))));
 		Assert.assertEquals(
 				"Doseringsforløbet starter tirsdag den 26. juni 2012 kl. 00:00:00 og gentages hver dag:\n"+
 				"   Doseringsforløb:\n"+
-				"   0-0 tablet aften",
+				"   42,117 tabletter middag",
 				LongTextConverter.convert(dosage));
 		Assert.assertEquals(
 				MorningNoonEveningNightConverterImpl.class, 
 				ShortTextConverter.getConverterClass(dosage));
 		Assert.assertEquals(
-				"0-0 tablet aften", 
+				"42,117 tabletter middag", 
 				ShortTextConverter.convert(dosage));
 		Assert.assertEquals(
-				0.0, 
+				42.117, 
 				DailyDosisCalculator.calculate(dosage).getValue().doubleValue(), 
 				0.000000001); 				
 		Assert.assertEquals(DosageType.Fixed, DosageTypeCalculator.calculate(dosage));		

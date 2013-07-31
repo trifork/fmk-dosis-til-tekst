@@ -39,33 +39,36 @@ public class TimedDoseWrapper extends DoseWrapper {
 		this.time = dose.getDosageTimeTime();
 	}
 
-	public TimedDoseWrapper(dk.medicinkortet.web.shared.jaxb.dkma.medicinecard2008.DosageTimeElementStructure dose) {
-		super(dose, false);
-		this.time = dose.getDosageTimeTime();
-	}
-
 	private TimedDoseWrapper(
 			String time, 
 			BigDecimal doseQuantity, BigDecimal minimalDoseQuantity, BigDecimal maximalDoseQuantity, 
 			String doseQuantityString, String minimalDoseQuantityString, String maximalDoseQuantityString, 
 			boolean isAccordingToNeed) {
-		super(doseQuantity, minimalDoseQuantity, maximalDoseQuantity, doseQuantityString, minimalDoseQuantityString, maximalDoseQuantityString, isAccordingToNeed);
+		super(doseQuantity, minimalDoseQuantity, maximalDoseQuantity, isAccordingToNeed);
 		this.time = time;
 	}
 
 	public static TimedDoseWrapper makeDose(String time, BigDecimal quantity) {
+		if(isZero(quantity))
+			return null;
 		return new TimedDoseWrapper(time, quantity, null, null, null, null, null, false);
 	}
 
 	public static TimedDoseWrapper makeDose(String time, BigDecimal quantity, String supplText) {
+		if(isZero(quantity))
+			return null;
 		return new TimedDoseWrapper(time, quantity, null, null, supplText, null, null, false);
 	}
 	
 	public static TimedDoseWrapper makeDose(String time, BigDecimal minimalQuantity, BigDecimal maximalQuantity) {
+		if(isZero(minimalQuantity, maximalQuantity))
+			return null;
 		return new TimedDoseWrapper(time, null, minimalQuantity, maximalQuantity, null, null, null, false);
 	}	
 
 	public static TimedDoseWrapper makeDose(String time, BigDecimal minimalQuantity, BigDecimal maximalQuantity, String minimalSupplText, String maximalSupplText) {
+		if(isZero(minimalQuantity, maximalQuantity))
+			return null;
 		return new TimedDoseWrapper(time, null, minimalQuantity, maximalQuantity, null, minimalSupplText, maximalSupplText, false);
 	}	
 	

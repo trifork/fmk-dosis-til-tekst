@@ -32,18 +32,13 @@ import dk.medicinkortet.dosisstructuretext.DosageType;
 import dk.medicinkortet.dosisstructuretext.DosageTypeCalculator;
 import dk.medicinkortet.dosisstructuretext.LongTextConverter;
 import dk.medicinkortet.dosisstructuretext.ShortTextConverter;
-import dk.medicinkortet.dosisstructuretext.TestHelper;
-import dk.medicinkortet.dosisstructuretext.longtextconverterimpl.DefaultLongTextConverterImpl;
-import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.SimpleAccordingToNeedConverterImpl;
-import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.SimpleLimitedAccordingToNeedConverterImpl;
-import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.WeeklyMorningNoonEveningNightConverterImpl;
+import dk.medicinkortet.dosisstructuretext.vowrapper.DateOrDateTimeWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DayWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
-import dk.medicinkortet.dosisstructuretext.vowrapper.EveningDoseWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.MorningDoseWrapper;
-import dk.medicinkortet.dosisstructuretext.vowrapper.NoonDoseWrapper;
-import dk.medicinkortet.dosisstructuretext.vowrapper.PlainDoseWrapper;
-import dk.medicinkortet.dosisstructuretext.vowrapper.DosageStructureWrapper;
+import dk.medicinkortet.dosisstructuretext.vowrapper.StructureWrapper;
+import dk.medicinkortet.dosisstructuretext.vowrapper.StructuresWrapper;
+import dk.medicinkortet.dosisstructuretext.vowrapper.UnitOrUnitsWrapper;
 
 /**
  * The purpose of this test class is to test new functionality added in FMK 1.4 (2012/06/01 namespace). 
@@ -55,11 +50,13 @@ public class LongTextComplexConverterTest {
 	@Test 
 	public void testUnits() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			DosageStructureWrapper.makeStructuredDosage(
-				1, null, "tablet", "tabletter", null, TestHelper.toDate("2012-04-18"), null, null, null, 
-				DayWrapper.makeDay(
-					1, 
-					MorningDoseWrapper.makeDose(new BigDecimal(1), false))));
+			StructuresWrapper.makeStructures(
+				UnitOrUnitsWrapper.makeUnits("tablet", "tabletter"), 
+				StructureWrapper.makeStructure(
+					1, null, DateOrDateTimeWrapper.makeDate("2012-04-18"), null,  
+					DayWrapper.makeDay(
+						1, 
+						MorningDoseWrapper.makeDose(new BigDecimal(1), false)))));
 		Assert.assertEquals(
 				"Doseringsforløbet starter onsdag den 18. april 2012 og gentages hver dag:\n"+
 				"   Doseringsforløb:\n"+
@@ -76,11 +73,13 @@ public class LongTextComplexConverterTest {
 	@Test 
 	public void testAccordingToNeed() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
-			DosageStructureWrapper.makeStructuredDosage(
-				0, null, "tablet", "tabletter", null, TestHelper.toDate("2012-04-18"), null, null, null, 
-				DayWrapper.makeDay(
-					0, 
-					MorningDoseWrapper.makeDose(new BigDecimal(1), true))));
+			StructuresWrapper.makeStructures(
+				UnitOrUnitsWrapper.makeUnits("tablet", "tabletter"),
+				StructureWrapper.makeStructure(
+					0, null, DateOrDateTimeWrapper.makeDate("2012-04-18"), null,  
+					DayWrapper.makeDay(
+						0, 
+						MorningDoseWrapper.makeDose(new BigDecimal(1), true)))));
 		Assert.assertEquals(
 				"Doseringsforløbet starter onsdag den 18. april 2012:\n"+
 				"   Doseringsforløb:\n"+

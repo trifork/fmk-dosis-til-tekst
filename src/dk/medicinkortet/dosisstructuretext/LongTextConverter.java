@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import dk.medicinkortet.dosisstructuretext.longtextconverterimpl.AdministrationAccordingToSchemaConverterImpl;
 import dk.medicinkortet.dosisstructuretext.longtextconverterimpl.DailyRepeatedConverterImpl;
 import dk.medicinkortet.dosisstructuretext.longtextconverterimpl.DefaultLongTextConverterImpl;
+import dk.medicinkortet.dosisstructuretext.longtextconverterimpl.DefaultMultiPeriodeLongTextConverterImpl;
 import dk.medicinkortet.dosisstructuretext.longtextconverterimpl.FreeTextConverterImpl;
 import dk.medicinkortet.dosisstructuretext.longtextconverterimpl.LongTextConverterImpl;
 import dk.medicinkortet.dosisstructuretext.longtextconverterimpl.TwoDaysRepeatedConverterImpl;
@@ -52,6 +53,7 @@ public class LongTextConverter {
 		converters.add(new TwoDaysRepeatedConverterImpl());		
 		converters.add(new WeeklyRepeatedConverterImpl());		
 		converters.add(new DefaultLongTextConverterImpl());		
+		converters.add(new DefaultMultiPeriodeLongTextConverterImpl());
 	}
 	
 	/**

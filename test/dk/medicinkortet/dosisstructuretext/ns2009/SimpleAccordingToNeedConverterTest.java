@@ -32,12 +32,14 @@ import dk.medicinkortet.dosisstructuretext.DosageType;
 import dk.medicinkortet.dosisstructuretext.DosageTypeCalculator;
 import dk.medicinkortet.dosisstructuretext.LongTextConverter;
 import dk.medicinkortet.dosisstructuretext.ShortTextConverter;
-import dk.medicinkortet.dosisstructuretext.TestHelper;
 import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.SimpleAccordingToNeedConverterImpl;
+import dk.medicinkortet.dosisstructuretext.vowrapper.DateOrDateTimeWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DayWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.PlainDoseWrapper;
-import dk.medicinkortet.dosisstructuretext.vowrapper.DosageStructureWrapper;
+import dk.medicinkortet.dosisstructuretext.vowrapper.StructureWrapper;
+import dk.medicinkortet.dosisstructuretext.vowrapper.StructuresWrapper;
+import dk.medicinkortet.dosisstructuretext.vowrapper.UnitOrUnitsWrapper;
 
 public class SimpleAccordingToNeedConverterTest {
 	
@@ -45,13 +47,12 @@ public class SimpleAccordingToNeedConverterTest {
 	public void test2StkEfterBehov() throws Exception {
 		DosageWrapper dosage = 
 			DosageWrapper.makeStructuredDosage(
-				DosageStructureWrapper.makeStructuredDosage(
-					0, 
-					"stk", 
-					null,
-					TestHelper.toDate("2011-01-01"), TestHelper.toDate("2011-01-11"), 
-					DayWrapper.makeDay(0,
-						PlainDoseWrapper.makeDose(new BigDecimal(2), true))));
+				StructuresWrapper.makeStructures(
+					UnitOrUnitsWrapper.makeUnit("stk"), 
+					StructureWrapper.makeStructure(
+						0, null, DateOrDateTimeWrapper.makeDate("2011-01-01"), DateOrDateTimeWrapper.makeDate("2011-01-11"), 
+						DayWrapper.makeDay(0,
+							PlainDoseWrapper.makeDose(new BigDecimal(2), true)))));
 		Assert.assertEquals(
 				"Doseringsforløbet starter lørdag den 1. januar 2011:\n"+
 				"   Doseringsforløb:\n"+
@@ -71,13 +72,12 @@ public class SimpleAccordingToNeedConverterTest {
 	public void test2StkEfterBehovVedSmerter() throws Exception {
 		DosageWrapper dosage = 
 			DosageWrapper.makeStructuredDosage(
-				DosageStructureWrapper.makeStructuredDosage(
-					0, 
-					"stk", 
-					"ved smerter",
-					TestHelper.toDate("2011-01-01"), TestHelper.toDate("2011-01-11"), 
-					DayWrapper.makeDay(0,
-						PlainDoseWrapper.makeDose(new BigDecimal(2), true))));
+				StructuresWrapper.makeStructures(
+					UnitOrUnitsWrapper.makeUnit("stk"), 
+					StructureWrapper.makeStructure(
+						0, "ved smerter", DateOrDateTimeWrapper.makeDate("2011-01-01"), DateOrDateTimeWrapper.makeDate("2011-01-11"), 
+						DayWrapper.makeDay(0,
+							PlainDoseWrapper.makeDose(new BigDecimal(2), true)))));
 		Assert.assertEquals(
 				"Doseringsforløbet starter lørdag den 1. januar 2011:\n"+
 				"   Doseringsforløb:\n"+
@@ -97,13 +97,12 @@ public class SimpleAccordingToNeedConverterTest {
 	public void test1Til2StkEfterBehov() throws Exception {
 		DosageWrapper dosage = 
 			DosageWrapper.makeStructuredDosage(
-				DosageStructureWrapper.makeStructuredDosage(
-					0, 
-					"stk", 
-					null,
-					TestHelper.toDate("2011-01-01"), TestHelper.toDate("2011-01-11"), 
-					DayWrapper.makeDay(0,
-						PlainDoseWrapper.makeDose(new BigDecimal(1), new BigDecimal(2), true))));
+				StructuresWrapper.makeStructures(
+					UnitOrUnitsWrapper.makeUnit("stk"), 
+					StructureWrapper.makeStructure(
+						0, null, DateOrDateTimeWrapper.makeDate("2011-01-01"), DateOrDateTimeWrapper.makeDate("2011-01-11"), 
+						DayWrapper.makeDay(0,
+							PlainDoseWrapper.makeDose(new BigDecimal(1), new BigDecimal(2), true)))));
 		Assert.assertEquals(
 				"Doseringsforløbet starter lørdag den 1. januar 2011:\n"+
 				"   Doseringsforløb:\n"+
