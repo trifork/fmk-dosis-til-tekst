@@ -39,30 +39,6 @@ public abstract class DoseWrapper {
 	
 	private boolean isAccordingToNeed;
 	
-	public DoseWrapper(dk.medicinkortet.web.shared.jaxb.dkma.medicinecard20120601.Dose dose, boolean isAccordingToNeed) {
-		this(
-			toBigDecimal(dose.getQuantity()), 
-			toBigDecimal(dose.getMinimalQuantity()), 
-			toBigDecimal(dose.getMaximalQuantity()), 
-			isAccordingToNeed);
-	}
-
-	public DoseWrapper(dk.medicinkortet.web.shared.jaxb.dkma.medicinecard2009.DosageTimeElementStructure dose, boolean isAccordingToNeed) {
-		this(
-			toBigDecimal(dose.getDosageQuantityValue()), 
-			toBigDecimal(dose.getMinimalDosageQuantityValue()), 
-			toBigDecimal(dose.getMaximalDosageQuantityValue()), 
-			isAccordingToNeed);
-	}
-
-	public DoseWrapper(dk.medicinkortet.web.shared.jaxb.dkma.medicinecard2009.DosageDefinedTimeElementStructure dose, boolean isAccordingToNeed) {
-		this(
-			toBigDecimal(dose.getDosageQuantityValue()), 
-			toBigDecimal(dose.getMinimalDosageQuantityValue()), 
-			toBigDecimal(dose.getMaximalDosageQuantityValue()), 
-			isAccordingToNeed);
-	}
-	
 	protected DoseWrapper(
 			BigDecimal doseQuantity, BigDecimal minimalDoseQuantity, BigDecimal maximalDoseQuantity,  
 			boolean isAccordingToNeed) {

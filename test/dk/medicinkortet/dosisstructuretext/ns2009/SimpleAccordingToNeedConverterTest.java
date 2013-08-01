@@ -46,7 +46,7 @@ public class SimpleAccordingToNeedConverterTest {
 	@Test
 	public void test2StkEfterBehov() throws Exception {
 		DosageWrapper dosage = 
-			DosageWrapper.makeStructuredDosage(
+			DosageWrapper.makeDosage(
 				StructuresWrapper.makeStructures(
 					UnitOrUnitsWrapper.makeUnit("stk"), 
 					StructureWrapper.makeStructure(
@@ -71,7 +71,7 @@ public class SimpleAccordingToNeedConverterTest {
 	@Test
 	public void test2StkEfterBehovVedSmerter() throws Exception {
 		DosageWrapper dosage = 
-			DosageWrapper.makeStructuredDosage(
+			DosageWrapper.makeDosage(
 				StructuresWrapper.makeStructures(
 					UnitOrUnitsWrapper.makeUnit("stk"), 
 					StructureWrapper.makeStructure(
@@ -96,7 +96,7 @@ public class SimpleAccordingToNeedConverterTest {
 	@Test
 	public void test1Til2StkEfterBehov() throws Exception {
 		DosageWrapper dosage = 
-			DosageWrapper.makeStructuredDosage(
+			DosageWrapper.makeDosage(
 				StructuresWrapper.makeStructures(
 					UnitOrUnitsWrapper.makeUnit("stk"), 
 					StructureWrapper.makeStructure(

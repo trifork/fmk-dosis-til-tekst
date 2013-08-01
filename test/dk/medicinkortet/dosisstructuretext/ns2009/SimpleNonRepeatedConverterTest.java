@@ -46,7 +46,7 @@ public class SimpleNonRepeatedConverterTest {
 	
 	@Test
 	public void test1Plaster5TimerFoerVirkningOenskes() throws Exception {
-		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
+		DosageWrapper dosage = DosageWrapper.makeDosage(
 			StructuresWrapper.makeStructures(
 				UnitOrUnitsWrapper.makeUnit("plaster"),
 				StructureWrapper.makeStructure(
@@ -71,7 +71,7 @@ public class SimpleNonRepeatedConverterTest {
 	
 	@Test
 	public void test1StkKl0730FoerIndlaeggelse() throws Exception {
-		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
+		DosageWrapper dosage = DosageWrapper.makeDosage(
 			StructuresWrapper.makeStructures(
 				UnitOrUnitsWrapper.makeUnit("stk"),
 				StructureWrapper.makeStructure(
@@ -96,7 +96,7 @@ public class SimpleNonRepeatedConverterTest {
 
 	@Test
 	public void test1StkKl0730() throws Exception {
-		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
+		DosageWrapper dosage = DosageWrapper.makeDosage(
 			StructuresWrapper.makeStructures(
 				UnitOrUnitsWrapper.makeUnit("stk"), 
 				StructureWrapper.makeStructure(

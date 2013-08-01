@@ -51,7 +51,7 @@ public class RepeatedConverterTest {
 	
 	@Test
 	public void testUnits() throws Exception {
-		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
+		DosageWrapper dosage = DosageWrapper.makeDosage(
 			StructuresWrapper.makeStructures(
 				UnitOrUnitsWrapper.makeUnits("dåse", "dåser"), 
 				StructureWrapper.makeStructure(
@@ -80,7 +80,7 @@ public class RepeatedConverterTest {
 	
 	@Test
 	public void testAccordingToNeed() throws Exception {
-		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
+		DosageWrapper dosage = DosageWrapper.makeDosage(
 			StructuresWrapper.makeStructures(
 				UnitOrUnitsWrapper.makeUnits("dåse", "dåser"), 
 				StructureWrapper.makeStructure(

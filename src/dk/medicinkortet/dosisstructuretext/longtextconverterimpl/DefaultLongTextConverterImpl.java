@@ -50,7 +50,7 @@ public class DefaultLongTextConverterImpl extends LongTextConverterImpl {
 		}
 		else if(structure.getIterationInterval()==0) {
 			// Not repeated dosage
-			appendDosageStart(s, structure);			
+			appendDosageStart(s, structure.getStartDateOrDateTime());			
 			// If there is just one day with according to need dosages we don't want say when to stop
 			if(structure.getDays().size()==1 && structure.containsAccordingToNeedDosesOnly()) {
 				s.append(":\n");
@@ -62,12 +62,12 @@ public class DefaultLongTextConverterImpl extends LongTextConverterImpl {
 		}
 		else if(structure.getIterationInterval()==1) {
 			// Daily dosage
-			appendDosageStart(s, structure);
+			appendDosageStart(s, structure.getStartDateOrDateTime());
 			s.append(" og gentages hver dag:\n");
 		}
 		else if(structure.getIterationInterval()>1) {
 			// Dosage repeated after more than one day
-			appendDosageStart(s, structure);
+			appendDosageStart(s, structure.getStartDateOrDateTime());
 			appendRepetition(s, structure);
 			appendNoteText(s, structure);
 		}

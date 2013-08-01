@@ -24,7 +24,7 @@ package dk.medicinkortet.dosisstructuretext.longtextconverterimpl;
 
 import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
 
-public class FreeTextConverterImpl extends LongTextConverterImpl {
+public class FreeTextConverterImpl extends SimpleLongTextConverterImpl {
 
 	@Override
 	public boolean canConvert(DosageWrapper dosage) {
@@ -33,7 +33,9 @@ public class FreeTextConverterImpl extends LongTextConverterImpl {
 
 	@Override
 	public String doConvert(DosageWrapper dosage) {
-		return dosage.getFreeText().getText();
+		return doConvert(dosage.getFreeText().getText(), 
+				dosage.getFreeText().getStartDateOrDateTime(), 
+				dosage.getFreeText().getEndDateOrDateTime());
 	}
 
 }

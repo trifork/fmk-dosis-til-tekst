@@ -46,7 +46,7 @@ public class DailyRepeatedConverterTest {
 
 	@Test
 	public void test1Stk2til3GangeDgligVedMaaltid() throws Exception {
-		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
+		DosageWrapper dosage = DosageWrapper.makeDosage(
 			StructuresWrapper.makeStructures(
 				UnitOrUnitsWrapper.makeUnit("stk"), 
 				StructureWrapper.makeStructure(

@@ -45,7 +45,7 @@ public class ParacetamolConverterTest {
 	
 	@Test
 	public void test1Til2stk3Til4GangeDagligVedSmerter() throws Exception {
-		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
+		DosageWrapper dosage = DosageWrapper.makeDosage(
 			StructuresWrapper.makeStructures(
 				UnitOrUnitsWrapper.makeUnit("stk"), 
 				StructureWrapper.makeStructure(

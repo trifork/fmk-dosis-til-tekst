@@ -51,7 +51,7 @@ public class SimpleAccordingToNeedConverterTest {
 	@Test
 	public void testUnits() throws Exception {
 		DosageWrapper dosage = 
-			DosageWrapper.makeStructuredDosage(
+			DosageWrapper.makeDosage(
 				StructuresWrapper.makeStructures(
 					UnitOrUnitsWrapper.makeUnits("tablet", "tabletter"), 
 					StructureWrapper.makeStructure(
@@ -76,7 +76,7 @@ public class SimpleAccordingToNeedConverterTest {
 	@Test
 	public void testAccordingToNeed() throws Exception {
 		DosageWrapper dosage = 
-			DosageWrapper.makeStructuredDosage(
+			DosageWrapper.makeDosage(
 				StructuresWrapper.makeStructures(
 					UnitOrUnitsWrapper.makeUnits("tablet", "tabletter"), 
 					StructureWrapper.makeStructure(

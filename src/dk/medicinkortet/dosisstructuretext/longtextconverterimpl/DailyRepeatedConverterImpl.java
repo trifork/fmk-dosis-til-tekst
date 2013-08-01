@@ -54,7 +54,7 @@ public class DailyRepeatedConverterImpl extends LongTextConverterImpl {
 
 	public String convert(UnitOrUnitsWrapper unitOrUnits, StructureWrapper structure) {
 		StringBuilder s = new StringBuilder();		
-		appendDosageStart(s, structure);
+		appendDosageStart(s, structure.getStartDateOrDateTime());
 		s.append(" og gentages hver dag:\n");
 
 		s.append(INDENT+"Doseringsforløb:\n");

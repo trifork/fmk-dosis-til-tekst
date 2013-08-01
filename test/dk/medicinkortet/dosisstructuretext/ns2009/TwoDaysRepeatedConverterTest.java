@@ -46,7 +46,7 @@ public class TwoDaysRepeatedConverterTest {
 
 	@Test
 	public void test1Stk2GangeSammeDagHver2DagVedMaaltid() throws Exception {
-		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
+		DosageWrapper dosage = DosageWrapper.makeDosage(
 			StructuresWrapper.makeStructures(
 				UnitOrUnitsWrapper.makeUnit("stk"), 
 				StructureWrapper.makeStructure(
@@ -78,7 +78,7 @@ public class TwoDaysRepeatedConverterTest {
 	
 	@Test
 	public void test1Stk2GangeSammeDagHver2DagVedMaaltid_2() throws Exception {
-		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
+		DosageWrapper dosage = DosageWrapper.makeDosage(
 			StructuresWrapper.makeStructures(
 				UnitOrUnitsWrapper.makeUnit("stk"),  
 				StructureWrapper.makeStructure(
@@ -110,7 +110,7 @@ public class TwoDaysRepeatedConverterTest {
 	
 	@Test
 	public void testTwoDays() throws Exception {
-		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
+		DosageWrapper dosage = DosageWrapper.makeDosage(
 			StructuresWrapper.makeStructures(
 				UnitOrUnitsWrapper.makeUnit("stk"),
 				StructureWrapper.makeStructure(

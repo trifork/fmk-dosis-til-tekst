@@ -44,7 +44,7 @@ public class DosageWrapperTest {
 	@Test
 	public void testDaglig4StkModSmerter2Gange() throws Exception {
 		DosageWrapper dosage = 
-			DosageWrapper.makeStructuredDosage(
+			DosageWrapper.makeDosage(
 				StructuresWrapper.makeStructures(
 					UnitOrUnitsWrapper.makeUnit("stk"),
 					StructureWrapper.makeStructure(
@@ -63,7 +63,7 @@ public class DosageWrapperTest {
 	@Test
 	public void testDaglig4StkModSmerterPlus4StkEfterBehovModSmerter() throws Exception {
 		DosageWrapper dosage = 
-			DosageWrapper.makeStructuredDosage(
+			DosageWrapper.makeDosage(
 				StructuresWrapper.makeStructures(
 					UnitOrUnitsWrapper.makeUnit("stk"),
 					StructureWrapper.makeStructure(
@@ -82,7 +82,7 @@ public class DosageWrapperTest {
 	@Test
 	public void testHverAndenDagEtc() throws Exception {
 		DosageWrapper dosage = 
-			DosageWrapper.makeStructuredDosage(
+			DosageWrapper.makeDosage(
 				StructuresWrapper.makeStructures(
 					UnitOrUnitsWrapper.makeUnit("stk"),
 					StructureWrapper.makeStructure(
@@ -104,7 +104,7 @@ public class DosageWrapperTest {
 	@Test
 	public void testMorgenMiddagAftenNat() throws Exception {
 		DosageWrapper dosage = 
-			DosageWrapper.makeStructuredDosage(
+			DosageWrapper.makeDosage(
 				StructuresWrapper.makeStructures(
 					UnitOrUnitsWrapper.makeUnit("stk"), 
 					StructureWrapper.makeStructure(

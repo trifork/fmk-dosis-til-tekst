@@ -46,7 +46,7 @@ public class SimpleLimitedAccordingToNeedConverterTest {
 	@Test
 	public void test1pustVedAnfaldHoejst3GangeDaglig() {
 		DosageWrapper dosage = 
-			DosageWrapper.makeStructuredDosage(
+			DosageWrapper.makeDosage(
 				StructuresWrapper.makeStructures(
 					UnitOrUnitsWrapper.makeUnit("pust"),
 					StructureWrapper.makeStructure(
@@ -73,7 +73,7 @@ public class SimpleLimitedAccordingToNeedConverterTest {
 	@Test
 	public void test1pustVedAnfaldHoejst1GangDaglig() {
 		DosageWrapper dosage = 
-			DosageWrapper.makeStructuredDosage(
+			DosageWrapper.makeDosage(
 				StructuresWrapper.makeStructures(
 					UnitOrUnitsWrapper.makeUnit("pust"),
 					StructureWrapper.makeStructure(
@@ -98,7 +98,7 @@ public class SimpleLimitedAccordingToNeedConverterTest {
 	@Test
 	public void testStkEfterBehovHoejst1GangDaglig() {
 		DosageWrapper dosage = 
-			DosageWrapper.makeStructuredDosage(
+			DosageWrapper.makeDosage(
 				StructuresWrapper.makeStructures(
 					UnitOrUnitsWrapper.makeUnit("stk"), 
 					StructureWrapper.makeStructure(

@@ -45,7 +45,7 @@ public class LimitedNumberOfDaysConverterTest {
 	
 	@Test
 	public void test4Stk2GangeDagligI3DageVedMaaltid() throws Exception {
-		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
+		DosageWrapper dosage = DosageWrapper.makeDosage(
 			StructuresWrapper.makeStructures(
 				UnitOrUnitsWrapper.makeUnit("stk"), 
 				StructureWrapper.makeStructure(
@@ -90,7 +90,7 @@ public class LimitedNumberOfDaysConverterTest {
 
 	@Test
 	public void test4Til6Stk2GangeDagligI3DageVedMaaltid() throws Exception {
-		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
+		DosageWrapper dosage = DosageWrapper.makeDosage(
 			StructuresWrapper.makeStructures(
 				UnitOrUnitsWrapper.makeUnit("stk"), 
 				StructureWrapper.makeStructure(

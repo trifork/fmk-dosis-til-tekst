@@ -48,7 +48,7 @@ public class MorningNoonEveningNightConverterTest {
 	
 	@Test
 	public void testMorningNoonEveningAndNight() throws Exception {
-		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
+		DosageWrapper dosage = DosageWrapper.makeDosage(
 			StructuresWrapper.makeStructures(
 				UnitOrUnitsWrapper.makeUnit("stk"), 
 				StructureWrapper.makeStructure(
@@ -79,7 +79,7 @@ public class MorningNoonEveningNightConverterTest {
 
 	@Test
 	public void testMorningNoonEveningAndNightWithEqualDoses() throws Exception {
-		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
+		DosageWrapper dosage = DosageWrapper.makeDosage(
 			StructuresWrapper.makeStructures(
 				UnitOrUnitsWrapper.makeUnit("stk"), 
 				StructureWrapper.makeStructure(
@@ -110,7 +110,7 @@ public class MorningNoonEveningNightConverterTest {
 	
 	@Test
 	public void testNoonEveningAndNight() throws Exception {
-		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
+		DosageWrapper dosage = DosageWrapper.makeDosage(
 			StructuresWrapper.makeStructures(
 				UnitOrUnitsWrapper.makeUnit("stk"), 
 				StructureWrapper.makeStructure(
@@ -140,7 +140,7 @@ public class MorningNoonEveningNightConverterTest {
 	
 	@Test
 	public void testMorningNoonAndEvening() throws Exception {
-		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
+		DosageWrapper dosage = DosageWrapper.makeDosage(
 			StructuresWrapper.makeStructures(
 				UnitOrUnitsWrapper.makeUnit("stk"), 
 				StructureWrapper.makeStructure(
@@ -170,7 +170,7 @@ public class MorningNoonEveningNightConverterTest {
 
 	@Test
 	public void testMorningAndNoonWithZeroIntervals() throws Exception {
-		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
+		DosageWrapper dosage = DosageWrapper.makeDosage(
 			StructuresWrapper.makeStructures(
 				UnitOrUnitsWrapper.makeUnit("stk"), 
 				StructureWrapper.makeStructure(
@@ -202,7 +202,7 @@ public class MorningNoonEveningNightConverterTest {
 	}
 	
 	public void testNight() throws Exception {
-		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
+		DosageWrapper dosage = DosageWrapper.makeDosage(
 			StructuresWrapper.makeStructures(
 				UnitOrUnitsWrapper.makeUnit("stk"), 
 				StructureWrapper.makeStructure(
@@ -228,7 +228,7 @@ public class MorningNoonEveningNightConverterTest {
 
 	@Test
 	public void test1DråbeMiddagOgAften() throws Exception {
-		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
+		DosageWrapper dosage = DosageWrapper.makeDosage(
 			StructuresWrapper.makeStructures(
 				UnitOrUnitsWrapper.makeUnit("dråber"), 
 				StructureWrapper.makeStructure(
@@ -257,7 +257,7 @@ public class MorningNoonEveningNightConverterTest {
 
 	@Test
 	public void test1DråbeAftenOgNat() throws Exception {
-		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
+		DosageWrapper dosage = DosageWrapper.makeDosage(
 			StructuresWrapper.makeStructures(
 				UnitOrUnitsWrapper.makeUnit("dråber"), 
 				StructureWrapper.makeStructure(
@@ -286,7 +286,7 @@ public class MorningNoonEveningNightConverterTest {
 
 	@Test
 	public void test1DråbeNat() throws Exception {
-		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
+		DosageWrapper dosage = DosageWrapper.makeDosage(
 			StructuresWrapper.makeStructures(
 				UnitOrUnitsWrapper.makeUnit("dråber"), 
 				StructureWrapper.makeStructure(
@@ -314,7 +314,7 @@ public class MorningNoonEveningNightConverterTest {
 
 	@Test
 	public void test400MilligramNat() throws Exception {
-		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
+		DosageWrapper dosage = DosageWrapper.makeDosage(
 			StructuresWrapper.makeStructures(
 				UnitOrUnitsWrapper.makeUnit("milligram"), 
 				StructureWrapper.makeStructure(
@@ -342,7 +342,7 @@ public class MorningNoonEveningNightConverterTest {
 	
 	@Test /* handle plurals, see https://jira.trifork.com/browse/FMK-943 */
 	public void testJiraFMK943() throws Exception {
-		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
+		DosageWrapper dosage = DosageWrapper.makeDosage(
 			StructuresWrapper.makeStructures(
 				UnitOrUnitsWrapper.makeUnit("tablet"), 
 				StructureWrapper.makeStructure(
@@ -371,7 +371,7 @@ public class MorningNoonEveningNightConverterTest {
 
 	@Test /* handle plurals, see https://jira.trifork.com/browse/FMK-943 */
 	public void testJiraFMK943Variant() throws Exception {
-		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
+		DosageWrapper dosage = DosageWrapper.makeDosage(
 			StructuresWrapper.makeStructures(
 				UnitOrUnitsWrapper.makeUnit("tablet"), 
 				StructureWrapper.makeStructure(
@@ -404,7 +404,7 @@ public class MorningNoonEveningNightConverterTest {
 
 	@Test /* handle zero dosages stored in the database using the 2008-namespace, see https://jira.trifork.com/browse/FMK-872 */
 	public void testJiraFMK872() throws Exception {
-		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
+		DosageWrapper dosage = DosageWrapper.makeDosage(
 			StructuresWrapper.makeStructures(
 				UnitOrUnitsWrapper.makeUnit("tablet"), 
 				StructureWrapper.makeStructure(

@@ -48,25 +48,7 @@ public class StructuresWrapper {
 				return -1;
 		}
 	};
-	
-	public StructuresWrapper(dk.medicinkortet.web.shared.jaxb.dkma.medicinecard2009.DosageTimesStructure dosageTimesStructure) {
-		this(
-			UnitOrUnitsWrapper.makeUnit(dosageTimesStructure.getDosageQuantityUnitText()), 
-			toSortedSet(new StructureWrapper(dosageTimesStructure)));
-	}
-	
-	public StructuresWrapper(dk.medicinkortet.web.shared.jaxb.dkma.medicinecard20120601.DosageStructure dosageStructure) {
-		this(
-			new UnitOrUnitsWrapper(dosageStructure),
-			toSortedSet(new StructureWrapper(dosageStructure)));
-	}
-	
-	private static SortedSet<StructureWrapper> toSortedSet(StructureWrapper structure) {
-		TreeSet<StructureWrapper> set = new TreeSet<StructureWrapper>(STRUCTURE_COMPARATOR);
-		set.add(structure);
-		return set;
-	}
-	
+		
 	public static StructuresWrapper makeStructures(UnitOrUnitsWrapper unitOrUnits, StructureWrapper... structures) {
 		TreeSet<StructureWrapper> set = new TreeSet<StructureWrapper>(STRUCTURE_COMPARATOR);
 		set.addAll(Arrays.asList(structures));

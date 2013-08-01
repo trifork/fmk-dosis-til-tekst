@@ -25,14 +25,6 @@ package dk.medicinkortet.dosisstructuretext.vowrapper;
 import java.math.BigDecimal;
 
 public class NightDoseWrapper extends DoseWrapper {
-	
-	public NightDoseWrapper(dk.medicinkortet.web.shared.jaxb.dkma.medicinecard20120601.Dose dose) {
-		super(dose, dose.isAccordingToNeed());
-	}
-	
-	public NightDoseWrapper(dk.medicinkortet.web.shared.jaxb.dkma.medicinecard2009.DosageDefinedTimeElementStructure dose) {
-		super(dose, false);
-	}
 
 	private NightDoseWrapper(
 			BigDecimal doseQuantity, BigDecimal minimalDoseQuantity, BigDecimal maximalDoseQuantity, 

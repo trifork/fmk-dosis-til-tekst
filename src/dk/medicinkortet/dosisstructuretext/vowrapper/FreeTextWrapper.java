@@ -22,36 +22,32 @@
 
 package dk.medicinkortet.dosisstructuretext.vowrapper;
 
-public class UnitOrUnitsWrapper {
-
-	private String unit;
-	private String unitSingular;
-	private String unitPlural;
+public class FreeTextWrapper {
 	
-	public static UnitOrUnitsWrapper makeUnit(String unit) {
-		return new UnitOrUnitsWrapper(unit, null, null);
-	}
-
-	public static UnitOrUnitsWrapper makeUnits(String unitSingular, String unitPlural) {
-		return new UnitOrUnitsWrapper(null, unitSingular, unitPlural);
+	private DateOrDateTimeWrapper startDateOrDateTime;
+	private DateOrDateTimeWrapper endDateOrDateTime;
+	private String text;
+	
+	public static FreeTextWrapper makeFreeText(DateOrDateTimeWrapper startDateOrDateTime, DateOrDateTimeWrapper endDateOrDateTime, String text) {
+		return new FreeTextWrapper(startDateOrDateTime, endDateOrDateTime, text);
 	}
 	
-	private UnitOrUnitsWrapper(String unit, String unitSingular, String unitPlural) {
-		this.unit = unit;
-		this.unitSingular = unitSingular;
-		this.unitPlural = unitPlural;
+	private FreeTextWrapper(DateOrDateTimeWrapper startDateOrDateTime, DateOrDateTimeWrapper endDateOrDateTime, String text) {
+		this.startDateOrDateTime = startDateOrDateTime;
+		this.endDateOrDateTime = endDateOrDateTime;
+		this.text = text;
+	}
+	
+	public DateOrDateTimeWrapper getStartDateOrDateTime() {
+		return startDateOrDateTime;
 	}
 
-	public String getUnit() {
-		return unit;
+	public DateOrDateTimeWrapper getEndDateOrDateTime() {
+		return endDateOrDateTime;
 	}
 
-	public String getUnitSingular() {
-		return unitSingular;
-	}
-
-	public String getUnitPlural() {
-		return unitPlural;
+	public String getText() {
+		return text;
 	}
 	
 }

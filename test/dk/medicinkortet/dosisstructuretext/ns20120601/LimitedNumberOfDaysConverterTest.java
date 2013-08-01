@@ -50,7 +50,7 @@ public class LimitedNumberOfDaysConverterTest {
 	
 	@Test
 	public void testUnits() throws Exception {
-		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
+		DosageWrapper dosage = DosageWrapper.makeDosage(
 			StructuresWrapper.makeStructures(
 				UnitOrUnitsWrapper.makeUnits("måleskefuld", "måleskefulde"), 
 				StructureWrapper.makeStructure(
@@ -94,7 +94,7 @@ public class LimitedNumberOfDaysConverterTest {
 	
 	@Test
 	public void testAccordingToNeed() throws Exception {
-		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
+		DosageWrapper dosage = DosageWrapper.makeDosage(
 			StructuresWrapper.makeStructures(
 				UnitOrUnitsWrapper.makeUnits("måleskefuld", "måleskefulde"),  
 				StructureWrapper.makeStructure(

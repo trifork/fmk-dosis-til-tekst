@@ -51,7 +51,7 @@ public class MorningNoonEveningNightInNDaysConverterTest {
 	
 	@Test
 	public void testUnits() throws Exception {
-		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
+		DosageWrapper dosage = DosageWrapper.makeDosage(
 			StructuresWrapper.makeStructures(
 				UnitOrUnitsWrapper.makeUnits("tablet", "tabletter"),
 				StructureWrapper.makeStructure(
@@ -98,7 +98,7 @@ public class MorningNoonEveningNightInNDaysConverterTest {
 	
 	@Test
 	public void testAccordingToNeed() throws Exception {
-		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
+		DosageWrapper dosage = DosageWrapper.makeDosage(
 			StructuresWrapper.makeStructures(
 				UnitOrUnitsWrapper.makeUnits("tablet", "tabletter"),
 				StructureWrapper.makeStructure(

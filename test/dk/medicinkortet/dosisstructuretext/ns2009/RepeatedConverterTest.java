@@ -47,7 +47,7 @@ public class RepeatedConverterTest {
 	
 	@Test
 	public void test3stk2gangeDaglig() throws Exception {
-		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
+		DosageWrapper dosage = DosageWrapper.makeDosage(
 			StructuresWrapper.makeStructures(
 				UnitOrUnitsWrapper.makeUnit("stk"), 
 				StructureWrapper.makeStructure(
@@ -76,7 +76,7 @@ public class RepeatedConverterTest {
 	
 	@Test
 	public void test1stk3gangeDagligVedMaaltid() throws Exception {
-		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
+		DosageWrapper dosage = DosageWrapper.makeDosage(
 			StructuresWrapper.makeStructures(
 				UnitOrUnitsWrapper.makeUnit("stk"), 
 				StructureWrapper.makeStructure(
@@ -105,7 +105,7 @@ public class RepeatedConverterTest {
 	
 	@Test
 	public void test1stkDagligVedMaaltid() throws Exception {
-		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
+		DosageWrapper dosage = DosageWrapper.makeDosage(
 			StructuresWrapper.makeStructures(
 				UnitOrUnitsWrapper.makeUnit("stk"), 
 				StructureWrapper.makeStructure(
@@ -129,7 +129,7 @@ public class RepeatedConverterTest {
 
 	@Test
 	public void test1Til2stk2GangeDaglig() throws Exception {
-		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
+		DosageWrapper dosage = DosageWrapper.makeDosage(
 			StructuresWrapper.makeStructures(
 				UnitOrUnitsWrapper.makeUnit("stk"), 
 				StructureWrapper.makeStructure(
@@ -162,7 +162,7 @@ public class RepeatedConverterTest {
 
 	@Test
 	public void test1stkHver2DagVedMaaltid() throws Exception {
-		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
+		DosageWrapper dosage = DosageWrapper.makeDosage(
 			StructuresWrapper.makeStructures(
 				UnitOrUnitsWrapper.makeUnit("stk"), 
 				StructureWrapper.makeStructure(
@@ -194,7 +194,7 @@ public class RepeatedConverterTest {
 	
 	@Test
 	public void test1stkOmUgenVedMaaltid() throws Exception {
-		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
+		DosageWrapper dosage = DosageWrapper.makeDosage(
 			StructuresWrapper.makeStructures(
 				UnitOrUnitsWrapper.makeUnit("stk"), 
 				StructureWrapper.makeStructure(
@@ -222,7 +222,7 @@ public class RepeatedConverterTest {
 
 	@Test
 	public void test1stkOmMaanedenVedMaaltid() throws Exception {
-		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
+		DosageWrapper dosage = DosageWrapper.makeDosage(
 			StructuresWrapper.makeStructures(
 				UnitOrUnitsWrapper.makeUnit("stk"), 
 				StructureWrapper.makeStructure(
@@ -250,7 +250,7 @@ public class RepeatedConverterTest {
 	
 	@Test
 	public void test2_5stk1GangOmUgenVedMaaltid() throws Exception {
-		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
+		DosageWrapper dosage = DosageWrapper.makeDosage(
 			StructuresWrapper.makeStructures(
 				UnitOrUnitsWrapper.makeUnit("stk"), 
 				StructureWrapper.makeStructure(
@@ -277,7 +277,7 @@ public class RepeatedConverterTest {
 	
 	@Test
 	public void test2_5Stk2GangeSammeDag1GangOmUgenVedMaaltid() throws Exception {
-		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
+		DosageWrapper dosage = DosageWrapper.makeDosage(
 			StructuresWrapper.makeStructures(
 				UnitOrUnitsWrapper.makeUnit("stk"), 
 				StructureWrapper.makeStructure(
@@ -306,7 +306,7 @@ public class RepeatedConverterTest {
 
 	@Test
 	public void test2_5stk1GangOmMaanedenVedMaaltid() throws Exception {
-		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
+		DosageWrapper dosage = DosageWrapper.makeDosage(
 			StructuresWrapper.makeStructures(
 				UnitOrUnitsWrapper.makeUnit("stk"), 
 				StructureWrapper.makeStructure(
@@ -334,7 +334,7 @@ public class RepeatedConverterTest {
 	
 	@Test
 	public void test2_5Stk2GangeSammeDag1GangOmMaanedenVedMaaltid() throws Exception {
-		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
+		DosageWrapper dosage = DosageWrapper.makeDosage(
 			StructuresWrapper.makeStructures(
 				UnitOrUnitsWrapper.makeUnit("stk"), 
 				StructureWrapper.makeStructure(
@@ -363,7 +363,7 @@ public class RepeatedConverterTest {
 
 	@Test
 	public void test2_5stkHver5DagVedMaaltid() throws Exception {
-		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
+		DosageWrapper dosage = DosageWrapper.makeDosage(
 			StructuresWrapper.makeStructures(
 				UnitOrUnitsWrapper.makeUnit("stk"), 
 				StructureWrapper.makeStructure(
@@ -391,7 +391,7 @@ public class RepeatedConverterTest {
 	
 	@Test
 	public void test2_5stk2GangeSammeDagHver5DagVedMaaltid() throws Exception {
-		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
+		DosageWrapper dosage = DosageWrapper.makeDosage(
 			StructuresWrapper.makeStructures(
 				UnitOrUnitsWrapper.makeUnit("stk"), 
 				StructureWrapper.makeStructure(
@@ -420,7 +420,7 @@ public class RepeatedConverterTest {
 	
 	@Test
 	public void test0_5stk1GangSammeDagHver5DagVedMaaltid() throws Exception {
-		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
+		DosageWrapper dosage = DosageWrapper.makeDosage(
 			StructuresWrapper.makeStructures(
 				UnitOrUnitsWrapper.makeUnit("stk"), 
 				StructureWrapper.makeStructure(
@@ -449,7 +449,7 @@ public class RepeatedConverterTest {
 	
 	@Test
 	public void test1stkDagligKl0800() throws Exception {
-		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
+		DosageWrapper dosage = DosageWrapper.makeDosage(
 			StructuresWrapper.makeStructures(
 				UnitOrUnitsWrapper.makeUnit("stk"), 
 				StructureWrapper.makeStructure(

@@ -26,14 +26,6 @@ import java.math.BigDecimal;
 
 public class EveningDoseWrapper extends DoseWrapper {
 	
-	public EveningDoseWrapper(dk.medicinkortet.web.shared.jaxb.dkma.medicinecard20120601.Dose dose) {
-		super(dose, dose.isAccordingToNeed());
-	}
-
-	public EveningDoseWrapper(dk.medicinkortet.web.shared.jaxb.dkma.medicinecard2009.DosageDefinedTimeElementStructure dose) {
-		super(dose, false);
-	}
-	
 	private EveningDoseWrapper(
 			BigDecimal doseQuantity, BigDecimal minimalDoseQuantity, BigDecimal maximalDoseQuantity, 
 			String doseQuantityString, String minimalDoseQuantityString, String maximalDoseQuantityString, 

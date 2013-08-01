@@ -47,7 +47,7 @@ public class WeeklyMorningNoonEveningNightConverterTest {
 
 	@Test /* TODO: This is a candidate for a short text converter */
 	public void testWeeklyPlain() throws Exception {
-		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
+		DosageWrapper dosage = DosageWrapper.makeDosage(
 			StructuresWrapper.makeStructures(
 				UnitOrUnitsWrapper.makeUnit("stk"), 
 				StructureWrapper.makeStructure(
@@ -90,7 +90,7 @@ public class WeeklyMorningNoonEveningNightConverterTest {
 	
 	@Test
 	public void testWeeklyMorningAndEvening() throws Exception {
-		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
+		DosageWrapper dosage = DosageWrapper.makeDosage(
 			StructuresWrapper.makeStructures(
 				UnitOrUnitsWrapper.makeUnit("stk"), 
 				StructureWrapper.makeStructure(

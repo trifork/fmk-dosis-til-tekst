@@ -24,7 +24,7 @@ package dk.medicinkortet.dosisstructuretext.longtextconverterimpl;
 
 import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
 
-public class AdministrationAccordingToSchemaConverterImpl extends LongTextConverterImpl {
+public class AdministrationAccordingToSchemaConverterImpl extends SimpleLongTextConverterImpl {
 
 	@Override
 	public boolean canConvert(DosageWrapper dosage) {
@@ -33,7 +33,9 @@ public class AdministrationAccordingToSchemaConverterImpl extends LongTextConver
 
 	@Override
 	public String doConvert(DosageWrapper dosage) {
-		return "Dosering efter skema i lokalt system";
+		return doConvert("Dosering efter skema i lokalt system", 
+				dosage.getAdministrationAccordingToSchema().getStartDateOrDateTime(), 
+				dosage.getAdministrationAccordingToSchema().getEndDateOrDateTime());
 	}
 
 }

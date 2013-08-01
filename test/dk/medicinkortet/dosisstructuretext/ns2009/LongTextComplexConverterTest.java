@@ -55,7 +55,7 @@ public class LongTextComplexConverterTest {
 
 	@Test /* Dosage "1 tablet morgen" */
 	public void test1TabletMorgen() throws Exception {
-		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
+		DosageWrapper dosage = DosageWrapper.makeDosage(
 			StructuresWrapper.makeStructures(
 				UnitOrUnitsWrapper.makeUnit("tablet"), 
 				StructureWrapper.makeStructure(
@@ -78,7 +78,7 @@ public class LongTextComplexConverterTest {
 
 	@Test /* Dosage "1 tablet morgen" with datetimes */
 	public void test1TabletMorgenWithDatetimes() throws Exception {
-		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
+		DosageWrapper dosage = DosageWrapper.makeDosage(
 			StructuresWrapper.makeStructures(
 				UnitOrUnitsWrapper.makeUnit("tablet"), 
 				StructureWrapper.makeStructure(
@@ -101,7 +101,7 @@ public class LongTextComplexConverterTest {
 	
 	@Test /* Dosage like the "Hjerdyl"-example */
 	public void testHjerdyl() throws Exception {
-		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
+		DosageWrapper dosage = DosageWrapper.makeDosage(
 			StructuresWrapper.makeStructures(
 				UnitOrUnitsWrapper.makeUnit("tablet"), 
 				StructureWrapper.makeStructure(
@@ -130,7 +130,7 @@ public class LongTextComplexConverterTest {
 	
 	@Test /* Dosage like the "Alendronat" example */
 	public void testAledronat() throws Exception {
-		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
+		DosageWrapper dosage = DosageWrapper.makeDosage(
 			StructuresWrapper.makeStructures(
 				UnitOrUnitsWrapper.makeUnit("tablet"), 
 				StructureWrapper.makeStructure(
@@ -154,7 +154,7 @@ public class LongTextComplexConverterTest {
 	
 	@Test /* Dosage like the "Marevan 14-dages skema 1+2 stk" example */
 	public void testMarevan14DagesSkema1_2Tablet() throws Exception {
-		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
+		DosageWrapper dosage = DosageWrapper.makeDosage(
 			StructuresWrapper.makeStructures(
 				UnitOrUnitsWrapper.makeUnit("stk"), 
 				StructureWrapper.makeStructure(
@@ -230,7 +230,7 @@ public class LongTextComplexConverterTest {
 	
 	@Test /* Dosage like the "Marevan ugeskema 1+2 stk" example */
 	public void testMarevanUgeskema1_2Tabletter() throws Exception {
-		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
+		DosageWrapper dosage = DosageWrapper.makeDosage(
 			StructuresWrapper.makeStructures(
 				UnitOrUnitsWrapper.makeUnit("stk"), 
 				StructureWrapper.makeStructure(
@@ -278,7 +278,7 @@ public class LongTextComplexConverterTest {
 	
 	@Test /* Dosage like the "Naragan ugeskema 1 tablet" example */
 	public void testNaraganUgeskema1Tablet() throws Exception {
-		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
+		DosageWrapper dosage = DosageWrapper.makeDosage(
 			StructuresWrapper.makeStructures(
 				UnitOrUnitsWrapper.makeUnit("tablet"), 
 				StructureWrapper.makeStructure(
@@ -315,7 +315,7 @@ public class LongTextComplexConverterTest {
 	
 	@Test /* Dosage like the "Naragan ugeskema 2 tabletter" example */
 	public void testNaraganUgeskema2Tabletter() throws Exception {
-		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
+		DosageWrapper dosage = DosageWrapper.makeDosage(
 			StructuresWrapper.makeStructures(
 				UnitOrUnitsWrapper.makeUnit("tabletter"), 
 				StructureWrapper.makeStructure(
@@ -348,7 +348,7 @@ public class LongTextComplexConverterTest {
 	
 	@Test /* Dosage like the "Morfin nedtrapning" example */
 	public void testMorfinNedtrapning() throws Exception {
-		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
+		DosageWrapper dosage = DosageWrapper.makeDosage(
 			StructuresWrapper.makeStructures(
 				UnitOrUnitsWrapper.makeUnit("stk"), 
 				StructureWrapper.makeStructure(
@@ -398,7 +398,7 @@ public class LongTextComplexConverterTest {
 	
 	@Test /* Dosage like the "Pulmicort" example */ 
 	public void testDag0Iterationsinterval0() throws Exception {
-		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
+		DosageWrapper dosage = DosageWrapper.makeDosage(
 			StructuresWrapper.makeStructures(
 				UnitOrUnitsWrapper.makeUnit("sug"), 
 				StructureWrapper.makeStructure(
@@ -426,7 +426,7 @@ public class LongTextComplexConverterTest {
 	
 	@Test /* Dosage like the "Ipren" example */
 	public void testDag1Iterationsinterval1() throws Exception {
-		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
+		DosageWrapper dosage = DosageWrapper.makeDosage(
 			StructuresWrapper.makeStructures(
 				UnitOrUnitsWrapper.makeUnit("tabletter"), 
 				StructureWrapper.makeStructure(
@@ -453,7 +453,7 @@ public class LongTextComplexConverterTest {
 
 	@Test /* Dosage like the "Ipren" example, with a minor variation */
 	public void testDag0Iterationsinterval1() throws Exception {
-		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
+		DosageWrapper dosage = DosageWrapper.makeDosage(
 			StructuresWrapper.makeStructures(
 				UnitOrUnitsWrapper.makeUnit("tabletter"), 
 				StructureWrapper.makeStructure(
@@ -473,7 +473,7 @@ public class LongTextComplexConverterTest {
 		
 	@Test /* Test dosage without meaning, this dosage must still be translated */
 	public void test012Iterationsinterval0() throws Exception {
-		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
+		DosageWrapper dosage = DosageWrapper.makeDosage(
 			StructuresWrapper.makeStructures(
 				UnitOrUnitsWrapper.makeUnit("ml"), 
 				StructureWrapper.makeStructure(
@@ -504,7 +504,7 @@ public class LongTextComplexConverterTest {
 
 	@Test /* Test dosage without meaning, must still be translated */
 	public void testDag012Iterationsinterval2() throws Exception {
-		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
+		DosageWrapper dosage = DosageWrapper.makeDosage(
 			StructuresWrapper.makeStructures(
 				UnitOrUnitsWrapper.makeUnit("sug"), 
 				StructureWrapper.makeStructure(
@@ -533,7 +533,7 @@ public class LongTextComplexConverterTest {
 	
 	@Test /* Weekly dosage */ 
 	public void testDag0Iterationsinterval7() throws Exception {
-		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
+		DosageWrapper dosage = DosageWrapper.makeDosage(
 			StructuresWrapper.makeStructures(
 				UnitOrUnitsWrapper.makeUnit("tabletter"), 
 				StructureWrapper.makeStructure(
@@ -554,7 +554,7 @@ public class LongTextComplexConverterTest {
 	
 	@Test /* Pure PN dosage */
 	public void test1TabletEfterBehov() throws Exception {
-		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
+		DosageWrapper dosage = DosageWrapper.makeDosage(
 			StructuresWrapper.makeStructures(
 				UnitOrUnitsWrapper.makeUnit("tablet"), 
 				StructureWrapper.makeStructure(
@@ -574,7 +574,7 @@ public class LongTextComplexConverterTest {
 	
 	@Test /* Pure PN dosage with max */
 	public void test1TabletEfterBehovHoejstEnGangDaglig() throws Exception {
-		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
+		DosageWrapper dosage = DosageWrapper.makeDosage(
 			StructuresWrapper.makeStructures(
 				UnitOrUnitsWrapper.makeUnit("tablet"), 
 				StructureWrapper.makeStructure(
@@ -594,7 +594,7 @@ public class LongTextComplexConverterTest {
 	
 	@Test /* Dosage "2 stk efter behov højst 1 gang daglig", see https://jira.trifork.com/browse/FMK-784*/
 	public void testJiraFMK784() throws Exception {
-		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
+		DosageWrapper dosage = DosageWrapper.makeDosage(
 			StructuresWrapper.makeStructures(
 				UnitOrUnitsWrapper.makeUnit("stk"), 
 				StructureWrapper.makeStructure(
@@ -615,7 +615,7 @@ public class LongTextComplexConverterTest {
 	
 	@Test /* Dosage "2 stk efter behov højst 2 gange daglig", see https://jira.trifork.com/browse/FMK-784*/
 	public void testJiraFMK784Variant() throws Exception {
-		DosageWrapper dosage = DosageWrapper.makeStructuredDosage(
+		DosageWrapper dosage = DosageWrapper.makeDosage(
 			StructuresWrapper.makeStructures(
 				UnitOrUnitsWrapper.makeUnit("stk"), 
 				StructureWrapper.makeStructure(

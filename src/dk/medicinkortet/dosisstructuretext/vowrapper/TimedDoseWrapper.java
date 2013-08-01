@@ -29,16 +29,6 @@ public class TimedDoseWrapper extends DoseWrapper {
 
 	private String time;
 
-	public TimedDoseWrapper(dk.medicinkortet.web.shared.jaxb.dkma.medicinecard20120601.Dose dose) {
-		super(dose, dose.isAccordingToNeed());
-		this.time = dose.getTime().getTime();
-	}
-
-	public TimedDoseWrapper(dk.medicinkortet.web.shared.jaxb.dkma.medicinecard2009.DosageTimeElementStructure dose) {
-		super(dose, false);
-		this.time = dose.getDosageTimeTime();
-	}
-
 	private TimedDoseWrapper(
 			String time, 
 			BigDecimal doseQuantity, BigDecimal minimalDoseQuantity, BigDecimal maximalDoseQuantity, 

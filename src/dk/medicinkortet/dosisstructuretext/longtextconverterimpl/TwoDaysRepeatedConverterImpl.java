@@ -60,7 +60,7 @@ public class TwoDaysRepeatedConverterImpl extends LongTextConverterImpl {
 
 	public String convert(UnitOrUnitsWrapper unitOrUnits, StructureWrapper structure) {
 		StringBuilder s = new StringBuilder();		
-		appendDosageStart(s, structure);
+		appendDosageStart(s, structure.getStartDateOrDateTime());
 		s.append(", forløbet gentages hver 2. dag");
 		appendNoteText(s, structure);
 		s.append(INDENT+"Doseringsforløb:\n");

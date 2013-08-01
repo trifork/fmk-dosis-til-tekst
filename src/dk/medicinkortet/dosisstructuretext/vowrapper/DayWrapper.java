@@ -27,8 +27,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dk.medicinkortet.dosisstructuretext.Interval;
-import dk.medicinkortet.web.shared.jaxb.dkma.medicinecard2009.DosageTimeElementStructure;
-import dk.medicinkortet.web.shared.jaxb.dkma.medicinecard20120601.Dose;
 
 public class DayWrapper {
 		
@@ -51,84 +49,7 @@ public class DayWrapper {
 	private Boolean areAllDosesTheSame;
 	private Boolean areAllDosesHaveTheSameQuantity;
 	private ArrayList<DoseWrapper> accordingToNeedDoses;
-
-	public DayWrapper(dk.medicinkortet.web.shared.jaxb.dkma.medicinecard20120601.DosageDay dosageDay) {
-		this.dayNumber = dosageDay.getDayNumber();
-		for(Dose dose: dosageDay.getDoses()) {
-			DoseWrapper wrappedDose = wrap(dose);
-			allDoses.add(wrappedDose);
-		}
-	}
 	
-	private DoseWrapper wrap(Dose dose) {
-		if(dose.getTime()==null) {
-			PlainDoseWrapper plainDose = new PlainDoseWrapper(dose);
-			plainDoses.add(plainDose);
-			return plainDose;
-		}
-		else {
-			if(dose.getTime().isMorning()) {
-				morningDose = new MorningDoseWrapper(dose);
-				return morningDose;
-			}
-			else if(dose.getTime().isNoon()) { 
-				noonDose = new NoonDoseWrapper(dose);
-				return noonDose;
-			}
-			else if(dose.getTime().isEvening()) {
-				eveningDose = new EveningDoseWrapper(dose);
-				return eveningDose;
-			}
-			else if(dose.getTime().isNight()) {
-				nightDose = new NightDoseWrapper(dose);
-				return nightDose;
-			}
-			else {
-				TimedDoseWrapper timedDose = new TimedDoseWrapper(dose);
-				timedDoses.add(timedDose);
-				return timedDose;
-			}
-		}
-	}
-
-
-	public DayWrapper(dk.medicinkortet.web.shared.jaxb.dkma.medicinecard2009.DosageDayElementStructure dosageDayElementStructure) {
-		this.dayNumber = dosageDayElementStructure.getDosageDayIdentifier();
-		for(DosageTimeElementStructure dose: dosageDayElementStructure.getDosageTimeElementStructures()) {
-			if(dose.getDosageTimeTime()!=null && dose.getDosageTimeTime().trim().length()>0) {
-				TimedDoseWrapper d = new TimedDoseWrapper(dose);
-				timedDoses.add(d);
-				allDoses.add(d);
-			}
-			else {
-				PlainDoseWrapper d = new PlainDoseWrapper(dose, false); // We keep doses in order, otherwise addAll would be nicer
-				plainDoses.add(d);
-				allDoses.add(d);
-			}			
-		}
-		for(DosageTimeElementStructure dose: dosageDayElementStructure.getAccordingToNeedDosageTimeElementStructures()) {
-			PlainDoseWrapper d = new PlainDoseWrapper(dose, true);
-			plainDoses.add(d);
-			allDoses.add(d);
-		}
-		if(dosageDayElementStructure.getMorningDosageTimeElementStructure()!=null) {
-			morningDose = new MorningDoseWrapper(dosageDayElementStructure.getMorningDosageTimeElementStructure());
-			allDoses.add(morningDose);
-		}
-		if(dosageDayElementStructure.getNoonDosageTimeElementStructure()!=null) {
-			noonDose = new NoonDoseWrapper(dosageDayElementStructure.getNoonDosageTimeElementStructure());
-			allDoses.add(noonDose);
-		}
-		if(dosageDayElementStructure.getEveningDosageTimeElementStructure()!=null) {
-			eveningDose = new EveningDoseWrapper(dosageDayElementStructure.getEveningDosageTimeElementStructure());
-			allDoses.add(eveningDose);
-		}
-		if(dosageDayElementStructure.getNightDosageTimeElementStructure()!=null) {
-			nightDose = new NightDoseWrapper(dosageDayElementStructure.getNightDosageTimeElementStructure());
-			allDoses.add(nightDose);
-		}			
-	}
-
 	private DayWrapper() {
 		
 	}

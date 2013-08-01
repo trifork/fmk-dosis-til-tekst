@@ -22,36 +22,27 @@
 
 package dk.medicinkortet.dosisstructuretext.vowrapper;
 
-public class UnitOrUnitsWrapper {
 
-	private String unit;
-	private String unitSingular;
-	private String unitPlural;
+public class AdministrationAccordingToSchemaWrapper {
 	
-	public static UnitOrUnitsWrapper makeUnit(String unit) {
-		return new UnitOrUnitsWrapper(unit, null, null);
-	}
-
-	public static UnitOrUnitsWrapper makeUnits(String unitSingular, String unitPlural) {
-		return new UnitOrUnitsWrapper(null, unitSingular, unitPlural);
+	private DateOrDateTimeWrapper startDateOrDateTime;
+	private DateOrDateTimeWrapper endDateOrDateTime;
+	
+	public static AdministrationAccordingToSchemaWrapper makeAdministrationAccordingToSchema(DateOrDateTimeWrapper startDateOrDateTime, DateOrDateTimeWrapper endDateOrDateTime) {
+		return new AdministrationAccordingToSchemaWrapper(startDateOrDateTime, endDateOrDateTime);
 	}
 	
-	private UnitOrUnitsWrapper(String unit, String unitSingular, String unitPlural) {
-		this.unit = unit;
-		this.unitSingular = unitSingular;
-		this.unitPlural = unitPlural;
+	private AdministrationAccordingToSchemaWrapper(DateOrDateTimeWrapper startDateOrDateTime, DateOrDateTimeWrapper endDateOrDateTime) {
+		this.startDateOrDateTime = startDateOrDateTime;
+		this.endDateOrDateTime = endDateOrDateTime;
+	}
+	
+	public DateOrDateTimeWrapper getStartDateOrDateTime() {
+		return startDateOrDateTime;
 	}
 
-	public String getUnit() {
-		return unit;
-	}
-
-	public String getUnitSingular() {
-		return unitSingular;
-	}
-
-	public String getUnitPlural() {
-		return unitPlural;
+	public DateOrDateTimeWrapper getEndDateOrDateTime() {
+		return endDateOrDateTime;
 	}
 	
 }

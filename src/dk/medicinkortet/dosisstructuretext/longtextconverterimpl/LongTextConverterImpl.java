@@ -46,8 +46,8 @@ public abstract class LongTextConverterImpl {
 
 	abstract public String doConvert(DosageWrapper dosageStructure);
 
-	protected void appendDosageStart(StringBuilder s, StructureWrapper dosageStructure) {
-		s.append("Doseringsforløbet starter "+datesToLongText(dosageStructure.getStartDateOrDateTime()));
+	protected void appendDosageStart(StringBuilder s, DateOrDateTimeWrapper startDateOrDateTime) {
+		s.append("Doseringsforløbet starter "+datesToLongText(startDateOrDateTime));
 	}
 	
 	protected String datesToLongText(DateOrDateTimeWrapper startDateOrDateTime) {

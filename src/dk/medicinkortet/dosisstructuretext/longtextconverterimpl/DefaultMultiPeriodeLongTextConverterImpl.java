@@ -44,7 +44,7 @@ public class DefaultMultiPeriodeLongTextConverterImpl extends LongTextConverterI
 		s.append(":\n\n");
 		for(StructureWrapper structure: dosage.getStructures().getStructures()) {
 			DosageWrapper w = 
-				DosageWrapper.makeStructuredDosage(
+				DosageWrapper.makeDosage(
 					StructuresWrapper.makeStructures(
 						dosage.getStructures().getUnitOrUnits(), 
 						structure));
