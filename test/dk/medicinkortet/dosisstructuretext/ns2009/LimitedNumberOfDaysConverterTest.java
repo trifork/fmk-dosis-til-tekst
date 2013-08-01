@@ -39,6 +39,7 @@ import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.PlainDoseWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.StructureWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.StructuresWrapper;
+import dk.medicinkortet.dosisstructuretext.vowrapper.TimedDoseWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.UnitOrUnitsWrapper;
 
 public class LimitedNumberOfDaysConverterTest {
@@ -130,5 +131,29 @@ public class LimitedNumberOfDaysConverterTest {
 				0.000000001); 				
 		Assert.assertEquals(DosageType.Temporary, DosageTypeCalculator.calculate(dosage));
 	}
-		
+
+	@Test
+	public void testCQ611() throws Exception {
+		DosageWrapper dosage = DosageWrapper.makeDosage(
+			StructuresWrapper.makeStructures(
+				UnitOrUnitsWrapper.makeUnit("ml"), 
+				StructureWrapper.makeStructure(
+					0, "ved måltid", DateOrDateTimeWrapper.makeDate("2011-01-01"), DateOrDateTimeWrapper.makeDate("2011-01-04"), 
+					DayWrapper.makeDay(
+						3, 
+						TimedDoseWrapper.makeDose("11:25", new BigDecimal(7))))));		
+		Assert.assertEquals(
+				"Doseringsforløbet starter lørdag den 1. januar 2011 og ophører efter det angivne forløb:\n" +
+				"   Doseringsforløb:\n" +
+				"   Mandag den 3. januar 2011: 7 ml kl. 11:25 ved måltid",
+				LongTextConverter.convert(dosage));
+		Assert.assertNull(ShortTextConverter.getConverterClass(dosage));
+		Assert.assertEquals(
+				7./3., 
+				DailyDosisCalculator.calculate(dosage).getValue().doubleValue(), 
+				0.000000001); 							
+		Assert.assertEquals(DosageType.Temporary, DosageTypeCalculator.calculate(dosage));
+	}
+	
+	
 }

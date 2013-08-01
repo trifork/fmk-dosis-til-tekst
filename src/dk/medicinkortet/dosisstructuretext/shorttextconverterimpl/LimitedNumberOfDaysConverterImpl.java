@@ -44,7 +44,7 @@ public class LimitedNumberOfDaysConverterImpl extends ShortTextConverterImpl {
 		StructureWrapper structure = dosage.getStructures().getStructures().first();
 		if(structure.getIterationInterval()!=0)
 			return false;
-		if(structure.getDays().first().getDayNumber()==0)
+		if(!structure.daysAreInUninteruptedSequenceFromOne())
 			return false;
 		if(structure.startsAndEndsSameDay())
 			return false;
