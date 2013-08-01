@@ -101,8 +101,6 @@ public class DosageWrapper {
 	}
 		
 	public static DosageWrapper makeStructuredDosage(StructuresWrapper structures) {
-		System.out.println("a -->"+structures.getStructures().size());
-		
 		return new DosageWrapper(null, null, structures);
 	}
 

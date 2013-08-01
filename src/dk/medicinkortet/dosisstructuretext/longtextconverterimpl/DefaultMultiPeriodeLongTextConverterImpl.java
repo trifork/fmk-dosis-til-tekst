@@ -49,7 +49,6 @@ public class DefaultMultiPeriodeLongTextConverterImpl extends LongTextConverterI
 						dosage.getStructures().getUnitOrUnits(), 
 						structure));
 			s.append(LongTextConverter.convert(w)).append("\n\n");
-			System.out.println("---->");
 		}
 		return s.toString().trim();
 	}

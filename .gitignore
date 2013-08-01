@@ -1,0 +1,6 @@
+build.properties
+/bin/
+/lib/
+/target/
+/test-output
+/out
