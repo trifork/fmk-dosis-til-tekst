@@ -39,8 +39,8 @@ import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.WeeklyMorningN
 import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
 
 /**
- * Converts dosage to short text. This is only possible for a limited number of dosages. Currently 
- * dosages in the 2008/06/01 and 2009/01/01 namespaces are supported.  
+ * Converts dosage to short text. This is only possible for a limited number of dosages, as the result must not exceed 70 
+ * characters. 
  */ 
 public class ShortTextConverter {
 
