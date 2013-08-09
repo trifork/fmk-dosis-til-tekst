@@ -71,8 +71,8 @@ public class TimedDoseWrapper extends DoseWrapper {
 		return LABEL+" "+time.toString();
 	}
 
-	public LocalTime getTime() {
-		return time;
+	public String getTime() {
+		return time.toString();
 	}
 	
 	@Override
