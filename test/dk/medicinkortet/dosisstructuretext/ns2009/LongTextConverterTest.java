@@ -63,7 +63,7 @@ public class LongTextConverterTest {
 		Assert.assertTrue(DailyDosisCalculator.calculate(dosage).isNone());
 		Assert.assertEquals(DosageType.Unspecified, DosageTypeCalculator.calculate(dosage));
 	}
-	
+
 	@Test
 	public void testNs2009DosageTimes() {
 		DosageWrapper dosage = 

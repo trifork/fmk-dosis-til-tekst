@@ -39,8 +39,13 @@ public abstract class LongTextConverterImpl {
 	
 	protected static final String LONG_DATE_FORMAT = "EEEEEEE 'den' d'.' MMMMMMM yyyy";
 	protected static final String LONG_DATE_TIME_FORMAT = "EEEEEEE 'den' d'.' MMMMMMM yyyy 'kl.' HH:mm:ss";
+    protected static final String LONG_DATE_TIME_FORMAT_NO_SECS = "EEEEEEE 'den' d'.' MMMMMMM yyyy 'kl.' HH:mm";
 	protected static final String DAY_FORMAT = "EEEEEEE";
 	protected static final String INDENT = "   ";
+
+    protected final SimpleDateFormat longDateTimeFormatter = new SimpleDateFormat(LONG_DATE_TIME_FORMAT, new Locale("da", "DK"));
+    protected final SimpleDateFormat longDateTimeFormatterNoSecs = new SimpleDateFormat(LONG_DATE_TIME_FORMAT_NO_SECS, new Locale("da", "DK"));
+    protected final SimpleDateFormat longDateFormatter = new SimpleDateFormat(LONG_DATE_FORMAT, new Locale("da", "DK"));
 	
 	abstract public boolean canConvert(DosageWrapper dosageStructure);
 
@@ -54,16 +59,27 @@ public abstract class LongTextConverterImpl {
 		if(startDateOrDateTime==null)
 			throw new IllegalArgumentException();
 		if(startDateOrDateTime.getDate()!=null) {
-			SimpleDateFormat f = new SimpleDateFormat(LONG_DATE_FORMAT, new Locale("da", "DK"));
-			return f.format(startDateOrDateTime.getDate());
-		}
-		else { 
-			SimpleDateFormat f = new SimpleDateFormat(LONG_DATE_TIME_FORMAT, new Locale("da", "DK"));
-			return f.format(startDateOrDateTime.getDateTime());
+			return longDateFormatter.format(startDateOrDateTime.getDate());
+		} else {
+            Date dateTime = startDateOrDateTime.getDateTime();
+            // We do not want to show seconds precision if seconds are not specified or 0
+            if (haveSeconds(dateTime)) {
+                return longDateTimeFormatter.format(dateTime);
+            } else {
+                return longDateTimeFormatterNoSecs.format(dateTime);
+            }
 		}
 	}
-	
-	protected int appendDays(StringBuilder s, UnitOrUnitsWrapper unitOrUnits, StructureWrapper structure) {
+
+    private boolean haveSeconds(Date dateTime) {
+        long secs = dateTime.getTime() / 1000;
+        if (secs % 60 != 0) {
+            return true;
+        }
+        return false;
+    }
+
+    protected int appendDays(StringBuilder s, UnitOrUnitsWrapper unitOrUnits, StructureWrapper structure) {
 		int appendedLines = 0;
 		for(DayWrapper day: structure.getDays()) {
 			appendedLines++;
@@ -115,8 +131,7 @@ public abstract class LongTextConverterImpl {
 	protected String makeDayString(DateOrDateTimeWrapper startDateOrDateTime, int dayNumber) {
 		GregorianCalendar c = makeFromDateOnly(startDateOrDateTime.getDateOrDateTime());
 		c.add(GregorianCalendar.DATE, dayNumber-1);
-		SimpleDateFormat f = new SimpleDateFormat(LONG_DATE_FORMAT, new Locale("da", "DK"));
-		String dateString = f.format(c.getTime());
+		String dateString = longDateFormatter.format(c.getTime());
 		dateString = Character.toUpperCase(dateString.charAt(0)) + dateString.substring(1);
 		return dateString;
 	}

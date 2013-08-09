@@ -82,12 +82,12 @@ public class LongTextComplexConverterTest {
 			StructuresWrapper.makeStructures(
 				UnitOrUnitsWrapper.makeUnit("tablet"), 
 				StructureWrapper.makeStructure(
-				1, null, DateOrDateTimeWrapper.makeDateTime("2012-04-18 08:30:00"), null, 
+				1, null, DateOrDateTimeWrapper.makeDateTime("2012-04-18 08:30:00"), null,
 				DayWrapper.makeDay(
 					1, 
 					MorningDoseWrapper.makeDose(new BigDecimal(1))))));
 		Assert.assertEquals(
-				"Doseringsforløbet starter onsdag den 18. april 2012 kl. 08:30:00 og gentages hver dag:\n"+
+				"Doseringsforløbet starter onsdag den 18. april 2012 kl. 08:30 og gentages hver dag:\n"+
 				"   Doseringsforløb:\n"+
 				"   1 tablet morgen", 
 				LongTextConverter.convert(dosage));
@@ -598,12 +598,12 @@ public class LongTextComplexConverterTest {
 			StructuresWrapper.makeStructures(
 				UnitOrUnitsWrapper.makeUnit("stk"), 
 				StructureWrapper.makeStructure(
-					1, null, DateOrDateTimeWrapper.makeDateTime("2012-04-13 20:06:00"), null, 
+					1, null, DateOrDateTimeWrapper.makeDateTime("2012-04-13 20:06:01"), null,
 					DayWrapper.makeDay(
 						1, 
 						PlainDoseWrapper.makeDose(new BigDecimal(2), true)))));
 		Assert.assertEquals(
-				"Doseringsforløbet starter fredag den 13. april 2012 kl. 20:06:00 og gentages hver dag:\n"+
+				"Doseringsforløbet starter fredag den 13. april 2012 kl. 20:06:01 og gentages hver dag:\n"+
 				"   Doseringsforløb:\n"+
 				"   2 stk efter behov højst 1 gang daglig",
 				LongTextConverter.convert(dosage));
@@ -625,7 +625,7 @@ public class LongTextComplexConverterTest {
 						PlainDoseWrapper.makeDose(new BigDecimal(2), true), 
 						PlainDoseWrapper.makeDose(new BigDecimal(2), true)))));
 		Assert.assertEquals(
-				"Doseringsforløbet starter fredag den 13. april 2012 kl. 20:06:00 og gentages hver dag:\n"+
+				"Doseringsforløbet starter fredag den 13. april 2012 kl. 20:06 og gentages hver dag:\n"+
 				"   Doseringsforløb:\n"+
 				"   2 stk efter behov højst 2 gange daglig",
 				LongTextConverter.convert(dosage));
@@ -633,6 +633,42 @@ public class LongTextComplexConverterTest {
 		Assert.assertEquals("2 stk efter behov højst 2 gange daglig", ShortTextConverter.convert(dosage));
 		Assert.assertNull(DailyDosisCalculator.calculate(dosage).getValue());
 		Assert.assertEquals(DosageType.AccordingToNeed, DosageTypeCalculator.calculate(dosage));		
-	}	
+	}
+
+    @Test /* Jira FMK-784 */
+    public void testSecondsAreNotIncluded() {
+        DosageWrapper dosage = DosageWrapper.makeDosage(
+                StructuresWrapper.makeStructures(
+                        UnitOrUnitsWrapper.makeUnit("stk"),
+                        StructureWrapper.makeStructure(
+                                1, null, DateOrDateTimeWrapper.makeDateTime("2012-04-13 20:06:00"), null,
+                                DayWrapper.makeDay(
+                                        1,
+                                        PlainDoseWrapper.makeDose(new BigDecimal(2), true),
+                                        PlainDoseWrapper.makeDose(new BigDecimal(2), true)))));
+        Assert.assertEquals(
+                "Doseringsforløbet starter fredag den 13. april 2012 kl. 20:06 og gentages hver dag:\n"+
+                        "   Doseringsforløb:\n"+
+                        "   2 stk efter behov højst 2 gange daglig",
+                LongTextConverter.convert(dosage));
+    }
+
+    @Test /* Jira FMK-784 */
+    public void testSecondsAreIncludedWhenProvided() {
+        DosageWrapper dosage = DosageWrapper.makeDosage(
+                StructuresWrapper.makeStructures(
+                        UnitOrUnitsWrapper.makeUnit("stk"),
+                        StructureWrapper.makeStructure(
+                                1, null, DateOrDateTimeWrapper.makeDateTime("2012-04-13 20:06:10"), null,
+                                DayWrapper.makeDay(
+                                        1,
+                                        PlainDoseWrapper.makeDose(new BigDecimal(2), true),
+                                        PlainDoseWrapper.makeDose(new BigDecimal(2), true)))));
+        Assert.assertEquals(
+                "Doseringsforløbet starter fredag den 13. april 2012 kl. 20:06:10 og gentages hver dag:\n"+
+                        "   Doseringsforløb:\n"+
+                        "   2 stk efter behov højst 2 gange daglig",
+                LongTextConverter.convert(dosage));
+    }
 		
 }

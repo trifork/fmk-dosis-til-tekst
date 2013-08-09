@@ -352,7 +352,7 @@ public class MorningNoonEveningNightConverterTest {
 						MorningDoseWrapper.makeDose(new BigDecimal(1)), 
 						EveningDoseWrapper.makeDose(new BigDecimal(2))))));
 		Assert.assertEquals(
-				"Doseringsforløbet starter tirsdag den 26. juni 2012 kl. 00:00:00 og gentages hver dag:\n"+
+				"Doseringsforløbet starter tirsdag den 26. juni 2012 kl. 00:00 og gentages hver dag:\n"+
 				"   Doseringsforløb:\n"+
 				"   1 tablet morgen + 2 tabletter aften",
 				LongTextConverter.convert(dosage));
@@ -381,7 +381,7 @@ public class MorningNoonEveningNightConverterTest {
 						MorningDoseWrapper.makeDose(new BigDecimal(0), new BigDecimal(1)), 
 						EveningDoseWrapper.makeDose(new BigDecimal(0.5), new BigDecimal(1.5))))));
 		Assert.assertEquals(
-				"Doseringsforløbet starter tirsdag den 26. juni 2012 kl. 00:00:00 og gentages hver dag:\n"+
+				"Doseringsforløbet starter tirsdag den 26. juni 2012 kl. 00:00 og gentages hver dag:\n"+
 				"   Doseringsforløb:\n"+
 				"   0-1 tablet morgen + 0,5-1,5 tabletter aften",
 				LongTextConverter.convert(dosage));
@@ -415,7 +415,7 @@ public class MorningNoonEveningNightConverterTest {
 						NoonDoseWrapper.makeDose(new BigDecimal("42.117")),
 						EveningDoseWrapper.makeDose(new BigDecimal(0.0), new BigDecimal(0.0))))));
 		Assert.assertEquals(
-				"Doseringsforløbet starter tirsdag den 26. juni 2012 kl. 00:00:00 og gentages hver dag:\n"+
+				"Doseringsforløbet starter tirsdag den 26. juni 2012 kl. 00:00 og gentages hver dag:\n"+
 				"   Doseringsforløb:\n"+
 				"   42,117 tabletter middag",
 				LongTextConverter.convert(dosage));

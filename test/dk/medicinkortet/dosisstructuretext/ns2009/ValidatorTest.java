@@ -60,7 +60,7 @@ public class ValidatorTest {
 				1, 
 				s.getDays().first().getNumberOfDoses());
 		Assert.assertEquals(
-				"Doseringsforløbet starter fredag den 13. april 2012 kl. 20:06:00 og gentages hver dag:\n"+
+				"Doseringsforløbet starter fredag den 13. april 2012 kl. 20:06 og gentages hver dag:\n"+
 				"   Doseringsforløb:\n"+
 				"   2 stk morgen",
 				LongTextConverter.convert(dosage));
@@ -92,7 +92,7 @@ public class ValidatorTest {
 				1, 
 				s.getDays().first().getAccordingToNeedDoses().size());
 		Assert.assertEquals(
-				"Doseringsforløbet starter fredag den 13. april 2012 kl. 20:06:00 og gentages hver dag:\n"+
+				"Doseringsforløbet starter fredag den 13. april 2012 kl. 20:06 og gentages hver dag:\n"+
 				"   Doseringsforløb:\n"+
 				"   2 stk efter behov højst 1 gang daglig",
 				LongTextConverter.convert(dosage));
