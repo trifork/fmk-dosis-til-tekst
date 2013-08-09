@@ -22,15 +22,17 @@
 
 package dk.medicinkortet.dosisstructuretext.vowrapper;
 
+import dk.medicinkortet.dosisstructuretext.LocalTime;
+
 import java.math.BigDecimal;
 
 
 public class TimedDoseWrapper extends DoseWrapper {
 
-	private String time;
+	private LocalTime time;
 
 	private TimedDoseWrapper(
-			String time, 
+            LocalTime time,
 			BigDecimal doseQuantity, BigDecimal minimalDoseQuantity, BigDecimal maximalDoseQuantity, 
 			String doseQuantityString, String minimalDoseQuantityString, String maximalDoseQuantityString, 
 			boolean isAccordingToNeed) {
@@ -38,25 +40,25 @@ public class TimedDoseWrapper extends DoseWrapper {
 		this.time = time;
 	}
 
-	public static TimedDoseWrapper makeDose(String time, BigDecimal quantity) {
+	public static TimedDoseWrapper makeDose(LocalTime time, BigDecimal quantity) {
 		if(isZero(quantity))
 			return null;
 		return new TimedDoseWrapper(time, quantity, null, null, null, null, null, false);
 	}
 
-	public static TimedDoseWrapper makeDose(String time, BigDecimal quantity, String supplText) {
+	public static TimedDoseWrapper makeDose(LocalTime time, BigDecimal quantity, String supplText) {
 		if(isZero(quantity))
 			return null;
 		return new TimedDoseWrapper(time, quantity, null, null, supplText, null, null, false);
 	}
 	
-	public static TimedDoseWrapper makeDose(String time, BigDecimal minimalQuantity, BigDecimal maximalQuantity) {
+	public static TimedDoseWrapper makeDose(LocalTime time, BigDecimal minimalQuantity, BigDecimal maximalQuantity) {
 		if(isZero(minimalQuantity, maximalQuantity))
 			return null;
 		return new TimedDoseWrapper(time, null, minimalQuantity, maximalQuantity, null, null, null, false);
 	}	
 
-	public static TimedDoseWrapper makeDose(String time, BigDecimal minimalQuantity, BigDecimal maximalQuantity, String minimalSupplText, String maximalSupplText) {
+	public static TimedDoseWrapper makeDose(LocalTime time, BigDecimal minimalQuantity, BigDecimal maximalQuantity, String minimalSupplText, String maximalSupplText) {
 		if(isZero(minimalQuantity, maximalQuantity))
 			return null;
 		return new TimedDoseWrapper(time, null, minimalQuantity, maximalQuantity, null, minimalSupplText, maximalSupplText, false);
@@ -66,10 +68,10 @@ public class TimedDoseWrapper extends DoseWrapper {
 	
 	@Override
 	public String getLabel() {
-		return LABEL+" "+time;
+		return LABEL+" "+time.toString();
 	}
 
-	public String getTime() {
+	public LocalTime getTime() {
 		return time;
 	}
 	

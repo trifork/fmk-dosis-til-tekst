@@ -24,6 +24,7 @@ package dk.medicinkortet.dosisstructuretext.ns2009;
 
 import java.math.BigDecimal;
 
+import dk.medicinkortet.dosisstructuretext.LocalTime;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -98,7 +99,7 @@ public class LongTextConverterTest {
 						0, "før behandling", DateOrDateTimeWrapper.makeDate("2011-01-01"), null, 
 						DayWrapper.makeDay(
 							1, 
-							TimedDoseWrapper.makeDose("13:30:00", new BigDecimal(1.0))))));
+							TimedDoseWrapper.makeDose(new LocalTime(13,30,0), new BigDecimal(1.0))))));
 		Assert.assertEquals(
 			"Doseringsforløbet starter lørdag den 1. januar 2011 og ophører efter det angivne forløb:\n"+
 			"   Doseringsforløb:\n"+
@@ -121,8 +122,8 @@ public class LongTextConverterTest {
 						0, "før behandling", DateOrDateTimeWrapper.makeDate("2011-01-01"), null, 
 						DayWrapper.makeDay(
 							1, 
-							TimedDoseWrapper.makeDose("13:30:00", new BigDecimal(1.0)), 
-							TimedDoseWrapper.makeDose("14:30:00", new BigDecimal(2.0))))));
+							TimedDoseWrapper.makeDose(new LocalTime(13,30,0), new BigDecimal(1.0)),
+							TimedDoseWrapper.makeDose(new LocalTime(14,30,0), new BigDecimal(2.0))))));
 		Assert.assertEquals(
 			"Doseringsforløbet starter lørdag den 1. januar 2011 og ophører efter det angivne forløb:\n"+
 			"   Doseringsforløb:\n"+

@@ -24,6 +24,7 @@ package dk.medicinkortet.dosisstructuretext.ns2009;
 
 import java.math.BigDecimal;
 
+import dk.medicinkortet.dosisstructuretext.LocalTime;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -78,7 +79,7 @@ public class SimpleNonRepeatedConverterTest {
 					0, "før indlæggelse", DateOrDateTimeWrapper.makeDate("2011-01-01"), DateOrDateTimeWrapper.makeDate("2011-01-01"), 
 					DayWrapper.makeDay(
 						0, 
-						TimedDoseWrapper.makeDose("07:30", new BigDecimal(1))))));				
+						TimedDoseWrapper.makeDose(new LocalTime(7,30), new BigDecimal(1))))));
 		Assert.assertEquals(
 			"Doseringen foretages kun lørdag den 1. januar 2011:\n"+
 			"   Doseringsforløb:\n"+
@@ -103,7 +104,7 @@ public class SimpleNonRepeatedConverterTest {
 					0, null, DateOrDateTimeWrapper.makeDate("2011-01-01"), DateOrDateTimeWrapper.makeDate("2011-01-01"), 
 					DayWrapper.makeDay(
 						1, 
-						TimedDoseWrapper.makeDose("07:30", new BigDecimal(1))))));				
+						TimedDoseWrapper.makeDose(new LocalTime(7,30), new BigDecimal(1))))));
 		Assert.assertEquals(
 			"Doseringen foretages kun lørdag den 1. januar 2011:\n"+
 			"   Doseringsforløb:\n"+

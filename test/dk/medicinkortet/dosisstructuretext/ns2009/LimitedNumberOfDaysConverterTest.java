@@ -24,6 +24,7 @@ package dk.medicinkortet.dosisstructuretext.ns2009;
 
 import java.math.BigDecimal;
 
+import dk.medicinkortet.dosisstructuretext.LocalTime;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -141,7 +142,7 @@ public class LimitedNumberOfDaysConverterTest {
 					0, "ved måltid", DateOrDateTimeWrapper.makeDate("2011-01-01"), DateOrDateTimeWrapper.makeDate("2011-01-04"), 
 					DayWrapper.makeDay(
 						3, 
-						TimedDoseWrapper.makeDose("11:25", new BigDecimal(7))))));		
+						TimedDoseWrapper.makeDose(new LocalTime(11,25), new BigDecimal(7))))));
 		Assert.assertEquals(
 				"Doseringsforløbet starter lørdag den 1. januar 2011 og ophører efter det angivne forløb:\n" +
 				"   Doseringsforløb:\n" +
