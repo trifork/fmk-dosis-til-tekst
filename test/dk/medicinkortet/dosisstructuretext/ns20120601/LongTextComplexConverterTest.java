@@ -24,6 +24,9 @@ package dk.medicinkortet.dosisstructuretext.ns20120601;
 
 import java.math.BigDecimal;
 
+import dk.medicinkortet.dosisstructuretext.LocalTime;
+import dk.medicinkortet.dosisstructuretext.vowrapper.DoseWrapper;
+import dk.medicinkortet.dosisstructuretext.vowrapper.TimedDoseWrapper;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -89,5 +92,34 @@ public class LongTextComplexConverterTest {
 		Assert.assertNull(DailyDosisCalculator.calculate(dosage).getValue());
 		Assert.assertEquals(DosageType.AccordingToNeed, DosageTypeCalculator.calculate(dosage));		
 	}
+
+    @Test
+    public void testTimes() throws Exception {
+        DosageWrapper dosage = DosageWrapper.makeDosage(
+                StructuresWrapper.makeStructures(
+                        UnitOrUnitsWrapper.makeUnits("tablet", "tabletter"),
+                        StructureWrapper.makeStructure(
+                                0, null, DateOrDateTimeWrapper.makeDate("2012-04-18"), null,
+                                DayWrapper.makeDay(
+                                        0,
+                                        TimedDoseWrapper.makeDose(new LocalTime(10,0), new BigDecimal(1))),
+                                DayWrapper.makeDay(
+                                        1,
+                                        TimedDoseWrapper.makeDose(new LocalTime(10,1), new BigDecimal(2))),
+                                DayWrapper.makeDay(
+                                        2,
+                                        TimedDoseWrapper.makeDose(new LocalTime(10,2,1), new BigDecimal(3))))));
+        Assert.assertEquals(
+                "Doseringsforløbet starter onsdag den 18. april 2012 og ophører efter det angivne forløb.\n" +
+                        "Bemærk at doseringen varierer og har et komplekst forløb:\n" +
+                        "   Doseringsforløb:\n" +
+                        "   Dag ikke angivet: 1 tablet kl. 10:00\n" +
+                        "   Onsdag den 18. april 2012: 2 tabletter kl. 10:01\n" +
+                        "   Torsdag den 19. april 2012: 3 tabletter kl. 10:02:01",
+                LongTextConverter.convert(dosage));
+        Assert.assertNull(ShortTextConverter.convert(dosage));
+        Assert.assertNull(DailyDosisCalculator.calculate(dosage).getValue());
+        Assert.assertEquals(DosageType.Temporary, DosageTypeCalculator.calculate(dosage));
+    }
 		
 }
