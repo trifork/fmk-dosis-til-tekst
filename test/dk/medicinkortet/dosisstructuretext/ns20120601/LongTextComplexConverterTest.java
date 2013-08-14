@@ -24,15 +24,13 @@ package dk.medicinkortet.dosisstructuretext.ns20120601;
 
 import java.math.BigDecimal;
 
-import dk.medicinkortet.dosisstructuretext.LocalTime;
-import dk.medicinkortet.dosisstructuretext.vowrapper.DoseWrapper;
-import dk.medicinkortet.dosisstructuretext.vowrapper.TimedDoseWrapper;
 import org.junit.Assert;
 import org.junit.Test;
 
 import dk.medicinkortet.dosisstructuretext.DailyDosisCalculator;
 import dk.medicinkortet.dosisstructuretext.DosageType;
 import dk.medicinkortet.dosisstructuretext.DosageTypeCalculator;
+import dk.medicinkortet.dosisstructuretext.LocalTime;
 import dk.medicinkortet.dosisstructuretext.LongTextConverter;
 import dk.medicinkortet.dosisstructuretext.ShortTextConverter;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DateOrDateTimeWrapper;
@@ -41,6 +39,7 @@ import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.MorningDoseWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.StructureWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.StructuresWrapper;
+import dk.medicinkortet.dosisstructuretext.vowrapper.TimedDoseWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.UnitOrUnitsWrapper;
 
 /**

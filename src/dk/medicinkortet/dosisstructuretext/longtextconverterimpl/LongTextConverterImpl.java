@@ -22,10 +22,7 @@
 
 package dk.medicinkortet.dosisstructuretext.longtextconverterimpl;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.Locale;
 
 import dk.medicinkortet.dosisstructuretext.TextHelper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DateOrDateTimeWrapper;
@@ -36,16 +33,6 @@ import dk.medicinkortet.dosisstructuretext.vowrapper.StructureWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.UnitOrUnitsWrapper;
 
 public abstract class LongTextConverterImpl {
-	
-	protected static final String LONG_DATE_FORMAT = "EEEEEEE 'den' d'.' MMMMMMM yyyy";
-	protected static final String LONG_DATE_TIME_FORMAT = "EEEEEEE 'den' d'.' MMMMMMM yyyy 'kl.' HH:mm:ss";
-    protected static final String LONG_DATE_TIME_FORMAT_NO_SECS = "EEEEEEE 'den' d'.' MMMMMMM yyyy 'kl.' HH:mm";
-	protected static final String DAY_FORMAT = "EEEEEEE";
-	protected static final String INDENT = "   ";
-
-    protected final SimpleDateFormat longDateTimeFormatter = new SimpleDateFormat(LONG_DATE_TIME_FORMAT, new Locale("da", "DK"));
-    protected final SimpleDateFormat longDateTimeFormatterNoSecs = new SimpleDateFormat(LONG_DATE_TIME_FORMAT_NO_SECS, new Locale("da", "DK"));
-    protected final SimpleDateFormat longDateFormatter = new SimpleDateFormat(LONG_DATE_FORMAT, new Locale("da", "DK"));
 	
 	abstract public boolean canConvert(DosageWrapper dosageStructure);
 
@@ -59,14 +46,16 @@ public abstract class LongTextConverterImpl {
 		if(startDateOrDateTime==null)
 			throw new IllegalArgumentException();
 		if(startDateOrDateTime.getDate()!=null) {
-			return longDateFormatter.format(startDateOrDateTime.getDate());
-		} else {
+			return TextHelper.formatLongDate(startDateOrDateTime.getDate());
+		} 
+		else {
             Date dateTime = startDateOrDateTime.getDateTime();
             // We do not want to show seconds precision if seconds are not specified or 0
             if (haveSeconds(dateTime)) {
-                return longDateTimeFormatter.format(dateTime);
-            } else {
-                return longDateTimeFormatterNoSecs.format(dateTime);
+                return TextHelper.formatLongDateTime(dateTime);
+            } 
+            else {
+                return TextHelper.formatLongDateNoSecs(dateTime);
             }
 		}
 	}
@@ -85,7 +74,7 @@ public abstract class LongTextConverterImpl {
 			appendedLines++;
 			if(appendedLines>1)
 				s.append("\n");
-			s.append(INDENT+makeDaysLabel(structure, day));
+			s.append(TextHelper.INDENT+makeDaysLabel(structure, day));
 			s.append(makeDaysDosage(unitOrUnits, structure, day));
 		}		
 		return appendedLines;
@@ -99,7 +88,7 @@ public abstract class LongTextConverterImpl {
 				return "Dag ikke angivet: ";
 		}
 		else {
-			return makeDayString(structure.getStartDateOrDateTime(), day.getDayNumber())+": ";
+			return TextHelper.makeDayString(structure.getStartDateOrDateTime(), day.getDayNumber())+": ";
 		}		
 	}
 
@@ -128,23 +117,7 @@ public abstract class LongTextConverterImpl {
 		return s.toString();
 	}
 
-	protected String makeDayString(DateOrDateTimeWrapper startDateOrDateTime, int dayNumber) {
-		GregorianCalendar c = makeFromDateOnly(startDateOrDateTime.getDateOrDateTime());
-		c.add(GregorianCalendar.DATE, dayNumber-1);
-		String dateString = longDateFormatter.format(c.getTime());
-		dateString = Character.toUpperCase(dateString.charAt(0)) + dateString.substring(1);
-		return dateString;
-	}
-	
-	protected static GregorianCalendar makeFromDateOnly(Date date) {
-		GregorianCalendar c = new GregorianCalendar();
-		c.setTime(date);
-		c.set(GregorianCalendar.HOUR, 0);
-		c.set(GregorianCalendar.MINUTE, 0);
-		c.set(GregorianCalendar.SECOND, 0);
-		c.set(GregorianCalendar.MILLISECOND, 0);
-		return c;
-	}
+
 	
 	protected StringBuilder makeOneDose(DoseWrapper dose, UnitOrUnitsWrapper unitOrUnits, String supplText) {
 		StringBuilder s = new StringBuilder();

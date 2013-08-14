@@ -22,6 +22,7 @@
 
 package dk.medicinkortet.dosisstructuretext.shorttextconverterimpl;
 
+import dk.medicinkortet.dosisstructuretext.TextHelper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DayWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.StructureWrapper;
@@ -59,31 +60,30 @@ public class RepeatedConverterImpl extends ShortTextConverterImpl {
 		
 		text.append(toValue(day.getAllDoses().get(0), dosage.getStructures().getUnitOrUnits()));
 		
-//		if(day.getAllDoses().get(0) instanceof TimedDoseWrapper)
-//			text.append(" "+((TimedDoseWrapper)day.getAllDoses().get(0)).getTime());
+		String supplText = "";
+		if(structure.getSupplText()!=null)
+			supplText = " "+structure.getSupplText();
 		
 		if(structure.getIterationInterval()==1 && day.getNumberOfDoses()==1)
-			text.append(" daglig");
+			text.append(" daglig"+supplText);
 		else if(structure.getIterationInterval()==1 && day.getNumberOfDoses()>1)
-			text.append(" "+day.getNumberOfDoses()+" gange daglig");
-		else if(numberOfWholeWeeks(structure.getIterationInterval())==1 && day.getNumberOfDoses()==1)
-			text.append(" 1 gang om ugen");
+			text.append(" "+day.getNumberOfDoses()+" gange daglig"+supplText);
+		else if(numberOfWholeWeeks(structure.getIterationInterval())==1 && day.getNumberOfDoses()==1) {
+			String name = TextHelper.makeDayOfWeekAndName(structure.getStartDateOrDateTime(), day, false).name;
+			text.append(" "+name+supplText+" hver uge");
+		}
 		else if(numberOfWholeWeeks(structure.getIterationInterval())==1 && day.getNumberOfDoses()>1)
-			text.append(" "+day.getNumberOfDoses()+" gange samme dag 1 gang om ugen");
+			text.append(" "+day.getNumberOfDoses()+" gange samme dag"+supplText+" 1 gang om ugen");
 		else if(numberOfWholeMonths(structure.getIterationInterval())==1 && day.getNumberOfDoses()==1)
-			text.append(" 1 gang om måneden");
+			text.append(" 1 gang om måneden"+supplText);
 		else if(numberOfWholeMonths(structure.getIterationInterval())==1 && day.getNumberOfDoses()>=1)
-			text.append(" "+day.getNumberOfDoses()+" gange samme dag 1 gang om måneden");
+			text.append(" "+day.getNumberOfDoses()+" gange samme dag"+supplText+" 1 gang om måneden");
 		else if(structure.getIterationInterval()>1 && day.getNumberOfDoses()==1)
-			text.append(" hver "+structure.getIterationInterval()+". dag");
+			text.append(" hver "+structure.getIterationInterval()+". dag"+supplText);
 		else if(structure.getIterationInterval()>1 && day.getNumberOfDoses()>=1)
-			text.append(" "+day.getNumberOfDoses()+" gange samme dag hver "+structure.getIterationInterval()+". dag");
+			text.append(" "+day.getNumberOfDoses()+" gange samme dag"+supplText+" hver "+structure.getIterationInterval()+". dag");
 		else
 			return null; // Something unexpected happened!
-		
-		if(structure.getSupplText()!=null)
-			text.append(" ").append(structure.getSupplText());
-		
 		return text.toString();
 	}
 
@@ -100,9 +100,5 @@ public class RepeatedConverterImpl extends ShortTextConverterImpl {
 			numberOfWholeMonths = -1;
 		return numberOfWholeMonths;
 	}
-	
-	
-	
-	
 	
 }

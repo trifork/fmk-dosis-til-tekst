@@ -25,15 +25,30 @@ package dk.medicinkortet.dosisstructuretext;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
+import dk.medicinkortet.dosisstructuretext.longtextconverterimpl.WeeklyRepeatedConverterImpl.DayOfWeek;
+import dk.medicinkortet.dosisstructuretext.vowrapper.DateOrDateTimeWrapper;
+import dk.medicinkortet.dosisstructuretext.vowrapper.DayWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DoseWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.UnitOrUnitsWrapper;
 
 public class TextHelper {
 
 	public static final String VERSION = "2013-08-09";
+
+	public static final String LONG_DATE_FORMAT = "EEEEEEE 'den' d'.' MMMMMMM yyyy";
+	public static final String LONG_DATE_TIME_FORMAT = "EEEEEEE 'den' d'.' MMMMMMM yyyy 'kl.' HH:mm:ss";
+	public static final String LONG_DATE_TIME_FORMAT_NO_SECS = "EEEEEEE 'den' d'.' MMMMMMM yyyy 'kl.' HH:mm";
+	public static final String DAY_FORMAT = "EEEEEEE";
+	public static final String INDENT = "   ";
+	
+    private static final SimpleDateFormat longDateTimeFormatter = new SimpleDateFormat(LONG_DATE_TIME_FORMAT, new Locale("da", "DK"));
+    private static final SimpleDateFormat longDateTimeFormatterNoSecs = new SimpleDateFormat(LONG_DATE_TIME_FORMAT_NO_SECS, new Locale("da", "DK"));
+    private static final SimpleDateFormat longDateFormatter = new SimpleDateFormat(LONG_DATE_FORMAT, new Locale("da", "DK"));
 	
 	private static final Map<String, String> decimalsToFractions = new HashMap<String, String>();
 	private static final Map<String, String> singularToPlural = new HashMap<String, String>();
@@ -135,6 +150,64 @@ public class TextHelper {
 		}
 		else {
 			return false;
+		}
+	}
+	
+	public static String makeDayString(DateOrDateTimeWrapper startDateOrDateTime, int dayNumber) {
+		GregorianCalendar c = makeFromDateOnly(startDateOrDateTime.getDateOrDateTime());
+		c.add(GregorianCalendar.DATE, dayNumber-1);
+		String dateString = longDateFormatter.format(c.getTime());
+		dateString = Character.toUpperCase(dateString.charAt(0)) + dateString.substring(1);
+		return dateString;
+	}
+	
+	public static GregorianCalendar makeFromDateOnly(Date date) {
+		GregorianCalendar c = new GregorianCalendar();
+		c.setTime(date);
+		c.set(GregorianCalendar.HOUR, 0);
+		c.set(GregorianCalendar.MINUTE, 0);
+		c.set(GregorianCalendar.SECOND, 0);
+		c.set(GregorianCalendar.MILLISECOND, 0);
+		return c;
+	}
+
+	public static String formatLongDate(Date date) {
+		return longDateFormatter.format(date);
+	}
+
+	public static String formatLongDateTime(Date dateTime) {
+		return longDateTimeFormatter.format(dateTime);
+	}
+
+	public static String formatLongDateNoSecs(Date dateTime) {
+		return longDateTimeFormatterNoSecs.format(dateTime);
+	}
+	
+	public static DayOfWeek makeDayOfWeekAndName(DateOrDateTimeWrapper startDateOrDateTime, DayWrapper day, boolean initialUpperCase) {
+		DayOfWeek d = new DayOfWeek();
+		d.day = day;
+		GregorianCalendar c = makeFromDateOnly(startDateOrDateTime.getDateOrDateTime());
+		c.add(GregorianCalendar.DATE, day.getDayNumber()-1);
+		SimpleDateFormat f = new SimpleDateFormat(DAY_FORMAT, new Locale("da", "DK"));
+		d.dayOfWeek = usToDkDayOfWeek(c.get(GregorianCalendar.DAY_OF_WEEK));
+		String dateString = f.format(c.getTime());
+		if(initialUpperCase)
+			d.name = Character.toUpperCase(dateString.charAt(0)) + dateString.substring(1);
+		else 
+			d.name = dateString;
+		return d;
+	}
+	
+	private static int usToDkDayOfWeek(int us) {
+		switch(us) {
+			case GregorianCalendar.MONDAY: return 1;
+			case GregorianCalendar.TUESDAY: return 2;
+			case GregorianCalendar.WEDNESDAY: return 3;
+			case GregorianCalendar.THURSDAY: return 4;
+			case GregorianCalendar.FRIDAY: return 5;
+			case GregorianCalendar.SATURDAY: return 6;
+			case GregorianCalendar.SUNDAY: return 7;
+			default: throw new RuntimeException(""+us);
 		}
 	}
 	

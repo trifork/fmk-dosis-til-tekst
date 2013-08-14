@@ -212,7 +212,7 @@ public class RepeatedConverterTest {
 				RepeatedConverterImpl.class, 
 				ShortTextConverter.getConverterClass(dosage));
 		Assert.assertEquals(
-				"1 stk 1 gang om ugen ved måltid", 
+				"1 stk lørdag ved måltid hver uge", 
 				ShortTextConverter.convert(dosage));
 		Assert.assertEquals(
 				1/7., 
@@ -268,7 +268,7 @@ public class RepeatedConverterTest {
 				RepeatedConverterImpl.class, 
 				ShortTextConverter.getConverterClass(dosage));
 		Assert.assertEquals(
-				"2,5 stk 1 gang om ugen ved måltid", 
+				"2,5 stk lørdag ved måltid hver uge", 
 				ShortTextConverter.convert(dosage));
 		Assert.assertEquals(
 				2.5/7., 
@@ -296,7 +296,7 @@ public class RepeatedConverterTest {
 				RepeatedConverterImpl.class, 
 				ShortTextConverter.getConverterClass(dosage));
 		Assert.assertEquals(
-				"2,5 stk 2 gange samme dag 1 gang om ugen ved måltid", 
+				"2,5 stk 2 gange samme dag ved måltid 1 gang om ugen", 
 				ShortTextConverter.convert(dosage));
 		Assert.assertEquals(
 				5/7., 
@@ -353,7 +353,7 @@ public class RepeatedConverterTest {
 				RepeatedConverterImpl.class, 
 				ShortTextConverter.getConverterClass(dosage));
 		Assert.assertEquals(
-				"2,5 stk 2 gange samme dag 1 gang om måneden ved måltid", 
+				"2,5 stk 2 gange samme dag ved måltid 1 gang om måneden", 
 				ShortTextConverter.convert(dosage));
 		Assert.assertEquals(
 				5/30., 
@@ -410,7 +410,7 @@ public class RepeatedConverterTest {
 				RepeatedConverterImpl.class, 
 				ShortTextConverter.getConverterClass(dosage));
 		Assert.assertEquals(
-				"2,5 stk 2 gange samme dag hver 5. dag ved måltid", 
+				"2,5 stk 2 gange samme dag ved måltid hver 5. dag", 
 				ShortTextConverter.convert(dosage));
 		Assert.assertEquals(
 				1, 
@@ -439,7 +439,7 @@ public class RepeatedConverterTest {
 				RepeatedConverterImpl.class, 
 				ShortTextConverter.getConverterClass(dosage));
 		Assert.assertEquals(
-				"1/2 stk 2 gange samme dag hver 5. dag ved måltid", 
+				"1/2 stk 2 gange samme dag ved måltid hver 5. dag", 
 				ShortTextConverter.convert(dosage));
 		Assert.assertEquals(
 				1/5., 

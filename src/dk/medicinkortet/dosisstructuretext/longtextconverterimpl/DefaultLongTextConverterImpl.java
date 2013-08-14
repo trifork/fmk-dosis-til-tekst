@@ -22,6 +22,7 @@
 
 package dk.medicinkortet.dosisstructuretext.longtextconverterimpl;
 
+import dk.medicinkortet.dosisstructuretext.TextHelper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.StructureWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.UnitOrUnitsWrapper;
@@ -71,7 +72,7 @@ public class DefaultLongTextConverterImpl extends LongTextConverterImpl {
 			appendRepetition(s, structure);
 			appendNoteText(s, structure);
 		}
-		s.append(INDENT+"Doseringsforløb:\n");
+		s.append(TextHelper.INDENT+"Doseringsforløb:\n");
 		appendDays(s, unitOrUnits, structure);
 		return s.toString();	
 	}

@@ -67,7 +67,7 @@ public class TwoDaysRepeatedConverterTest {
 				RepeatedConverterImpl.class, 
 				ShortTextConverter.getConverterClass(dosage));
 		Assert.assertEquals(
-				"1 stk 2 gange samme dag hver 2. dag ved måltid", 
+				"1 stk 2 gange samme dag ved måltid hver 2. dag", 
 				ShortTextConverter.convert(dosage));
 		Assert.assertEquals(
 				1.0, 
@@ -99,7 +99,7 @@ public class TwoDaysRepeatedConverterTest {
 				RepeatedConverterImpl.class, 
 				ShortTextConverter.getConverterClass(dosage));
 		Assert.assertEquals(
-				"1 stk 2 gange samme dag hver 2. dag ved måltid", 
+				"1 stk 2 gange samme dag ved måltid hver 2. dag", 
 				ShortTextConverter.convert(dosage));
 		Assert.assertEquals(
 				1.0, 

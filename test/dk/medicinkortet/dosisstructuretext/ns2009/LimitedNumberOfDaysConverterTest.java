@@ -33,6 +33,7 @@ import dk.medicinkortet.dosisstructuretext.DosageType;
 import dk.medicinkortet.dosisstructuretext.DosageTypeCalculator;
 import dk.medicinkortet.dosisstructuretext.LongTextConverter;
 import dk.medicinkortet.dosisstructuretext.ShortTextConverter;
+import dk.medicinkortet.dosisstructuretext.longtextconverterimpl.DefaultLongTextConverterImpl;
 import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.LimitedNumberOfDaysConverterImpl;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DateOrDateTimeWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DayWrapper;
@@ -69,6 +70,9 @@ public class LimitedNumberOfDaysConverterTest {
 						4, 
 						PlainDoseWrapper.makeDose(new BigDecimal(4)), 
 						PlainDoseWrapper.makeDose(new BigDecimal(4))))));		
+		Assert.assertEquals(
+				DefaultLongTextConverterImpl.class,
+				LongTextConverter.getConverterClass(dosage));
 		Assert.assertEquals(
 				"Doseringsforløbet starter lørdag den 1. januar 2011 og ophører efter det angivne forløb:\n"+
 				"   Doseringsforløb:\n"+

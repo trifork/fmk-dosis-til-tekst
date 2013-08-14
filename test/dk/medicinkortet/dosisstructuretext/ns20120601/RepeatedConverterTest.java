@@ -30,16 +30,20 @@ import org.junit.Test;
 import dk.medicinkortet.dosisstructuretext.DailyDosisCalculator;
 import dk.medicinkortet.dosisstructuretext.DosageType;
 import dk.medicinkortet.dosisstructuretext.DosageTypeCalculator;
+import dk.medicinkortet.dosisstructuretext.LocalTime;
 import dk.medicinkortet.dosisstructuretext.LongTextConverter;
 import dk.medicinkortet.dosisstructuretext.ShortTextConverter;
+import dk.medicinkortet.dosisstructuretext.longtextconverterimpl.WeeklyRepeatedConverterImpl;
 import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.RepeatedConverterImpl;
 import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.SimpleLimitedAccordingToNeedConverterImpl;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DateOrDateTimeWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DayWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
+import dk.medicinkortet.dosisstructuretext.vowrapper.MorningDoseWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.PlainDoseWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.StructureWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.StructuresWrapper;
+import dk.medicinkortet.dosisstructuretext.vowrapper.TimedDoseWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.UnitOrUnitsWrapper;
 
 /**
@@ -104,5 +108,66 @@ public class RepeatedConverterTest {
 		Assert.assertEquals(DosageType.AccordingToNeed, DosageTypeCalculator.calculate(dosage));		
 	}
 	
+	@Test
+	public void testOnceWeekly() throws Exception {
+		DosageWrapper dosage = DosageWrapper.makeDosage(
+			StructuresWrapper.makeStructures(
+				UnitOrUnitsWrapper.makeUnit("stk"), 
+				StructureWrapper.makeStructure(
+					7, "ved måltid", DateOrDateTimeWrapper.makeDate("2013-08-12"), null, 
+					DayWrapper.makeDay(
+						3, 
+						TimedDoseWrapper.makeDose(new LocalTime(8, 0), new BigDecimal(1))))));
+		Assert.assertEquals(
+				WeeklyRepeatedConverterImpl.class, 
+				LongTextConverter.getConverterClass(dosage));
+		Assert.assertEquals(
+				"Doseringsforløbet starter mandag den 12. august 2013, forløbet gentages hver uge:\n"+
+				"   Doseringsforløb:\n"+
+				"   Onsdag: 1 stk kl. 08:00 ved måltid",
+				LongTextConverter.convert(dosage));
+		Assert.assertEquals(
+				dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.RepeatedConverterImpl.class,
+				ShortTextConverter.getConverterClass(dosage));
+		Assert.assertEquals(
+				"1 stk kl. 08:00 onsdag ved måltid hver uge",
+				ShortTextConverter.convert(dosage));
+		Assert.assertEquals(
+				1/7., 
+				DailyDosisCalculator.calculate(dosage).getValue().doubleValue(), 
+				0.000000001); 							
+		Assert.assertEquals(DosageType.Fixed, DosageTypeCalculator.calculate(dosage));						
+	}
+	
+	@Test
+	public void testOnceWeekly2() throws Exception {
+		DosageWrapper dosage = DosageWrapper.makeDosage(
+			StructuresWrapper.makeStructures(
+				UnitOrUnitsWrapper.makeUnit("stk"), 
+				StructureWrapper.makeStructure(
+					7, "ved måltid", DateOrDateTimeWrapper.makeDate("2013-08-12"), null, 
+					DayWrapper.makeDay(
+						3, 
+						MorningDoseWrapper.makeDose(new BigDecimal(1))))));
+		Assert.assertEquals(
+				WeeklyRepeatedConverterImpl.class, 
+				LongTextConverter.getConverterClass(dosage));
+		Assert.assertEquals(
+				"Doseringsforløbet starter mandag den 12. august 2013, forløbet gentages hver uge:\n"+
+				"   Doseringsforløb:\n"+
+				"   Onsdag: 1 stk morgen ved måltid",
+				LongTextConverter.convert(dosage));
+		Assert.assertEquals(
+				dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.WeeklyMorningNoonEveningNightConverterImpl.class,
+				ShortTextConverter.getConverterClass(dosage));
+		Assert.assertEquals(
+				"1 stk morgen ved måltid onsdag hver uge",
+				ShortTextConverter.convert(dosage));
+		Assert.assertEquals(
+				1/7., 
+				DailyDosisCalculator.calculate(dosage).getValue().doubleValue(), 
+				0.000000001); 							
+		Assert.assertEquals(DosageType.Fixed, DosageTypeCalculator.calculate(dosage));						
+	}
 		
 }

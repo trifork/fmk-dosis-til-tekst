@@ -1,10 +1,8 @@
 package dk.medicinkortet.dosisstructuretext;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.Locale;
 import java.util.TimeZone;
 
 /**
@@ -61,14 +59,6 @@ public class LocalTime {
 
     public boolean hasSeconds() {
         return second != null;
-    }
-
-    private boolean hasSeconds(Date dateTime) {
-        long secs = dateTime.getTime() / 1000;
-        if (secs % 60 != 0) {
-            return true;
-        }
-        return false;
     }
 
     @Override

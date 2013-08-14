@@ -22,14 +22,11 @@
 
 package dk.medicinkortet.dosisstructuretext.longtextconverterimpl;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.GregorianCalendar;
-import java.util.Locale;
 
-import dk.medicinkortet.dosisstructuretext.vowrapper.DateOrDateTimeWrapper;
+import dk.medicinkortet.dosisstructuretext.TextHelper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DayWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.StructureWrapper;
@@ -67,7 +64,7 @@ public class WeeklyRepeatedConverterImpl extends LongTextConverterImpl {
 		appendDosageStart(s, structure.getStartDateOrDateTime());
 		s.append(", forløbet gentages hver uge");
 		appendNoteText(s, structure);
-		s.append(INDENT+"Doseringsforløb:\n");
+		s.append(TextHelper.INDENT+"Doseringsforløb:\n");
 		appendDays(s, unitOrUnits, structure);
 		return s.toString();	
 	}
@@ -81,7 +78,7 @@ public class WeeklyRepeatedConverterImpl extends LongTextConverterImpl {
 			if(appendedLines>0)
 				s.append("\n");
 			appendedLines++;
-			s.append(INDENT+e.name+": ");
+			s.append(TextHelper.INDENT+e.name+": ");
 			s.append(makeDaysDosage(unitOrUnits, structure, e.day));
 		}		
 		return appendedLines;
@@ -91,7 +88,7 @@ public class WeeklyRepeatedConverterImpl extends LongTextConverterImpl {
 		// First convert all days (up to 7) to day of week and DK name ((1, Mandag) etc).
 		ArrayList<DayOfWeek> daysOfWeek = new ArrayList<DayOfWeek>();
 		for(DayWrapper day: structure.getDays()) {
-			daysOfWeek.add(makeDayOfWeekAndName(structure.getStartDateOrDateTime(), day));
+			daysOfWeek.add(TextHelper.makeDayOfWeekAndName(structure.getStartDateOrDateTime(), day, true));
 		}
 		// Sort according to day of week (Monday always first)
 		Collections.sort(daysOfWeek, new Comparator<DayOfWeek>() {
@@ -107,32 +104,6 @@ public class WeeklyRepeatedConverterImpl extends LongTextConverterImpl {
 		public Integer dayOfWeek;
 		public String name;
 		public DayWrapper day;
-	}
-	
-	private static DayOfWeek makeDayOfWeekAndName(DateOrDateTimeWrapper startDateOrDateTime, DayWrapper day) {
-		DayOfWeek d = new DayOfWeek();
-		d.day = day;
-		GregorianCalendar c = makeFromDateOnly(startDateOrDateTime.getDateOrDateTime());
-		c.add(GregorianCalendar.DATE, day.getDayNumber()-1);
-		SimpleDateFormat f = new SimpleDateFormat(DAY_FORMAT, new Locale("da", "DK"));
-		d.dayOfWeek = usToDkDayOfWeek(c.get(GregorianCalendar.DAY_OF_WEEK));
-		String dateString = f.format(c.getTime());
-		d.name = Character.toUpperCase(dateString.charAt(0)) + dateString.substring(1);
-		return d;
-	}
-	
-	private static int usToDkDayOfWeek(int us) {
-		switch(us) {
-			case GregorianCalendar.MONDAY: return 1;
-			case GregorianCalendar.TUESDAY: return 2;
-			case GregorianCalendar.WEDNESDAY: return 3;
-			case GregorianCalendar.THURSDAY: return 4;
-			case GregorianCalendar.FRIDAY: return 5;
-			case GregorianCalendar.SATURDAY: return 6;
-			case GregorianCalendar.SUNDAY: return 7;
-			default: throw new RuntimeException(""+us);
-		}
-	}
-	
+	}	
 	
 }

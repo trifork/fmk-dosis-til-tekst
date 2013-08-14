@@ -22,6 +22,7 @@
 
 package dk.medicinkortet.dosisstructuretext.longtextconverterimpl;
 
+import dk.medicinkortet.dosisstructuretext.TextHelper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DayWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.StructureWrapper;
@@ -57,7 +58,7 @@ public class DailyRepeatedConverterImpl extends LongTextConverterImpl {
 		appendDosageStart(s, structure.getStartDateOrDateTime());
 		s.append(" og gentages hver dag:\n");
 
-		s.append(INDENT+"Doseringsforløb:\n");
+		s.append(TextHelper.INDENT+"Doseringsforløb:\n");
 		appendDays(s, unitOrUnits, structure);
 		return s.toString();	
 	}
