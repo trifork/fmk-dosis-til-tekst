@@ -42,6 +42,7 @@ public class StructureWrapper {
 	private DateOrDateTimeWrapper startDateOrDateTime;
 	private DateOrDateTimeWrapper endDateOrDateTime;
 	private SortedSet<DayWrapper> days;
+	private Object refToSource;
 	
 	// Cached values
 	private Boolean areAllDaysTheSame;
@@ -61,25 +62,32 @@ public class StructureWrapper {
 	public static StructureWrapper makeStructure(int iterationInterval, String supplText, DateOrDateTimeWrapper startDateOrDateTime, DateOrDateTimeWrapper endDateOrDateTime, DayWrapper... days) {
 		TreeSet<DayWrapper> set = new TreeSet<DayWrapper>(DAY_COMPARATOR);
 		set.addAll(Arrays.asList(days));
-		return new StructureWrapper(iterationInterval, supplText, startDateOrDateTime, endDateOrDateTime, set);
+		return new StructureWrapper(iterationInterval, supplText, startDateOrDateTime, endDateOrDateTime, set, null);
 	}
 	
 	/**
 	 * Factory metod to create structured dosages
 	 */
-	public static StructureWrapper makeStructure(int iterationInterval, String supplText, DateOrDateTimeWrapper startDateOrDateTime, DateOrDateTimeWrapper endDateOrDateTime, Collection<DayWrapper> days) {
+	public static StructureWrapper makeStructure(int iterationInterval, String supplText, DateOrDateTimeWrapper startDateOrDateTime, DateOrDateTimeWrapper endDateOrDateTime, Collection<DayWrapper> days, Object refToSource) {
+		
 		if(days instanceof SortedSet<?>)
-			return new StructureWrapper(iterationInterval, supplText, startDateOrDateTime, endDateOrDateTime, (SortedSet<DayWrapper>)days);
+			return new StructureWrapper(iterationInterval, supplText, startDateOrDateTime, endDateOrDateTime, (SortedSet<DayWrapper>)days, refToSource);
 		else {
 			TreeSet<DayWrapper> set = new TreeSet<DayWrapper>(DAY_COMPARATOR);
 			set.addAll(days);
-			return new StructureWrapper(iterationInterval, supplText, startDateOrDateTime, endDateOrDateTime, set);
+			return new StructureWrapper(iterationInterval, supplText, startDateOrDateTime, endDateOrDateTime, set, refToSource);
 		}
+		
+	}
+	
+	public static StructureWrapper makeStructure(int iterationInterval, String supplText, DateOrDateTimeWrapper startDateOrDateTime, DateOrDateTimeWrapper endDateOrDateTime, Collection<DayWrapper> days) {
+		return makeStructure(iterationInterval, supplText, startDateOrDateTime, endDateOrDateTime, days, null);
 	}
 	
 	private StructureWrapper(int iterationInterval, String supplText, 
 			DateOrDateTimeWrapper startDateOrDateTime, DateOrDateTimeWrapper endDateOrDateTime,
-			SortedSet<DayWrapper> days) {
+			SortedSet<DayWrapper> days,
+			Object refToSource) {
 		this.iterationInterval = iterationInterval;
 		this.supplText = supplText;
 		this.startDateOrDateTime = startDateOrDateTime;
@@ -89,6 +97,7 @@ public class StructureWrapper {
 		if(days.size()==0)
 			throw new IllegalArgumentException();
 		this.days = days;
+		this.refToSource = refToSource;
 	}
 
 	public int getIterationInterval() {
@@ -105,6 +114,10 @@ public class StructureWrapper {
 
 	public DateOrDateTimeWrapper getEndDateOrDateTime() {
 		return endDateOrDateTime;
+	}
+	
+	public Object getRefToSource() {
+		return refToSource;
 	}
 	
 	public boolean startsAndEndsSameDay() {
