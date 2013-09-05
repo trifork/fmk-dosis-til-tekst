@@ -22,6 +22,7 @@
 
 package dk.medicinkortet.dosisstructuretext.shorttextconverterimpl;
 
+import dk.medicinkortet.dosisstructuretext.TextHelper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DayWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.StructureWrapper;
@@ -62,11 +63,11 @@ public class SimpleLimitedAccordingToNeedConverterImpl extends ShortTextConverte
 		text.append(toValue(day.getAccordingToNeedDoses().get(0), dosage.getStructures().getUnitOrUnits()));
 		text.append(" efter behov");
 		if(structure.getSupplText()!=null)
-			text.append(" ").append(structure.getSupplText());
+			text.append(TextHelper.space(structure.getSupplText())).append(structure.getSupplText());
 		if(day.getNumberOfAccordingToNeedDoses()==1)
-			text.append(" højst "+day.getNumberOfAccordingToNeedDoses()+" gang daglig");
+			text.append(", højst "+day.getNumberOfAccordingToNeedDoses()+" gang daglig");
 		else
-			text.append(" højst "+day.getNumberOfAccordingToNeedDoses()+" gange daglig");
+			text.append(", højst "+day.getNumberOfAccordingToNeedDoses()+" gange daglig");
 		return text.toString();
 	}
 

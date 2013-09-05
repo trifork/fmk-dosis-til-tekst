@@ -132,4 +132,30 @@ public class LimitedNumberOfDaysConverterTest {
 		Assert.assertNull(DailyDosisCalculator.calculate(dosage).getValue()); 				
 		Assert.assertEquals(DosageType.AccordingToNeed, DosageTypeCalculator.calculate(dosage));
 	}
+
+	@Test
+	public void testJustOne() throws Exception {
+		DosageWrapper dosage = DosageWrapper.makeDosage(
+			StructuresWrapper.makeStructures(
+				UnitOrUnitsWrapper.makeUnits("tablet", "tabletter"),  
+				StructureWrapper.makeStructure(
+					0, "ved måltid", DateOrDateTimeWrapper.makeDate("2011-01-01"), DateOrDateTimeWrapper.makeDate("2011-01-04"),  
+					DayWrapper.makeDay(
+						1, 
+						PlainDoseWrapper.makeDose(new BigDecimal(4))))));		
+		Assert.assertEquals(
+				"Doseringsforløbet starter lørdag den 1. januar 2011 og ophører efter det angivne forløb:\n"+
+				"   Doseringsforløb:\n"+
+				"   Lørdag den 1. januar 2011: 4 tabletter ved måltid",
+				LongTextConverter.convert(dosage));
+		Assert.assertEquals(
+				LimitedNumberOfDaysConverterImpl.class, 
+				ShortTextConverter.getConverterClass(dosage));
+		Assert.assertEquals(
+				"4 tabletter 1 gang ved måltid", 
+				ShortTextConverter.convert(dosage));
+		Assert.assertEquals(4.0, DailyDosisCalculator.calculate(dosage).getValue().doubleValue(), 0.000000001); 				
+		Assert.assertEquals(DosageType.Temporary, DosageTypeCalculator.calculate(dosage));
+	}
+
 }

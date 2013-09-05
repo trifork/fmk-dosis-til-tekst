@@ -32,6 +32,7 @@ import dk.medicinkortet.dosisstructuretext.DosageType;
 import dk.medicinkortet.dosisstructuretext.DosageTypeCalculator;
 import dk.medicinkortet.dosisstructuretext.LongTextConverter;
 import dk.medicinkortet.dosisstructuretext.ShortTextConverter;
+import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.LimitedNumberOfDaysConverterImpl;
 import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.SimpleLimitedAccordingToNeedConverterImpl;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DateOrDateTimeWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DayWrapper;
@@ -64,7 +65,7 @@ public class SimpleLimitedAccordingToNeedConverterTest {
 				SimpleLimitedAccordingToNeedConverterImpl.class, 
 				ShortTextConverter.getConverterClass(dosage));
 		Assert.assertEquals(
-				"1 pust efter behov ved anfald højst 3 gange daglig", 
+				"1 pust efter behov ved anfald, højst 3 gange daglig", 
 				ShortTextConverter.convert(dosage));
 		Assert.assertTrue(DailyDosisCalculator.calculate(dosage).isNone()); 
 		Assert.assertEquals(DosageType.AccordingToNeed, DosageTypeCalculator.calculate(dosage));				
@@ -89,7 +90,7 @@ public class SimpleLimitedAccordingToNeedConverterTest {
 				SimpleLimitedAccordingToNeedConverterImpl.class, 
 				ShortTextConverter.getConverterClass(dosage));
 		Assert.assertEquals(
-				"1 pust efter behov ved anfald højst 1 gang daglig", 
+				"1 pust efter behov ved anfald, højst 1 gang daglig", 
 				ShortTextConverter.convert(dosage));
 		Assert.assertTrue(DailyDosisCalculator.calculate(dosage).isNone()); 
 		Assert.assertEquals(DosageType.AccordingToNeed, DosageTypeCalculator.calculate(dosage));				
@@ -114,10 +115,49 @@ public class SimpleLimitedAccordingToNeedConverterTest {
 				SimpleLimitedAccordingToNeedConverterImpl.class, 
 				ShortTextConverter.getConverterClass(dosage));
 		Assert.assertEquals(
-				"1 stk efter behov højst 1 gang daglig", 
+				"1 stk efter behov, højst 1 gang daglig", 
 				ShortTextConverter.convert(dosage));
 		Assert.assertTrue(DailyDosisCalculator.calculate(dosage).isNone()); 
 		Assert.assertEquals(DosageType.AccordingToNeed, DosageTypeCalculator.calculate(dosage));				
+	}
+
+	@Test
+	public void testNoShortText() {
+		DosageWrapper dosage = 
+			DosageWrapper.makeDosage(
+				StructuresWrapper.makeStructures(
+					UnitOrUnitsWrapper.makeUnit("stk"), 
+					StructureWrapper.makeStructure(
+						0, null, DateOrDateTimeWrapper.makeDate("2012-06-01"), null, 
+						DayWrapper.makeDay(1,
+							PlainDoseWrapper.makeDose(new BigDecimal(1)), 
+							PlainDoseWrapper.makeDose(new BigDecimal(1)), 
+							PlainDoseWrapper.makeDose(new BigDecimal(1)), 
+							PlainDoseWrapper.makeDose(new BigDecimal(1))), 
+						DayWrapper.makeDay(2,
+							PlainDoseWrapper.makeDose(new BigDecimal(1)), 
+							PlainDoseWrapper.makeDose(new BigDecimal(1)), 
+							PlainDoseWrapper.makeDose(new BigDecimal(1)), 
+							PlainDoseWrapper.makeDose(new BigDecimal(1))), 
+						DayWrapper.makeDay(3,
+							PlainDoseWrapper.makeDose(new BigDecimal(1)), 
+							PlainDoseWrapper.makeDose(new BigDecimal(1))), 
+						DayWrapper.makeDay(4, 
+							PlainDoseWrapper.makeDose(new BigDecimal(1)), 
+							PlainDoseWrapper.makeDose(new BigDecimal(1))))));
+		Assert.assertEquals(
+				"Doseringsforløbet starter fredag den 1. juni 2012 og ophører efter det angivne forløb.\n"+
+				"Bemærk at doseringen varierer:\n"+
+				"   Doseringsforløb:\n"+
+				"   Fredag den 1. juni 2012: 1 stk 4 gange\n"+
+				"   Lørdag den 2. juni 2012: 1 stk 4 gange\n"+
+				"   Søndag den 3. juni 2012: 1 stk 2 gange\n"+
+				"   Mandag den 4. juni 2012: 1 stk 2 gange",
+				 LongTextConverter.convert(dosage));
+		Assert.assertEquals(null,
+				ShortTextConverter.getConverterClass(dosage));
+		Assert.assertTrue(DailyDosisCalculator.calculate(dosage).isNone()); 
+		Assert.assertEquals(DosageType.Temporary, DosageTypeCalculator.calculate(dosage));				
 	}
 	
 }

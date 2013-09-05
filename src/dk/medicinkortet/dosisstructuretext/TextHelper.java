@@ -83,6 +83,22 @@ public class TextHelper {
 		return trim(quantity.toPlainString().replace('.', ','));
 	}
 	
+	public static String gange(Integer number) {
+		if(number==null || number.intValue()>1)
+			return "gange";
+		else
+			return "gang";
+	}
+	
+	public static String space(String supplText) {
+		if(supplText==null)
+			return " ";
+		else if(supplText.startsWith(",") || supplText.startsWith("."))
+			return "";
+		else
+			return " ";
+	}
+	
 	public static String trim(String number) {
 		if(number.indexOf('.')<0 && number.indexOf(',')<0)
 			return number;

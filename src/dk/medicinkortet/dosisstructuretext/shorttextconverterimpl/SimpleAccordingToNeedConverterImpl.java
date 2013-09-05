@@ -22,6 +22,7 @@
 
 package dk.medicinkortet.dosisstructuretext.shorttextconverterimpl;
 
+import dk.medicinkortet.dosisstructuretext.TextHelper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DayWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.StructureWrapper;
@@ -83,7 +84,7 @@ public class SimpleAccordingToNeedConverterImpl extends ShortTextConverterImpl {
 		text.append(toValue(day.getAllDoses().get(0), dosage.getStructures().getUnitOrUnits()));
 		text.append(" efter behov");
 		if(structure.getSupplText()!=null)
-			text.append(" ").append(structure.getSupplText());
+			text.append(TextHelper.space(structure.getSupplText())).append(structure.getSupplText());
 		return text.toString();
 	}
 

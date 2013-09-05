@@ -22,6 +22,7 @@
 
 package dk.medicinkortet.dosisstructuretext.shorttextconverterimpl;
 
+import dk.medicinkortet.dosisstructuretext.TextHelper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DayWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.StructureWrapper;
@@ -50,6 +51,8 @@ public class LimitedNumberOfDaysConverterImpl extends ShortTextConverterImpl {
 			return false;
 		if(structure.containsMorningNoonEveningNightDoses())
 			return false;
+		if(!structure.allDaysAreTheSame())
+			return false;
 		if(!structure.allDosesAreTheSame())
 			return false;
 		return true;
@@ -61,10 +64,14 @@ public class LimitedNumberOfDaysConverterImpl extends ShortTextConverterImpl {
 		StringBuilder text = new StringBuilder();
 		DayWrapper day = structure.getDays().first();
 		text.append(toValue(day.getAllDoses().get(0), dosage.getStructures().getUnitOrUnits()));
-		text.append(" "+day.getAllDoses().size()+" gange daglig");
-		text.append(" i "+structure.getDays().last().getDayNumber()+" dage");
+		if(structure.getDays().size()==1 && structure.getDays().first().getDayNumber()==1)
+			text.append(" "+day.getAllDoses().size()+" "+TextHelper.gange(day.getAllDoses().size()));
+		else {			
+			text.append(" "+day.getAllDoses().size()+" "+TextHelper.gange(day.getAllDoses().size())+" daglig");
+			text.append(" i "+structure.getDays().last().getDayNumber()+" dage");
+		}
 		if(structure.getSupplText()!=null)
-			text.append(" ").append(structure.getSupplText());
+			text.append(TextHelper.space(structure.getSupplText())).append(structure.getSupplText());
 		return text.toString();
 	}
 

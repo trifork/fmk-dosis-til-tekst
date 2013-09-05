@@ -100,7 +100,7 @@ public class ValidatorTest {
 				SimpleLimitedAccordingToNeedConverterImpl.class, 
 				ShortTextConverter.getConverterClass(dosage));
 		Assert.assertEquals(
-				"2 stk efter behov højst 1 gang daglig", 
+				"2 stk efter behov, højst 1 gang daglig", 
 				ShortTextConverter.convert(dosage));
 		Assert.assertNull(DailyDosisCalculator.calculate(dosage).getValue()); 				
 	}	

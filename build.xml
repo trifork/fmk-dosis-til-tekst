@@ -7,6 +7,8 @@
 	<property name="trifork-common" value="${basedir}/../trifork-common"/>
 	<import file="${trifork-common}/etc/build-common.xml"/>
 
+	<property environment="env"/>
+
 	<property name="test.instrument" value="true"/>
 
 	<path id="sourcepath">
@@ -36,7 +38,6 @@
 
 	<target name="publish-internal" depends="init, resolve-build, local-revision,jar, war, publish-internal-do"/>
 
-	
 	<target name="publish-trifork-common" depends="publish-local">
 		<copy todir="/${trifork-common}/lib/shared-lib/trifork/${ant.project.name}/${revision}">
 			<fileset dir="target" includes="ivy.xml, dosis-til-text.jar"/>

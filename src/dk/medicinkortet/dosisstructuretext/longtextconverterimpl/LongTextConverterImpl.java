@@ -103,9 +103,9 @@ public abstract class LongTextConverterImpl {
 		else if(day.getNumberOfDoses()>1 && day.allDosesAreTheSame()) {
 			s.append(makeOneDose(day.getDose(0), unitOrUnits, structure.getSupplText()));
 			if(day.containsAccordingToNeedDosesOnly() && day.getDayNumber()>0)
-				s.append(" højst "+day.getNumberOfDoses()+" gange daglig");
+				s.append(" højst "+day.getNumberOfDoses()+" "+TextHelper.gange(day.getNumberOfDoses())+" daglig");
 			else
-				s.append(" "+day.getNumberOfDoses()+" gange");
+				s.append(" "+day.getNumberOfDoses()+" "+TextHelper.gange(day.getNumberOfDoses()));
 		}
 		else {
 			for(int d=0; d<day.getNumberOfDoses(); d++) {

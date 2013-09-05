@@ -22,6 +22,7 @@
 
 package dk.medicinkortet.dosisstructuretext.shorttextconverterimpl;
 
+import dk.medicinkortet.dosisstructuretext.TextHelper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DayWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.StructureWrapper;
@@ -63,7 +64,7 @@ public class ParacetamolConverterImpl extends ShortTextConverterImpl {
 		text.append(" "+(day.getNumberOfPlainDoses()-day.getNumberOfAccordingToNeedDoses())+"-"+(day.getNumberOfPlainDoses()));
 		text.append(" gange daglig");
 		if(structure.getSupplText()!=null)
-			text.append(" ").append(structure.getSupplText());		
+			text.append(TextHelper.space(structure.getSupplText())).append(structure.getSupplText());		
 		return text.toString();
 	}
 

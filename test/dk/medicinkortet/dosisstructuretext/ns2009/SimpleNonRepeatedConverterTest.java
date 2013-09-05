@@ -33,6 +33,7 @@ import dk.medicinkortet.dosisstructuretext.DosageType;
 import dk.medicinkortet.dosisstructuretext.DosageTypeCalculator;
 import dk.medicinkortet.dosisstructuretext.LongTextConverter;
 import dk.medicinkortet.dosisstructuretext.ShortTextConverter;
+import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.LimitedNumberOfDaysConverterImpl;
 import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.SimpleNonRepeatedConverterImpl;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DateOrDateTimeWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DayWrapper;
@@ -67,6 +68,32 @@ public class SimpleNonRepeatedConverterTest {
 			"1 plaster 5 timer før virkning ønskes", 
 			ShortTextConverter.convert(dosage));
 		Assert.assertTrue(DailyDosisCalculator.calculate(dosage).isNone());
+		Assert.assertEquals(DosageType.Temporary, DosageTypeCalculator.calculate(dosage));						
+	}
+	
+	@Test
+	public void testOneDayOnly() throws Exception {
+		DosageWrapper dosage = DosageWrapper.makeDosage(
+			StructuresWrapper.makeStructures(
+				UnitOrUnitsWrapper.makeUnit("kapsel"),
+				StructureWrapper.makeStructure(
+					0,  "dagen før indlæggelse", DateOrDateTimeWrapper.makeDate("2011-01-01"), DateOrDateTimeWrapper.makeDate("2011-01-30"), 
+					DayWrapper.makeDay(
+						1, 
+						PlainDoseWrapper.makeDose(new BigDecimal(1)), 
+						PlainDoseWrapper.makeDose(new BigDecimal(1))))));				
+		Assert.assertEquals(
+			"Doseringsforløbet starter lørdag den 1. januar 2011 og ophører efter det angivne forløb:\n"+
+			"   Doseringsforløb:\n"+
+			"   Lørdag den 1. januar 2011: 1 kapsel dagen før indlæggelse 2 gange",
+			LongTextConverter.convert(dosage));
+		Assert.assertEquals(
+			LimitedNumberOfDaysConverterImpl.class, 
+			ShortTextConverter.getConverterClass(dosage));
+		Assert.assertEquals(
+			"1 kapsel 2 gange dagen før indlæggelse", 
+			ShortTextConverter.convert(dosage));
+		Assert.assertEquals(2, DailyDosisCalculator.calculate(dosage).getValue().doubleValue(), 0.000000001);
 		Assert.assertEquals(DosageType.Temporary, DosageTypeCalculator.calculate(dosage));						
 	}
 	

@@ -445,7 +445,7 @@ public class LongTextComplexConverterTest {
 				SimpleLimitedAccordingToNeedConverterImpl.class, 
 				ShortTextConverter.getConverterClass(dosage));
 		Assert.assertEquals(
-				"1-2 tabletter efter behov ved smerter højst 3 gange daglig", 
+				"1-2 tabletter efter behov ved smerter, højst 3 gange daglig", 
 				ShortTextConverter.convert(dosage));
 		Assert.assertNull(DailyDosisCalculator.calculate(dosage).getValue());
 		Assert.assertEquals(DosageType.AccordingToNeed, DosageTypeCalculator.calculate(dosage));		
@@ -587,7 +587,7 @@ public class LongTextComplexConverterTest {
 				"   Doseringsforløb:\n"+
 				"   1 tablet efter behov højst 1 gang daglig",
 				LongTextConverter.convert(dosage));
-		Assert.assertEquals("1 tablet efter behov højst 1 gang daglig", ShortTextConverter.convert(dosage));
+		Assert.assertEquals("1 tablet efter behov, højst 1 gang daglig", ShortTextConverter.convert(dosage));
 		Assert.assertNull(DailyDosisCalculator.calculate(dosage).getValue());
 		Assert.assertEquals(DosageType.AccordingToNeed, DosageTypeCalculator.calculate(dosage));		
 	}
@@ -608,7 +608,7 @@ public class LongTextComplexConverterTest {
 				"   2 stk efter behov højst 1 gang daglig",
 				LongTextConverter.convert(dosage));
 		Assert.assertEquals(SimpleLimitedAccordingToNeedConverterImpl.class, ShortTextConverter.getConverterClass(dosage));
-		Assert.assertEquals("2 stk efter behov højst 1 gang daglig", ShortTextConverter.convert(dosage));
+		Assert.assertEquals("2 stk efter behov, højst 1 gang daglig", ShortTextConverter.convert(dosage));
 		Assert.assertNull(DailyDosisCalculator.calculate(dosage).getValue());
 		Assert.assertEquals(DosageType.AccordingToNeed, DosageTypeCalculator.calculate(dosage));		
 	}	
@@ -630,7 +630,7 @@ public class LongTextComplexConverterTest {
 				"   2 stk efter behov højst 2 gange daglig",
 				LongTextConverter.convert(dosage));
 		Assert.assertEquals(SimpleLimitedAccordingToNeedConverterImpl.class, ShortTextConverter.getConverterClass(dosage));
-		Assert.assertEquals("2 stk efter behov højst 2 gange daglig", ShortTextConverter.convert(dosage));
+		Assert.assertEquals("2 stk efter behov, højst 2 gange daglig", ShortTextConverter.convert(dosage));
 		Assert.assertNull(DailyDosisCalculator.calculate(dosage).getValue());
 		Assert.assertEquals(DosageType.AccordingToNeed, DosageTypeCalculator.calculate(dosage));		
 	}
