@@ -1,4 +1,6 @@
-package dk.medicinkortet.dosagetranslation;
+package dk.medicinkortet.dosagetranslation.spreadsheet;
+
+import dk.medicinkortet.dosagetranslation.ValidationException;
 
 public class SourceFactory {
 	

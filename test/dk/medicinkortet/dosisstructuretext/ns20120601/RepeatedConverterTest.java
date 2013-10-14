@@ -68,7 +68,7 @@ public class RepeatedConverterTest {
 		Assert.assertEquals(
 				"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages hver dag:\n"+
 				"   Doseringsforløb:\n"+
-				"   3 dåser 2 gange",
+				"   3 dåser 2 gange daglig",
 				LongTextConverter.convert(dosage));
 		Assert.assertEquals(
 				RepeatedConverterImpl.class, 
@@ -131,7 +131,7 @@ public class RepeatedConverterTest {
 				dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.RepeatedConverterImpl.class,
 				ShortTextConverter.getConverterClass(dosage));
 		Assert.assertEquals(
-				"1 stk kl. 08:00 onsdag ved måltid hver uge",
+				"1 stk kl. 08:00 onsdag hver uge ved måltid",
 				ShortTextConverter.convert(dosage));
 		Assert.assertEquals(
 				1/7., 
@@ -162,7 +162,7 @@ public class RepeatedConverterTest {
 				dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.WeeklyMorningNoonEveningNightConverterImpl.class,
 				ShortTextConverter.getConverterClass(dosage));
 		Assert.assertEquals(
-				"1 stk morgen ved måltid onsdag hver uge",
+				"1 stk morgen onsdag hver uge ved måltid",
 				ShortTextConverter.convert(dosage));
 		Assert.assertEquals(
 				1/7., 
@@ -193,7 +193,7 @@ public class RepeatedConverterTest {
 				dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.RepeatedConverterImpl.class,
 				ShortTextConverter.getConverterClass(dosage));
 		Assert.assertEquals(
-				"1 stk onsdag ved måltid hver 7. uge",
+				"1 stk onsdag hver 7. uge ved måltid",
 				ShortTextConverter.convert(dosage));
 		Assert.assertEquals(
 				1/(7.*7.), 
@@ -203,12 +203,12 @@ public class RepeatedConverterTest {
 	}
 	
 	@Test
-	public void testOnceEvery7thMonth() throws Exception {
+	public void testOnceEvery2thMonth() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeDosage(
 			StructuresWrapper.makeStructures(
 				UnitOrUnitsWrapper.makeUnit("stk"), 
 				StructureWrapper.makeStructure(
-					30*7, "ved måltid", DateOrDateTimeWrapper.makeDate("2013-08-12"), null, 
+					60, "ved måltid", DateOrDateTimeWrapper.makeDate("2013-08-12"), null, 
 					DayWrapper.makeDay(
 						3, 
 						PlainDoseWrapper.makeDose(new BigDecimal(1))))));
@@ -216,7 +216,7 @@ public class RepeatedConverterTest {
 				DefaultLongTextConverterImpl.class, 
 				LongTextConverter.getConverterClass(dosage));
 		Assert.assertEquals(
-				"Doseringsforløbet starter mandag den 12. august 2013, forløbet gentages efter 210 dage:\n"+
+				"Doseringsforløbet starter mandag den 12. august 2013, forløbet gentages efter 60 dage:\n"+
 				"   Doseringsforløb:\n"+
 				"   Onsdag den 14. august 2013: 1 stk ved måltid",
 				LongTextConverter.convert(dosage));
@@ -224,10 +224,10 @@ public class RepeatedConverterTest {
 				dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.RepeatedConverterImpl.class,
 				ShortTextConverter.getConverterClass(dosage));
 		Assert.assertEquals(
-				"1 stk onsdag ved måltid hver 30. uge",
+				"1 stk hver 2. måned ved måltid",
 				ShortTextConverter.convert(dosage));
 		Assert.assertEquals(
-				1/(7.*30.), 
+				1/60., 
 				DailyDosisCalculator.calculate(dosage).getValue().doubleValue(), 
 				0.000000001); 							
 		Assert.assertEquals(DosageType.Fixed, DosageTypeCalculator.calculate(dosage));						

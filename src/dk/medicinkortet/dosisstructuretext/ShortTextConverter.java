@@ -25,10 +25,14 @@ package dk.medicinkortet.dosisstructuretext;
 import java.util.ArrayList;
 
 import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.AdministrationAccordingToSchemaConverterImpl;
-import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.MorningNoonEveningNightInNDaysConverterImp;
+import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.CombinedTwoPeriodesConverterImpl;
 import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.FreeTextConverterImpl;
 import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.LimitedNumberOfDaysConverterImpl;
+import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.MorningNoonEveningNightAndAccordingToNeedConverterImpl;
 import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.MorningNoonEveningNightConverterImpl;
+import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.MorningNoonEveningNightInNDaysConverterImp;
+import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.MultipleDaysNonRepeatedConverterImpl;
+import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.NumberOfWholeWeeksConverterImpl;
 import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.ParacetamolConverterImpl;
 import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.RepeatedConverterImpl;
 import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.ShortTextConverterImpl;
@@ -36,6 +40,7 @@ import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.SimpleAccordin
 import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.SimpleLimitedAccordingToNeedConverterImpl;
 import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.SimpleNonRepeatedConverterImpl;
 import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.WeeklyMorningNoonEveningNightConverterImpl;
+import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.WeeklyRepeatedConverterImpl;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
 
 /**
@@ -62,7 +67,13 @@ public class ShortTextConverter {
 		converters.add(new LimitedNumberOfDaysConverterImpl());
 		converters.add(new SimpleLimitedAccordingToNeedConverterImpl());
 		converters.add(new WeeklyMorningNoonEveningNightConverterImpl());
-		converters.add(new ParacetamolConverterImpl());		
+		converters.add(new WeeklyRepeatedConverterImpl());
+		converters.add(new ParacetamolConverterImpl());
+		converters.add(new MorningNoonEveningNightAndAccordingToNeedConverterImpl());
+		converters.add(new MultipleDaysNonRepeatedConverterImpl());
+		converters.add(new NumberOfWholeWeeksConverterImpl());
+		// Converters for more than one periode:
+		converters.add(new CombinedTwoPeriodesConverterImpl()); 
 	}
 	
 	/**
@@ -80,7 +91,15 @@ public class ShortTextConverter {
 		}
 		return null;
 	}
-
+	
+	public static boolean canConvert(DosageWrapper dosage) {
+		for(ShortTextConverterImpl converter: converters) {
+			if(converter.canConvert(dosage))
+				return true;
+		}
+		return false;
+	}
+	
 	/**
 	 * This method returns the converter class handing the conversion to a short, if
 	 * the dosage can be converted. The metod is useful for test, logging etc. 

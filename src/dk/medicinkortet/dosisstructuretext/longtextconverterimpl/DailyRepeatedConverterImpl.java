@@ -62,10 +62,5 @@ public class DailyRepeatedConverterImpl extends LongTextConverterImpl {
 		appendDays(s, unitOrUnits, structure);
 		return s.toString();	
 	}
-	
-	@Override
-	protected String makeDaysLabel(StructureWrapper dosageStructure, DayWrapper day) {
-		return "";
-	}
 
 }

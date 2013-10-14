@@ -22,12 +22,14 @@
 
 package dk.medicinkortet.dosisstructuretext.shorttextconverterimpl;
 
-import dk.medicinkortet.dosisstructuretext.TextHelper;
+import java.util.SortedSet;
+
+import dk.medicinkortet.dosisstructuretext.longtextconverterimpl.WeeklyRepeatedConverterImpl.DayOfWeek;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DayWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.StructureWrapper;
 
-public class ParacetamolConverterImpl extends ShortTextConverterImpl {
+public class WeeklyRepeatedConverterImpl extends ShortTextConverterImpl {
 
 	@Override
 	public boolean canConvert(DosageWrapper dosage) {
@@ -36,36 +38,66 @@ public class ParacetamolConverterImpl extends ShortTextConverterImpl {
 		if(dosage.getStructures().getStructures().size()!=1)
 			return false;	
 		StructureWrapper structure = dosage.getStructures().getStructures().first();
-		if(structure.getIterationInterval()!=1)
+		if(structure.getIterationInterval()!=7)
 			return false;
-		if(structure.getDays().size()!=1)
+		if(structure.getStartDateOrDateTime().equals(structure.getEndDateOrDateTime()))
+			return false; 
+		if(structure.getDays().size()>7)
 			return false;
-		DayWrapper day = structure.getDays().first();
-		if(!day.containsAccordingToNeedDose())
+		if(structure.getDays().first().getDayNumber()==0)
 			return false;
-		if(day.containsAccordingToNeedDosesOnly())
+		if(structure.getDays().last().getDayNumber()>7)
 			return false;
-		if(!day.containsPlainDose())
+		if(!structure.allDaysAreTheSame()) // Otherwise the text is too long, and cannot fit into a short text
 			return false;
-		if(day.getMorningDose()!=null || day.getNoonDose()!=null 
-				|| day.getEveningDose()!=null || day.getNightDose()!=null)
+		if(!structure.allDosesAreTheSame())
 			return false;
-		if(!day.allDosesHaveTheSameQuantity())
+		if(structure.containsAccordingToNeedDose() || structure.containsMorningNoonEveningNightDoses() || structure.containsTimedDose())
 			return false;
-		return true;
-	}
+		return true;	
+	}	
 
 	@Override
 	public String doConvert(DosageWrapper dosage) {
 		StructureWrapper structure = dosage.getStructures().getStructures().first();
+		
 		StringBuilder text = new StringBuilder();
+
+		// Append dosage
 		DayWrapper day = structure.getDays().first();
 		text.append(toValue(day.getAllDoses().get(0), dosage.getStructures().getUnitOrUnits()));
-		text.append(" "+(day.getNumberOfPlainDoses()-day.getNumberOfAccordingToNeedDoses())+"-"+(day.getNumberOfPlainDoses()));
-		text.append(" gange daglig");
-		if(structure.getSupplText()!=null)
-			text.append(TextHelper.maybeAddSpace(structure.getSupplText())).append(structure.getSupplText());		
+		
+		// Add times daily
+		if(day.getNumberOfDoses()>1)
+			text.append(" "+day.getNumberOfDoses()+" gange daglig");
+		
+		// Add days
+		text.append(makeDays(structure));
+	
+		text.append(" hver uge");
+		
+		return text.toString();
+	}
+	
+	public static String makeDays(StructureWrapper structure) {
+		StringBuilder text = new StringBuilder();
+		// Add days
+		SortedSet<DayOfWeek> daysOfWeek = 
+				dk.medicinkortet.dosisstructuretext.longtextconverterimpl.WeeklyRepeatedConverterImpl.sortDaysOfWeek(structure);
+		int i = 0;
+		for(DayOfWeek d: daysOfWeek) {
+			if(i==daysOfWeek.size()-1 && daysOfWeek.size()>1)
+				text.append(" og ").append(d.getName().toLowerCase());
+			else if(i==0) 
+				text.append(" ").append(d.getName().toLowerCase());
+			else if(i>0)
+				text.append(", ").append(d.getName().toLowerCase());
+			i++;
+		}					
 		return text.toString();
 	}
 
+	
+	
+	
 }

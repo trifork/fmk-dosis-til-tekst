@@ -74,8 +74,17 @@ public abstract class LongTextConverterImpl {
 			appendedLines++;
 			if(appendedLines>1)
 				s.append("\n");
-			s.append(TextHelper.INDENT+makeDaysLabel(structure, day));
-			s.append(makeDaysDosage(unitOrUnits, structure, day));
+			s.append(TextHelper.INDENT);
+			String daysLabel = makeDaysLabel(structure, day);
+
+			// We cannot have a day without label if there are other days (or "any day")
+			if(structure.getDays().size()>1 && daysLabel.length()==0 && structure.getIterationInterval()==1)
+				daysLabel = "Daglig: ";
+			else if(structure.getDays().size()>1 && daysLabel.length()==0 && structure.getIterationInterval()>1)
+				daysLabel = "Dosering: "; // We probably never get here
+			
+			s.append(daysLabel);
+			s.append(makeDaysDosage(unitOrUnits, structure, day, daysLabel.length()>0));
 		}		
 		return appendedLines;
 	}
@@ -87,39 +96,51 @@ public abstract class LongTextConverterImpl {
 			else 
 				return "Dag ikke angivet: ";
 		}
+		else if(structure.getIterationInterval()==1) {
+			return "";
+		}
 		else {
 			return TextHelper.makeDayString(structure.getStartDateOrDateTime(), day.getDayNumber())+": ";
 		}		
 	}
 
-	protected String makeDaysDosage(UnitOrUnitsWrapper unitOrUnits, StructureWrapper structure, DayWrapper day) {
+	protected String makeDaysDosage(UnitOrUnitsWrapper unitOrUnits, StructureWrapper structure, DayWrapper day, boolean hasDaysLabel) {
 		StringBuilder s = new StringBuilder();
+
+		String supplText = "";
+		if(structure.getSupplText()!=null)
+			supplText = TextHelper.maybeAddSpace(structure.getSupplText()) + structure.getSupplText();
+		
+		String daglig = "";
+		if(!hasDaysLabel)
+			daglig = " daglig";
 		
 		if(day.getNumberOfDoses()==1) {
 			s.append(makeOneDose(day.getDose(0), unitOrUnits, structure.getSupplText()));
 			if(day.containsAccordingToNeedDosesOnly() && day.getDayNumber()>0)
-				s.append(" højst 1 gang daglig");
+				s.append(" højst 1 gang"+daglig).append(supplText);
+			else
+				s.append(supplText);
 		}
 		else if(day.getNumberOfDoses()>1 && day.allDosesAreTheSame()) {
 			s.append(makeOneDose(day.getDose(0), unitOrUnits, structure.getSupplText()));
 			if(day.containsAccordingToNeedDosesOnly() && day.getDayNumber()>0)
-				s.append(" højst "+day.getNumberOfDoses()+" "+TextHelper.gange(day.getNumberOfDoses())+" daglig");
+				s.append(" højst "+day.getNumberOfDoses()+" "+TextHelper.gange(day.getNumberOfDoses())+daglig+supplText);
 			else
-				s.append(" "+day.getNumberOfDoses()+" "+TextHelper.gange(day.getNumberOfDoses()));
+				s.append(" "+day.getNumberOfDoses()+" "+TextHelper.gange(day.getNumberOfDoses())+daglig+supplText);
 		}
 		else {
 			for(int d=0; d<day.getNumberOfDoses(); d++) {
-				s.append(makeOneDose(day.getDose(d), unitOrUnits, structure.getSupplText()));
+				s.append(makeOneDose(day.getDose(d), unitOrUnits, structure.getSupplText())+supplText);
 				if(d<day.getNumberOfDoses()-1)
 					s.append(" + ");
 			}
 		}
+		
 		return s.toString();
 	}
-
-
 	
-	protected StringBuilder makeOneDose(DoseWrapper dose, UnitOrUnitsWrapper unitOrUnits, String supplText) {
+	private StringBuilder makeOneDose(DoseWrapper dose, UnitOrUnitsWrapper unitOrUnits, String supplText) {
 		StringBuilder s = new StringBuilder();
 		s.append(dose.getAnyDoseQuantityString());
 		s.append(" ").append(TextHelper.getUnit(dose, unitOrUnits));
@@ -127,8 +148,6 @@ public abstract class LongTextConverterImpl {
 			s.append(" ").append(dose.getLabel());
 		if(dose.isAccordingToNeed())
 			s.append(" efter behov");
-		if(supplText!=null)
-			s.append(" ").append(supplText);
 		return s;
 	}
 
@@ -143,13 +162,13 @@ public abstract class LongTextConverterImpl {
 			s.append(":\n");
 	}
 	
-	protected boolean isComplex(StructureWrapper structure) {
+	private boolean isComplex(StructureWrapper structure) {
 		if(structure.getDays().size()==1)
 			return false;
 		return !structure.daysAreInUninteruptedSequenceFromOne();
 	}
 	
-	protected boolean isVarying(StructureWrapper structure) {
+	private boolean isVarying(StructureWrapper structure) {
 		return !structure.allDaysAreTheSame();
 	}	
 	

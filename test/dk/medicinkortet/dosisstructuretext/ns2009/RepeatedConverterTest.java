@@ -33,6 +33,7 @@ import dk.medicinkortet.dosisstructuretext.DosageType;
 import dk.medicinkortet.dosisstructuretext.DosageTypeCalculator;
 import dk.medicinkortet.dosisstructuretext.LongTextConverter;
 import dk.medicinkortet.dosisstructuretext.ShortTextConverter;
+import dk.medicinkortet.dosisstructuretext.longtextconverterimpl.DailyRepeatedConverterImpl;
 import dk.medicinkortet.dosisstructuretext.longtextconverterimpl.TwoDaysRepeatedConverterImpl;
 import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.RepeatedConverterImpl;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DateOrDateTimeWrapper;
@@ -58,9 +59,12 @@ public class RepeatedConverterTest {
 						PlainDoseWrapper.makeDose(new BigDecimal(3)), 
 						PlainDoseWrapper.makeDose(new BigDecimal(3))))));
 		Assert.assertEquals(
+				DailyRepeatedConverterImpl.class, 
+				LongTextConverter.getConverterClass(dosage));
+		Assert.assertEquals(
 				"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages hver dag:\n"+
 				"   Doseringsforløb:\n"+
-				"   3 stk 2 gange",
+				"   3 stk 2 gange daglig",
 				LongTextConverter.convert(dosage));
 		Assert.assertEquals(
 				RepeatedConverterImpl.class, 
@@ -89,7 +93,7 @@ public class RepeatedConverterTest {
 		Assert.assertEquals(
 				"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages hver dag:\n"+
 				"   Doseringsforløb:\n"+
-				"   3 stk ved måltid 2 gange",
+				"   3 stk 2 gange daglig ved måltid",
 				LongTextConverter.convert(dosage));
 		Assert.assertEquals(
 				RepeatedConverterImpl.class, 
@@ -142,7 +146,7 @@ public class RepeatedConverterTest {
 		Assert.assertEquals(
 				"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages hver dag:\n"+
 				"   Doseringsforløb:\n"+
-				"   1-2 stk 2 gange",
+				"   1-2 stk 2 gange daglig",
 				LongTextConverter.convert(dosage));
 		Assert.assertEquals(
 				RepeatedConverterImpl.class, 
@@ -212,7 +216,7 @@ public class RepeatedConverterTest {
 				RepeatedConverterImpl.class, 
 				ShortTextConverter.getConverterClass(dosage));
 		Assert.assertEquals(
-				"1 stk lørdag ved måltid hver uge", 
+				"1 stk lørdag hver uge ved måltid", 
 				ShortTextConverter.convert(dosage));
 		Assert.assertEquals(
 				1/7., 
@@ -268,7 +272,7 @@ public class RepeatedConverterTest {
 				RepeatedConverterImpl.class, 
 				ShortTextConverter.getConverterClass(dosage));
 		Assert.assertEquals(
-				"2,5 stk lørdag ved måltid hver uge", 
+				"2,5 stk lørdag hver uge ved måltid", 
 				ShortTextConverter.convert(dosage));
 		Assert.assertEquals(
 				2.5/7., 
@@ -290,13 +294,13 @@ public class RepeatedConverterTest {
 		Assert.assertEquals(
 				"Doseringsforløbet starter lørdag den 1. januar 2011, forløbet gentages hver uge:\n"+
 				"   Doseringsforløb:\n"+
-				"   Lørdag: 2,5 stk ved måltid 2 gange",
+				"   Lørdag: 2,5 stk 2 gange ved måltid",
 				LongTextConverter.convert(dosage));
 		Assert.assertEquals(
 				RepeatedConverterImpl.class, 
 				ShortTextConverter.getConverterClass(dosage));
 		Assert.assertEquals(
-				"2,5 stk 2 gange samme dag ved måltid 1 gang om ugen", 
+				"2,5 stk 2 gange lørdag hver uge ved måltid",
 				ShortTextConverter.convert(dosage));
 		Assert.assertEquals(
 				5/7., 
@@ -347,13 +351,13 @@ public class RepeatedConverterTest {
 		Assert.assertEquals(
 				"Doseringsforløbet starter lørdag den 1. januar 2011, forløbet gentages efter 30 dage:\n"+
 				"   Doseringsforløb:\n"+
-				"   Lørdag den 1. januar 2011: 2,5 stk ved måltid 2 gange",
+				"   Lørdag den 1. januar 2011: 2,5 stk 2 gange ved måltid",
 				LongTextConverter.convert(dosage));
 		Assert.assertEquals(
 				RepeatedConverterImpl.class, 
 				ShortTextConverter.getConverterClass(dosage));
 		Assert.assertEquals(
-				"2,5 stk 2 gange samme dag ved måltid 1 gang om måneden", 
+				"2,5 stk 2 gange samme dag 1 gang om måneden ved måltid", 
 				ShortTextConverter.convert(dosage));
 		Assert.assertEquals(
 				5/30., 
@@ -404,13 +408,13 @@ public class RepeatedConverterTest {
 		Assert.assertEquals(
 				"Doseringsforløbet starter lørdag den 1. januar 2011, forløbet gentages efter 5 dage:\n"+
 				"   Doseringsforløb:\n"+
-				"   Lørdag den 1. januar 2011: 2,5 stk ved måltid 2 gange",
+				"   Lørdag den 1. januar 2011: 2,5 stk 2 gange ved måltid",
 				LongTextConverter.convert(dosage));
 		Assert.assertEquals(
 				RepeatedConverterImpl.class, 
 				ShortTextConverter.getConverterClass(dosage));
 		Assert.assertEquals(
-				"2,5 stk 2 gange samme dag ved måltid hver 5. dag", 
+				"2,5 stk 2 gange samme dag hver 5. dag ved måltid", 
 				ShortTextConverter.convert(dosage));
 		Assert.assertEquals(
 				1, 
@@ -433,13 +437,13 @@ public class RepeatedConverterTest {
 		Assert.assertEquals(
 				"Doseringsforløbet starter lørdag den 1. januar 2011, forløbet gentages efter 5 dage:\n"+
 				"   Doseringsforløb:\n"+
-				"   Lørdag den 1. januar 2011: 0,5 stk ved måltid 2 gange",
+				"   Lørdag den 1. januar 2011: 0,5 stk 2 gange ved måltid",
 				LongTextConverter.convert(dosage));
 		Assert.assertEquals(
 				RepeatedConverterImpl.class, 
 				ShortTextConverter.getConverterClass(dosage));
 		Assert.assertEquals(
-				"1/2 stk 2 gange samme dag ved måltid hver 5. dag", 
+				"1/2 stk 2 gange samme dag hver 5. dag ved måltid", 
 				ShortTextConverter.convert(dosage));
 		Assert.assertEquals(
 				1/5., 

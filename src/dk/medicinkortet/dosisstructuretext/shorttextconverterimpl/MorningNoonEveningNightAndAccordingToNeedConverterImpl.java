@@ -28,7 +28,7 @@ import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.StructureWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.UnitOrUnitsWrapper;
 
-public class MorningNoonEveningNightConverterImpl extends ShortTextConverterImpl {
+public class MorningNoonEveningNightAndAccordingToNeedConverterImpl extends ShortTextConverterImpl {
 
 	@Override
 	public boolean canConvert(DosageWrapper dosage) {
@@ -44,7 +44,13 @@ public class MorningNoonEveningNightConverterImpl extends ShortTextConverterImpl
 		DayWrapper day = structure.getDays().first();
 		if(day.getDayNumber()!=1)
 			return false;
-		if(day.containsPlainDose() || day.containsTimedDose())
+		if(day.containsTimedDose())
+			return false;
+		if(day.containsPlainNotAccordingToNeedDose())
+			return false;
+		if(!day.containsMorningNoonEveningNightDoses())
+			return false;
+		if(!day.containsAccordingToNeedDose())
 			return false;
 		return true;
 	}
@@ -59,6 +65,9 @@ public class MorningNoonEveningNightConverterImpl extends ShortTextConverterImpl
 		appendEvening(day, text, dosage.getStructures().getUnitOrUnits());
 		appendNight(day, text, dosage.getStructures().getUnitOrUnits());
 		appendSupplText(structure.getSupplText(), text);
+		
+		text.append(", samt "+new SimpleLimitedAccordingToNeedConverterImpl().doConvert(dosage));
+		
 		return text.toString();
 	}
 

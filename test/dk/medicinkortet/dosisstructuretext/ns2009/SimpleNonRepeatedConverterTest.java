@@ -85,7 +85,7 @@ public class SimpleNonRepeatedConverterTest {
 		Assert.assertEquals(
 			"Doseringsforløbet starter lørdag den 1. januar 2011 og ophører efter det angivne forløb:\n"+
 			"   Doseringsforløb:\n"+
-			"   Lørdag den 1. januar 2011: 1 kapsel dagen før indlæggelse 2 gange",
+			"   Lørdag den 1. januar 2011: 1 kapsel 2 gange dagen før indlæggelse",
 			LongTextConverter.convert(dosage));
 		Assert.assertEquals(
 			LimitedNumberOfDaysConverterImpl.class, 

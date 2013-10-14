@@ -47,8 +47,6 @@ public class LimitedNumberOfDaysConverterImpl extends ShortTextConverterImpl {
 			return false;
 		if(!structure.daysAreInUninteruptedSequenceFromOne())
 			return false;
-		if(structure.startsAndEndsSameDay())
-			return false;
 		if(structure.containsMorningNoonEveningNightDoses())
 			return false;
 		if(!structure.allDaysAreTheSame())
@@ -71,7 +69,7 @@ public class LimitedNumberOfDaysConverterImpl extends ShortTextConverterImpl {
 			text.append(" i "+structure.getDays().last().getDayNumber()+" dage");
 		}
 		if(structure.getSupplText()!=null)
-			text.append(TextHelper.space(structure.getSupplText())).append(structure.getSupplText());
+			text.append(TextHelper.maybeAddSpace(structure.getSupplText())).append(structure.getSupplText());
 		return text.toString();
 	}
 

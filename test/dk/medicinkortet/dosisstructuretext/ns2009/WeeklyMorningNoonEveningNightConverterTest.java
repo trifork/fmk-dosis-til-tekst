@@ -44,49 +44,6 @@ import dk.medicinkortet.dosisstructuretext.vowrapper.StructuresWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.UnitOrUnitsWrapper;
 
 public class WeeklyMorningNoonEveningNightConverterTest {
-
-	@Test /* TODO: This is a candidate for a short text converter */
-	public void testWeeklyPlain() throws Exception {
-		DosageWrapper dosage = DosageWrapper.makeDosage(
-			StructuresWrapper.makeStructures(
-				UnitOrUnitsWrapper.makeUnit("stk"), 
-				StructureWrapper.makeStructure(
-					7, "ved måltid", DateOrDateTimeWrapper.makeDate("2012-06-08"), DateOrDateTimeWrapper.makeDate("2012-12-31"), 
-					DayWrapper.makeDay(
-						1, 
-						PlainDoseWrapper.makeDose(new BigDecimal(1)), 
-						PlainDoseWrapper.makeDose(new BigDecimal(1))),
-					DayWrapper.makeDay(
-						3, 
-						PlainDoseWrapper.makeDose(new BigDecimal(1)), 
-						PlainDoseWrapper.makeDose(new BigDecimal(1))),
-					DayWrapper.makeDay(
-						5, 
-						PlainDoseWrapper.makeDose(new BigDecimal(1)), 
-						PlainDoseWrapper.makeDose(new BigDecimal(1))),
-					DayWrapper.makeDay(
-						7, 
-						PlainDoseWrapper.makeDose(new BigDecimal(1)), 
-						PlainDoseWrapper.makeDose(new BigDecimal(1))))));
-		Assert.assertEquals(
-				WeeklyRepeatedConverterImpl.class, 
-				LongTextConverter.getConverterClass(dosage));
-		Assert.assertEquals(
-				"Doseringsforløbet starter fredag den 8. juni 2012, forløbet gentages hver uge.\n"+
-				"Bemærk at doseringen har et komplekst forløb:\n"+
-				"   Doseringsforløb:\n"+
-				"   Tirsdag: 1 stk ved måltid 2 gange\n"+
-				"   Torsdag: 1 stk ved måltid 2 gange\n"+
-				"   Fredag: 1 stk ved måltid 2 gange\n"+
-				"   Søndag: 1 stk ved måltid 2 gange",
-				LongTextConverter.convert(dosage));
-		Assert.assertNull(ShortTextConverter.convert(dosage));
-		Assert.assertEquals(
-				8/7., 
-				DailyDosisCalculator.calculate(dosage).getValue().doubleValue(), 
-				0.000000001); 							
-		Assert.assertEquals(DosageType.Temporary, DosageTypeCalculator.calculate(dosage));						
-	}
 	
 	@Test
 	public void testWeeklyMorningAndEvening() throws Exception {
@@ -127,7 +84,7 @@ public class WeeklyMorningNoonEveningNightConverterTest {
 				dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.WeeklyMorningNoonEveningNightConverterImpl.class,
 				ShortTextConverter.getConverterClass(dosage));
 		Assert.assertEquals(
-				"1 stk morgen og aften ved måltid tirsdag, torsdag, fredag og søndag hver uge",
+				"1 stk morgen og aften tirsdag, torsdag, fredag og søndag hver uge ved måltid",
 				ShortTextConverter.convert(dosage));
 		Assert.assertEquals(
 				8/7., 

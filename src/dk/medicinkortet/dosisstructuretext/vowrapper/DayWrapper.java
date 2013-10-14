@@ -204,6 +204,15 @@ public class DayWrapper {
 		}
 		return false;
 	}
+	
+	public boolean containsPlainNotAccordingToNeedDose() {
+		for(DoseWrapper dose: getAllDoses()) {
+			if(dose instanceof PlainDoseWrapper && !dose.isAccordingToNeed()) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 	public boolean containsMorningNoonEveningNightDoses() {
 		for(DoseWrapper dose: getAllDoses()) {

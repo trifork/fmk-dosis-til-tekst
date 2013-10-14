@@ -56,7 +56,7 @@ public class DosageWrapperTest {
 		Assert.assertEquals(
 			"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages hver dag:\n"+
 			"   Doseringsforløb:\n"+
-			"   4 stk mod smerter 2 gange", 
+			"   4 stk 2 gange daglig mod smerter", 
 			LongTextConverter.convert(dosage));
 	}
 
@@ -118,7 +118,7 @@ public class DosageWrapperTest {
 		Assert.assertEquals(
 			"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages hver dag:\n"+
 			"   Doseringsforløb:\n"+
-			"   1 stk morgen mod smerter + 1 stk middag mod smerter + 1 stk aften mod smerter + 1 stk nat mod smerter",				
+			"   1 stk morgen mod smerter + 1 stk middag mod smerter + 1 stk aften mod smerter + 1 stk før sengetid mod smerter",				
 			LongTextConverter.convert(dosage));
 	}
 	

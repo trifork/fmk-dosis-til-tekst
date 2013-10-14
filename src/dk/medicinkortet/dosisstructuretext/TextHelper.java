@@ -90,7 +90,7 @@ public class TextHelper {
 			return "gang";
 	}
 	
-	public static String space(String supplText) {
+	public static String maybeAddSpace(String supplText) {
 		if(supplText==null)
 			return " ";
 		else if(supplText.startsWith(",") || supplText.startsWith("."))
@@ -200,18 +200,18 @@ public class TextHelper {
 	}
 	
 	public static DayOfWeek makeDayOfWeekAndName(DateOrDateTimeWrapper startDateOrDateTime, DayWrapper day, boolean initialUpperCase) {
-		DayOfWeek d = new DayOfWeek();
-		d.day = day;
 		GregorianCalendar c = makeFromDateOnly(startDateOrDateTime.getDateOrDateTime());
 		c.add(GregorianCalendar.DATE, day.getDayNumber()-1);
 		SimpleDateFormat f = new SimpleDateFormat(DAY_FORMAT, new Locale("da", "DK"));
-		d.dayOfWeek = usToDkDayOfWeek(c.get(GregorianCalendar.DAY_OF_WEEK));
+		int dayOfWeek = usToDkDayOfWeek(c.get(GregorianCalendar.DAY_OF_WEEK));
 		String dateString = f.format(c.getTime());
+		String name;
 		if(initialUpperCase)
-			d.name = Character.toUpperCase(dateString.charAt(0)) + dateString.substring(1);
+			name = Character.toUpperCase(dateString.charAt(0)) + dateString.substring(1);
 		else 
-			d.name = dateString;
-		return d;
+			name = dateString;
+		return new DayOfWeek(dayOfWeek, name, day);
+
 	}
 	
 	private static int usToDkDayOfWeek(int us) {

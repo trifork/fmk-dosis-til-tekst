@@ -25,6 +25,8 @@ package dk.medicinkortet.dosisstructuretext.longtextconverterimpl;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import dk.medicinkortet.dosisstructuretext.TextHelper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DayWrapper;
@@ -72,38 +74,58 @@ public class WeeklyRepeatedConverterImpl extends LongTextConverterImpl {
 	@Override
 	protected int appendDays(StringBuilder s, UnitOrUnitsWrapper unitOrUnits, StructureWrapper structure) {
 		// Make a sorted list of weekdays
-		ArrayList<DayOfWeek> daysOfWeek = sortDaysOfWeek(structure);
+		SortedSet<DayOfWeek> daysOfWeek = sortDaysOfWeek(structure);
 		int appendedLines = 0;
 		for(DayOfWeek e: daysOfWeek) {
 			if(appendedLines>0)
 				s.append("\n");
 			appendedLines++;
 			s.append(TextHelper.INDENT+e.name+": ");
-			s.append(makeDaysDosage(unitOrUnits, structure, e.day));
+			s.append(makeDaysDosage(unitOrUnits, structure, e.day, true));
 		}		
 		return appendedLines;
 	}
 
-	public static ArrayList<DayOfWeek> sortDaysOfWeek(StructureWrapper structure) {
-		// First convert all days (up to 7) to day of week and DK name ((1, Mandag) etc).
-		ArrayList<DayOfWeek> daysOfWeek = new ArrayList<DayOfWeek>();
+	public static SortedSet<DayOfWeek> sortDaysOfWeek(StructureWrapper structure) {
+		// Convert all days (up to 7) to day of week and DK name ((1, Mandag) etc).
+		// Sort according to day of week (Monday always first) using DayOfWeek's compareTo in SortedSet
+		TreeSet<DayOfWeek> daysOfWeekSet = new TreeSet<DayOfWeek>();
 		for(DayWrapper day: structure.getDays()) {
-			daysOfWeek.add(TextHelper.makeDayOfWeekAndName(structure.getStartDateOrDateTime(), day, true));
+			daysOfWeekSet.add(TextHelper.makeDayOfWeekAndName(structure.getStartDateOrDateTime(), day, true));			
 		}
-		// Sort according to day of week (Monday always first)
-		Collections.sort(daysOfWeek, new Comparator<DayOfWeek>() {
-			@Override
-			public int compare(DayOfWeek e1, DayOfWeek e2) {
-				return e1.dayOfWeek.compareTo(e2.dayOfWeek);
-			}
-		});		
-		return daysOfWeek;
+		return daysOfWeekSet;
 	}
 	
-	public static class DayOfWeek {
-		public Integer dayOfWeek;
-		public String name;
-		public DayWrapper day;
+	public static class DayOfWeek implements Comparable<DayOfWeek> {
+		
+		private Integer dayOfWeek;
+		private String name;
+		private DayWrapper day;
+		
+		public DayOfWeek(int dayOfWeek, String name, DayWrapper day) {
+			super();
+			this.dayOfWeek = dayOfWeek;
+			this.name = name;
+			this.day = day;
+		}
+
+		public int getDayOfWeek() {
+			return dayOfWeek;
+		}
+		
+		public String getName() {
+			return name;
+		}
+		
+		public DayWrapper getDay() {
+			return day;
+		}
+
+		@Override
+		public int compareTo(DayOfWeek other) {
+			return this.dayOfWeek.compareTo(other.dayOfWeek);
+		}
+		
 	}	
 	
 }

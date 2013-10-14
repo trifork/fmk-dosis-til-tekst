@@ -74,10 +74,10 @@ public class LimitedNumberOfDaysConverterTest {
 		Assert.assertEquals(
 				"Doseringsforløbet starter lørdag den 1. januar 2011 og ophører efter det angivne forløb:\n"+
 				"   Doseringsforløb:\n"+
-				"   Lørdag den 1. januar 2011: 4 måleskefulde ved måltid 2 gange\n"+
-				"   Søndag den 2. januar 2011: 4 måleskefulde ved måltid 2 gange\n"+
-				"   Mandag den 3. januar 2011: 4 måleskefulde ved måltid 2 gange\n"+
-				"   Tirsdag den 4. januar 2011: 4 måleskefulde ved måltid 2 gange",
+				"   Lørdag den 1. januar 2011: 4 måleskefulde 2 gange ved måltid\n"+
+				"   Søndag den 2. januar 2011: 4 måleskefulde 2 gange ved måltid\n"+
+				"   Mandag den 3. januar 2011: 4 måleskefulde 2 gange ved måltid\n"+
+				"   Tirsdag den 4. januar 2011: 4 måleskefulde 2 gange ved måltid",
 				LongTextConverter.convert(dosage));
 		Assert.assertEquals(
 				LimitedNumberOfDaysConverterImpl.class, 
@@ -118,10 +118,10 @@ public class LimitedNumberOfDaysConverterTest {
 		Assert.assertEquals(
 				"Doseringsforløbet starter lørdag den 1. januar 2011 og ophører efter det angivne forløb:\n"+
 				"   Doseringsforløb:\n"+
-				"   Lørdag den 1. januar 2011: 4 måleskefulde efter behov ved måltid højst 2 gange daglig\n"+
-				"   Søndag den 2. januar 2011: 4 måleskefulde efter behov ved måltid højst 2 gange daglig\n"+
-				"   Mandag den 3. januar 2011: 4 måleskefulde efter behov ved måltid højst 2 gange daglig\n"+
-				"   Tirsdag den 4. januar 2011: 4 måleskefulde efter behov ved måltid højst 2 gange daglig",
+				"   Lørdag den 1. januar 2011: 4 måleskefulde efter behov højst 2 gange ved måltid\n"+
+				"   Søndag den 2. januar 2011: 4 måleskefulde efter behov højst 2 gange ved måltid\n"+
+				"   Mandag den 3. januar 2011: 4 måleskefulde efter behov højst 2 gange ved måltid\n"+
+				"   Tirsdag den 4. januar 2011: 4 måleskefulde efter behov højst 2 gange ved måltid",
 				LongTextConverter.convert(dosage));
 		Assert.assertEquals(
 				LimitedNumberOfDaysConverterImpl.class, 

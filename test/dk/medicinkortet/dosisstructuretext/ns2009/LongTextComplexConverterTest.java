@@ -439,7 +439,7 @@ public class LongTextComplexConverterTest {
 		Assert.assertEquals(
 				"Doseringsforløbet starter onsdag den 18. april 2012 og gentages hver dag:\n"+
 				"   Doseringsforløb:\n"+
-				"   1-2 tabletter efter behov ved smerter højst 3 gange daglig", 
+				"   1-2 tabletter efter behov højst 3 gange daglig ved smerter", 
 				LongTextConverter.convert(dosage));
 		Assert.assertEquals(
 				SimpleLimitedAccordingToNeedConverterImpl.class, 
@@ -494,8 +494,8 @@ public class LongTextComplexConverterTest {
 				"Bemærk at doseringen varierer og har et komplekst forløb:\n"+
 				"   Doseringsforløb:\n"+
 				"   Efter behov: 1 ml efter behov mod smerter\n"+
-				"   Onsdag den 18. april 2012: 20 ml efter behov mod smerter højst 2 gange daglig\n"+
-				"   Torsdag den 19. april 2012: 20 ml efter behov mod smerter højst 2 gange daglig", 
+				"   Onsdag den 18. april 2012: 20 ml efter behov højst 2 gange mod smerter\n"+
+				"   Torsdag den 19. april 2012: 20 ml efter behov højst 2 gange mod smerter", 
 				LongTextConverter.convert(dosage));
 		Assert.assertNull(ShortTextConverter.convert(dosage));
 		Assert.assertNull(DailyDosisCalculator.calculate(dosage).getValue());
@@ -523,8 +523,8 @@ public class LongTextComplexConverterTest {
 				"Bemærk at doseringen har et komplekst forløb:\n"+
 				"   Doseringsforløb:\n"+
 				"   Efter behov: 1-2 sug efter behov ved anstrengelse\n"+
-				"   Onsdag den 18. april 2012: 1-2 sug efter behov ved anstrengelse højst 1 gang daglig\n"+
-				"   Torsdag den 19. april 2012: 1-2 sug efter behov ved anstrengelse højst 1 gang daglig",
+				"   Onsdag den 18. april 2012: 1-2 sug efter behov højst 1 gang ved anstrengelse\n"+
+				"   Torsdag den 19. april 2012: 1-2 sug efter behov højst 1 gang ved anstrengelse",
 				LongTextConverter.convert(dosage));
 		Assert.assertNull(ShortTextConverter.convert(dosage));
 		Assert.assertNull(DailyDosisCalculator.calculate(dosage).getValue());

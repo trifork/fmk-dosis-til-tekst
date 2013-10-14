@@ -84,7 +84,7 @@ public class SimpleAccordingToNeedConverterImpl extends ShortTextConverterImpl {
 		text.append(toValue(day.getAllDoses().get(0), dosage.getStructures().getUnitOrUnits()));
 		text.append(" efter behov");
 		if(structure.getSupplText()!=null)
-			text.append(TextHelper.space(structure.getSupplText())).append(structure.getSupplText());
+			text.append(TextHelper.maybeAddSpace(structure.getSupplText())).append(structure.getSupplText());
 		return text.toString();
 	}
 

@@ -56,59 +56,69 @@ public class RepeatedConverterImpl extends ShortTextConverterImpl {
 		StructureWrapper structure = dosage.getStructures().getStructures().first();
 		
 		StringBuilder text = new StringBuilder();
+
+		// Append dosage
 		DayWrapper day = structure.getDays().first();
-		
 		text.append(toValue(day.getAllDoses().get(0), dosage.getStructures().getUnitOrUnits()));
-		
-		String supplText = "";
-		if(structure.getSupplText()!=null)
-			supplText = TextHelper.space(structure.getSupplText())+structure.getSupplText();
 	
-		// Repeated daily 
-		if(structure.getIterationInterval()==1 && day.getNumberOfDoses()==1)
-			text.append(" daglig"+supplText);
-		else if(structure.getIterationInterval()==1 && day.getNumberOfDoses()>1)
-			text.append(" "+day.getNumberOfDoses()+" "+TextHelper.gange(day.getNumberOfDoses())+" daglig"+supplText);
+		// Append iteration:
+		text.append(makeIteration(structure, day));
 
-		// Repeated monthly
-		else if(numberOfWholeMonths(structure.getIterationInterval())==1 && day.getNumberOfDoses()==1)
-			text.append(" 1 gang om måneden"+supplText);
-		else if(numberOfWholeMonths(structure.getIterationInterval())==1 && day.getNumberOfDoses()>=1)
-			text.append(" "+day.getNumberOfDoses()+" "+TextHelper.gange(day.getNumberOfDoses())+" samme dag"+supplText+" 1 gang om måneden");
-		
-		// Repeated weekly
-		else if(numberOfWholeWeeks(structure.getIterationInterval())==1 && day.getNumberOfDoses()==1) {
-			String name = TextHelper.makeDayOfWeekAndName(structure.getStartDateOrDateTime(), day, false).name;
-			text.append(" "+name+supplText+" hver uge");
-		}
-		else if(numberOfWholeWeeks(structure.getIterationInterval())==1 && day.getNumberOfDoses()>1) {
-			text.append(" "+day.getNumberOfDoses()+" "+TextHelper.gange(day.getNumberOfDoses())+" samme dag"+supplText+" 1 gang om ugen");
-		}
-		else if(numberOfWholeWeeks(structure.getIterationInterval())>1 && day.getNumberOfDoses()==1) {
-			String name = TextHelper.makeDayOfWeekAndName(structure.getStartDateOrDateTime(), day, false).name;
-			text.append(" "+name+supplText+" hver "+numberOfWholeWeeks(structure.getIterationInterval())+". uge");
-		}	
+		// Append suppl. text
+		if(structure.getSupplText()!=null)
+			text.append(TextHelper.maybeAddSpace(structure.getSupplText())+structure.getSupplText());
 
-		// 
-		else if(structure.getIterationInterval()>1 && day.getNumberOfDoses()==1)
-			text.append(" hver "+structure.getIterationInterval()+". dag"+supplText);
-		else if(structure.getIterationInterval()>1 && day.getNumberOfDoses()>=1)
-			text.append(" "+day.getNumberOfDoses()+" "+TextHelper.gange(day.getNumberOfDoses())+" samme dag"+supplText+" hver "+structure.getIterationInterval()+". dag");
-
-		// Something unexpected happened!
-		else
-			return null; 
 		return text.toString();
 	}
+	
+	private String makeIteration(StructureWrapper structure, DayWrapper day) {
 
-	private int numberOfWholeWeeks(int iterationInterval) {
+		int iterationInterval = structure.getIterationInterval();
+		int numberOfDoses = day.getNumberOfDoses();
+		 
+		// Repeated daily
+		if(iterationInterval==1 && numberOfDoses==1)
+			return " daglig";
+		if(iterationInterval==1 && numberOfDoses>1)
+			return " "+numberOfDoses+" "+TextHelper.gange(numberOfDoses)+" daglig";
+
+		// Repeated monthly
+		int numberOfWholeMonths = calculateNumberOfWholeMonths(iterationInterval);
+		if(numberOfWholeMonths==1 && numberOfDoses==1)
+			return " 1 gang om måneden";
+		if(numberOfWholeMonths==1 && numberOfDoses>=1)
+			return " "+numberOfDoses+" "+"gange samme dag 1 gang om måneden";
+		if(numberOfWholeMonths>1 && numberOfDoses==1)
+			return " hver "+numberOfWholeMonths+". måned";
+		
+		// Repeated weekly
+		int numberOfWholeWeeks = calculateNumberOfWholeWeeks(structure.getIterationInterval());
+		String name = TextHelper.makeDayOfWeekAndName(structure.getStartDateOrDateTime(), day, false).getName();
+		if(numberOfWholeWeeks==1 && day.getNumberOfDoses()==1) 
+			return " "+name+" hver uge";
+		else if(numberOfWholeWeeks==1 && numberOfDoses>1) 
+			return " "+numberOfDoses+" "+"gange "+name+" hver uge";
+		if(numberOfWholeWeeks>1 && numberOfDoses==1) 
+			return " "+name+" hver "+numberOfWholeWeeks+". uge";
+
+		// Every Nth day
+		if(iterationInterval>1 && numberOfDoses==1)
+			return " hver "+iterationInterval+". dag";
+		if(iterationInterval>1 && numberOfDoses>=1) 
+			return " "+numberOfDoses+" "+"gange samme dag hver "+iterationInterval+". dag";
+		
+		// Above is exhaustive if both iterationInterval>1 and numberOfDoses>1, return null to make compiler happy
+		return null;
+	}
+
+	private int calculateNumberOfWholeWeeks(int iterationInterval) {
 		int numberOfWholeWeeks =  iterationInterval/7;
 		if(numberOfWholeWeeks*7!=iterationInterval)
 			numberOfWholeWeeks = -1;
 		return numberOfWholeWeeks;
 	}
 
-	private int numberOfWholeMonths(int iterationInterval) {
+	private int calculateNumberOfWholeMonths(int iterationInterval) {
 		int numberOfWholeMonths = iterationInterval/30;
 		if(numberOfWholeMonths*30!=iterationInterval)
 			numberOfWholeMonths = -1;

@@ -59,7 +59,7 @@ public class SimpleLimitedAccordingToNeedConverterTest {
 		Assert.assertEquals(
 				"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages hver dag:\n"+
 				"   Doseringsforløb:\n"+
-				"   1 pust efter behov ved anfald højst 3 gange daglig",
+				"   1 pust efter behov højst 3 gange daglig ved anfald", // TOOD order
 				LongTextConverter.convert(dosage));
 		Assert.assertEquals(
 				SimpleLimitedAccordingToNeedConverterImpl.class, 
@@ -84,7 +84,7 @@ public class SimpleLimitedAccordingToNeedConverterTest {
 		Assert.assertEquals(
 				"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages hver dag:\n"+
 				"   Doseringsforløb:\n"+
-				"   1 pust efter behov ved anfald højst 1 gang daglig",
+				"   1 pust efter behov højst 1 gang daglig ved anfald", 
 				LongTextConverter.convert(dosage));
 		Assert.assertEquals(
 				SimpleLimitedAccordingToNeedConverterImpl.class, 

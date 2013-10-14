@@ -22,7 +22,7 @@
 
 package dk.medicinkortet.dosisstructuretext.shorttextconverterimpl;
 
-import java.util.ArrayList;
+import java.util.SortedSet;
 
 import dk.medicinkortet.dosisstructuretext.longtextconverterimpl.WeeklyRepeatedConverterImpl.DayOfWeek;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
@@ -59,27 +59,28 @@ public class WeeklyMorningNoonEveningNightConverterImpl extends ShortTextConvert
 		
 		StructureWrapper structure = dosage.getStructures().getStructures().first();
 		
-		ArrayList<DayOfWeek> daysOfWeek = 
+		SortedSet<DayOfWeek> daysOfWeek = 
 				dk.medicinkortet.dosisstructuretext.longtextconverterimpl.WeeklyRepeatedConverterImpl.sortDaysOfWeek(structure);
 		StringBuilder text = new StringBuilder();		
 		
-		DayOfWeek firstDay = daysOfWeek.get(0);
-		MorningNoonEveningNightConverterImpl.appendMorning(firstDay.day, text, dosage.getStructures().getUnitOrUnits());
-		MorningNoonEveningNightConverterImpl.appendNoon(firstDay.day, text, dosage.getStructures().getUnitOrUnits());
-		MorningNoonEveningNightConverterImpl.appendEvening(firstDay.day, text, dosage.getStructures().getUnitOrUnits());
-		MorningNoonEveningNightConverterImpl.appendNight(firstDay.day, text, dosage.getStructures().getUnitOrUnits());
-		MorningNoonEveningNightConverterImpl.appendSupplText(structure.getSupplText(), text);
+		DayOfWeek firstDay = daysOfWeek.first();
+		MorningNoonEveningNightConverterImpl.appendMorning(firstDay.getDay(), text, dosage.getStructures().getUnitOrUnits());
+		MorningNoonEveningNightConverterImpl.appendNoon(firstDay.getDay(), text, dosage.getStructures().getUnitOrUnits());
+		MorningNoonEveningNightConverterImpl.appendEvening(firstDay.getDay(), text, dosage.getStructures().getUnitOrUnits());
+		MorningNoonEveningNightConverterImpl.appendNight(firstDay.getDay(), text, dosage.getStructures().getUnitOrUnits());
 		int i = 0;
 		for(DayOfWeek d: daysOfWeek) {
 			if(i==daysOfWeek.size()-1 && daysOfWeek.size()>1)
-				text.append(" og ").append(d.name.toLowerCase());
+				text.append(" og ").append(d.getName().toLowerCase());
 			else if(i==0) 
-				text.append(" ").append(d.name.toLowerCase());
+				text.append(" ").append(d.getName().toLowerCase());
 			else if(i>0)
-				text.append(", ").append(d.name.toLowerCase());
+				text.append(", ").append(d.getName().toLowerCase());
 			i++;
 		}			
 		text.append(" hver uge");
+		
+		MorningNoonEveningNightConverterImpl.appendSupplText(structure.getSupplText(), text);
 		return text.toString();
 	}
 
