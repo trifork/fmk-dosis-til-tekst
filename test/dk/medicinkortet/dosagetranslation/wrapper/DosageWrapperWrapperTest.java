@@ -6,8 +6,6 @@ import org.junit.Test;
 
 import dk.medicinkortet.dosagetranslation.DosageToTextTranslator;
 import dk.medicinkortet.dosagetranslation.RawDefinition;
-import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.CombinedTwoPeriodesConverterImpl;
-import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.NumberOfWholeWeeksConverterImpl;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
 
 public class DosageWrapperWrapperTest {
@@ -15,7 +13,7 @@ public class DosageWrapperWrapperTest {
 	@Test
 	public void test1() throws Exception {
 		RawDefinition definition = new RawDefinition(
-				1, 
+				1, 28100000013L, "Test", 
 				"tablet", "tabletter", 
 				"{N daglig}{N daglig}", "{0}{1}", "{2;2;2;2}{2;2}", ", 1 i hvert øje");
 		DosageWrapper dosage = DosageWrapperWrapper.wrap(definition);
@@ -40,7 +38,7 @@ public class DosageWrapperWrapperTest {
 	@Test
 	public void test2() throws Exception {
 		RawDefinition definition = new RawDefinition(
-				1, 
+				1, 28100000013L, "Test",
 				"tablet", "tabletter", 
 				"{M+M+A+N}{PN}", "{1}{0}", "{0+0+0+20}{20}", null);
 		DosageWrapper dosage = DosageWrapperWrapper.wrap(definition);
@@ -58,7 +56,7 @@ public class DosageWrapperWrapperTest {
 	@Test
 	public void test3() throws Exception {
 		RawDefinition definition = new RawDefinition(
-				1, 
+				1, 28100000013L, "Test",
 				"tablet", "tabletter", 
 				"N daglig", "28", "dag 1: 1 dag 2: 1 dag 3: 1 dag 4: 1 dag 5: 1 dag 6: 1 dag 7: 1 dag 8: 1 dag 9: 1 dag 10: 1 dag 11: 1 dag 12: 1 dag 13: 1 dag 14: 1 dag 15: 1 dag 16: 1 dag 17: 1 dag 18: 1 dag 19: 1 dag 20: 1 dag 21: 1", null);
 		DosageWrapper dosage = DosageWrapperWrapper.wrap(definition);
@@ -96,7 +94,7 @@ public class DosageWrapperWrapperTest {
 	@Test
 	public void test4() throws Exception {
 		RawDefinition definition = new RawDefinition(
-				1, 
+				1, 28100000013L, "Test",
 				"tablet", "tabletter", 
 				"N daglig", "28", "dag 1: 1 dag 2: 1 dag 3: 1 dag 4: 1 dag 5: 1 dag 6: 1 dag 7: 1 dag 8: 1 dag 9: 1 dag 10: 1", "optimalt fra 15.-24. cyklusdag");
 		DosageWrapper dosage = DosageWrapperWrapper.wrap(definition);
@@ -123,7 +121,7 @@ public class DosageWrapperWrapperTest {
 	@Test
 	public void test5() throws Exception {
 		RawDefinition definition = new RawDefinition(
-				1, 
+				1, 28100000013L, "Test",
 				"kapsel", "kapsler", 
 				"M+M+A+N", "0", "dag 2: 1+0+0+0 dag 3: 1+0+0+0", null);
 		DosageWrapper dosage = DosageWrapperWrapper.wrap(definition);
@@ -143,7 +141,7 @@ public class DosageWrapperWrapperTest {
 	@Test
 	public void test6() throws Exception {
 		RawDefinition definition = new RawDefinition(
-				1, 
+				1, 28100000013L, "Test",
 				"tablet", "tabletter", 
 				"N daglig", "0", "dag 1: 1 dag 4: 4", null);
 		DosageWrapper dosage = DosageWrapperWrapper.wrap(definition);
@@ -163,7 +161,7 @@ public class DosageWrapperWrapperTest {
 	@Test
 	public void test7() throws Exception {
 		RawDefinition definition = new RawDefinition(
-				1, 
+				1, 28100000013L, "Test",
 				"tablet", "tabletter", 
 				"N daglig", "0", "dag 1: 1 dag 22: 1 dag 36:1", null);
 		DosageWrapper dosage = DosageWrapperWrapper.wrap(definition);
@@ -184,7 +182,7 @@ public class DosageWrapperWrapperTest {
 	@Test
 	public void test8() throws Exception {
 		RawDefinition definition = new RawDefinition(
-				1, 
+				1, 28100000013L, "Test",
 				"dråbe", "dråber", 
 				"{N daglig}{N daglig}", "{0}{1}", "{dag 1;1;1;1;1;1;1;1;1;1;1;1 dag 2: 1;1;1;1;1;1;1;1;1;1;1;1}{1;1;1;1;1;1;}", "i venstre øje");
 		DosageWrapper dosage = DosageWrapperWrapper.wrap(definition);

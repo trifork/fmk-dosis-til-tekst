@@ -19,5 +19,9 @@ public class RawDefinitions implements Iterable<RawDefinition> {
 	public Iterator<RawDefinition> iterator() {
 		return rawDefinitionMap.values().iterator();
 	}
-
+	
+	public int size() {
+		return rawDefinitionMap.size();
+	}
+	
 }

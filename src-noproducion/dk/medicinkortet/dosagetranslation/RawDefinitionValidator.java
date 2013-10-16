@@ -6,24 +6,30 @@ import java.util.Set;
 
 public class RawDefinitionValidator {
 
-	public static void validate(RawDefinitions rawDefinitionList) {
-		for(RawDefinition d: rawDefinitionList) {
-			try {
-				validateUnit(d);
-			}
-			catch(ValidationException e) {
-				d.addError(e.getMessage());
-			}
-			try {
-				validateDataComplete(d);
-			}
-			catch(ValidationException e) {
-				d.addError(e.getMessage());
-			}
-		}
+	public static boolean isComplete(RawDefinition d) {
+		String s = validateUnit(d);
+		if(s!=null)
+			return false;
+		s = validateDataComplete(d);
+		if(s!=null)
+			return false;
+		return true;
+	}
+	
+	public static String getIncompleteCause(RawDefinition d) {
+		String s1 = validateUnit(d);
+		String s2 = validateDataComplete(d);
+		if(s1==null && s2==null)
+			return null;
+		String s = "";
+		if(s1!=null)
+			s += s1 + ". ";
+		if(s2!=null)
+			s += s2;
+		return s;
 	}
 
-	private static void validateUnit(RawDefinition rawDefinition) throws ValidationException {
+	private static String validateUnit(RawDefinition rawDefinition) {
 		HashMap<String, Set<String>> fwd = new HashMap<String, Set<String>>();
 		HashMap<String, Set<String>> bwd = new HashMap<String, Set<String>>();
 		if(rawDefinition.getUnitSingular()!=null && rawDefinition.getUnitPlural()!=null) {
@@ -68,33 +74,38 @@ public class RawDefinitionValidator {
 		
 		if(v.length()>0) {
 			v = "Inkonsekvent angivelse af enheder: "+v.substring(0, v.length()-2);
-			throw new ValidationException(v);
+			return v;
 		}		
+		else {
+			return null;
+		}
 		
 	}
 	
 	
-	private static void validateDataComplete(RawDefinition rawDefinition) throws ValidationException {
+	private static String validateDataComplete(RawDefinition rawDefinition) {
 		String v = "";
-		if(rawDefinition.getUnitSingular()==null||rawDefinition.getUnitSingular().length()==1)
+		if(rawDefinition.getUnitSingular()==null||rawDefinition.getUnitSingular().trim().length()==0)
 			v += "enhed-ental, ";
-		if(rawDefinition.getUnitPlural()==null||rawDefinition.getUnitPlural().length()==1)
+		if(rawDefinition.getUnitPlural()==null||rawDefinition.getUnitPlural().trim().length()==0)
 			v += "enhed-flertal, ";
-		if(rawDefinition.getIterationInterval()==null||rawDefinition.getIterationInterval().length()==1)
+		if(rawDefinition.getIterationInterval()==null||rawDefinition.getIterationInterval().equals(".")||rawDefinition.getIterationInterval().trim().length()==0)
 			v += "iterationsinterval, ";
-		if(rawDefinition.getType()==null||rawDefinition.getType().length()==1)
+		if(rawDefinition.getType()==null||rawDefinition.getType().trim().length()==0)
 			v += "type, ";
-		if(rawDefinition.getMapping()==null||rawDefinition.getMapping().length()==1)
+		if(rawDefinition.getMapping()==null||rawDefinition.getMapping().trim().length()==0)
 			v += "mapping, ";
 		if(v.length()>0) {
 			v = "Mangler "+v.substring(0, v.length()-2);
-			throw new ValidationException(v);
+			return v;
 		}
 		
 		if(rawDefinition.getType().equals("M+M+A+N") && rawDefinition.getMapping().indexOf(";")>=0)
-			throw new ValidationException("Uoverensstemmelse mellem type og mapping");
+			return "Uoverensstemmelse mellem type og mapping";
 		
 		if(rawDefinition.getType().equals("N daglig") && rawDefinition.getMapping().indexOf("+")>=0)
-			throw new ValidationException("Uoverensstemmelse mellem type og mapping");
+			return "Uoverensstemmelse mellem type og mapping";
+		
+		return null;
 	}
 }

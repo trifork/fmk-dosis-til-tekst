@@ -2,11 +2,18 @@ package dk.medicinkortet.dosagetranslation;
 
 import java.util.ArrayList;
 
+import dk.medicinkortet.dosagetranslation.wrapper.DosageWrapperWrapper;
+import dk.medicinkortet.dosisstructuretext.LongTextConverter;
+import dk.medicinkortet.dosisstructuretext.ShortTextConverter;
+import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
+
 
 public class RawDefinition {
 	
-	// Read from the source (spreadsheet)
+	// Read from the source (text file)
 	private int rowNumber; 
+	private Long drugIdentifier;
+	private String drugName;
 	private String unitSingular;
 	private String unitPlural;
 	private String type;
@@ -19,19 +26,55 @@ public class RawDefinition {
 	private ArrayList<String> types;
 	private ArrayList<String> mappings;
 	
-	// Written to the source (spreadsheet)
-	private String error;
+	private boolean isComplete;
+	private String incompleteCause;
+	
+	private DosageWrapper wrapper;
+	
 	private String shortText; 
 	private String longText;
 	
-	public RawDefinition(int rowNumber, String unitSingular, String unitPlural, String type, String iterationInterval, String mapping, String supplementaryText) {
+	public RawDefinition(int rowNumber, Long drugIdentifier, String drugName, String unitSingular, String unitPlural, String type, String iterationInterval, String mapping, String supplementaryText) {
 		this.rowNumber = rowNumber;
+		this.drugIdentifier = drugIdentifier;
+		this.drugName = drugName;
 		this.unitSingular = unitSingular;
 		this.unitPlural = unitPlural;
 		this.type = type;
 		this.iterationInterval = iterationInterval;
 		this.mapping = mapping;
 		this.supplementaryText = supplementaryText;
+		if(supplementaryText!=null && supplementaryText.trim().length()==0)
+			this.supplementaryText = null;
+		this.isComplete = RawDefinitionValidator.isComplete(this);
+		if(!isComplete)
+			incompleteCause = RawDefinitionValidator.getIncompleteCause(this);
+		
+		if(isComplete) {
+			try {
+				wrapper = DosageWrapperWrapper.wrap(this);
+				shortText = ShortTextConverter.convert(wrapper);
+				longText = LongTextConverter.convert(wrapper);
+				if(shortText!=null && shortText.length()>70)
+					shortText = null;
+			}
+			catch(ValidationException e) {
+				throw new RuntimeException(e);
+			}
+		}
+		
+	}
+	
+	public DosageWrapper getDosageWrapper() {
+		return wrapper;
+	}
+	
+	public Long getDrugIdentifier() {
+		return drugIdentifier;
+	}
+	
+	public String getDrugName() {
+		return drugName;
 	}
 	
 	public int getRowNumber() {
@@ -62,17 +105,14 @@ public class RawDefinition {
 		return supplementaryText;
 	}
 
-	public void addError(String errorMessage) {
-		if(this.error==null)
-			error = errorMessage;
-		else 
-			error += "; "+errorMessage;
+	public boolean isComplete() {
+		return isComplete;
 	}
 
-	public String getError() {
-		return error;
+	public String getIncompleteCause() {
+		return incompleteCause;
 	}
-
+	
 	public void setDosageTranslation(String shortText, String longText) {
 		this.shortText = shortText;
 		this.longText = longText;

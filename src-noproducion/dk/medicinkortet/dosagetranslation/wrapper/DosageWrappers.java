@@ -1,4 +1,4 @@
-package dk.medicinkortet.dosagetranslation;
+package dk.medicinkortet.dosagetranslation.wrapper;
 
 import java.util.TreeMap;
 
@@ -18,6 +18,10 @@ public class DosageWrappers {
 
 	public DosageWrapper getDosageWrapper(int rowNumber) {
 		return dosageWrapperMap.get(rowNumber);
+	}
+	
+	public int size() {
+		return dosageWrapperMap.size();
 	}
 	
 }

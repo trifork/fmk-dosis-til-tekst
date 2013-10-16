@@ -8,7 +8,6 @@ import java.util.GregorianCalendar;
 import java.util.SortedSet;
 import java.util.TreeMap;
 
-import dk.medicinkortet.dosagetranslation.DosageWrappers;
 import dk.medicinkortet.dosagetranslation.RawDefinition;
 import dk.medicinkortet.dosagetranslation.RawDefinitions;
 import dk.medicinkortet.dosagetranslation.ValidationException;
@@ -30,46 +29,38 @@ public class DosageWrapperWrapper {
 	private static final Date START_DATE = DateOrDateTimeWrapper.makeDate("2013-06-03").getDate();
 	private static final Date END_DATE = DateOrDateTimeWrapper.makeDate("2015-06-01").getDate();
 	
-	public static DosageWrappers wrap(RawDefinitions rawDefinitions) {
+	public static DosageWrappers wrap(RawDefinitions rawDefinitions) throws ValidationException {
 		DosageWrappers dosageWrappers = new DosageWrappers();
 		for(RawDefinition rawDefinition: rawDefinitions) {
-			if(rawDefinition.getError()==null) {
+			if(rawDefinition.isComplete()) {
 //				System.out.println("Wrapping "+rawDefinition.getIterationInterval()+", "+rawDefinition.getType()+", "+rawDefinition.getMapping()+" from row "+(rawDefinition.getRowNumber()+1));
 				dosageWrappers.add(rawDefinition.getRowNumber(), wrap(rawDefinition));
 			}
 			else {
 //				System.out.println("Ignoring row "+(rawDefinition.getRowNumber()+1)+": "+rawDefinition.getError());
-				dosageWrappers.add(rawDefinition.getRowNumber(), null);
+//				dosageWrappers.add(rawDefinition.getRowNumber(), null);
 			}
 		}
 		return dosageWrappers;
 	}
 
-	public static DosageWrapper wrap(RawDefinition rawDefinition) {		
-		try {
-			
-			CurlyUnwrapper.unwrapCurlies(rawDefinition);
-			
-			// Wrap 
-			DosageWrapper dosageWrapper = DosageWrapper.makeDosage(
-				StructuresWrapper.makeStructures(
-					wrapUnits(
-						rawDefinition.getUnitSingular(), 
-						rawDefinition.getUnitPlural()), 
-					wrapStructures(
-						rawDefinition.getIterationIntervals(), 
-						rawDefinition.getTypes(), 
-						rawDefinition.getMappings(), 
-						rawDefinition.getSupplementaryText(), 
-						rawDefinition.getRowNumber())));
-			
-			return dosageWrapper;
-		}
-		catch(ValidationException e) {
-			System.err.println("Error wrapping row "+(rawDefinition.getRowNumber()+1)+": "+e.getMessage());
-			rawDefinition.addError(e.getMessage());
-			return null;
-		}			
+	public static DosageWrapper wrap(RawDefinition rawDefinition) throws ValidationException {		
+		CurlyUnwrapper.unwrapCurlies(rawDefinition);
+		
+		// Wrap 
+		DosageWrapper dosageWrapper = DosageWrapper.makeDosage(
+			StructuresWrapper.makeStructures(
+				wrapUnits(
+					rawDefinition.getUnitSingular(), 
+					rawDefinition.getUnitPlural()), 
+				wrapStructures(
+					rawDefinition.getIterationIntervals(), 
+					rawDefinition.getTypes(), 
+					rawDefinition.getMappings(), 
+					rawDefinition.getSupplementaryText(), 
+					rawDefinition.getRowNumber())));
+		
+		return dosageWrapper;
 	}
 
 	private static UnitOrUnitsWrapper wrapUnits(String unitSingular, String unitPlural) {
@@ -278,4 +269,5 @@ public class DosageWrapperWrapper {
 			return 365;
 		}
 	}
+	
 }

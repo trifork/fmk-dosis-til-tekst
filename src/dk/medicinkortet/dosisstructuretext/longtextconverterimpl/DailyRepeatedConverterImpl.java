@@ -23,7 +23,6 @@
 package dk.medicinkortet.dosisstructuretext.longtextconverterimpl;
 
 import dk.medicinkortet.dosisstructuretext.TextHelper;
-import dk.medicinkortet.dosisstructuretext.vowrapper.DayWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.StructureWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.UnitOrUnitsWrapper;

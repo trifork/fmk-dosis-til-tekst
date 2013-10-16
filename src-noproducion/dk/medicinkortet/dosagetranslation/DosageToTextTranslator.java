@@ -1,5 +1,6 @@
 package dk.medicinkortet.dosagetranslation;
 
+import dk.medicinkortet.dosagetranslation.wrapper.DosageWrappers;
 import dk.medicinkortet.dosisstructuretext.LongTextConverter;
 import dk.medicinkortet.dosisstructuretext.ShortTextConverter;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;

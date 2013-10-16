@@ -38,7 +38,6 @@ import dk.medicinkortet.dosisstructuretext.vowrapper.DayWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.EveningDoseWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.MorningDoseWrapper;
-import dk.medicinkortet.dosisstructuretext.vowrapper.PlainDoseWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.StructureWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.StructuresWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.UnitOrUnitsWrapper;
