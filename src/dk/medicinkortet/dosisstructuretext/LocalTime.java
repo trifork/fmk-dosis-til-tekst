@@ -64,9 +64,21 @@ public class LocalTime {
     @Override
     public String toString() {
         if (hasSeconds()) {
-            return String.format("%02d:%02d:%02d", hour, minute, second);
+        	// Avoid String.format since it is not supported by gwt. 
+        	// return String.format("%02d:%02d:%02d", hour, minute, second);
+        	return formatDecimal(hour, 2) + ":" + formatDecimal(minute, 2) + ":" + formatDecimal(second, 2);
         } else {
-            return String.format("%02d:%02d", hour, minute);
+        	// Avoid String.format since it is not supported by gwt. 
+        	// return String.format("%02d:%02d", hour, minute);
+        	return formatDecimal(hour, 2) + ":" + formatDecimal(minute, 2);
         }
+    }
+
+    private String formatDecimal(int value, int numDigits) {
+    	String s = String.valueOf(value);
+    	while (s.length() < numDigits) {
+    		s = "0" + s;
+    	}
+    	return s;
     }
 }
