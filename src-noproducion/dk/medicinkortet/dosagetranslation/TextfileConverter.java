@@ -15,32 +15,54 @@ import dk.medicinkortet.dosagetranslation.dumper.DumpDrugsDosageStructure;
 import dk.medicinkortet.dosagetranslation.dumper.DumpDrugsDosageStructures;
 import dk.medicinkortet.dosagetranslation.dumper.DumpVersion;
 import dk.medicinkortet.dosagetranslation.dumper.SDMOutputter;
+import dk.medicinkortet.dosagetranslation.xml.XMLBuilder;
 
 public class TextfileConverter {
+	
+	/**
+	 * Path to input file. Text file with columns separated by '|'. First line is header. Columns are 
+	 * drugid, drug name (not used), unit-singular, unit-plural, (old code, not used), iteration, type of mapping, mapping, suppl. text 
+	 */
+	public static final String PATH_TO_INPUT_FILE = "2013-10-15/input.txt"; 
+
+	/**
+	 * Path to output dir, where json files are written 
+	 */
+	public static final String PATH_TO_OUTPUT_DIR = "2013-10-15";
+	
+	/**
+	 * Release number. Must be greater than prevoius release. 
+	 */
+	public static final long RELEASE_NUMBER = 9L;
+	
+	/**
+	 * Relase date for the data set, typically tomorrow
+	 */
+	public static final String RELEASE_DATE = "2013-10-15" ;
+	
 	
 	public static void main(String[] args) {
 		try {
 			TextfileReader t = new TextfileReader();
-			RawDefinitions rawDefinitions = t.read("2013-10-14/input.txt");
+			RawDefinitions rawDefinitions = t.read(PATH_TO_INPUT_FILE);
 			System.out.println("Read "+rawDefinitions.size()+" definitions");
 			
-			File destinationDir = new File("2013-10-14");
-			long releaseNumber = 9L;
+			File destinationDir = new File(PATH_TO_OUTPUT_DIR);
 			
 			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 			SDMOutputter.dumpDosageVersion(destinationDir, new DumpVersion(
-					releaseNumber, 
-					dateFormat.parse("2013-10-15"), 
+					RELEASE_NUMBER, 
+					dateFormat.parse(RELEASE_DATE), 
 					dateFormat.parse("2000-01-01"), 
 					dateFormat.parse("2000-01-01")));
 			
-			DumpDosageUnits dumpDosageUnits = collectDosageUnits(releaseNumber, rawDefinitions);
+			DumpDosageUnits dumpDosageUnits = collectDosageUnits(RELEASE_NUMBER, rawDefinitions);
 			SDMOutputter.dumpDosageUnits(destinationDir, dumpDosageUnits);
 			
-			DumpDrugs dumpDrugs = collectDrugs(releaseNumber, rawDefinitions, dumpDosageUnits);
+			DumpDrugs dumpDrugs = collectDrugs(RELEASE_NUMBER, rawDefinitions, dumpDosageUnits);
 			SDMOutputter.dumpDrugs(destinationDir, dumpDrugs);
 			
-			D d = collectDrugsDosageStructures(releaseNumber, rawDefinitions);
+			D d = collectDrugsDosageStructures(RELEASE_NUMBER, rawDefinitions);
 			DumpDosageStructures dumpDosageStructures = d.dumpDosageStructures;
 			DumpDrugsDosageStructures dumpDrugsDosageStructures = d.dumpDrugsDosageStructures;
 			
@@ -50,7 +72,6 @@ public class TextfileConverter {
 			
 		} 
 		catch (Exception e) {
-			System.err.println(e.getMessage());
 			e.printStackTrace();
 			System.exit(0);
 		}
@@ -69,9 +90,10 @@ public class TextfileConverter {
 		DumpDosageStructures dumpDosageStructures = new DumpDosageStructures();
 		DumpDrugsDosageStructures dumpDrugsDosageStructures = new DumpDrugsDosageStructures();	
 		long nextCode = 0;
+		XMLBuilder xmlBuilder = new XMLBuilder();
 		for(RawDefinition d: rawDefinitions) {
 			if(d.isComplete()) {		
-				String xml = XMLBuilder.toXML(d);
+				String xml = xmlBuilder.toXML(d);
 				if(xml.length()<10000) {
 					DumpDosageStructure dumpDosageStructure = new DumpDosageStructure(
 							releaseNumber, 
