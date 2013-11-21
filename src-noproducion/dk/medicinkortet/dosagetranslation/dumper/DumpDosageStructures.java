@@ -30,12 +30,14 @@ public class DumpDosageStructures {
 		return all;
 	}
 	
-	public Long getCodeFor(DumpDosageStructure dumpDosageStructure) {
+	
+	
+	public DumpDosageStructure getMatchingFormer(DumpDosageStructure dumpDosageStructure) {
 		if(dumpDosageStructure.getShortTranslation()==null)
 			return null;
 		DumpDosageStructure d = map.get(dumpDosageStructure.getShortTranslation());
 		if(d!=null)
-			return d.getCode();
+			return d;
 		else 
 			return null;
 	}

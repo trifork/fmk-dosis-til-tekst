@@ -33,12 +33,12 @@ public class TextfileConverter {
 	/**
 	 * Release number. Must be greater than prevoius release. 
 	 */
-	public static final long RELEASE_NUMBER = 9L;
+	public static final long RELEASE_NUMBER = 11L;
 	
 	/**
 	 * Relase date for the data set, typically tomorrow
 	 */
-	public static final String RELEASE_DATE = "2013-10-15" ;
+	public static final String RELEASE_DATE = "2013-11-22" ;
 	
 	
 	public static void main(String[] args) {
@@ -69,6 +69,8 @@ public class TextfileConverter {
 			SDMOutputter.dumpDosageStructures(destinationDir, dumpDosageStructures);
 			
 			SDMOutputter.dumpDrugsDosageStructures(destinationDir, dumpDrugsDosageStructures);
+
+			System.out.println("Done!");
 			
 		} 
 		catch (Exception e) {
@@ -92,7 +94,8 @@ public class TextfileConverter {
 		long nextCode = 0;
 		XMLBuilder xmlBuilder = new XMLBuilder();
 		for(RawDefinition d: rawDefinitions) {
-			if(d.isComplete()) {		
+			if(d.isComplete()) {				
+				
 				String xml = xmlBuilder.toXML(d);
 				if(xml.length()<10000) {
 					DumpDosageStructure dumpDosageStructure = new DumpDosageStructure(
@@ -103,10 +106,13 @@ public class TextfileConverter {
 							xml, 
 							d.getShortText(), 
 							d.getLongText());
+					
 					// Try to reuse one of the existing XMLs 
-					Long c = dumpDosageStructures.getCodeFor(dumpDosageStructure);
-					if(c==null) {
-						dumpDosageStructure.setCode(nextCode++);
+					DumpDosageStructure matchingFormer = dumpDosageStructures.getMatchingFormer(dumpDosageStructure);
+						
+					if(matchingFormer==null) {
+						nextCode++;
+						dumpDosageStructure.setCode(nextCode);
 						dumpDosageStructures.add(dumpDosageStructure);
 						dumpDrugsDosageStructures.add(new DumpDrugsDosageStructure(
 								releaseNumber, 
@@ -114,11 +120,11 @@ public class TextfileConverter {
 								nextCode));
 					}
 					else {
-						dumpDosageStructure.setCode(c);
+						dumpDosageStructure.setCode(matchingFormer.getCode());
 						dumpDrugsDosageStructures.add(new DumpDrugsDosageStructure(
 								releaseNumber, 
 								d.getDrugIdentifier(), 
-								c));
+								matchingFormer.getCode()));
 					}
 				}
 			}
@@ -134,7 +140,7 @@ public class TextfileConverter {
 			}
 		});
 		for(RawDefinition d: rawDefinitions) {
-			if(d.isComplete()) {
+			if(d.hasUnits()) {
 				units.put(d.getUnitSingular(), d.getUnitPlural());
 			}
 		}
@@ -150,7 +156,7 @@ public class TextfileConverter {
 		DumpDrugs dumpDrugs = new DumpDrugs();
 		for(RawDefinition d: rawDefinitions) {
 			Integer dosageUnitCode = dumpDosageUnits.get(d.getUnitSingular(), d.getUnitPlural());
-			if(d.isComplete() && dosageUnitCode!=null)
+			if((d.isComplete()||d.hasUnits()) && dosageUnitCode!=null)
 				dumpDrugs.add(new DumpDrug(releaseNumber, d.getDrugIdentifier(), d.getDrugName(), dosageUnitCode));
 		}
 		return dumpDrugs;

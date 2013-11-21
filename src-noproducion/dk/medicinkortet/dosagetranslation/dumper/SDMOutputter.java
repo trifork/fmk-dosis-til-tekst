@@ -9,6 +9,7 @@ import java.util.ArrayList;
 public class SDMOutputter {
 
 	public static void dumpDosageVersion(File destinationDir, DumpVersion version) throws IOException {
+		System.out.println("Writing DosageVersions.json");
 		BufferedWriter writer = new BufferedWriter(new FileWriter(new File(destinationDir, "DosageVersion.json")));
 		writer.write("{\"version\":");
 		writer.write(JSONHelper.toJsonString(version));
@@ -17,6 +18,7 @@ public class SDMOutputter {
 	}
 
 	public static void dumpDosageUnits(File destinationDir, DumpDosageUnits dumpDosageUnits) throws IOException {
+		System.out.println("Writing DosageUnits.json");
 		BufferedWriter writer = new BufferedWriter(new FileWriter(new File(destinationDir, "DosageUnits.json")));
 		writer.write("{\"dosageUnits\":[");
 		writer.newLine();
@@ -35,6 +37,7 @@ public class SDMOutputter {
 	}
 
 	public static void dumpDosageStructures(File destinationDir, DumpDosageStructures dumpDosageStructures) throws IOException {
+		System.out.println("Writing DosageStructures.json");
 		BufferedWriter writer = new BufferedWriter(new FileWriter(new File(destinationDir, "DosageStructures.json")));
 		boolean firstRow = true; 
 		writer.write("{\"dosageStructures\":[");
@@ -56,6 +59,7 @@ public class SDMOutputter {
 	}
 
 	public static void dumpDrugs(File destinationDir, DumpDrugs dumpDrugs) throws IOException {
+		System.out.println("Writing Drugs.json");
 		BufferedWriter writer = new BufferedWriter(new FileWriter(new File(destinationDir, "Drugs.json")));
 		writer.write("{\"drugs\":[");
 		boolean drugFirstRow = true;
@@ -80,6 +84,7 @@ public class SDMOutputter {
 	}
 
 	public static void dumpDrugsDosageStructures(File destinationDir, DumpDrugsDosageStructures dumpDrugsDosageStructures) throws IOException {
+		System.out.println("Writing DrugsDosageStructures.json");
 		BufferedWriter writer = new BufferedWriter(new FileWriter(new File(destinationDir, "DrugsDosageStructures.json")));
 		writer.write("{\"drugsDosageStructures\":[");
 		boolean relFirstRow = true;

@@ -108,6 +108,10 @@ public class RawDefinition {
 	public boolean isComplete() {
 		return isComplete;
 	}
+	
+	public boolean hasUnits() {
+		return unitSingular!=null && unitPlural!=null && unitSingular.trim().length()>0 && unitPlural.trim().length()>0;
+	}
 
 	public String getIncompleteCause() {
 		return incompleteCause;
@@ -149,5 +153,5 @@ public class RawDefinition {
 	public void setMappings(ArrayList<String> mappings) {
 		this.mappings = mappings;
 	}
-
+	
 }

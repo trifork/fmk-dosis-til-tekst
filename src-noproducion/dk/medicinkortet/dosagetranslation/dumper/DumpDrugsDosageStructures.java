@@ -4,11 +4,9 @@ import java.util.ArrayList;
 
 public class DumpDrugsDosageStructures {
 
-	private ArrayList<DumpDrugsDosageStructure> dumpDrugsDosageStructures;
+	private ArrayList<DumpDrugsDosageStructure> dumpDrugsDosageStructures = new ArrayList<DumpDrugsDosageStructure>();
 	
 	public void add(DumpDrugsDosageStructure dumpDrugsDosageStructure) {
-		if(dumpDrugsDosageStructures==null)
-			dumpDrugsDosageStructures = new ArrayList<DumpDrugsDosageStructure>();
 		dumpDrugsDosageStructures.add(dumpDrugsDosageStructure);
 	}
 

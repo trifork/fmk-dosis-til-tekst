@@ -41,7 +41,8 @@ public class TextfileReader {
 	}
 
 	private RawDefinition toRawDefinition(int lineNo, String line) {
-		System.out.print("  "+line);
+//      // Debug:
+//		System.out.print("  "+line);
 		String[] s = line.split("\\|");
 		RawDefinition d = new RawDefinition(
 			lineNo, 
@@ -53,10 +54,11 @@ public class TextfileReader {
 			get(s, 5), // iteration interval
 			get(s, 7), // mapping, 
 			get(s, 8)); // suppl. text
-		if(d.isComplete())
-			System.out.println(" --> "+d.getShortText());
-		else 
-			System.out.println(" ### "+d.getIncompleteCause());
+//      // Debug:
+//		if(d.isComplete())
+//			System.out.println(" --> "+d.getShortText());
+//		else 
+//			System.out.println(" ### "+d.getIncompleteCause());
 		return d;
 	}
 	
