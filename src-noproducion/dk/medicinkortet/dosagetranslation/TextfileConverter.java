@@ -33,12 +33,12 @@ public class TextfileConverter {
 	/**
 	 * Release number. Must be greater than prevoius release. 
 	 */
-	public static final long RELEASE_NUMBER = 11L;
+	public static final long RELEASE_NUMBER = 12L;
 	
 	/**
 	 * Relase date for the data set, typically tomorrow
 	 */
-	public static final String RELEASE_DATE = "2013-11-22" ;
+	public static final String RELEASE_DATE = "2013-11-23" ;
 	
 	
 	public static void main(String[] args) {
@@ -101,7 +101,8 @@ public class TextfileConverter {
 					DumpDosageStructure dumpDosageStructure = new DumpDosageStructure(
 							releaseNumber, 
 							0L, 
-							d.getType(), 
+							d.getType(),
+							d.getSimpleString(),
 							d.getSupplementaryText(), 
 							xml, 
 							d.getShortText(), 

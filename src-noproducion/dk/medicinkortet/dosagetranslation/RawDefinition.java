@@ -141,6 +141,16 @@ public class RawDefinition {
 	public ArrayList<String> getTypes() {
 		return types;
 	}
+	
+	public String getSimpleString() {
+		if(mapping==null || mapping.trim().length()==0)
+			return null;
+		if(mappings.size()>1)
+			return null;
+		if(mapping.indexOf(":")>0)
+			return null;
+		return mapping;
+	}
 
 	public void setTypes(ArrayList<String> types) {
 		this.types = types;

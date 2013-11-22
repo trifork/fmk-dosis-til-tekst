@@ -6,18 +6,20 @@ public class DumpDosageStructure {
 	private Long code;
 		
 	private String type;
+	private String simpleString;
 	private String supplementaryText;
 	private String xml;
 	private String shortTranslation;
 	private String longTranslation;
 	
 	public DumpDosageStructure(Long releaseNumber,
-			Long code, String type, 
+			Long code, String type, String simpleString, 
 			String supplementaryText, String xml, String shortTranslation,
 			String longTranslation) {
 		this.releaseNumber = releaseNumber;
 		this.code = code;
 		this.type = type;
+		this.simpleString = simpleString;
 		this.supplementaryText = supplementaryText;
 		if(supplementaryText!=null && supplementaryText.trim().length()==0)
 			this.supplementaryText = null;
