@@ -54,27 +54,86 @@ public class TextHelper {
 	private static final Map<String, String> singularToPlural = new HashMap<String, String>();
 	private static final Map<String, String> pluralToSingular = new HashMap<String, String>();
 	
+	private static final String[][] UNITS = new String[][] {
+		
+		// Units from "doseringsenheder og doseringsforslag" 
+		{"ampul", "ampuller"},	
+		{"applikatordosis", "applikatordoser"},
+		{"brev", "breve"},
+		{"brusetablet", "brusetabletter"},
+		{"bukkalfilm", "bukkalfilm"},
+		{"doseringssprøjte", "doseringssprøjter"},
+		{"dosis", "doser"},
+		{"dråbe", "dråber"},
+		{"engangspen", "engangspenne"},
+		{"engangssprøjte", "engangssprøjter"},
+		{"enkeltdosisbeholder", "enkeltdosisbeholdere"},
+		{"hætteglas", "hætteglas"},
+		{"hætteglas+brev", "hætteglas+breve"},
+		{"IE", "IE"},
+		{"implantat", "implantater"},
+		{"indgnidning", "indgnidninger"},
+		{"indsprøjtning", "indsprøjtninger"},
+		{"injektionssprøjte", "injektionssprøjter"},
+		{"injektor", "injektorer"},
+		{"kapsel", "kapsler"},
+		{"kapsel med inhalationspulver", "kapsler med inhalationspulver"},
+		{"L", "L"},
+		{"mg", "mg"},
+		{"ml", "ml"},
+		{"måleske", "måleskeer"},
+		{"oral sprøjte", "orale sprøjter"},
+		{"pensling", "penslinger"},
+		{"plaster", "plastre"},
+		{"plastflaske", "plastflasker"},
+		{"pudring", "pudringer"},
+		{"pulver+solvens", "pulver+solvens"},
+		{"pump", "pump"},
+		{"pust", "pust"},
+		{"påsmøring", "påsmøringer"},
+		{"rektal stikpille", "rektale stikpiller"},
+		{"rektalsprøjte", "rektalsprøjte"},
+		{"rektaltube", "rektaltuber"},
+		{"resoriblet", "resoribletter"},
+		{"skylning", "skylninger"},
+		{"spiral", "spiraler"},
+		{"streg", "streger"},
+		{"stribe", "striber"},
+		{"strømpe", "strømper"},
+		{"sug", "sug"},
+		{"sugetablet", "sugetabletter"},
+		{"sæt breve A+B", "sæt breve A+B"},
+		{"tablet", "tabletter"},
+		{"tablet+opløsningsvæske", "tabletter+opløsningsvæsker"},
+		{"tryk", "tryk"},
+		{"tube", "tuber"},
+		{"tubule", "tubuler"},
+		{"tyggegummi", "tyggegummier"},
+		{"tyggetabletter", "tyggetabletter"},
+		{"vaginalindlæg", "vaginalindlæg"},
+		{"vaginalkapsel", "vaginalkapsler"},
+		{"vaginaltablet", "vaginaltabletter"},
+		{"vagitorie", "vagitorier"},
+		{"vask", "vaske"},
+		{"øjenlamel", "øjenlamel"},
+	
+		// Additional, from old static texts
+		{"behandling", "behandlinger"}, 
+		{"tykt lag", "tykke lag"},
+		{"tyndt lag", "tynde lag"}
+	};
+
 	static {
 		decimalsToFractions.put("0,5", "1/2");
 		decimalsToFractions.put("0,25", "1/4");
 		decimalsToFractions.put("0,75", "3/4");
 		decimalsToFractions.put("1,5", "1 1/2");
 
-		pluralToSingular.put("tabletter", "tablet");
-		pluralToSingular.put("kapsler", "kapsel");
-		pluralToSingular.put("dråber", "dråbe");
-		pluralToSingular.put("behandlinger", "behandling");
-		pluralToSingular.put("doser", "dosis");
-		pluralToSingular.put("tykke lag", "tykt lag");
-		pluralToSingular.put("tynde lag", "tyndt lag");
-
-		singularToPlural.put("tablet", "tabletter");
-		singularToPlural.put("kapsel", "kapsler");
-		singularToPlural.put("dråbe", "dråber");
-		singularToPlural.put("behandling", "behandlinger");
-		singularToPlural.put("dosis", "doser");
-		singularToPlural.put("tykt lag", "tykke lag");
-		singularToPlural.put("tyndt lag", "tynde lag");
+		for(String[] u: UNITS) {
+			singularToPlural.put(u[0], u[1]);
+			pluralToSingular.put(u[1], u[0]);
+		}
+		
 	}
 		
 	public static String formatQuantity(BigDecimal quantity) {
