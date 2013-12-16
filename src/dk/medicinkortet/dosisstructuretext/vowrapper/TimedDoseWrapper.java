@@ -40,28 +40,28 @@ public class TimedDoseWrapper extends DoseWrapper {
 		this.time = time;
 	}
 
-	public static TimedDoseWrapper makeDose(LocalTime time, BigDecimal quantity) {
+	public static TimedDoseWrapper makeDose(LocalTime time, BigDecimal quantity, boolean isAccordingToNeed) {
 		if(isZero(quantity))
 			return null;
-		return new TimedDoseWrapper(time, quantity, null, null, null, null, null, false);
+		return new TimedDoseWrapper(time, quantity, null, null, null, null, null, isAccordingToNeed);
 	}
 
-	public static TimedDoseWrapper makeDose(LocalTime time, BigDecimal quantity, String supplText) {
+	public static TimedDoseWrapper makeDose(LocalTime time, BigDecimal quantity, String supplText, boolean isAccordingToNeed) {
 		if(isZero(quantity))
 			return null;
-		return new TimedDoseWrapper(time, quantity, null, null, supplText, null, null, false);
+		return new TimedDoseWrapper(time, quantity, null, null, supplText, null, null, isAccordingToNeed);
 	}
 	
-	public static TimedDoseWrapper makeDose(LocalTime time, BigDecimal minimalQuantity, BigDecimal maximalQuantity) {
+	public static TimedDoseWrapper makeDose(LocalTime time, BigDecimal minimalQuantity, BigDecimal maximalQuantity, boolean isAccordingToNeed) {
 		if(isZero(minimalQuantity, maximalQuantity))
 			return null;
-		return new TimedDoseWrapper(time, null, minimalQuantity, maximalQuantity, null, null, null, false);
+		return new TimedDoseWrapper(time, null, minimalQuantity, maximalQuantity, null, null, null, isAccordingToNeed);
 	}	
 
-	public static TimedDoseWrapper makeDose(LocalTime time, BigDecimal minimalQuantity, BigDecimal maximalQuantity, String minimalSupplText, String maximalSupplText) {
+	public static TimedDoseWrapper makeDose(LocalTime time, BigDecimal minimalQuantity, BigDecimal maximalQuantity, String minimalSupplText, String maximalSupplText, boolean isAccordingToNeed) {
 		if(isZero(minimalQuantity, maximalQuantity))
 			return null;
-		return new TimedDoseWrapper(time, null, minimalQuantity, maximalQuantity, null, minimalSupplText, maximalSupplText, false);
+		return new TimedDoseWrapper(time, null, minimalQuantity, maximalQuantity, null, minimalSupplText, maximalSupplText, isAccordingToNeed);
 	}	
 	
 	public final static String LABEL = "kl.";  
