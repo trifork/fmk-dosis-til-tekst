@@ -14,6 +14,10 @@ public class DumpDosageUnit {
 		this.textSingular = textSingular;
 		this.textPlural = textPlural;
 	}
+	
+	public Long getReleaseNumber() {
+		return releaseNumber;
+	}
 
 	public Integer getCode() {
 		return code;

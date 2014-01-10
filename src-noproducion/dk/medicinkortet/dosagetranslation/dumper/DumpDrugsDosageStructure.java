@@ -11,6 +11,18 @@ public class DumpDrugsDosageStructure {
 		this.releaseNumber = releaseNumber;
 		this.drugId = drugId;
 		this.dosageStructureCode = dosageStructureCode;
+	}
+
+	public Long getReleaseNumber() {
+		return releaseNumber;
+	}
+
+	public Long getDrugId() {
+		return drugId;
+	}
+
+	public Long getDosageStructureCode() {
+		return dosageStructureCode;
 	}	
 	
 }

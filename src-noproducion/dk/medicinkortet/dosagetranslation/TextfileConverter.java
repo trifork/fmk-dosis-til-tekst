@@ -23,22 +23,32 @@ public class TextfileConverter {
 	 * Path to input file. Text file with columns separated by '|'. First line is header. Columns are 
 	 * drugid, drug name (not used), unit-singular, unit-plural, (old code, not used), iteration, type of mapping, mapping, suppl. text 
 	 */
-	public static final String PATH_TO_INPUT_FILE = "2013-10-15/input.txt"; 
+	public static final String PATH_TO_INPUT_FILE = "2014-01-11/input.txt"; 
 
 	/**
 	 * Path to output dir, where json files are written 
 	 */
-	public static final String PATH_TO_OUTPUT_DIR = "2013-10-15";
+	public static final String PATH_TO_OUTPUT_DIR = "2014-01-11";
+	
+	/**
+	 * If true no dosage translations are written
+	 */
+	public static final boolean NO_DOSAGE_TRANSLATIONS = true; 
+	
+	/**
+	 * If true CSV files are created also (nice for debugging). CSV-files are not uploaded to SDM!
+	 */
+	public static final boolean CREATE_CSV_ALSO = true;
 	
 	/**
 	 * Release number. Must be greater than prevoius release. 
 	 */
-	public static final long RELEASE_NUMBER = 12L;
+	public static final long RELEASE_NUMBER = 15L;
 	
 	/**
 	 * Relase date for the data set, typically tomorrow
 	 */
-	public static final String RELEASE_DATE = "2013-11-23" ;
+	public static final String RELEASE_DATE = "2014-01-11" ;
 	
 	
 	public static void main(String[] args) {
@@ -54,22 +64,32 @@ public class TextfileConverter {
 					RELEASE_NUMBER, 
 					dateFormat.parse(RELEASE_DATE), 
 					dateFormat.parse("2000-01-01"), 
-					dateFormat.parse("2000-01-01")));
+					dateFormat.parse("2000-01-01")), 
+					CREATE_CSV_ALSO);
 			
 			DumpDosageUnits dumpDosageUnits = collectDosageUnits(RELEASE_NUMBER, rawDefinitions);
-			SDMOutputter.dumpDosageUnits(destinationDir, dumpDosageUnits);
+			SDMOutputter.dumpDosageUnits(destinationDir, dumpDosageUnits, CREATE_CSV_ALSO);
 			
 			DumpDrugs dumpDrugs = collectDrugs(RELEASE_NUMBER, rawDefinitions, dumpDosageUnits);
-			SDMOutputter.dumpDrugs(destinationDir, dumpDrugs);
+			SDMOutputter.dumpDrugs(destinationDir, dumpDrugs, CREATE_CSV_ALSO);
 			
 			D d = collectDrugsDosageStructures(RELEASE_NUMBER, rawDefinitions);
 			DumpDosageStructures dumpDosageStructures = d.dumpDosageStructures;
 			DumpDrugsDosageStructures dumpDrugsDosageStructures = d.dumpDrugsDosageStructures;
 			
-			SDMOutputter.dumpDosageStructures(destinationDir, dumpDosageStructures);
+			if(NO_DOSAGE_TRANSLATIONS)
+				SDMOutputter.dumpDosageStructures(destinationDir, new DumpDosageStructures(), CREATE_CSV_ALSO);
+			else 
+				SDMOutputter.dumpDosageStructures(destinationDir, dumpDosageStructures, CREATE_CSV_ALSO);
 			
-			SDMOutputter.dumpDrugsDosageStructures(destinationDir, dumpDrugsDosageStructures);
+			if(NO_DOSAGE_TRANSLATIONS)
+				SDMOutputter.dumpDrugsDosageStructures(destinationDir, new DumpDrugsDosageStructures(), CREATE_CSV_ALSO);
+			else
+				SDMOutputter.dumpDrugsDosageStructures(destinationDir, dumpDrugsDosageStructures, CREATE_CSV_ALSO);
 
+			if(CREATE_CSV_ALSO)
+				SDMOutputter.dumpCompleteUnitTable(destinationDir, dumpDrugs, dumpDosageUnits, CREATE_CSV_ALSO);
+			
 			System.out.println("Done!");
 			
 		} 
@@ -98,11 +118,16 @@ public class TextfileConverter {
 				
 				String xml = xmlBuilder.toXML(d);
 				if(xml.length()<10000) {
+					
+					String simpleString = null;
+					if(d.getIterationInterval()!=null && d.getIterationInterval().equals("1"))
+						simpleString = d.getSimpleString();
+					
 					DumpDosageStructure dumpDosageStructure = new DumpDosageStructure(
 							releaseNumber, 
 							0L, 
 							d.getType(),
-							d.getSimpleString(),
+							simpleString,
 							d.getSupplementaryText(), 
 							xml, 
 							d.getShortText(), 

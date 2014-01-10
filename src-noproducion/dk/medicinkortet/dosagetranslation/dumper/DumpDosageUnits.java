@@ -25,4 +25,8 @@ public class DumpDosageUnits {
 		return null;
 	}
 	
+	public DumpDosageUnit get(Integer dosageUnitCode) {
+		return dosageUnits.get(dosageUnitCode);
+	}
+	
 }

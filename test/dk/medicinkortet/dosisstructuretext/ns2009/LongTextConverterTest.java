@@ -99,7 +99,7 @@ public class LongTextConverterTest {
 						0, "før behandling", DateOrDateTimeWrapper.makeDate("2011-01-01"), null, 
 						DayWrapper.makeDay(
 							1, 
-							TimedDoseWrapper.makeDose(new LocalTime(13,30,0), new BigDecimal(1.0))))));
+							TimedDoseWrapper.makeDose(new LocalTime(13,30,0), new BigDecimal(1.0), false)))));
 		Assert.assertEquals(
 			"Doseringsforløbet starter lørdag den 1. januar 2011 og ophører efter det angivne forløb:\n"+
 			"   Doseringsforløb:\n"+
@@ -122,8 +122,8 @@ public class LongTextConverterTest {
 						0, "før behandling", DateOrDateTimeWrapper.makeDate("2011-01-01"), null, 
 						DayWrapper.makeDay(
 							1, 
-							TimedDoseWrapper.makeDose(new LocalTime(13,30,0), new BigDecimal(1.0)),
-							TimedDoseWrapper.makeDose(new LocalTime(14,30,0), new BigDecimal(2.0))))));
+							TimedDoseWrapper.makeDose(new LocalTime(13,30,0), new BigDecimal(1.0), false),
+							TimedDoseWrapper.makeDose(new LocalTime(14,30,0), new BigDecimal(2.0), false)))));
 		Assert.assertEquals(
 			"Doseringsforløbet starter lørdag den 1. januar 2011 og ophører efter det angivne forløb:\n"+
 			"   Doseringsforløb:\n"+

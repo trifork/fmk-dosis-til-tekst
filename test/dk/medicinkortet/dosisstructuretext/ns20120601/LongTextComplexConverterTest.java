@@ -101,13 +101,13 @@ public class LongTextComplexConverterTest {
                                 0, null, DateOrDateTimeWrapper.makeDate("2012-04-18"), null,
                                 DayWrapper.makeDay(
                                         0,
-                                        TimedDoseWrapper.makeDose(new LocalTime(10,0), new BigDecimal(1))),
+                                        TimedDoseWrapper.makeDose(new LocalTime(10,0), new BigDecimal(1), false)),
                                 DayWrapper.makeDay(
                                         1,
-                                        TimedDoseWrapper.makeDose(new LocalTime(10,1), new BigDecimal(2))),
+                                        TimedDoseWrapper.makeDose(new LocalTime(10,1), new BigDecimal(2), false)),
                                 DayWrapper.makeDay(
                                         2,
-                                        TimedDoseWrapper.makeDose(new LocalTime(10,2,1), new BigDecimal(3))))));
+                                        TimedDoseWrapper.makeDose(new LocalTime(10,2,1), new BigDecimal(3), false)))));
         Assert.assertEquals(
                 "Doseringsforløbet starter onsdag den 18. april 2012 og ophører efter det angivne forløb.\n" +
                         "Bemærk at doseringen varierer og har et komplekst forløb:\n" +

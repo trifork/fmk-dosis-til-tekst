@@ -36,6 +36,8 @@ import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.SimpleAccordin
 import dk.medicinkortet.dosisstructuretext.vowrapper.DateOrDateTimeWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DayWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
+import dk.medicinkortet.dosisstructuretext.vowrapper.EveningDoseWrapper;
+import dk.medicinkortet.dosisstructuretext.vowrapper.MorningDoseWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.PlainDoseWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.StructureWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.StructuresWrapper;
@@ -94,6 +96,27 @@ public class SimpleAccordingToNeedConverterTest {
 		Assert.assertEquals(
 				"2 tabletter efter behov", 
 				ShortTextConverter.convert(dosage));
+		Assert.assertTrue(DailyDosisCalculator.calculate(dosage).isNone());
+		Assert.assertEquals(DosageType.AccordingToNeed, DosageTypeCalculator.calculate(dosage));				
+	}
+	
+	@Test
+	public void testCombined() throws Exception {
+		DosageWrapper dosage = 
+			DosageWrapper.makeDosage(
+				StructuresWrapper.makeStructures(
+					UnitOrUnitsWrapper.makeUnits("tablet", "tabletter"), 
+					StructureWrapper.makeStructure(
+						1, null, DateOrDateTimeWrapper.makeDate("2014-01-01"), DateOrDateTimeWrapper.makeDate("2014-12-31"),
+						DayWrapper.makeDay(0,
+							PlainDoseWrapper.makeDose(new BigDecimal(2), true),
+							PlainDoseWrapper.makeDose(new BigDecimal(2), true)))));
+		Assert.assertEquals(
+				"Doseringsforløbet starter onsdag den 1. januar 2014 og gentages hver dag:\n"+
+				"   Doseringsforløb:\n"+
+				"   Efter behov: 2 tabletter efter behov 2 gange",
+				LongTextConverter.convert(dosage));
+		Assert.assertNull(ShortTextConverter.convert(dosage));
 		Assert.assertTrue(DailyDosisCalculator.calculate(dosage).isNone());
 		Assert.assertEquals(DosageType.AccordingToNeed, DosageTypeCalculator.calculate(dosage));				
 	}

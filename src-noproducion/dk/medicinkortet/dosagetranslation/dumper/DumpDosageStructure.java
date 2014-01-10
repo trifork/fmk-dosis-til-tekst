@@ -28,6 +28,10 @@ public class DumpDosageStructure {
 		this.longTranslation = longTranslation;
 	}
 
+	public Long getReleaseNumber() {
+		return releaseNumber;
+	}
+	
 	public void setCode(Long code) {
 		this.code = code;
 	}
@@ -35,9 +39,28 @@ public class DumpDosageStructure {
 	public Long getCode() {
 		return code;
 	}
-
+	
+	public String getType() {
+		return type;
+	}
+	
+	public String getSimpleString() {
+		return simpleString;
+	}
+	
+	public String getSupplementaryText() {
+		return supplementaryText;
+	}
+	
+	public String getXml() {
+		return xml;
+	}
+	
 	public String getShortTranslation() {
 		return shortTranslation;
 	}
 	
+	public String getLongTranslation() {
+		return longTranslation;
+	}
 }

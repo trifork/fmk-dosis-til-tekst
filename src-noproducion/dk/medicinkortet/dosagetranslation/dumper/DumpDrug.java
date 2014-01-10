@@ -14,10 +14,18 @@ public class DumpDrug {
 		this.dosageUnitCode = dosageUnitCode;
 	}
 
+	public Long getReleaseNumber() {
+		return releaseNumber;
+	}
+	
 	public Long getDrugId() {
 		return drugId;
 	}
 
+	public String getDrugName() {
+		return drugName;
+	}
+	
 	public Integer getDosageUnitCode() {
 		return dosageUnitCode;
 	}	

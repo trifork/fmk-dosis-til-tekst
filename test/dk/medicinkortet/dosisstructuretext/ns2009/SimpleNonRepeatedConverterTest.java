@@ -106,7 +106,7 @@ public class SimpleNonRepeatedConverterTest {
 					0, "før indlæggelse", DateOrDateTimeWrapper.makeDate("2011-01-01"), DateOrDateTimeWrapper.makeDate("2011-01-01"), 
 					DayWrapper.makeDay(
 						0, 
-						TimedDoseWrapper.makeDose(new LocalTime(7,30), new BigDecimal(1))))));
+						TimedDoseWrapper.makeDose(new LocalTime(7,30), new BigDecimal(1), false)))));
 		Assert.assertEquals(
 			"Doseringen foretages kun lørdag den 1. januar 2011:\n"+
 			"   Doseringsforløb:\n"+
@@ -131,7 +131,7 @@ public class SimpleNonRepeatedConverterTest {
 					0, null, DateOrDateTimeWrapper.makeDate("2011-01-01"), DateOrDateTimeWrapper.makeDate("2011-01-01"), 
 					DayWrapper.makeDay(
 						1, 
-						TimedDoseWrapper.makeDose(new LocalTime(7,30), new BigDecimal(1))))));
+						TimedDoseWrapper.makeDose(new LocalTime(7,30), new BigDecimal(1), false)))));
 		Assert.assertEquals(
 			"Doseringen foretages kun lørdag den 1. januar 2011:\n"+
 			"   Doseringsforløb:\n"+

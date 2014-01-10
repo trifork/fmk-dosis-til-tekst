@@ -118,7 +118,7 @@ public class RepeatedConverterTest {
 					7, "ved måltid", DateOrDateTimeWrapper.makeDate("2013-08-12"), null, 
 					DayWrapper.makeDay(
 						3, 
-						TimedDoseWrapper.makeDose(new LocalTime(8, 0), new BigDecimal(1))))));
+						TimedDoseWrapper.makeDose(new LocalTime(8, 0), new BigDecimal(1), false)))));
 		Assert.assertEquals(
 				WeeklyRepeatedConverterImpl.class, 
 				LongTextConverter.getConverterClass(dosage));
@@ -233,4 +233,29 @@ public class RepeatedConverterTest {
 		Assert.assertEquals(DosageType.Fixed, DosageTypeCalculator.calculate(dosage));						
 	}
 		
+	@Test
+	public void testMany() throws Exception {
+		DosageWrapper dosage = DosageWrapper.makeDosage(
+			StructuresWrapper.makeStructures(
+				UnitOrUnitsWrapper.makeUnits("tablet", "tabletter"),  
+				StructureWrapper.makeStructure(
+					1, "ved måltid", DateOrDateTimeWrapper.makeDate("2011-01-01"), DateOrDateTimeWrapper.makeDate("2011-01-04"),  
+					DayWrapper.makeDay(
+						1, 
+						PlainDoseWrapper.makeDose(new BigDecimal(4))))));		
+		Assert.assertEquals(
+				"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages hver dag:\n"+
+				"   Doseringsforløb:\n"+
+				"   4 tabletter ved måltid",
+				LongTextConverter.convert(dosage));
+		Assert.assertEquals(
+				RepeatedConverterImpl.class, 
+				ShortTextConverter.getConverterClass(dosage));
+		Assert.assertEquals(
+				"4 tabletter daglig ved måltid", 
+				ShortTextConverter.convert(dosage));
+		Assert.assertEquals(4.0, DailyDosisCalculator.calculate(dosage).getValue().doubleValue(), 0.000000001); 				
+		Assert.assertEquals(DosageType.Temporary, DosageTypeCalculator.calculate(dosage));
+	}
+	
 }
