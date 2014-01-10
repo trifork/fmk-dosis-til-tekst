@@ -55,10 +55,10 @@ public class TextHelper {
 	private static final Map<String, String> pluralToSingular = new HashMap<String, String>();
 	
 	private static final String[][] UNITS = new String[][] {
-		
-		// Units from "doseringsenheder og doseringsforslag" 
 		{"ampul", "ampuller"},	
 		{"applikatordosis", "applikatordoser"},
+		{"beholder", "beholdere"},
+		{"behandling", "behandlinger"}, 
 		{"brev", "breve"},
 		{"brusetablet", "brusetabletter"},
 		{"bukkalfilm", "bukkalfilm"},
@@ -74,11 +74,13 @@ public class TextHelper {
 		{"implantat", "implantater"},
 		{"indgnidning", "indgnidninger"},
 		{"indsprøjtning", "indsprøjtninger"},
+		{"inhalationskapsel", "inhalationskapsler"},
 		{"injektionssprøjte", "injektionssprøjter"},
 		{"injektor", "injektorer"},
 		{"kapsel", "kapsler"},
 		{"kapsel med inhalationspulver", "kapsler med inhalationspulver"},
 		{"L", "L"},
+		{"liter", "liter"},
 		{"mg", "mg"},
 		{"ml", "ml"},
 		{"måleske", "måleskeer"},
@@ -105,22 +107,21 @@ public class TextHelper {
 		{"sæt breve A+B", "sæt breve A+B"},
 		{"tablet", "tabletter"},
 		{"tablet+opløsningsvæske", "tabletter+opløsningsvæsker"},
+		{"tablet til rektal anvendelse", "tabletter til rektal anvendelse"},
 		{"tryk", "tryk"},
 		{"tube", "tuber"},
 		{"tubule", "tubuler"},
 		{"tyggegummi", "tyggegummier"},
 		{"tyggetabletter", "tyggetabletter"},
+		{"tykt lag", "tykke lag"},
+		{"tyndt lag", "tynde lag"},
 		{"vaginalindlæg", "vaginalindlæg"},
 		{"vaginalkapsel", "vaginalkapsler"},
 		{"vaginaltablet", "vaginaltabletter"},
 		{"vagitorie", "vagitorier"},
 		{"vask", "vaske"},
 		{"øjenlamel", "øjenlamel"},
-	
-		// Additional, from old static texts
-		{"behandling", "behandlinger"}, 
-		{"tykt lag", "tykke lag"},
-		{"tyndt lag", "tynde lag"}
+		{"øjenskylning", "øjenskylninger"},
 	};
 
 	static {
