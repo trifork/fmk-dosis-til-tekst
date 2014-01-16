@@ -40,7 +40,7 @@ public class DefaultMultiPeriodeLongTextConverterImpl extends LongTextConverterI
 	public String doConvert(DosageWrapper dosage) {
 		StringBuilder s = new StringBuilder("Doseringen indeholder flere perioder");
 		if(dosage.getStructures().hasOverlappingPeriodes())
-			s.append(", bemærk at der er ovelappende perioder");
+			s.append(", bemærk at der er overlappende perioder");
 		s.append(":\n\n");
 		for(StructureWrapper structure: dosage.getStructures().getStructures()) {
 			DosageWrapper w = 

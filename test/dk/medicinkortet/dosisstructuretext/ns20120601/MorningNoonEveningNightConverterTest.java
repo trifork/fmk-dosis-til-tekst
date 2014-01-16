@@ -39,6 +39,8 @@ import dk.medicinkortet.dosisstructuretext.vowrapper.DayWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.EveningDoseWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.MorningDoseWrapper;
+import dk.medicinkortet.dosisstructuretext.vowrapper.NightDoseWrapper;
+import dk.medicinkortet.dosisstructuretext.vowrapper.NoonDoseWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.StructureWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.StructuresWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.UnitOrUnitsWrapper;
@@ -83,10 +85,40 @@ public class MorningNoonEveningNightConverterTest {
 	}
 	
 	@Test
+	public void testTooLong() throws Exception {
+		DosageWrapper dosage = DosageWrapper.makeDosage(
+			StructuresWrapper.makeStructures(
+				UnitOrUnitsWrapper.makeUnits("tablet", "tabletter"), 
+				StructureWrapper.makeStructure(
+					1, "ved måltid og hvornår man ellers skulle føle trang", DateOrDateTimeWrapper.makeDate("2011-01-01"), DateOrDateTimeWrapper.makeDate("2011-01-30"), 
+					DayWrapper.makeDay(
+						1, 
+						MorningDoseWrapper.makeDose(new BigDecimal(1.5)), 
+						NoonDoseWrapper.makeDose(new BigDecimal(2.5)),
+						EveningDoseWrapper.makeDose(new BigDecimal(3.5)),
+						NightDoseWrapper.makeDose(new BigDecimal(4.5)))))); 
+		Assert.assertEquals(
+				DailyRepeatedConverterImpl.class, 
+				LongTextConverter.getConverterClass(dosage));
+		Assert.assertEquals(
+			"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages hver dag:\n"+
+			"   Doseringsforløb:\n"+
+			"   1,5 tabletter morgen ved måltid og hvornår man ellers skulle føle trang + 2,5 tabletter middag ved måltid og hvornår man ellers skulle føle trang + 3,5 tabletter aften ved måltid og hvornår man ellers skulle føle trang + 4,5 tabletter før sengetid ved måltid og hvornår man ellers skulle føle trang",
+			LongTextConverter.convert(dosage));
+		Assert.assertNull(ShortTextConverter.getConverterClass(dosage));
+		Assert.assertNull(ShortTextConverter.convert(dosage));
+		Assert.assertEquals(
+				12.0, 
+				DailyDosisCalculator.calculate(dosage).getValue().doubleValue(), 
+				0.000000001); 			
+		Assert.assertEquals(DosageType.Temporary, DosageTypeCalculator.calculate(dosage));		
+	}
+	
+	@Test
 	public void testAccordingToNeed() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeDosage(
 			StructuresWrapper.makeStructures(
-				UnitOrUnitsWrapper.makeUnits("tablet", "tabletter"),  
+				UnitOrUnitsWrapper.makeUnits("mg", "mg"),  
 				StructureWrapper.makeStructure(
 					1, "ved måltid", DateOrDateTimeWrapper.makeDate("2011-01-01"), DateOrDateTimeWrapper.makeDate("2011-01-30"), 
 					DayWrapper.makeDay(
@@ -99,13 +131,13 @@ public class MorningNoonEveningNightConverterTest {
 		Assert.assertEquals(
 			"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages hver dag:\n"+
 			"   Doseringsforløb:\n"+
-			"   1 tablet morgen efter behov ved måltid + 2 tabletter aften efter behov ved måltid",
+			"   1 mg morgen efter behov ved måltid + 2 mg aften efter behov ved måltid",
 			LongTextConverter.convert(dosage));
 		Assert.assertEquals(
 			MorningNoonEveningNightConverterImpl.class, 
 			ShortTextConverter.getConverterClass(dosage));
 		Assert.assertEquals(
-			"1 tablet morgen efter behov og 2 tabletter aften efter behov ved måltid", 
+			"1 mg morgen efter behov og 2 mg aften efter behov ved måltid", 
 			ShortTextConverter.convert(dosage));
 		Assert.assertNull(DailyDosisCalculator.calculate(dosage).getValue()); 			
 		Assert.assertEquals(DosageType.AccordingToNeed, DosageTypeCalculator.calculate(dosage));		

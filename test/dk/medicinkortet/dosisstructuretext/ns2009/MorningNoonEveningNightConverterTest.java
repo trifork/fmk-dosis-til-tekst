@@ -52,7 +52,7 @@ public class MorningNoonEveningNightConverterTest {
 			StructuresWrapper.makeStructures(
 				UnitOrUnitsWrapper.makeUnit("stk"), 
 				StructureWrapper.makeStructure(
-					1, "ved måltid", DateOrDateTimeWrapper.makeDate("2011-01-01"), DateOrDateTimeWrapper.makeDate("2011-01-30"),
+					1, "!", DateOrDateTimeWrapper.makeDate("2011-01-01"), DateOrDateTimeWrapper.makeDate("2011-01-30"),
 					DayWrapper.makeDay(
 						1, 
 						MorningDoseWrapper.makeDose(new BigDecimal(1)), 
@@ -62,13 +62,13 @@ public class MorningNoonEveningNightConverterTest {
 		Assert.assertEquals(
 			"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages hver dag:\n"+
 			"   Doseringsforløb:\n"+
-			"   1 stk morgen ved måltid + 2 stk middag ved måltid + 3 stk aften ved måltid + 4 stk før sengetid ved måltid",
+			"   1 stk morgen ! + 2 stk middag ! + 3 stk aften ! + 4 stk før sengetid !",
 			LongTextConverter.convert(dosage));
 		Assert.assertEquals(
 			MorningNoonEveningNightConverterImpl.class, 
 			ShortTextConverter.getConverterClass(dosage));
 		Assert.assertEquals(
-			"1 stk morgen, 2 stk middag, 3 stk aften og 4 stk før sengetid ved måltid", 
+			"1 stk morgen, 2 stk middag, 3 stk aften og 4 stk før sengetid !", 
 			ShortTextConverter.convert(dosage));
 		Assert.assertEquals(
 			10.0, 

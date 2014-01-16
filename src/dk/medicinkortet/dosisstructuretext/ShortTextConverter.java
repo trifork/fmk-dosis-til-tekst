@@ -49,7 +49,9 @@ import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
  */ 
 public class ShortTextConverter {
 
-	private static ArrayList<ShortTextConverterImpl> converters = new ArrayList<ShortTextConverterImpl>();
+	private static final int MAX_LENGTH = 70;
+	
+	private static ArrayList<ShortTextConverterImpl> converters = new ArrayList<ShortTextConverterImpl>();	
 	 
 	/**
 	 * Populate a list of implemented converters 
@@ -86,8 +88,11 @@ public class ShortTextConverter {
 	 */
 	public static String convert(DosageWrapper dosage) {
 		for(ShortTextConverterImpl converter: converters) {
-			if(converter.canConvert(dosage))
-				return converter.doConvert(dosage);
+			if(converter.canConvert(dosage)) {
+				String s = converter.doConvert(dosage);
+				if(s.length()<=MAX_LENGTH)
+					return s;
+			}
 		}
 		return null;
 	}
@@ -108,7 +113,7 @@ public class ShortTextConverter {
 	 */
 	public static Class<? extends ShortTextConverterImpl> getConverterClass(DosageWrapper dosage) {
 		for(ShortTextConverterImpl converter: converters) {
-			if(converter.canConvert(dosage))
+			if(converter.canConvert(dosage) && converter.doConvert(dosage).length()<=MAX_LENGTH) 
 				return converter.getClass();
 		}
 		return null;

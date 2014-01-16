@@ -98,6 +98,55 @@ public class MultiplePeriodesTest {
 	}
 	
 	@Test
+	public void testTwoNotFollwingPeriodes() throws Exception {
+		DosageWrapper dosage = DosageWrapper.makeDosage(
+			StructuresWrapper.makeStructures(
+				UnitOrUnitsWrapper.makeUnits("tablet", "tabletter"), 
+				StructureWrapper.makeStructure(
+					0, null, DateOrDateTimeWrapper.makeDate("2013-06-01"), null,
+					DayWrapper.makeDay(
+						1, 
+						MorningDoseWrapper.makeDose(new BigDecimal(2)), 
+						NoonDoseWrapper.makeDose(new BigDecimal(2)), 
+						EveningDoseWrapper.makeDose(new BigDecimal(2))),
+					DayWrapper.makeDay(
+						2, 
+						MorningDoseWrapper.makeDose(new BigDecimal(2)), 
+						EveningDoseWrapper.makeDose(new BigDecimal(2))),
+					DayWrapper.makeDay(
+						3, 
+						MorningDoseWrapper.makeDose(new BigDecimal(2)))), 
+						
+						
+				StructureWrapper.makeStructure(
+					1, null, DateOrDateTimeWrapper.makeDate("2013-06-04"), null, 
+					DayWrapper.makeDay(
+						1, 
+						MorningDoseWrapper.makeDose(new BigDecimal(1)))
+					)
+				)				
+			); 
+		Assert.assertEquals(
+			"Doseringen indeholder flere perioder, bemærk at der er overlappende perioder:\n" +
+			"\n" +
+			"Doseringsforløbet starter lørdag den 1. juni 2013 og ophører efter det angivne forløb.\n" +
+			"Bemærk at doseringen varierer:\n" +
+			"   Doseringsforløb:\n" +
+			"   Lørdag den 1. juni 2013: 2 tabletter morgen + 2 tabletter middag + 2 tabletter aften\n" +
+			"   Søndag den 2. juni 2013: 2 tabletter morgen + 2 tabletter aften\n" +
+			"   Mandag den 3. juni 2013: 2 tabletter morgen\n" +
+			"\n" +
+			"Doseringsforløbet starter tirsdag den 4. juni 2013 og gentages hver dag:\n" +
+			"   Doseringsforløb:\n" +
+			"   1 tablet morgen",
+			LongTextConverter.convert(dosage));
+		Assert.assertNull(ShortTextConverter.getConverterClass(dosage));
+		Assert.assertNull(DailyDosisCalculator.calculate(dosage).getValue()); 		
+		Assert.assertEquals(DosageType.Combined, DosageTypeCalculator.calculate(dosage));		
+	}
+	
+	
+	@Test
 	public void testTwoFollwingPeriodesWithOverlappingPN() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeDosage(
 			StructuresWrapper.makeStructures(
@@ -134,7 +183,7 @@ public class MultiplePeriodesTest {
 			); 
 				
 		Assert.assertEquals(
-			"Doseringen indeholder flere perioder, bemærk at der er ovelappende perioder:\n" +
+			"Doseringen indeholder flere perioder, bemærk at der er overlappende perioder:\n" +
 			"\n" +
 			"Doseringsforløbet starter lørdag den 1. juni 2013 og ophører efter det angivne forløb.\n" +
 			"Bemærk at doseringen varierer:\n" +
