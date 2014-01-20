@@ -79,10 +79,7 @@ public class ShortTextConverter {
 	}
 	
 	/**
-	 * Performs a conversion to a short text if possible. Note that the length of the 
-	 * "short text" might be longer than the XML schema allows for this text. This must 
-	 * be checked by the caller, as we don't want the implementation to depend on 
-	 * what context it is used in. 
+	 * Performs a conversion to a short text if possible. Otherwise null.
 	 * @param dosage
 	 * @return A short text string describing the dosage 
 	 */
