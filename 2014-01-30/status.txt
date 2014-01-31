@@ -1,0 +1,19 @@
+Så er der indlæst "nye" stamdata for doseringenheder og doseringsforslag. 
+
+Datasættet indeholder doseringsenheder svarende til hvad der tildigere er udstllet som doseringsenheder i produktion. 
+Dvs. de enheder der oprindeligt stammer fra Katarinas datasæt. 
+
+Doseringsforslagene stammer fra Katarinas datasæt. 
+
+Desuden er der fixet en bug, således at der ikke returneres korte doseringsoversættelser der er længere end 70 tegn. 
+
+Test1: Opdateret fra verison 12 til version 13
+Test2: Opdateret fra version 12 til version 13
+Udd: IKKE opdateret, aktuel version er stadig 7 
+Prodtest: IKKE opdateret, aktuel version er stadig 6
+Staging: Aktuel version 12 
+Prod: Opdateret fra version 13 til version 14
+
+Bemærk, at indholdet i datasættene på test og produktion er det samme, bortset fra versionsnumrene. 
+Stamdataindlæseren kræver lige nu, at versionsnumrene er fortløbende og uden huller i sekvensen 
+(der er dog meldt et ændringsønske ind, så vi kan få versionnumrene allignet). 

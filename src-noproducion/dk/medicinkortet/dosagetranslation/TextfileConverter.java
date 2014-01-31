@@ -23,17 +23,17 @@ public class TextfileConverter {
 	 * Path to input file. Text file with columns separated by '|'. First line is header. Columns are 
 	 * drugid, drug name (not used), unit-singular, unit-plural, (old code, not used), iteration, type of mapping, mapping, suppl. text 
 	 */
-	public static final String PATH_TO_INPUT_FILE = "2014-01-11/input.txt"; 
+	public static final String PATH_TO_INPUT_FILE = "2014-01-30/input.txt"; 
 
 	/**
 	 * Path to output dir, where json files are written 
 	 */
-	public static final String PATH_TO_OUTPUT_DIR = "2014-01-11";
+	public static final String PATH_TO_OUTPUT_DIR = "2014-01-30";
 	
 	/**
 	 * If true no dosage translations are written
 	 */
-	public static final boolean NO_DOSAGE_TRANSLATIONS = true; 
+	public static final boolean NO_DOSAGE_TRANSLATIONS = false; 
 	
 	/**
 	 * If true CSV files are created also (nice for debugging). CSV-files are not uploaded to SDM!
@@ -43,12 +43,12 @@ public class TextfileConverter {
 	/**
 	 * Release number. Must be greater than prevoius release. 
 	 */
-	public static final long RELEASE_NUMBER = 15L;
+	public static final long RELEASE_NUMBER = 13L;
 	
 	/**
 	 * Relase date for the data set, typically tomorrow
 	 */
-	public static final String RELEASE_DATE = "2014-01-11" ;
+	public static final String RELEASE_DATE = "2014-01-31" ;
 	
 	
 	public static void main(String[] args) {
