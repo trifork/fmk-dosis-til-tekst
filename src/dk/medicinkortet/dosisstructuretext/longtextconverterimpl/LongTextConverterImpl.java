@@ -116,14 +116,16 @@ public abstract class LongTextConverterImpl {
 			daglig = " daglig";
 		
 		if(day.getNumberOfDoses()==1) {
-			s.append(makeOneDose(day.getDose(0), unitOrUnits, structure.getSupplText()));
+			// The cast to CharSequence is needed to circumvent a gwt bug:
+			s.append((CharSequence)makeOneDose(day.getDose(0), unitOrUnits, structure.getSupplText()));
 			if(day.containsAccordingToNeedDosesOnly() && day.getDayNumber()>0)
 				s.append(" højst 1 gang"+daglig).append(supplText);
 			else
 				s.append(supplText);
 		}
 		else if(day.getNumberOfDoses()>1 && day.allDosesAreTheSame()) {
-			s.append(makeOneDose(day.getDose(0), unitOrUnits, structure.getSupplText()));
+			// The cast to CharSequence is needed to circumvent a gwt bug:
+			s.append((CharSequence)makeOneDose(day.getDose(0), unitOrUnits, structure.getSupplText()));
 			if(day.containsAccordingToNeedDosesOnly() && day.getDayNumber()>0)
 				s.append(" højst "+day.getNumberOfDoses()+" "+TextHelper.gange(day.getNumberOfDoses())+daglig+supplText);
 			else
@@ -131,7 +133,8 @@ public abstract class LongTextConverterImpl {
 		}
 		else {
 			for(int d=0; d<day.getNumberOfDoses(); d++) {
-				s.append(makeOneDose(day.getDose(d), unitOrUnits, structure.getSupplText())+supplText);
+				// The cast to CharSequence is needed to circumvent a gwt bug:
+				s.append((CharSequence)makeOneDose(day.getDose(d), unitOrUnits, structure.getSupplText())+supplText);
 				if(d<day.getNumberOfDoses()-1)
 					s.append(" + ");
 			}
