@@ -36,16 +36,16 @@ public class RepeatedConverterImpl extends ShortTextConverterImpl {
 		if(dosage.getStructures().getStructures().size()!=1)
 			return false;	
 		StructureWrapper structure = dosage.getStructures().getStructures().first();
-		if(structure.getIterationInterval()==0)
-			return false;
+        if(structure.getIterationInterval()==0)
+            return false;
 		if(structure.getDays().size()!=1)
 			return false;
 		DayWrapper day = structure.getDays().first();
 		if(day.containsAccordingToNeedDose())
 			return false;
-		if(day.getMorningDose()!=null || day.getNoonDose()!=null 
-				|| day.getEveningDose()!=null || day.getNightDose()!=null)
-			return false;
+//		if(day.getMorningDose()!=null || day.getNoonDose()!=null
+//				|| day.getEveningDose()!=null || day.getNightDose()!=null)
+//			return false;
 		if(!day.allDosesAreTheSame())
 			return false;
 		return true;

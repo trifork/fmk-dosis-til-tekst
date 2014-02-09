@@ -25,6 +25,7 @@ package dk.medicinkortet.dosisstructuretext.ns2009;
 import java.math.BigDecimal;
 
 import dk.medicinkortet.dosisstructuretext.LocalTime;
+import dk.medicinkortet.dosisstructuretext.vowrapper.*;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -36,14 +37,6 @@ import dk.medicinkortet.dosisstructuretext.ShortTextConverter;
 import dk.medicinkortet.dosisstructuretext.longtextconverterimpl.DailyRepeatedConverterImpl;
 import dk.medicinkortet.dosisstructuretext.longtextconverterimpl.TwoDaysRepeatedConverterImpl;
 import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.RepeatedConverterImpl;
-import dk.medicinkortet.dosisstructuretext.vowrapper.DateOrDateTimeWrapper;
-import dk.medicinkortet.dosisstructuretext.vowrapper.DayWrapper;
-import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
-import dk.medicinkortet.dosisstructuretext.vowrapper.PlainDoseWrapper;
-import dk.medicinkortet.dosisstructuretext.vowrapper.StructureWrapper;
-import dk.medicinkortet.dosisstructuretext.vowrapper.StructuresWrapper;
-import dk.medicinkortet.dosisstructuretext.vowrapper.TimedDoseWrapper;
-import dk.medicinkortet.dosisstructuretext.vowrapper.UnitOrUnitsWrapper;
 
 public class RepeatedConverterTest {
 	
@@ -479,5 +472,107 @@ public class RepeatedConverterTest {
 				0.000000001);
 		Assert.assertEquals(DosageType.Temporary, DosageTypeCalculator.calculate(dosage));				
 	}
-		
+
+    @Test
+    public void test1stkHver6uger() {
+        DosageWrapper dosage = DosageWrapper.makeDosage(
+                StructuresWrapper.makeStructures(
+                        UnitOrUnitsWrapper.makeUnit("stk"),
+                        StructureWrapper.makeStructure(
+                                42, null, DateOrDateTimeWrapper.makeDateTime("2014-02-07 07:19:00"), null,
+                                DayWrapper.makeDay(1,
+                                        PlainDoseWrapper.makeDose(new BigDecimal(1)))
+                        )
+                ));
+
+
+        Assert.assertEquals("Doseringsforløbet starter fredag den 7. februar 2014 kl. 07:19, forløbet gentages efter 42 dage:\n" +
+                "   Doseringsforløb:\n" +
+                "   Fredag den 7. februar 2014: 1 stk", LongTextConverter.convert(dosage));
+        Assert.assertEquals(
+                "1 stk fredag hver 6. uge",
+                ShortTextConverter.convert(dosage));
+        Assert.assertEquals(
+                0.023809524,
+                DailyDosisCalculator.calculate(dosage).getValue().doubleValue(),
+                0.000000001);
+        Assert.assertEquals(DosageType.Fixed, DosageTypeCalculator.calculate(dosage));
+    }
+
+    @Test
+    public void test1stkKl12Hver6uger() {
+        DosageWrapper dosage = DosageWrapper.makeDosage(
+                StructuresWrapper.makeStructures(
+                        UnitOrUnitsWrapper.makeUnit("stk"),
+                        StructureWrapper.makeStructure(
+                                42, null, DateOrDateTimeWrapper.makeDateTime("2014-02-07 07:19:00"), null,
+                                DayWrapper.makeDay(1,
+                                        TimedDoseWrapper.makeDose(new LocalTime(12,0), new BigDecimal(1), false))
+                        )
+                ));
+
+
+        Assert.assertEquals("Doseringsforløbet starter fredag den 7. februar 2014 kl. 07:19, forløbet gentages efter 42 dage:\n" +
+                "   Doseringsforløb:\n" +
+                "   Fredag den 7. februar 2014: 1 stk kl. 12:00", LongTextConverter.convert(dosage));
+        Assert.assertEquals(
+                "1 stk kl. 12:00 fredag hver 6. uge",
+                ShortTextConverter.convert(dosage));
+        Assert.assertEquals(
+                0.023809524,
+                DailyDosisCalculator.calculate(dosage).getValue().doubleValue(),
+                0.000000001);
+        Assert.assertEquals(DosageType.Fixed, DosageTypeCalculator.calculate(dosage));
+    }
+
+    @Test
+    public void test1stkMiddagHver6uger() {
+        DosageWrapper dosage = DosageWrapper.makeDosage(
+                StructuresWrapper.makeStructures(
+                        UnitOrUnitsWrapper.makeUnit("stk"),
+                        StructureWrapper.makeStructure(
+                                42, null, DateOrDateTimeWrapper.makeDateTime("2014-02-07 07:19:00"), null,
+                                DayWrapper.makeDay(1,
+                                        NoonDoseWrapper.makeDose(new BigDecimal(1)))
+                        )
+                ));
+
+
+        Assert.assertEquals("Doseringsforløbet starter fredag den 7. februar 2014 kl. 07:19, forløbet gentages efter 42 dage:\n" +
+                "   Doseringsforløb:\n" +
+                "   Fredag den 7. februar 2014: 1 stk middag", LongTextConverter.convert(dosage));
+        Assert.assertEquals(
+                "1 stk middag fredag hver 6. uge",
+                ShortTextConverter.convert(dosage));
+        Assert.assertEquals(
+                0.023809524,
+                DailyDosisCalculator.calculate(dosage).getValue().doubleValue(),
+                0.000000001);
+        Assert.assertEquals(DosageType.Fixed, DosageTypeCalculator.calculate(dosage));
+    }
+
+    @Test
+    public void test1stkMorgenOgNatHver6uger() {
+        DosageWrapper dosage = DosageWrapper.makeDosage(
+                StructuresWrapper.makeStructures(
+                        UnitOrUnitsWrapper.makeUnit("stk"),
+                        StructureWrapper.makeStructure(
+                                42, null, DateOrDateTimeWrapper.makeDateTime("2014-02-07 07:19:00"), null,
+                                DayWrapper.makeDay(1,
+                                        NoonDoseWrapper.makeDose(new BigDecimal(1)),
+                                        NightDoseWrapper.makeDose(new BigDecimal(1)))
+                        )
+                ));
+
+
+        Assert.assertEquals("Doseringsforløbet starter fredag den 7. februar 2014 kl. 07:19, forløbet gentages efter 42 dage:\n" +
+                "   Doseringsforløb:\n" +
+                "   Fredag den 7. februar 2014: 1 stk middag + 1 stk før sengetid", LongTextConverter.convert(dosage));
+        Assert.assertNull(ShortTextConverter.convert(dosage)); // does not have a short text translation
+        Assert.assertEquals(
+                0.047619048,
+                DailyDosisCalculator.calculate(dosage).getValue().doubleValue(),
+                0.000000001);
+        Assert.assertEquals(DosageType.Fixed, DosageTypeCalculator.calculate(dosage));
+    }
 }

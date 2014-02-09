@@ -62,13 +62,13 @@ public class ShortTextConverter {
 		converters.add(new AdministrationAccordingToSchemaConverterImpl());
 		converters.add(new FreeTextConverterImpl());
 		converters.add(new MorningNoonEveningNightConverterImpl());
-		converters.add(new RepeatedConverterImpl());		
+		converters.add(new WeeklyMorningNoonEveningNightConverterImpl());
+		converters.add(new RepeatedConverterImpl());
 		converters.add(new SimpleNonRepeatedConverterImpl());
 		converters.add(new MorningNoonEveningNightInNDaysConverterImp());
 		converters.add(new SimpleAccordingToNeedConverterImpl());
 		converters.add(new LimitedNumberOfDaysConverterImpl());
 		converters.add(new SimpleLimitedAccordingToNeedConverterImpl());
-		converters.add(new WeeklyMorningNoonEveningNightConverterImpl());
 		converters.add(new WeeklyRepeatedConverterImpl());
 		converters.add(new ParacetamolConverterImpl());
 		converters.add(new MorningNoonEveningNightAndAccordingToNeedConverterImpl());

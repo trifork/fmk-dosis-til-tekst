@@ -35,21 +35,24 @@ public class NumberOfWholeWeeksConverterImpl extends ShortTextConverterImpl {
 		if(dosage.getStructures().getStructures().size()!=1)
 			return false;	
 		StructureWrapper structure = dosage.getStructures().getStructures().first();
-		if(structure.getIterationInterval()%7>0)
-			return false;
+        // USK: denne klasse ser ud til at være kodet ud fra at interval altid er 28!
+        // Implementationen gav helt gale resultater ifm. CQ 1278 og CQ 1321 (FMK-).
+//		if(structure.getIterationInterval()%7>0)
+        if(structure.getIterationInterval()!=28)
+            return false;
 		if(structure.getStartDateOrDateTime().equals(structure.getEndDateOrDateTime()))
 			return false;
 		if(structure.getDays().first().getDayNumber()>7)
 			return false;
 		if(!structure.daysAreInUninteruptedSequenceFromOne())
 			return false;
-		if(!structure.allDaysAreTheSame()) 
+		if(!structure.allDaysAreTheSame())
 			return false;
 		if(!structure.allDosesAreTheSame())
 			return false;
 		if(structure.containsAccordingToNeedDose() || structure.containsTimedDose())
 			return false;
-		return true;	
+		return true;
 	}	
 	
 	@Override
