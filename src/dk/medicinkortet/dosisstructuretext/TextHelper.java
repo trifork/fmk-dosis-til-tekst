@@ -41,7 +41,7 @@ import dk.medicinkortet.dosisstructuretext.vowrapper.UnitOrUnitsWrapper;
 
 public class TextHelper {
 
-	public static final String VERSION = "2013-08-09";
+	public static final String VERSION = "2014-02-10";
 
 	public static final String LONG_DATE_FORMAT = "EEEEEEE 'den' d'.' MMMMMMM yyyy";
 	public static final String LONG_DATE_TIME_FORMAT = "EEEEEEE 'den' d'.' MMMMMMM yyyy 'kl.' HH:mm:ss";
