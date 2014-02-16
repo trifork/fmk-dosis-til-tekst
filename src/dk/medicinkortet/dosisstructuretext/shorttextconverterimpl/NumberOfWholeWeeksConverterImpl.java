@@ -35,10 +35,7 @@ public class NumberOfWholeWeeksConverterImpl extends ShortTextConverterImpl {
 		if(dosage.getStructures().getStructures().size()!=1)
 			return false;	
 		StructureWrapper structure = dosage.getStructures().getStructures().first();
-        // USK: denne klasse ser ud til at være kodet ud fra at interval altid er 28!
-        // Implementationen gav helt gale resultater ifm. CQ 1278 og CQ 1321 (FMK-).
-//		if(structure.getIterationInterval()%7>0)
-        if(structure.getIterationInterval()!=28)
+		if(structure.getIterationInterval()%7>0)
             return false;
 		if(structure.getStartDateOrDateTime().equals(structure.getEndDateOrDateTime()))
 			return false;
@@ -67,20 +64,38 @@ public class NumberOfWholeWeeksConverterImpl extends ShortTextConverterImpl {
 		
 		// Add times daily
 		if(day.getNumberOfDoses()>1)
-			text.append(" "+day.getNumberOfDoses()+" gange daglig i ");
+			text.append(" "+day.getNumberOfDoses()+" gange daglig");
 		else
-			text.append(" daglig i");
+			text.append(" daglig");
 		
-		// Add how many weeks/days
-		if(structure.getDays().size()==7)
-			text.append(" første uge, herefter 3 ugers pause");
-		else if(structure.getDays().size()==14)
-			text.append(" de første 2 uger, herefter 2 ugers pause");
-		else if(structure.getDays().size()==21)
-			text.append(" de første 3 uger, herefter 1 uges pause");
-		else 
-			text.append(" de første "+structure.getDays().size()+" dage, herefter "+(28-structure.getDays().size())+" dages pause");
-		
+        int days = structure.getDays().size();
+        int pauseDays = structure.getIterationInterval() - days;
+
+        // If pause == 0 then this structure is equivalent to a structure with just one day and iteration=1
+        if (pauseDays > 0) {
+            // Add how many weeks/days
+            if (days==7) {
+                text.append(" i første uge");
+            } else if(days % 7 == 0) {
+                int weeks = days / 7;
+                text.append(" i de første " + weeks + " uger");
+            } else {
+                text.append(" i de første "+days+" dage");
+            }
+
+            // Add pause
+            if (pauseDays == 7) {
+                text.append(", herefter 1 uges pause");
+            } else if (pauseDays % 7 == 0) {
+                int pauseWeeks = pauseDays / 7;
+                text.append(", herefter " + pauseWeeks + " ugers pause");
+            } else if (pauseDays == 1) {
+                text.append(", herefter 1 dags pause");
+            } else {
+                text.append(", herefter " + pauseDays + " dages pause");
+            }
+        }
+
 		return text.toString();
 	}
 
