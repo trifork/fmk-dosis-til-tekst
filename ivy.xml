@@ -11,9 +11,7 @@
 		<dependency org="junit" name="junit" rev="4.4" conf="test->default"/>
 		<dependency org="trifork" name="trifork-common" rev="latest.integration" conf="*->@"/>
 		<dependency org="log4j" name="log4j" rev="1.2.9" transitive="false" conf="test->default" />
-		<dependency org="org.apache.poi" name="poi" rev="3.10-beta1"/>
         <dependency org="com.google.code.gson" name="gson" rev="1.4" />
-		<dependency org="commons-lang" name="commons-lang" rev="2.4" />		
 	</dependencies>
 
 </ivy-module>

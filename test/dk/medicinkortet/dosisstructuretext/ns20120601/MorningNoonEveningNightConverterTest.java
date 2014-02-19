@@ -85,6 +85,38 @@ public class MorningNoonEveningNightConverterTest {
 	}
 	
 	@Test
+	public void testWhereEquals() throws Exception {
+		DosageWrapper dosage = DosageWrapper.makeDosage(
+			StructuresWrapper.makeStructures(
+				UnitOrUnitsWrapper.makeUnits("tablet", "tabletter"), 
+				StructureWrapper.makeStructure(
+					1, "ved måltid", DateOrDateTimeWrapper.makeDate("2011-01-01"), DateOrDateTimeWrapper.makeDate("2011-01-30"), 
+					DayWrapper.makeDay(
+						1, 
+						MorningDoseWrapper.makeDose(new BigDecimal(2)), 
+						EveningDoseWrapper.makeDose(new BigDecimal(2)))))); 
+		Assert.assertEquals(
+				DailyRepeatedConverterImpl.class, 
+				LongTextConverter.getConverterClass(dosage));
+		Assert.assertEquals(
+			"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages hver dag:\n"+
+			"   Doseringsforløb:\n"+
+			"   2 tabletter morgen ved måltid + 2 tabletter aften ved måltid",
+			LongTextConverter.convert(dosage));
+		Assert.assertEquals(
+			MorningNoonEveningNightConverterImpl.class, 
+			ShortTextConverter.getConverterClass(dosage));
+		Assert.assertEquals(
+			"2 tabletter morgen og aften ved måltid", 
+			ShortTextConverter.convert(dosage));
+		Assert.assertEquals(
+				4.0, 
+				DailyDosisCalculator.calculate(dosage).getValue().doubleValue(), 
+				0.000000001); 			
+		Assert.assertEquals(DosageType.Temporary, DosageTypeCalculator.calculate(dosage));		
+	}
+	
+	@Test
 	public void testTooLong() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeDosage(
 			StructuresWrapper.makeStructures(
