@@ -1,0 +1,14 @@
+20. februar 2014
+
+Stamdata for doseringenheder og doseringsforslag er opdateret med nye doseringsenheder. Ændringer kan ses i filen Ændringer.csv (utf-8 separeret med semikolon).
+
+Doseringsforslagene er som tidligere.
+
+Test1 og test2: Opdateres torsdag den 20. april med valid-from dato 2014-02-21 fra verison 13 til version 14
+Prod: Opdateres mandag den 10. marts med valid-from dato 2014-03-11 fra version 14 til version 15
+Prodtest: Opdateres mandag den 10. marts med valid-from dato 2014-03-11 fra version 7 til version 8
+Udd: Opdateres ikke, aktuel version er stadig 7 
+
+Bemærk, at indholdet i datasættene på test og produktion herefter vil være det samme, bortset fra versionsnumrene. 
+Stamdataindlæseren kræver lige nu, at versionsnumrene er fortløbende og uden huller i sekvensen 
+(der er dog meldt et ændringsønske ind, så vi kan få versionnumrene allignet). 
