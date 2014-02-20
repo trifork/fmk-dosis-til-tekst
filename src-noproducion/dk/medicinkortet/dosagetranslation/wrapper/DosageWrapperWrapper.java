@@ -111,7 +111,7 @@ public class DosageWrapperWrapper {
 			if(	types.get(0).equals("N daglig") && types.get(1).equals("N daglig") && 
 				iterationIntervals.get(0).intValue()==0 && iterationIntervals.get(1).intValue()>=1) {
 				// First periode
-				TreeMap<Integer, String> daysMap = splitDays(mappings.get(0));
+				TreeMap<Integer, String> daysMap = splitDays(types.get(0), mappings.get(0));
 				int lastDayNumber = ((SortedSet<Integer>)daysMap.keySet()).last();
 				GregorianCalendar c = new GregorianCalendar();
 				c.setTime(START_DATE);
@@ -124,7 +124,7 @@ public class DosageWrapperWrapper {
 			else if( types.get(0).equals("N daglig") && types.get(1).equals("N daglig") && 
 				 iterationIntervals.get(0).intValue()==0 && iterationIntervals.get(1).intValue()==0) {
 				// First periode
-				TreeMap<Integer, String> daysMap = splitDays(mappings.get(0));
+				TreeMap<Integer, String> daysMap = splitDays(types.get(0), mappings.get(0));
 				int lastDayNumber = ((SortedSet<Integer>)daysMap.keySet()).last();
 				GregorianCalendar c = new GregorianCalendar();
 				c.setTime(START_DATE);
@@ -133,7 +133,7 @@ public class DosageWrapperWrapper {
 				// Second periode
 				c.add(GregorianCalendar.DATE, 1);
 				Date c0 = c.getTime();
-				daysMap = splitDays(mappings.get(1));
+				daysMap = splitDays(types.get(1), mappings.get(1));
 				lastDayNumber = ((SortedSet<Integer>)daysMap.keySet()).last();
 				c.add(GregorianCalendar.DATE, lastDayNumber-1);
 				periodes.add(new Date[]{c0, c.getTime()});
@@ -151,7 +151,7 @@ public class DosageWrapperWrapper {
 	private static StructureWrapper wrapStructure(Integer iterationInterval, String type, 
 			String mapping, String supplText, Date startDate, Date endDate) throws ValidationException {
 		// Handle dag 1: ... dag 2: ... etc
-		TreeMap<Integer, String> days = splitDays(mapping);
+		TreeMap<Integer, String> days = splitDays(type, mapping);
 		// Wrap
 		return StructureWrapper.makeStructure(
 			iterationInterval, 
@@ -211,7 +211,7 @@ public class DosageWrapperWrapper {
 		return doseWrappers;
 	}
 	
-	private static TreeMap<Integer, String> splitDays(String mapping) {
+	private static TreeMap<Integer, String> splitDays(String type, String mapping) {
 		TreeMap<Integer, String> map = new TreeMap<Integer, String>();
 		ArrayList<String> days = new ArrayList<String>(Arrays.asList(mapping.split("\\s*(?i)dag\\s*")));		
 		if(days.get(0).length()==0)
@@ -219,6 +219,8 @@ public class DosageWrapperWrapper {
 		for(int i=0; i<days.size(); i++) {
 			String day = days.get(i);
 			int dayNumber = 1;
+			if(type.equals("PN"))
+				dayNumber = 0;
 			String daysMapping = day;
 			if(day.indexOf(':')>=0) {
 				dayNumber = Integer.parseInt(day.substring(0, day.indexOf(':')).trim());
