@@ -2307,7 +2307,7 @@ drugid|pname|enhed_e|enhed_f|kode|iteration|type|mapning|tekst
 28101282986|Bricanyl Turbuhaler|sug|sug|0000349|1|N daglig|1;1| 
 28101282986|Bricanyl Turbuhaler|sug|sug| |.| | | 
 28101282986|Bricanyl Turbuhaler|sug|sug|0000001|.| | | 
-28101282986|Bricanyl Turbuhaler|sug|sug|0000646|0|PN|1|før anstregelse
+28101282986|Bricanyl Turbuhaler|sug|sug|0000646|0|PN|1|før anstrengelse
 28101286686|Toradol| | | |.| | | 
 28101286986|Abboticin Novum|tablet|tabletter|0000039|1|N daglig|2;2;2| 
 28101286986|Abboticin Novum|tablet|tabletter|0000034|1|N daglig|4;4| 
@@ -2572,7 +2572,7 @@ drugid|pname|enhed_e|enhed_f|kode|iteration|type|mapning|tekst
 28101328488|Atenolol "Orifarm"|tablet|tabletter| |.| | | 
 28101328488|Atenolol "Orifarm"|tablet|tabletter|0000028|1|N daglig|0.5| 
 28101328488|Atenolol "Orifarm"|tablet|tabletter|0000024|1|N daglig|2| 
-28101329088|Airomir Autohaler|pust|pust|0000644|0|PN|1|før anstregelse
+28101329088|Airomir Autohaler|pust|pust|0000644|0|PN|1|før anstrengelse
 28101329088|Airomir Autohaler|pust|pust|0000645|0|PN|2|før anstrengelse
 28101329088|Airomir Autohaler|pust|pust|0000001|.| | | 
 28101329088|Airomir Autohaler|pust|pust|0000399|0|PN|1|ved anfald
@@ -3293,7 +3293,7 @@ drugid|pname|enhed_e|enhed_f|kode|iteration|type|mapning|tekst
 28101492390|Surlid|tablet|tabletter|0000001|.| | | 
 28101492390|Surlid|tablet|tabletter|0000925|1|N daglig|1|mindst 15 min før et måltid
 28101492390|Surlid|tablet|tabletter|0000026|1|N daglig|1| 
-28101492592|Bricanyl Turbuhaler|sug|sug|0000646|0|PN|1|før anstregelse
+28101492592|Bricanyl Turbuhaler|sug|sug|0000646|0|PN|1|før anstrengelse
 28101492592|Bricanyl Turbuhaler|sug|sug|0000352|0|PN|1|ved anfald
 28101492592|Bricanyl Turbuhaler|sug|sug|0000352|.|PN|1|ved anfald
 28101493892|Odrik|kapsel|kapsler|0000031|1|N daglig|2| 
@@ -3559,7 +3559,7 @@ drugid|pname|enhed_e|enhed_f|kode|iteration|type|mapning|tekst
 28101575493|Acular|dråbe|dråber|0000780|1|N daglig|1;1;1;1|i højre øje
 28101575493|Acular|dråbe|dråber|0000747|1|N daglig|1;1;1|i højre øje
 28101576593|Foradil|inhalationskapsel|inhalationskapsler|0000352|0|PN|1|ved anfald
-28101576593|Foradil|inhalationskapsel|inhalationskapsler|0000646|0|PN|1|før anstregelse
+28101576593|Foradil|inhalationskapsel|inhalationskapsler|0000646|0|PN|1|før anstrengelse
 28101576593|Foradil|inhalationskapsel|inhalationskapsler|0000347|0|PN|2|ved anfald
 28101576593|Foradil|inhalationskapsel|inhalationskapsler|0000349|1|N daglig|1;1| 
 28101576593|Foradil|inhalationskapsel|inhalationskapsler|0000351|1|N daglig|2;2| 
@@ -3790,7 +3790,7 @@ drugid|pname|enhed_e|enhed_f|kode|iteration|type|mapning|tekst
 28101697294|Airomir|pust|pust|0000217|0|PN|2|ved anfald
 28101697294|Airomir|pust|pust|0000645|0|PN|2|før anstrengelse
 28101697294|Airomir|pust|pust|0000399|0|PN|1|ved anfald
-28101697294|Airomir|pust|pust|0000644|0|PN|1|før anstregelse
+28101697294|Airomir|pust|pust|0000644|0|PN|1|før anstrengelse
 28101697994|Sevorane| | | |.| | | 
 28101698894|Famvir|tablet|tabletter|0000003|1|N daglig|2;2| 
 28101698894|Famvir|tablet|tabletter|0000039|1|N daglig|2;2;2| 
@@ -3884,10 +3884,10 @@ drugid|pname|enhed_e|enhed_f|kode|iteration|type|mapning|tekst
 28101728794|Buventol Easyhaler|sug|sug|0000647|0|PN|2|før anstrengelse
 28101728794|Buventol Easyhaler|sug|sug|0000352|0|PN|1|ved anfald
 28101728794|Buventol Easyhaler|sug|sug|0000352|.|PN|1|ved anfald
-28101728794|Buventol Easyhaler|sug|sug|0000646|0|PN|1|før anstregelse
+28101728794|Buventol Easyhaler|sug|sug|0000646|0|PN|1|før anstrengelse
 28101728794|Buventol Easyhaler|sug|sug|0000001|.| | | 
 28101728794|Buventol Easyhaler|sug|sug|0000347|0|PN|2|ved anfald
-28101728894|Buventol Easyhaler|sug|sug|0000646|0|PN|1|før anstregelse
+28101728894|Buventol Easyhaler|sug|sug|0000646|0|PN|1|før anstrengelse
 28101728894|Buventol Easyhaler|sug|sug|0000352|.|PN|1|ved anfald
 28101728894|Buventol Easyhaler|sug|sug|0000001|.| | | 
 28101728894|Buventol Easyhaler|sug|sug|0000352|0|PN|1|ved anfald
@@ -4052,7 +4052,7 @@ drugid|pname|enhed_e|enhed_f|kode|iteration|type|mapning|tekst
 28101784995|Glavamin| | | |.| | | 
 28101785695|Ventoline|sug|sug|0000352|0|PN|1|ved anfald
 28101785695|Ventoline|sug|sug|0000352|.|PN|1|ved anfald
-28101785695|Ventoline|sug|sug|0000646|0|PN|1|før anstregelse
+28101785695|Ventoline|sug|sug|0000646|0|PN|1|før anstrengelse
 28101787795|Nurofen Junior|ml|ml|0001142|.| | | 
 28101787795|Nurofen Junior|ml|ml|0001141|.| | | 
 28101787795|Nurofen Junior|ml|ml|0000124|1|N daglig|2.5;2.5;2.5| 
@@ -4470,7 +4470,7 @@ drugid|pname|enhed_e|enhed_f|kode|iteration|type|mapning|tekst
 28101879397|Pulmicort Turbuhaler|sug|sug|0000001|.| | | 
 28101879397|Pulmicort Turbuhaler|sug|sug|0000351|1|N daglig|2;2| 
 28101879397|Pulmicort Turbuhaler|sug|sug|0000032|1|N daglig|1;1| 
-28101879497|Terbasmin Turbuhaler|sug|sug|0000646|0|PN|1|før anstregelse
+28101879497|Terbasmin Turbuhaler|sug|sug|0000646|0|PN|1|før anstrengelse
 28101879497|Terbasmin Turbuhaler|sug|sug|0000352|0|PN|1|ved anfald
 28101879497|Terbasmin Turbuhaler|sug|sug|0000352|.|PN|1|ved anfald
 28101879497|Terbasmin Turbuhaler|sug|sug|0000350|1|N daglig|1;1;1;1| 
@@ -4868,7 +4868,7 @@ drugid|pname|enhed_e|enhed_f|kode|iteration|type|mapning|tekst
 28103007198|Oxis Turbuhaler|sug|sug|0000417|1|N daglig|1| 
 28103007198|Oxis Turbuhaler|sug|sug|0000349|1|N daglig|1;1| 
 28103007298|Oxis Turbuhaler|sug|sug|0000352|.|PN|1|ved anfald
-28103007298|Oxis Turbuhaler|sug|sug|0000646|0|PN|1|før anstregelse
+28103007298|Oxis Turbuhaler|sug|sug|0000646|0|PN|1|før anstrengelse
 28103007298|Oxis Turbuhaler|sug|sug|0000349|1|N daglig|1;1| 
 28103007298|Oxis Turbuhaler|sug|sug|0000352|0|PN|1|ved anfald
 28103007298|Oxis Turbuhaler|sug|sug|0000418|1|N daglig|2| 
@@ -5081,7 +5081,7 @@ drugid|pname|enhed_e|enhed_f|kode|iteration|type|mapning|tekst
 28103050098|balance 2,3% glucose, 1,75 mmol/l calcium|liter|liter|0000001|.| | | 
 28103050198|balance 4,25% glucose, 1,75 mmol/l calcium|liter|liter|0000001|.| | | 
 28103050298|Bricanyl Turbuhaler|sug|sug|0000350|1|N daglig|1;1;1;1| 
-28103050298|Bricanyl Turbuhaler|sug|sug|0000646|0|PN|1|før anstregelse
+28103050298|Bricanyl Turbuhaler|sug|sug|0000646|0|PN|1|før anstrengelse
 28103050298|Bricanyl Turbuhaler|sug|sug|0000349|1|N daglig|1;1| 
 28103050298|Bricanyl Turbuhaler|sug|sug|0000352|0|PN|1|ved anfald
 28103050298|Bricanyl Turbuhaler|sug|sug|0000352|.|PN|1|ved anfald
@@ -5543,7 +5543,7 @@ drugid|pname|enhed_e|enhed_f|kode|iteration|type|mapning|tekst
 28103170200|Zaditen|dråbe|dråber|0000744|1|N daglig|1;1|i højre øje
 28103170200|Zaditen|dråbe|dråber|0000745|1|N daglig|1;1|i venstre øje
 28103170200|Zaditen|dråbe|dråber|0000746|1|N daglig|2;2|, 1 i hvert øje
-28103170800|Delnil|inhalationskapsel|inhalationskapsler|0000646|0|PN|1|før anstregelse
+28103170800|Delnil|inhalationskapsel|inhalationskapsler|0000646|0|PN|1|før anstrengelse
 28103170800|Delnil|inhalationskapsel|inhalationskapsler|0000351|1|N daglig|2;2| 
 28103170800|Delnil|inhalationskapsel|inhalationskapsler|0000352|.|PN|1|ved anfald
 28103170800|Delnil|inhalationskapsel|inhalationskapsler|0000347|0|PN|2|ved anfald
@@ -5656,7 +5656,7 @@ drugid|pname|enhed_e|enhed_f|kode|iteration|type|mapning|tekst
 28103205500|Mycostatin|ml|ml|0000066|1|N daglig|1;1;1;1| 
 28103205500|Mycostatin|ml|ml|0000037|1|N daglig|10;10| 
 28103205500|Mycostatin|ml|ml|0000036|1|N daglig|5;5;5| 
-28103205700|Terbasmin Turbuhaler|sug|sug|0000646|0|PN|1|før anstregelse
+28103205700|Terbasmin Turbuhaler|sug|sug|0000646|0|PN|1|før anstrengelse
 28103205700|Terbasmin Turbuhaler|sug|sug|0000352|0|PN|1|ved anfald
 28103205700|Terbasmin Turbuhaler|sug|sug|0000352|.|PN|1|ved anfald
 28103205700|Terbasmin Turbuhaler|sug|sug|0000350|1|N daglig|1;1;1;1| 
@@ -6057,7 +6057,7 @@ drugid|pname|enhed_e|enhed_f|kode|iteration|type|mapning|tekst
 28103284701|DiTeKiPol/Act-Hib|pulver+solvens|pulver+solvens|0000434|.| | | 
 28103284701|DiTeKiPol/Act-Hib|pulver+solvens|pulver+solvens|0000343|.| | | 
 28103284901|Salamol|pust|pust|0000645|0|PN|2|før anstrengelse
-28103284901|Salamol|pust|pust|0000644|0|PN|1|før anstregelse
+28103284901|Salamol|pust|pust|0000644|0|PN|1|før anstrengelse
 28103284901|Salamol|pust|pust|0000399|0|PN|1|ved anfald
 28103284901|Salamol|pust|pust|0000217|0|PN|2|ved anfald
 28103285001|Metvix|påsmøring|påsmøringer| |.| | | 
@@ -6366,7 +6366,7 @@ drugid|pname|enhed_e|enhed_f|kode|iteration|type|mapning|tekst
 28103345302|Levitra|tablet|tabletter|0000995|0|PN|1|, 30 min før virkning ønskes
 28103345402|Levitra|tablet|tabletter|0000995|0|PN|1|, 30 min før virkning ønskes
 28103345502|Levitra|tablet|tabletter|0000995|0|PN|1|, 30 min før virkning ønskes
-28103346001|Oxis Turbuhaler|sug|sug|0000646|0|PN|1|før anstregelse
+28103346001|Oxis Turbuhaler|sug|sug|0000646|0|PN|1|før anstrengelse
 28103346001|Oxis Turbuhaler|sug|sug|0000349|1|N daglig|1;1| 
 28103346001|Oxis Turbuhaler|sug|sug|0000351|1|N daglig|2;2| 
 28103346001|Oxis Turbuhaler|sug|sug|0000418|1|N daglig|2| 
@@ -6913,7 +6913,7 @@ drugid|pname|enhed_e|enhed_f|kode|iteration|type|mapning|tekst
 28103470003|Ketoconazole Shampoo "Actavis" 2 %|vask|vaske|0000001|.| | | 
 28103472803|Alfuzosin "Orifarm"|tablet|tabletter|0000026|1|N daglig|1| 
 28103473003|Alfuzosin "Teva"|tablet|tabletter|0000026|1|N daglig|1| 
-28103476303|Oxis Turbohaler|sug|sug|0000646|0|PN|1|før anstregelse
+28103476303|Oxis Turbohaler|sug|sug|0000646|0|PN|1|før anstrengelse
 28103476303|Oxis Turbohaler|sug|sug|0000351|1|N daglig|2;2| 
 28103476303|Oxis Turbohaler|sug|sug|0000352|.|PN|1|ved anfald
 28103476303|Oxis Turbohaler|sug|sug|0000418|1|N daglig|2| 
@@ -8109,7 +8109,7 @@ drugid|pname|enhed_e|enhed_f|kode|iteration|type|mapning|tekst
 28103756704|Foradil HFA|pust|pust|0000347|0|PN|2|ved anfald
 28103756704|Foradil HFA|pust|pust|0000352|.|PN|1|ved anfald
 28103756704|Foradil HFA|pust|pust|0000352|0|PN|1|ved anfald
-28103756704|Foradil HFA|pust|pust|0000646|0|PN|1|før anstregelse
+28103756704|Foradil HFA|pust|pust|0000646|0|PN|1|før anstrengelse
 28103756704|Foradil HFA|pust|pust|0000211|1|N daglig|1;1| 
 28103757104|Crestor|tablet|tabletter|0000026|1|N daglig|1| 
 28103757104|Crestor|tablet|tabletter|0000024|1|N daglig|2| 
@@ -8666,7 +8666,7 @@ drugid|pname|enhed_e|enhed_f|kode|iteration|type|mapning|tekst
 28103881306|Pulmicort Turbuhaler|sug|sug|0000032|1|N daglig|1;1| 
 28103881306|Pulmicort Turbuhaler|sug|sug|0000001|.| | | 
 28103881406|Oxis Turbuhaler|sug|sug|0000352|.|PN|1|ved anfald
-28103881406|Oxis Turbuhaler|sug|sug|0000646|0|PN|1|før anstregelse
+28103881406|Oxis Turbuhaler|sug|sug|0000646|0|PN|1|før anstrengelse
 28103881406|Oxis Turbuhaler|sug|sug|0000352|0|PN|1|ved anfald
 28103881406|Oxis Turbuhaler|sug|sug|0000418|1|N daglig|2| 
 28103881406|Oxis Turbuhaler|sug|sug|0000351|1|N daglig|2;2| 
@@ -9625,7 +9625,7 @@ drugid|pname|enhed_e|enhed_f|kode|iteration|type|mapning|tekst
 28104041606|Oxis Turbuhaler|sug|sug|0000418|1|N daglig|2| 
 28104041606|Oxis Turbuhaler|sug|sug|0000417|1|N daglig|1| 
 28104041606|Oxis Turbuhaler|sug|sug|0000352|0|PN|1|ved anfald
-28104041606|Oxis Turbuhaler|sug|sug|0000646|0|PN|1|før anstregelse
+28104041606|Oxis Turbuhaler|sug|sug|0000646|0|PN|1|før anstrengelse
 28104041606|Oxis Turbuhaler|sug|sug|0000349|1|N daglig|1;1| 
 28104041606|Oxis Turbuhaler|sug|sug|0000352|.|PN|1|ved anfald
 28104041706|Dorzolamid "Sandoz"|dråbe|dråber|0000749|1|N daglig|2;2;2|, 1 i hvert øje
@@ -10856,7 +10856,7 @@ drugid|pname|enhed_e|enhed_f|kode|iteration|type|mapning|tekst
 28104252407|Foradil|pust|pust|0000351|1|N daglig|2;2| 
 28104252407|Foradil|pust|pust|0000347|0|PN|2|ved anfald
 28104252407|Foradil|pust|pust|0000211|1|N daglig|1;1| 
-28104252407|Foradil|pust|pust|0000646|0|PN|1|før anstregelse
+28104252407|Foradil|pust|pust|0000646|0|PN|1|før anstrengelse
 28104252407|Foradil|pust|pust|0000352|0|PN|1|ved anfald
 28104252407|Foradil|pust|pust|0000352|.|PN|1|ved anfald
 28104252407|Foradil|pust|pust|0000349|1|N daglig|1;1| 
@@ -11348,7 +11348,7 @@ drugid|pname|enhed_e|enhed_f|kode|iteration|type|mapning|tekst
 28104327808|Burana|tablet|tabletter|0000094|1|N daglig|0.5;0.5;0.5| 
 28104327808|Burana|tablet|tabletter|0000038|1|N daglig|1;1;1| 
 28104327808|Burana|tablet|tabletter|0000001|.| | | 
-28104328108|Foradil|pust|pust|0000646|0|PN|1|før anstregelse
+28104328108|Foradil|pust|pust|0000646|0|PN|1|før anstrengelse
 28104328108|Foradil|pust|pust|0000352|0|PN|1|ved anfald
 28104328108|Foradil|pust|pust|0000352|.|PN|1|ved anfald
 28104328108|Foradil|pust|pust|0000351|1|N daglig|2;2| 
@@ -12006,7 +12006,7 @@ drugid|pname|enhed_e|enhed_f|kode|iteration|type|mapning|tekst
 28104434608|Movicol Chokolade|brev|breve|0000084|1|N daglig|1| 
 28104434608|Movicol Chokolade|brev|breve|0000001|.| | | 
 28104434608|Movicol Chokolade|brev|breve|0000866|0|PN|8|, indtages i løbet af 6 timer
-28104434708|Bricanyl Turbohaler|sug|sug|0000646|0|PN|1|før anstregelse
+28104434708|Bricanyl Turbohaler|sug|sug|0000646|0|PN|1|før anstrengelse
 28104434708|Bricanyl Turbohaler|sug|sug|0000352|0|PN|1|ved anfald
 28104434708|Bricanyl Turbohaler|sug|sug|0000352|.|PN|1|ved anfald
 28104434708|Bricanyl Turbohaler|sug|sug|0000350|1|N daglig|1;1;1;1| 
@@ -12408,7 +12408,7 @@ drugid|pname|enhed_e|enhed_f|kode|iteration|type|mapning|tekst
 28104507109|Arthrotec|tablet|tabletter|0000259|1|N daglig|1;1|efter et måltid
 28104507209|Arthrotec Forte|tablet|tabletter|0000262|1|N daglig|1;1|ved et måltid
 28104507209|Arthrotec Forte|tablet|tabletter|0000259|1|N daglig|1;1|efter et måltid
-28104507809|Bricanyl Turbuhaler|sug|sug|0000646|0|PN|1|før anstregelse
+28104507809|Bricanyl Turbuhaler|sug|sug|0000646|0|PN|1|før anstrengelse
 28104507809|Bricanyl Turbuhaler|sug|sug|0000352|0|PN|1|ved anfald
 28104507809|Bricanyl Turbuhaler|sug|sug|0000352|.|PN|1|ved anfald
 28104507809|Bricanyl Turbuhaler|sug|sug|0000350|1|N daglig|1;1;1;1| 
@@ -13337,7 +13337,7 @@ drugid|pname|enhed_e|enhed_f|kode|iteration|type|mapning|tekst
 28104612709|Fluoxetin "2care4"|tablet|tabletter|0000081|1|M+M+A+N|1+0+0+0| 
 28104612709|Fluoxetin "2care4"|tablet|tabletter|0000026|1|N daglig|1| 
 28104612709|Fluoxetin "2care4"|tablet|tabletter|0000025|1|N daglig|4| 
-28104612809|Terbutalinsulfat "Paranova"|sug|sug|0000646|0|PN|1|før anstregelse
+28104612809|Terbutalinsulfat "Paranova"|sug|sug|0000646|0|PN|1|før anstrengelse
 28104612809|Terbutalinsulfat "Paranova"|sug|sug|0000352|0|PN|1|ved anfald
 28104612809|Terbutalinsulfat "Paranova"|sug|sug|0000352|.|PN|1|ved anfald
 28104612809|Terbutalinsulfat "Paranova"|sug|sug|0000350|1|N daglig|1;1;1;1| 
@@ -14254,7 +14254,7 @@ drugid|pname|enhed_e|enhed_f|kode|iteration|type|mapning|tekst
 28104755310|Visacor|tablet|tabletter|0000026|1|N daglig|1| 
 28104755310|Visacor|tablet|tabletter|0000024|1|N daglig|2| 
 28104755310|Visacor|tablet|tabletter|0000001|.| | | 
-28104756410|Oxez Turbuhaler|sug|sug|0000646|0|PN|1|før anstregelse
+28104756410|Oxez Turbuhaler|sug|sug|0000646|0|PN|1|før anstrengelse
 28104756410|Oxez Turbuhaler|sug|sug|0000418|1|N daglig|2| 
 28104756410|Oxez Turbuhaler|sug|sug|0000417|1|N daglig|1| 
 28104756410|Oxez Turbuhaler|sug|sug|0000352|0|PN|1|ved anfald
@@ -14948,7 +14948,7 @@ drugid|pname|enhed_e|enhed_f|kode|iteration|type|mapning|tekst
 28104864411|Oxis Turbuhaler|sug|sug|0000417|1|N daglig|1| 
 28104864411|Oxis Turbuhaler|sug|sug|0000351|1|N daglig|2;2| 
 28104864411|Oxis Turbuhaler|sug|sug|0000349|1|N daglig|1;1| 
-28104864511|Oxis Turbuhaler|sug|sug|0000646|0|PN|1|før anstregelse
+28104864511|Oxis Turbuhaler|sug|sug|0000646|0|PN|1|før anstrengelse
 28104864511|Oxis Turbuhaler|sug|sug|0000418|1|N daglig|2| 
 28104864511|Oxis Turbuhaler|sug|sug|0000417|1|N daglig|1| 
 28104864511|Oxis Turbuhaler|sug|sug|0000352|0|PN|1|ved anfald
@@ -15422,7 +15422,7 @@ drugid|pname|enhed_e|enhed_f|kode|iteration|type|mapning|tekst
 28104960311|Tresiba 100 Penfill|IE|IE|0000001|.| | | 
 28104960411|Tresiba 200 Flextouch|IE|IE|0000001|.| | | 
 28104961411|Picoprep|brev|breve|0000001|.| | | 
-28104962011|Ventolin|sug|sug|0000646|0|PN|1|før anstregelse
+28104962011|Ventolin|sug|sug|0000646|0|PN|1|før anstrengelse
 28104962011|Ventolin|sug|sug|0000352|0|PN|1|ved anfald
 28104962011|Ventolin|sug|sug|0000352|.|PN|1|ved anfald
 28104962411|Strattera|kapsel|kapsler|0000181|1|M+M+A+N|2+0+0+0| 
@@ -16265,7 +16265,7 @@ drugid|pname|enhed_e|enhed_f|kode|iteration|type|mapning|tekst
 28105144512|Flixotide|pust|pust|0000213|1|N daglig|2;2| 
 28105144512|Flixotide|pust|pust|0000211|1|N daglig|1;1| 
 28105144512|Flixotide|pust|pust|0000001|.| | | 
-28105145112|Terbasmin Turbuhaler|sug|sug|0000646|0|PN|1|før anstregelse
+28105145112|Terbasmin Turbuhaler|sug|sug|0000646|0|PN|1|før anstrengelse
 28105145112|Terbasmin Turbuhaler|sug|sug|0000352|0|PN|1|ved anfald
 28105145112|Terbasmin Turbuhaler|sug|sug|0000352|.|PN|1|ved anfald
 28105145112|Terbasmin Turbuhaler|sug|sug|0000350|1|N daglig|1;1;1;1| 
@@ -16429,7 +16429,7 @@ drugid|pname|enhed_e|enhed_f|kode|iteration|type|mapning|tekst
 28105167612|Phenergan|ml|ml|0000001|.| | | 
 28105168512|Mirena|spiral|spiraler|0000343|.| | | 
 28105168512|Mirena|spiral|spiraler|0000001|.| | | 
-28105168612|Ventolin|sug|sug|0000646|0|PN|1|før anstregelse
+28105168612|Ventolin|sug|sug|0000646|0|PN|1|før anstrengelse
 28105168612|Ventolin|sug|sug|0000352|0|PN|1|ved anfald
 28105168612|Ventolin|sug|sug|0000352|.|PN|1|ved anfald
 28105170812|Lutinus|vaginaltablet|vaginaltabletter|0001200|1|N daglig|1;1;1|i skeden
@@ -16446,7 +16446,7 @@ drugid|pname|enhed_e|enhed_f|kode|iteration|type|mapning|tekst
 28105171412|Valaciclovir "2care4"|tablet|tabletter|0000370|1|N daglig|2| 
 28105171412|Valaciclovir "2care4"|tablet|tabletter|0000026|1|N daglig|1| 
 28105171612|Airomir Autohaler|pust|pust|0000645|0|PN|2|før anstrengelse
-28105171612|Airomir Autohaler|pust|pust|0000644|0|PN|1|før anstregelse
+28105171612|Airomir Autohaler|pust|pust|0000644|0|PN|1|før anstrengelse
 28105171612|Airomir Autohaler|pust|pust|0000399|0|PN|1|ved anfald
 28105171612|Airomir Autohaler|pust|pust|0000217|0|PN|2|ved anfald
 28105171612|Airomir Autohaler|pust|pust|0000001|.| | | 

@@ -48,7 +48,7 @@ public class TextfileConverter {
 	/**
 	 * Relase date for the data set, typically tomorrow
 	 */
-	public static final String RELEASE_DATE = "2014-02-31" ;
+	public static final String RELEASE_DATE = "2014-03-31" ;
 	
 	
 	public static void main(String[] args) {
