@@ -24,6 +24,7 @@ package dk.medicinkortet.dosisstructuretext.shorttextconverterimpl;
 
 import java.util.SortedSet;
 
+import dk.medicinkortet.dosisstructuretext.TextHelper;
 import dk.medicinkortet.dosisstructuretext.longtextconverterimpl.WeeklyRepeatedConverterImpl.DayOfWeek;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DayWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
@@ -75,6 +76,9 @@ public class WeeklyRepeatedConverterImpl extends ShortTextConverterImpl {
 		text.append(makeDays(structure));
 	
 		text.append(" hver uge");
+		
+		if(structure.getSupplText()!=null)
+			text.append(TextHelper.maybeAddSpace(structure.getSupplText())+structure.getSupplText());
 		
 		return text.toString();
 	}

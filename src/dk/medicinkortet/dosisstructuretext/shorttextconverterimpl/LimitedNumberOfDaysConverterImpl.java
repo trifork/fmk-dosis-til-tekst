@@ -66,7 +66,13 @@ public class LimitedNumberOfDaysConverterImpl extends ShortTextConverterImpl {
 			text.append(" "+day.getAllDoses().size()+" "+TextHelper.gange(day.getAllDoses().size()));
 		else {			
 			text.append(" "+day.getAllDoses().size()+" "+TextHelper.gange(day.getAllDoses().size())+" daglig");
-			text.append(" i "+structure.getDays().last().getDayNumber()+" dage");
+			int days = structure.getDays().last().getDayNumber();
+			if(days == 7)
+				text.append(" i 1 uge");
+			else if(days%7 == 0)
+				text.append(" i "+(days/7)+" uger");
+			else
+				text.append(" i "+days+" dage");
 		}
 		if(structure.getSupplText()!=null)
 			text.append(TextHelper.maybeAddSpace(structure.getSupplText())).append(structure.getSupplText());

@@ -26,15 +26,18 @@ import java.util.ArrayList;
 
 import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.AdministrationAccordingToSchemaConverterImpl;
 import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.CombinedTwoPeriodesConverterImpl;
+import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.DayInWeekConverterImpl;
 import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.FreeTextConverterImpl;
 import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.LimitedNumberOfDaysConverterImpl;
 import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.MorningNoonEveningNightAndAccordingToNeedConverterImpl;
 import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.MorningNoonEveningNightConverterImpl;
+import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.MorningNoonEveningNightEyeOrEarConverterImpl;
 import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.MorningNoonEveningNightInNDaysConverterImp;
 import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.MultipleDaysNonRepeatedConverterImpl;
 import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.NumberOfWholeWeeksConverterImpl;
 import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.ParacetamolConverterImpl;
 import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.RepeatedConverterImpl;
+import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.RepeatedEyeOrEarConverterImpl;
 import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.ShortTextConverterImpl;
 import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.SimpleAccordingToNeedConverterImpl;
 import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.SimpleLimitedAccordingToNeedConverterImpl;
@@ -61,8 +64,10 @@ public class ShortTextConverter {
 	static {
 		converters.add(new AdministrationAccordingToSchemaConverterImpl());
 		converters.add(new FreeTextConverterImpl());
+		converters.add(new MorningNoonEveningNightEyeOrEarConverterImpl());
 		converters.add(new MorningNoonEveningNightConverterImpl());
 		converters.add(new WeeklyMorningNoonEveningNightConverterImpl());
+		converters.add(new RepeatedEyeOrEarConverterImpl());
 		converters.add(new RepeatedConverterImpl());
 		converters.add(new SimpleNonRepeatedConverterImpl());
 		converters.add(new MorningNoonEveningNightInNDaysConverterImp());
@@ -74,6 +79,7 @@ public class ShortTextConverter {
 		converters.add(new MorningNoonEveningNightAndAccordingToNeedConverterImpl());
 		converters.add(new MultipleDaysNonRepeatedConverterImpl());
 		converters.add(new NumberOfWholeWeeksConverterImpl());
+		converters.add(new DayInWeekConverterImpl());
 		// Converters for more than one periode:
 		converters.add(new CombinedTwoPeriodesConverterImpl()); 
 	}

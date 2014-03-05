@@ -22,6 +22,8 @@
 
 package dk.medicinkortet.dosisstructuretext.shorttextconverterimpl;
 
+import java.math.BigDecimal;
+
 import dk.medicinkortet.dosisstructuretext.TextHelper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DoseWrapper;
@@ -46,6 +48,19 @@ public abstract class ShortTextConverterImpl {
 		}		
 	}
 	
+	protected static String toValue(BigDecimal dose) {
+		if(dose!=null) {
+			return TextHelper.quantityToString(dose);
+		}
+		else {
+			return null;
+		}		
+	}
+	
+	protected static boolean hasIntegerValue(BigDecimal n) {
+		return n.signum() == 0 || n.scale() <= 0 || n.stripTrailingZeros().scale() <= 0;
+	}
+	
 	protected static String toValue(DoseWrapper dose, UnitOrUnitsWrapper unitOrUnits) {
 		String s = toValue(dose);
 		String u = TextHelper.getUnit(dose, unitOrUnits);
@@ -53,6 +68,15 @@ public abstract class ShortTextConverterImpl {
 			return s + " " + u;
 		else 
 			return s + " " + u + " " + dose.getLabel();
+	}
+	
+	protected static String toValue(BigDecimal dose, String label, UnitOrUnitsWrapper unitOrUnits) {
+		String s = toValue(dose);
+		String u = TextHelper.getUnit(dose, unitOrUnits);
+		if(label==null || label.length()==0)
+			return s + " " + u;
+		else 
+			return s + " " + u + " " + label;
 	}
 	
 	

@@ -148,6 +148,20 @@ public class StructureWrapper {
 		return null;
 	}
 	
+	public boolean sameDayOfWeek() {
+		 List<DayWrapper> daysAsList = getDaysAsList();
+		 if(daysAsList.size()==1)
+			 return false;
+		 int remainder = -1;
+		 for(DayWrapper day: daysAsList) {
+			 int r = day.getDayNumber() % 7;
+			 if(remainder>=0&& remainder!=r)
+				return false;
+			 remainder = r;
+		 }
+		 return true;
+	}
+	
 	public boolean allDaysAreTheSame() {
 		if(areAllDaysTheSame==null) {
 			areAllDaysTheSame = true;

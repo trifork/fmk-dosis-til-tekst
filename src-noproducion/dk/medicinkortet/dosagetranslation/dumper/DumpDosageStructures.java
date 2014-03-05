@@ -13,10 +13,10 @@ public class DumpDosageStructures {
 	public void add(DumpDosageStructure dumpDosageStructure) {
 		if(dumpDosageStructure==null)
 			return;
-		if(dumpDosageStructure.getShortTranslation()!=null)
+		if(dumpDosageStructure.getShortTranslation()!=null) {
 			map.put(dumpDosageStructure.getShortTranslation(), dumpDosageStructure);
-		else
 			list.add(dumpDosageStructure);
+		}
 	}
 
 	public TreeSet<DumpDosageStructure> getAll() {
@@ -40,6 +40,14 @@ public class DumpDosageStructures {
 			return d;
 		else 
 			return null;
+	}
+
+	public DumpDosageStructure get(Long dosageStructureCode) {
+		for(DumpDosageStructure s: list) {
+			if(s.getCode().equals(dosageStructureCode))
+				return s;
+		}
+		return null;
 	}
 	
 }

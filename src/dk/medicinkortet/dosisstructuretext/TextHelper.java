@@ -202,8 +202,24 @@ public class TextHelper {
 		else 
 			return null;
 	}
+	
+	public static String getUnit(BigDecimal dose, UnitOrUnitsWrapper unitOrUnits) {
+		if(unitOrUnits.getUnit()!=null)
+			return correctUnit(dose, unitOrUnits.getUnit());
+		else if(unitOrUnits.getUnitSingular()!=null && unitOrUnits.getUnitPlural()!=null)
+			return chooseUnit(dose, unitOrUnits.getUnitSingular(), unitOrUnits.getUnitPlural());
+		else 
+			return null;
+	}
 
 	private static String correctUnit(DoseWrapper dose, String unit) {
+		if(hasPluralUnit(dose))
+			return unitToPlural(unit);
+		else 
+			return unitToSingular(unit);			
+	}
+	
+	private static String correctUnit(BigDecimal dose, String unit) {
 		if(hasPluralUnit(dose))
 			return unitToPlural(unit);
 		else 
@@ -217,12 +233,28 @@ public class TextHelper {
 			return unitSingular;
 	}
 	
+	private static String chooseUnit(BigDecimal dose, String unitSingular, String unitPlural) {
+		if(hasPluralUnit(dose))
+			return unitPlural;
+		else
+			return unitSingular;
+	}
+	
 	private static boolean hasPluralUnit(DoseWrapper dose) {
 		if(dose.getDoseQuantity()!=null) {
 			return dose.getDoseQuantity().doubleValue()>1.0 || dose.getDoseQuantity().doubleValue()<0.000000001d;
 		}
 		else if(dose.getMaximalDoseQuantity()!=null) {
 			return dose.getMaximalDoseQuantity().doubleValue()>1.0 || dose.getMaximalDoseQuantity().doubleValue()<0.000000001d;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	private static boolean hasPluralUnit(BigDecimal dose) {
+		if(dose!=null) {
+			return dose.doubleValue()>1.0 || dose.doubleValue()<0.000000001d;
 		}
 		else {
 			return false;

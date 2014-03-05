@@ -14,4 +14,14 @@ public class DumpDrugsDosageStructures {
 		return dumpDrugsDosageStructures;
 	}
 	
+	public ArrayList<DumpDrugsDosageStructure> getAll(Long drugId) {
+		ArrayList<DumpDrugsDosageStructure> result = new ArrayList<DumpDrugsDosageStructure>();
+		for(DumpDrugsDosageStructure d: dumpDrugsDosageStructures) {
+			if(d.getDrugId().equals(drugId)) {
+				result.add(d);
+			}
+		}
+		return result;
+	}
+	
 }

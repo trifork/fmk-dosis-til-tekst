@@ -32,6 +32,7 @@ import dk.medicinkortet.dosisstructuretext.DosageType;
 import dk.medicinkortet.dosisstructuretext.DosageTypeCalculator;
 import dk.medicinkortet.dosisstructuretext.LongTextConverter;
 import dk.medicinkortet.dosisstructuretext.ShortTextConverter;
+import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.MorningNoonEveningNightConverterImpl;
 import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.SimpleAccordingToNeedConverterImpl;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DateOrDateTimeWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DayWrapper;
@@ -117,6 +118,32 @@ public class SimpleAccordingToNeedConverterTest {
 				"   Efter behov: 2 tabletter efter behov 2 gange",
 				LongTextConverter.convert(dosage));
 		Assert.assertNull(ShortTextConverter.convert(dosage));
+		Assert.assertTrue(DailyDosisCalculator.calculate(dosage).isNone());
+		Assert.assertEquals(DosageType.AccordingToNeed, DosageTypeCalculator.calculate(dosage));				
+	}
+	
+	@Test
+	public void testAccordingMmanToNeed() throws Exception {
+		DosageWrapper dosage = 
+			DosageWrapper.makeDosage(
+				StructuresWrapper.makeStructures(
+					UnitOrUnitsWrapper.makeUnits("tablet", "tabletter"), 
+					StructureWrapper.makeStructure(
+						1, null, DateOrDateTimeWrapper.makeDate("2011-01-01"), DateOrDateTimeWrapper.makeDate("2011-01-11"),
+						DayWrapper.makeDay(1,
+							MorningDoseWrapper.makeDose(new BigDecimal(2), true), 
+							EveningDoseWrapper.makeDose(new BigDecimal(2), true)))));
+		Assert.assertEquals(
+				"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages hver dag:\n"+
+				"   Doseringsforløb:\n"+
+				"   2 tabletter morgen efter behov + 2 tabletter aften efter behov",
+				LongTextConverter.convert(dosage));
+		Assert.assertEquals(
+				MorningNoonEveningNightConverterImpl.class, 
+				ShortTextConverter.getConverterClass(dosage));
+		Assert.assertEquals(
+				"2 tabletter morgen efter behov og aften efter behov", 
+				ShortTextConverter.convert(dosage));
 		Assert.assertTrue(DailyDosisCalculator.calculate(dosage).isNone());
 		Assert.assertEquals(DosageType.AccordingToNeed, DosageTypeCalculator.calculate(dosage));				
 	}

@@ -55,13 +55,13 @@ public class SimpleLimitedAccordingToNeedConverterTest {
 				StructuresWrapper.makeStructures(
 					UnitOrUnitsWrapper.makeUnits("påsmøring", "påsmøringer"), 
 					StructureWrapper.makeStructure(
-						0, null, DateOrDateTimeWrapper.makeDate("2014-01-01"), DateOrDateTimeWrapper.makeDate("2014-12-31"),
+						1, null, DateOrDateTimeWrapper.makeDate("2014-01-01"), DateOrDateTimeWrapper.makeDate("2014-12-31"),
 						DayWrapper.makeDay(1,
 							PlainDoseWrapper.makeDose(new BigDecimal(1), true)))));
 		Assert.assertEquals(
 				"Doseringsforløbet starter onsdag den 1. januar 2014 og gentages hver dag:\n"+
 				"   Doseringsforløb:\n"+
-				"   Onsdag den 1. januar 2014: 1 påsmøring efter behov højst 1 gang daglig",
+				"   1 påsmøring efter behov højst 1 gang daglig",
 				LongTextConverter.convert(dosage));
 		Assert.assertEquals(
 				SimpleLimitedAccordingToNeedConverterImpl.class, 

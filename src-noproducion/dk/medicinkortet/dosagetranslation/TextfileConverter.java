@@ -23,12 +23,12 @@ public class TextfileConverter {
 	 * Path to input file. Text file with columns separated by '|'. First line is header. Columns are 
 	 * drugid, drug name (not used), unit-singular, unit-plural, (old code, not used), iteration, type of mapping, mapping, suppl. text 
 	 */
-	public static final String PATH_TO_INPUT_FILE = "2014-02-20/input.txt"; 
+	public static final String PATH_TO_INPUT_FILE = "2014-03-31/input.txt"; 
 
 	/**
 	 * Path to output dir, where json files are written 
 	 */
-	public static final String PATH_TO_OUTPUT_DIR = "2014-02-20";
+	public static final String PATH_TO_OUTPUT_DIR = "2014-03-31";
 	
 	/**
 	 * If true no dosage translations are written
@@ -43,12 +43,12 @@ public class TextfileConverter {
 	/**
 	 * Release number. Must be greater than prevoius release. 
 	 */
-	public static final long RELEASE_NUMBER = 14L;
+	public static final long RELEASE_NUMBER = 20L;
 	
 	/**
 	 * Relase date for the data set, typically tomorrow
 	 */
-	public static final String RELEASE_DATE = "2014-02-21" ;
+	public static final String RELEASE_DATE = "2014-02-31" ;
 	
 	
 	public static void main(String[] args) {
@@ -87,9 +87,11 @@ public class TextfileConverter {
 			else
 				SDMOutputter.dumpDrugsDosageStructures(destinationDir, dumpDrugsDosageStructures, CREATE_CSV_ALSO);
 
-			if(CREATE_CSV_ALSO)
+			if(CREATE_CSV_ALSO) {
 				SDMOutputter.dumpCompleteUnitTable(destinationDir, dumpDrugs, dumpDosageUnits, CREATE_CSV_ALSO);
-			
+				SDMOutputter.dumpFilteredDrugTable(destinationDir, dumpDrugs, dumpDosageUnits, dumpDrugsDosageStructures, dumpDosageStructures, CREATE_CSV_ALSO);
+			}
+				
 			System.out.println("Done!");
 			
 		} 
@@ -116,42 +118,40 @@ public class TextfileConverter {
 		for(RawDefinition d: rawDefinitions) {
 			if(d.isComplete()) {				
 				
-				String xml = xmlBuilder.toXML(d);
-				if(xml.length()<10000) {
+				String xml = xmlBuilder.toXML(d, 10000);
 					
-					String simpleString = null;
-					if(d.getIterationInterval()!=null && d.getIterationInterval().equals("1"))
-						simpleString = d.getSimpleString();
+				String simpleString = null;
+				if(d.getIterationInterval()!=null && d.getIterationInterval().equals("1"))
+					simpleString = d.getSimpleString();
+				
+				DumpDosageStructure dumpDosageStructure = new DumpDosageStructure(
+						releaseNumber, 
+						0L, 
+						d.getType(),
+						simpleString,
+						d.getSupplementaryText(), 
+						xml, 
+						d.getShortText(), 
+						d.getLongText());
+				
+				// Try to reuse one of the existing XMLs 
+				DumpDosageStructure matchingFormer = dumpDosageStructures.getMatchingFormer(dumpDosageStructure);
 					
-					DumpDosageStructure dumpDosageStructure = new DumpDosageStructure(
+				if(matchingFormer==null) {
+					nextCode++;
+					dumpDosageStructure.setCode(nextCode);
+					dumpDosageStructures.add(dumpDosageStructure);
+					dumpDrugsDosageStructures.add(new DumpDrugsDosageStructure(
 							releaseNumber, 
-							0L, 
-							d.getType(),
-							simpleString,
-							d.getSupplementaryText(), 
-							xml, 
-							d.getShortText(), 
-							d.getLongText());
-					
-					// Try to reuse one of the existing XMLs 
-					DumpDosageStructure matchingFormer = dumpDosageStructures.getMatchingFormer(dumpDosageStructure);
-						
-					if(matchingFormer==null) {
-						nextCode++;
-						dumpDosageStructure.setCode(nextCode);
-						dumpDosageStructures.add(dumpDosageStructure);
-						dumpDrugsDosageStructures.add(new DumpDrugsDosageStructure(
-								releaseNumber, 
-								d.getDrugIdentifier(), 
-								nextCode));
-					}
-					else {
-						dumpDosageStructure.setCode(matchingFormer.getCode());
-						dumpDrugsDosageStructures.add(new DumpDrugsDosageStructure(
-								releaseNumber, 
-								d.getDrugIdentifier(), 
-								matchingFormer.getCode()));
-					}
+							d.getDrugIdentifier(), 
+							nextCode));
+				}
+				else {
+					dumpDosageStructure.setCode(matchingFormer.getCode());
+					dumpDrugsDosageStructures.add(new DumpDrugsDosageStructure(
+							releaseNumber, 
+							d.getDrugIdentifier(), 
+							matchingFormer.getCode()));
 				}
 			}
 		}

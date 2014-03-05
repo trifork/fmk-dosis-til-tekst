@@ -35,6 +35,7 @@ import dk.medicinkortet.dosisstructuretext.LongTextConverter;
 import dk.medicinkortet.dosisstructuretext.ShortTextConverter;
 import dk.medicinkortet.dosisstructuretext.longtextconverterimpl.DefaultLongTextConverterImpl;
 import dk.medicinkortet.dosisstructuretext.longtextconverterimpl.WeeklyRepeatedConverterImpl;
+import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.DayInWeekConverterImpl;
 import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.RepeatedConverterImpl;
 import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.SimpleLimitedAccordingToNeedConverterImpl;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DateOrDateTimeWrapper;
@@ -252,9 +253,43 @@ public class RepeatedConverterTest {
 				RepeatedConverterImpl.class, 
 				ShortTextConverter.getConverterClass(dosage));
 		Assert.assertEquals(
-				"4 tabletter daglig ved måltid", 
+				"4 tabletter 1 gang daglig ved måltid", 
 				ShortTextConverter.convert(dosage));
 		Assert.assertEquals(4.0, DailyDosisCalculator.calculate(dosage).getValue().doubleValue(), 0.000000001); 				
+		Assert.assertEquals(DosageType.Temporary, DosageTypeCalculator.calculate(dosage));
+	}
+	
+	@Test
+	public void testNew() throws Exception {
+		DosageWrapper dosage = DosageWrapper.makeDosage(
+			StructuresWrapper.makeStructures(
+				UnitOrUnitsWrapper.makeUnits("plaster", "plastre"),  
+				StructureWrapper.makeStructure(
+					35, null, DateOrDateTimeWrapper.makeDate("2011-01-01"), DateOrDateTimeWrapper.makeDate("2011-01-04"),  
+					DayWrapper.makeDay(
+						1, 
+						PlainDoseWrapper.makeDose(new BigDecimal(1))), 
+					DayWrapper.makeDay(
+						8,
+						PlainDoseWrapper.makeDose(new BigDecimal(1))), 
+					DayWrapper.makeDay(
+						15, 
+						PlainDoseWrapper.makeDose(new BigDecimal(1))))));		
+		Assert.assertEquals(
+				"Doseringsforløbet starter lørdag den 1. januar 2011, forløbet gentages efter 35 dage.\n"+
+				"Bemærk at doseringen har et komplekst forløb:\n"+
+				"   Doseringsforløb:\n"+
+				"   Lørdag den 1. januar 2011: 1 plaster\n"+
+				"   Lørdag den 8. januar 2011: 1 plaster\n"+
+				"   Lørdag den 15. januar 2011: 1 plaster",
+				LongTextConverter.convert(dosage));
+		Assert.assertEquals(
+				DayInWeekConverterImpl.class, 
+				ShortTextConverter.getConverterClass(dosage));
+		Assert.assertEquals(
+				"1 plaster daglig lørdag i de første 3 uger, herefter 2 ugers pause", 
+				ShortTextConverter.convert(dosage));
+		Assert.assertEquals(3/35.0, DailyDosisCalculator.calculate(dosage).getValue().doubleValue(), 0.000000001); 				
 		Assert.assertEquals(DosageType.Temporary, DosageTypeCalculator.calculate(dosage));
 	}
 	

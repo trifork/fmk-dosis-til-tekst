@@ -77,8 +77,12 @@ public class RepeatedConverterImpl extends ShortTextConverterImpl {
 		int numberOfDoses = day.getNumberOfDoses();
 		 
 		// Repeated daily
-		if(iterationInterval==1 && numberOfDoses==1)
-			return " daglig";
+		if(iterationInterval==1 && numberOfDoses==1) {
+			if(day.getDose(0).getLabel().equals("") && day.getDose(0).getDoseQuantity()!=null && day.getDose(0).getDoseQuantity().doubleValue()>1.000000001)
+				return " 1 gang daglig";
+			else
+				return " daglig";
+		}
 		if(iterationInterval==1 && numberOfDoses>1)
 			return " "+numberOfDoses+" "+TextHelper.gange(numberOfDoses)+" daglig";
 

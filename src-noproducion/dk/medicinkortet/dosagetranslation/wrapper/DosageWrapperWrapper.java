@@ -219,8 +219,12 @@ public class DosageWrapperWrapper {
 		for(int i=0; i<days.size(); i++) {
 			String day = days.get(i);
 			int dayNumber = 1;
-			if(type.equals("PN"))
-				dayNumber = 0;
+			if(type.equals("PN")) {
+				if(mapping.indexOf(";")>0)
+					dayNumber = 1;
+				else
+					dayNumber = 0;
+			}
 			String daysMapping = day;
 			if(day.indexOf(':')>=0) {
 				dayNumber = Integer.parseInt(day.substring(0, day.indexOf(':')).trim());

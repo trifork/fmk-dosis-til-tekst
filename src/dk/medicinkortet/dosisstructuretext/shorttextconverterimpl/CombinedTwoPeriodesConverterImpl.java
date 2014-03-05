@@ -63,14 +63,19 @@ public class CombinedTwoPeriodesConverterImpl extends ShortTextConverterImpl {
 				fixedStructure));
 		String fixedText = ShortTextConverter.convert(fixedDosage);
 		
-		int lastFixedDayNumber = tempStructure.getDays().last().getDayNumber();
-		if(lastFixedDayNumber==1) {
+		int days = tempStructure.getDays().last().getDayNumber();
+		if(days==1) {
 			return "første dag "+ tempText + ", herefter "+fixedText;
 		}
 		else {
-			String tempTail = " i "+lastFixedDayNumber+" dage";
-//			if(tempText.indexOf(',')>=0)
-//				tempTail = tempTail;
+			String tempTail = null;
+			if(days == 7)
+				tempTail = " i 1 uge";
+			else if(days%7 == 0)
+				tempTail = " i "+(days/7)+" uger";
+			else
+				tempTail = " i "+days+" dage";
+
 			if(tempText.indexOf(tempTail)>0)
 				return tempText + ", herefter "+fixedText;
 			else
