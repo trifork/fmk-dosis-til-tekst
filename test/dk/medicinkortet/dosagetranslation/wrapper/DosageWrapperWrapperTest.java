@@ -87,7 +87,7 @@ public class DosageWrapperWrapperTest {
 				"   Søndag den 23. juni 2013: 1 tablet",
 				definition.getLongText());
 		Assert.assertEquals(
-				"1 tablet daglig i de første 3 uger, herefter 1 uges pause", 
+				"1 tablet daglig i 3 uger, herefter en uges pause", 
 				definition.getShortText());
 	}
 	
@@ -114,7 +114,7 @@ public class DosageWrapperWrapperTest {
 				"   Onsdag den 12. juni 2013: 1 tablet optimalt fra 15.-24. cyklusdag",
 				definition.getLongText());
 		Assert.assertEquals(
-				"1 tablet daglig i de første 10 dage, herefter 18 dages pause", 
+				"1 tablet daglig i 10 dage, herefter 18 dages pause", 
 				definition.getShortText());
 	}
 	
@@ -199,6 +199,5 @@ public class DosageWrapperWrapperTest {
 //				"1 dråbe 12 gange daglig i 2 dage i venstre øje, herefter 1 dråbe 6 gange daglig i venstre øje", 
 //				definition.getShortText());
 	}
-	
 	
 }

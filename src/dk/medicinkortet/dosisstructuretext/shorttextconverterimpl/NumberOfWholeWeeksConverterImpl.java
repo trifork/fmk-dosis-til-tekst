@@ -75,17 +75,17 @@ public class NumberOfWholeWeeksConverterImpl extends ShortTextConverterImpl {
         if (pauseDays > 0) {
             // Add how many weeks/days
             if (days==7) {
-                text.append(" i første uge");
+                text.append(" i en uge");
             } else if(days % 7 == 0) {
                 int weeks = days / 7;
-                text.append(" i de første " + weeks + " uger");
+                text.append(" i " + weeks + " uger");
             } else {
-                text.append(" i de første "+days+" dage");
+                text.append(" i "+days+" dage");
             }
 
             // Add pause
             if (pauseDays == 7) {
-                text.append(", herefter 1 uges pause");
+                text.append(", herefter en uges pause");
             } else if (pauseDays % 7 == 0) {
                 int pauseWeeks = pauseDays / 7;
                 text.append(", herefter " + pauseWeeks + " ugers pause");

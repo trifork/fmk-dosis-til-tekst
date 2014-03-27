@@ -196,24 +196,28 @@ public class SDMOutputter {
 	public static void dumpFilteredDrugTable(File destinationDir, DumpDrugs dumpDrugs, DumpDosageUnits dumpDosageUnits,	DumpDrugsDosageStructures dumpDrugsDosageStructures, DumpDosageStructures dumpDosageStructures, boolean createCsv) throws IOException {
 		if(createCsv) {
 			System.out.println("Writing Filtered-Complete.csv");
-			BufferedWriter writer = new BufferedWriter(new FileWriter(new File(destinationDir, " Filtered-Complete.csv")));
+			BufferedWriter writer = new BufferedWriter(new FileWriter(new File(destinationDir, "Unfiltered-Complete.csv")));
 			writer.write("DrugId"+S+"Drugname"+S+"ShortTranslation");
 			writer.newLine();
 			for(DumpDrug drug: dumpDrugs.getAll()) {
 				DumpDosageUnit u = dumpDosageUnits.get(drug.getDosageUnitCode());
 				for(DumpDrugsDosageStructure ds: dumpDrugsDosageStructures.getAll(drug.getDrugId())) {
 					DumpDosageStructure s = dumpDosageStructures.get(ds.getDosageStructureCode());					
-					if(include(drug.getDrugId())) {
+//					if(include(drug.getDrugId())) {
 						writer.write(drug.getDrugId() + S + drug.getDrugName());
 						if(s!=null && s.getShortTranslation()!=null)
 							writer.write(S + s.getShortTranslation());
-						else if(s!=null && s.getLongTranslation()!=null)
-							writer.write(S + s.getLongTranslation().replace("\n", "\\n"));
+//						else if(s!=null && s.getLongTranslation()!=null)
+//							writer.write(S + s.getLongTranslation().replace("\n", "\\n"));
 						else 
 							writer.write(S);
+						if(include(drug.getDrugId()))
+							writer.write(S + "N");
+						else
+							writer.write(S + "S");
 						writer.newLine();
 					}
-				}
+//				}
 			}
 			writer.close();
 		}
@@ -239,8 +243,8 @@ public class SDMOutputter {
 		28101137283L, 28103729704L, 28103359500L, 28101785695L, 28100559669L, 
 		28100777276L, 28103276801L, 28103975106L, 28101376189L, 28104450408L, 
 		28100994978L, 28104770510L,	28104219807L, 28104204207L, 28104350408L, 
-		28101073681L, 28101204284L,	28101440791L,28103235801L };
-
+		28101073681L, 28101204284L,	28101440791L, 28103235801L  };
+	
 	
 	private static boolean include(Long drugid) {
 		for(Long l: LIST)

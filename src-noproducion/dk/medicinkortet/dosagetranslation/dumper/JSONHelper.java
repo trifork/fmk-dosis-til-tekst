@@ -38,6 +38,8 @@ public class JSONHelper {
 		
 	public static <T> T read(File file, Class<T> klass) throws IOException {
 		BufferedReader r = null;
+		if(!file.exists())
+			throw new IOException("No file "+file.getAbsolutePath());
 		try {
 			r = new BufferedReader(new FileReader(file));
 			return getGson().fromJson(r, klass);
@@ -52,7 +54,7 @@ public class JSONHelper {
 		}
 	}
 	
-	private static Gson getGson() {
+	public static Gson getGson() {
 		GsonBuilder b = new GsonBuilder();
 		b.disableHtmlEscaping();
 		b.registerTypeAdapter(Date.class, new JsonSerializer<Date>() {

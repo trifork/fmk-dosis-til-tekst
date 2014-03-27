@@ -35,7 +35,7 @@ public class NumberOfWholeWeeksConverterTest {
                 "   Tirsdag den 11. februar 2014: 1 stk middag\n" +
                 "   Onsdag den 12. februar 2014: 1 stk middag\n" +
                 "   Torsdag den 13. februar 2014: 1 stk middag", LongTextConverter.convert(dosage));
-        Assert.assertEquals("1 stk middag daglig i første uge, herefter 1 uges pause", ShortTextConverter.convert(dosage));
+        Assert.assertEquals("1 stk middag daglig i en uge, herefter en uges pause", ShortTextConverter.convert(dosage));
         Assert.assertEquals(
                 0.5,
                 DailyDosisCalculator.calculate(dosage).getValue().doubleValue(),
@@ -103,7 +103,7 @@ public class NumberOfWholeWeeksConverterTest {
                 "   Tirsdag den 11. februar 2014: 1 stk 2 gange\n" +
                 "   Onsdag den 12. februar 2014: 1 stk 2 gange\n" +
                 "   Torsdag den 13. februar 2014: 1 stk 2 gange", LongTextConverter.convert(dosage));
-        Assert.assertEquals("1 stk 2 gange daglig i første uge, herefter 1 uges pause", ShortTextConverter.convert(dosage));
+        Assert.assertEquals("1 stk 2 gange daglig i en uge, herefter en uges pause", ShortTextConverter.convert(dosage));
         Assert.assertEquals(
                 1.0,
                 DailyDosisCalculator.calculate(dosage).getValue().doubleValue(),
@@ -137,7 +137,7 @@ public class NumberOfWholeWeeksConverterTest {
                 "   Tirsdag den 11. februar 2014: 1 stk middag\n" +
                 "   Onsdag den 12. februar 2014: 1 stk middag\n" +
                 "   Torsdag den 13. februar 2014: 1 stk middag", LongTextConverter.convert(dosage));
-        Assert.assertEquals("1 stk middag daglig i første uge, herefter 5 ugers pause", ShortTextConverter.convert(dosage));
+        Assert.assertEquals("1 stk middag daglig i en uge, herefter 5 ugers pause", ShortTextConverter.convert(dosage));
         Assert.assertEquals(
                 0.166666667,
                 DailyDosisCalculator.calculate(dosage).getValue().doubleValue(),
@@ -185,7 +185,7 @@ public class NumberOfWholeWeeksConverterTest {
                 "   Tirsdag den 18. februar 2014: 1 stk middag\n" +
                 "   Onsdag den 19. februar 2014: 1 stk middag\n" +
                 "   Torsdag den 20. februar 2014: 1 stk middag", LongTextConverter.convert(dosage));
-        Assert.assertEquals("1 stk middag daglig i de første 2 uger, herefter 4 ugers pause", ShortTextConverter.convert(dosage));
+        Assert.assertEquals("1 stk middag daglig i 2 uger, herefter 4 ugers pause", ShortTextConverter.convert(dosage));
         Assert.assertEquals(
                 0.333333333,
                 DailyDosisCalculator.calculate(dosage).getValue().doubleValue(),
@@ -261,7 +261,7 @@ public class NumberOfWholeWeeksConverterTest {
                 "   Fredag den 7. februar 2014: 1 stk middag\n" +
                 "   Lørdag den 8. februar 2014: 1 stk middag\n" +
                 "   Søndag den 9. februar 2014: 1 stk middag", LongTextConverter.convert(dosage));
-        Assert.assertEquals("1 stk middag daglig i de første 3 dage, herefter 39 dages pause", ShortTextConverter.convert(dosage));
+        Assert.assertEquals("1 stk middag daglig i 3 dage, herefter 39 dages pause", ShortTextConverter.convert(dosage));
         Assert.assertEquals(
                 0.071428571,
                 DailyDosisCalculator.calculate(dosage).getValue().doubleValue(),

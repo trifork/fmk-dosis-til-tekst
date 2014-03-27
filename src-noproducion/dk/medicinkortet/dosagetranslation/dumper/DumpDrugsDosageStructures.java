@@ -24,4 +24,8 @@ public class DumpDrugsDosageStructures {
 		return result;
 	}
 	
+	public int size() {
+		return dumpDrugsDosageStructures.size();
+	}
+	
 }

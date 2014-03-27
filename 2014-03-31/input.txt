@@ -9,9 +9,9 @@ drugid|pname|enhed_e|enhed_f|kode|iteration|type|mapning|tekst
 28100010554|Marzine|tablet|tabletter|0000038|1|N daglig|1;1;1| 
 28100010554|Marzine|tablet|tabletter|0000001|.| | | 
 28100020455|Eltroxin|tablet|tabletter|0000026|1|N daglig|1| 
-28100020455|Eltroxin|tablet|tabletter|0000083|1|N daglig|3| 
-28100020455|Eltroxin|tablet|tabletter|0000001|.| | | 
 28100020455|Eltroxin|tablet|tabletter|0000024|1|N daglig|2| 
+28100020455|Eltroxin|tablet|tabletter|0000083|1|N daglig|3| 
+28100020455|Eltroxin|tablet|tabletter|0000001|0|FT|Dosering efter skriftlig anvisning| 
 28100021255|Postafen|tablet|tabletter|0000001|.| | | 
 28100021255|Postafen|tablet|tabletter|0000205|0|PN|0.5|, 1 time før virkning ønskes
 28100021255|Postafen|tablet|tabletter|0000208|0|PN|2|, 1 time før virkning ønskes
@@ -166,10 +166,10 @@ drugid|pname|enhed_e|enhed_f|kode|iteration|type|mapning|tekst
 28100320959|Dulcolax|rektal stikpille|rektale stikpiller|0000372|1|N daglig|0.5|i endetarmen
 28100323959|Depo-medrol| | | |.| | | 
 28100327560|Centyl med Kaliumklorid|tablet|tabletter|0000026|1|N daglig|1| 
-28100327560|Centyl med Kaliumklorid|tablet|tabletter|0000015|1|M+M+A+N|1+1+0| 
+28100327560|Centyl med Kaliumklorid|tablet|tabletter|0000015|1|M+M+A+N|1+0+1| 
 28100327560|Centyl med Kaliumklorid|tablet|tabletter|0000024|1|N daglig|2| 
-28100327560|Centyl med Kaliumklorid|tablet|tabletter|0000003|1|M+M+A+N|2+2+0| 
-28100327560|Centyl med Kaliumklorid|tablet|tabletter|0000001|.| | | 
+28100327560|Centyl med Kaliumklorid|tablet|tabletter|0000003|1|M+M+A+N|2+0+2| 
+28100327560|Centyl med Kaliumklorid|tablet|tabletter|0000001|0|FT|Dosering efter skriftlig anvisning| 
 28100327860|Nozinan|tablet|tabletter|0000039|1|N daglig|2;2;2| 
 28100327860|Nozinan|tablet|tabletter|0000038|1|N daglig|1;1;1| 
 28100327860|Nozinan|tablet|tabletter|0000001|.| | | 
@@ -838,6 +838,7 @@ drugid|pname|enhed_e|enhed_f|kode|iteration|type|mapning|tekst
 28100709776|Digoxin "DAK"|tablet|tabletter|0000024|1|N daglig|2| 
 28100709776|Digoxin "DAK"|tablet|tabletter|0000003|1|M+M+A+N|2+0+2| 
 28100709776|Digoxin "DAK"|tablet|tabletter|0000083|1|N daglig|3| 
+28100709776|Digoxin "DAK"|tablet|tabletter|0000083|0|FT|Dosering efter skriftlig anvisning| 
 28100709876|Digoxin "DAK"|tablet|tabletter|0000026|1|N daglig|1| 
 28100709876|Digoxin "DAK"|tablet|tabletter|0000015|1|N daglig|1;1| 
 28100709876|Digoxin "DAK"|tablet|tabletter|0000001|.| | | 
@@ -898,8 +899,8 @@ drugid|pname|enhed_e|enhed_f|kode|iteration|type|mapning|tekst
 28100719376|Imipramin "DAK"|tablet|tabletter|0000015|1|N daglig|1;1| 
 28100719376|Imipramin "DAK"|tablet|tabletter|0000003|1|N daglig|2;2| 
 28100719376|Imipramin "DAK"|tablet|tabletter|0000001|.| | | 
-28100722776|Kinin "DAK"|tablet|tabletter|0000026|1|N daglig|1| 
-28100722776|Kinin "DAK"|tablet|tabletter|0000024|1|N daglig|2| 
+28100722776|Kinin "DAK"|tablet|tabletter|0000026|1|M+M+A+N|0+0+0+1| 
+28100722776|Kinin "DAK"|tablet|tabletter|0000024|1|M+M+A+N|0+0+0+2| 
 28100723576|Klopoxid "Takeda"|tablet|tabletter|0000015|1|N daglig|1;1| 
 28100723576|Klopoxid "Takeda"|tablet|tabletter|0000001|.| | | 
 28100723576|Klopoxid "Takeda"|tablet|tabletter|0000038|1|N daglig|1;1;1| 
@@ -1434,11 +1435,11 @@ drugid|pname|enhed_e|enhed_f|kode|iteration|type|mapning|tekst
 28101005764|Marevan|tablet|tabletter|0000026|1|N daglig|1| 
 28101005764|Marevan|tablet|tabletter|0000024|1|N daglig|2| 
 28101005764|Marevan|tablet|tabletter|0000083|1|N daglig|3| 
-28101005764|Marevan|tablet|tabletter|0000001|.| | | 
+28101005764|Marevan|tablet|tabletter|0000001|0|FT|Dosering efter skriftlig anvisning| 
 28101006679|Eltroxin|tablet|tabletter|0000083|1|N daglig|3| 
 28101006679|Eltroxin|tablet|tabletter|0000026|1|N daglig|1| 
 28101006679|Eltroxin|tablet|tabletter|0000024|1|N daglig|2| 
-28101006679|Eltroxin|tablet|tabletter|0000001|.| | | 
+28101006679|Eltroxin|tablet|tabletter|0000001|0|FT|Dosering efter skriftlig anvisning| 
 28101009755|Phenergan|tablet|tabletter|0000675|1|M+M+A+N|0+0+0+1| 
 28101009755|Phenergan|tablet|tabletter|0000038|1|N daglig|1;1;1| 
 28101009755|Phenergan|tablet|tabletter|0000016|1|N daglig|1;1;1;1| 
@@ -1656,7 +1657,6 @@ drugid|pname|enhed_e|enhed_f|kode|iteration|type|mapning|tekst
 28101066981|Frisium|tablet|tabletter|0000003|1|N daglig|2;2| 
 28101066981|Frisium|tablet|tabletter|0000001|.| | | 
 28101066981|Frisium|tablet|tabletter|0000015|1|N daglig|1;1| 
-28101066981|Frisium|tablet|tabletter|0000006|1|PN|10; 10;10;10| 
 28101066981|Frisium|tablet|tabletter|0000024|1|N daglig|2| 
 28101067681|Veraloc| | | |.| | | 
 28101067781|Veraloc|tablet|tabletter|0000016|1|N daglig|1;1;1;1| 
@@ -2125,6 +2125,7 @@ drugid|pname|enhed_e|enhed_f|kode|iteration|type|mapning|tekst
 28101214185|Oxabenz|tablet|tabletter|0000015|1|M+M+A+N|1+0+1| 
 28101214185|Oxabenz|tablet|tabletter|0000038|1|M+M+A+N|1+1+1| 
 28101214185|Oxabenz|tablet|tabletter|0000003|1|M+M+A+N|2+0+2| 
+28101214185|Oxabenz|tablet|tabletter|0000003|0|FT|Dosering efter skriftlig anvisning| 
 28101218285|Unixan|tablet|tabletter|0000114|1|M+M+A+N|0+0+0+0.5| 
 28101218285|Unixan|tablet|tabletter|0000045|1|M+M+A+N|0+0+0+2| 
 28101218285|Unixan|tablet|tabletter|0000044|1|M+M+A+N|0+0+0+1| 
@@ -2134,6 +2135,7 @@ drugid|pname|enhed_e|enhed_f|kode|iteration|type|mapning|tekst
 28101218785|Oxapax|tablet|tabletter|0000015|1|M+M+A+N|1+0+1| 
 28101218785|Oxapax|tablet|tabletter|0000038|1|M+M+A+N|1+1+1| 
 28101218785|Oxapax|tablet|tabletter|0000003|1|M+M+A+N|2+0+2| 
+28101218785|Oxapax|tablet|tabletter|0000003|0|FT|Dosering efter skriftlig anvisning| 
 28101218885|Brentacort|påsmøring|påsmøringer|0000104|1|N daglig|1;1| 
 28101218885|Brentacort|påsmøring|påsmøringer|0000001|.| | | 
 28101219085|Vepesid|kapsel|kapsler|0000001|.| | | 
@@ -2830,6 +2832,7 @@ drugid|pname|enhed_e|enhed_f|kode|iteration|type|mapning|tekst
 28101376489|Morfin "DAK"|tablet|tabletter|0000038|1|M+M+A+N|1+1+1| 
 28101376489|Morfin "DAK"|tablet|tabletter|0000016|1|M+M+A+N|1+1+1+1| 
 28101376489|Morfin "DAK"|tablet|tabletter|0000092|1|N daglig|1;1;1;1;1| 
+28101376489|Morfin "DAK"|tablet|tabletter|0000015|0|FT|Dosering efter skriftlig anvisning| 
 28101377189|Duact|kapsel|kapsler|0000334|1|PN|1;1;1| 
 28101377189|Duact|kapsel|kapsler|0000035|1|N daglig|1;1;1| 
 28101377189|Duact|kapsel|kapsler|0000001|.| | | 
@@ -3786,7 +3789,7 @@ drugid|pname|enhed_e|enhed_f|kode|iteration|type|mapning|tekst
 28101697094|Centyl Mite med Kaliumklorid|tablet|tabletter|0000024|1|N daglig|2| 
 28101697094|Centyl Mite med Kaliumklorid|tablet|tabletter|0000015|1|M+M+A+N|1+1+0| 
 28101697094|Centyl Mite med Kaliumklorid|tablet|tabletter|0000003|1|M+M+A+N|2+2+0| 
-28101697094|Centyl Mite med Kaliumklorid|tablet|tabletter|0000001|.| | | 
+28101697094|Centyl Mite med Kaliumklorid|tablet|tabletter|0000001|0|FT|Dosering efter skriftlig anvisning| 
 28101697294|Airomir|pust|pust|0000217|0|PN|2|ved anfald
 28101697294|Airomir|pust|pust|0000645|0|PN|2|før anstrengelse
 28101697294|Airomir|pust|pust|0000399|0|PN|1|ved anfald
@@ -6205,7 +6208,7 @@ drugid|pname|enhed_e|enhed_f|kode|iteration|type|mapning|tekst
 28103309501|Ciprofloxacin "HEXAL"|tablet|tabletter|0000015|1|N daglig|1;1| 
 28103310001|Migard|tablet|tabletter|0000001|.| | | 
 28103310001|Migard|tablet|tabletter|0000285|0|PN|1|ved anfald
-28103310301|Novorapid FlexPen|IE|IE|0001212|0|PN|1|kort tid før et måltid
+28103310301|Novorapid FlexPen|IE|IE|0001212|0|FT|Dosering efter skriftlig anvisning |
 28103310301|Novorapid FlexPen|IE|IE|0000001|.| | | 
 28103312201|Pamidronatdinatrium "Hospira"| | | |.| | | 
 28103312301|Pamidronatdinatrium "Hospira"| | | |.| | | 
@@ -8230,9 +8233,9 @@ drugid|pname|enhed_e|enhed_f|kode|iteration|type|mapning|tekst
 28103785905|Keppra| | | |.| | | 
 28103789105|Lansoprazol "KRKA"|kapsel|kapsler|0000031|1|N daglig|2| 
 28103789105|Lansoprazol "KRKA"|kapsel|kapsler|0000030|1|N daglig|1| 
-28103789205|Lansoprazol "KRKA"|kapsel|kapsler|0000030|1|N daglig|1| 
+28103789205|Lansoprazol "KRKA"|kapsel|kapsler|0000030|1|M+M+A+N|1+0+0| 
 28103789205|Lansoprazol "KRKA"|kapsel|kapsler|0000871|1|M+M+A+N|1+0+1|ved eradikations-behandling
-28103789205|Lansoprazol "KRKA"|kapsel|kapsler|0000031|1|N daglig|2| 
+28103789205|Lansoprazol "KRKA"|kapsel|kapsler|0000031|1|M+M+A+N|2+0+0| 
 28103789505|Metformin "Teva"|tablet|tabletter|0001155|1|N daglig|2;2;2|ved et måltid
 28103789505|Metformin "Teva"|tablet|tabletter|0000038|1|N daglig|1;1;1| 
 28103789505|Metformin "Teva"|tablet|tabletter|0000026|1|N daglig|1| 
@@ -10052,6 +10055,7 @@ drugid|pname|enhed_e|enhed_f|kode|iteration|type|mapning|tekst
 28104120007|Ancozan|tablet|tabletter|0000024|1|N daglig|2| 
 28104120007|Ancozan|tablet|tabletter|0000001|.| | | 
 28104120007|Ancozan|tablet|tabletter|0000028|1|N daglig|0.5| 
+28104120007|Ancozan|tablet|tabletter|0000001|0|FT|Dosering efter skriftlig anvisning| 
 28104120207|Ancozan|tablet|tabletter|0000081|1|M+M+A+N|1+0+0+0| 
 28104120207|Ancozan|tablet|tabletter|0000028|1|N daglig|0.5| 
 28104120207|Ancozan|tablet|tabletter|0000001|.| | | 
@@ -11412,7 +11416,7 @@ drugid|pname|enhed_e|enhed_f|kode|iteration|type|mapning|tekst
 28104343208|Spersadex Comp.|dråbe|dråber|0000748|1|N daglig|1;1;1|i venstre øje
 28104343408|Victoza|mg|mg|0001228|1|N daglig|0.6| 
 28104343408|Victoza|mg|mg|0001230|1|N daglig|1.8| 
-28104343408|Victoza|mg|mg|0000001|.| | | 
+28104343408|Victoza|mg|mg|0000001|0|FT|Dosering efter skriftlig anvisning| 
 28104343408|Victoza|mg|mg|0001229|1|N daglig|1.2| 
 28104344008|Flutide|sug|sug|0000354|1|N daglig|4;4| 
 28104344008|Flutide|sug|sug|0000353|1|N daglig|3;3| 

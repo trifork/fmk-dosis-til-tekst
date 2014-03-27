@@ -16,6 +16,7 @@ import dk.medicinkortet.dosisstructuretext.vowrapper.DayWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DoseWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.EveningDoseWrapper;
+import dk.medicinkortet.dosisstructuretext.vowrapper.FreeTextWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.MorningDoseWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.NightDoseWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.NoonDoseWrapper;
@@ -47,20 +48,29 @@ public class DosageWrapperWrapper {
 	public static DosageWrapper wrap(RawDefinition rawDefinition) throws ValidationException {		
 		CurlyUnwrapper.unwrapCurlies(rawDefinition);
 		
-		// Wrap 
-		DosageWrapper dosageWrapper = DosageWrapper.makeDosage(
-			StructuresWrapper.makeStructures(
-				wrapUnits(
-					rawDefinition.getUnitSingular(), 
-					rawDefinition.getUnitPlural()), 
-				wrapStructures(
-					rawDefinition.getIterationIntervals(), 
-					rawDefinition.getTypes(), 
-					rawDefinition.getMappings(), 
-					rawDefinition.getSupplementaryText(), 
-					rawDefinition.getRowNumber())));
-		
-		return dosageWrapper;
+		if(rawDefinition.getType().equals("FT")) {
+			DosageWrapper dosageWrapper = DosageWrapper.makeDosage(
+				FreeTextWrapper.makeFreeText(
+					DateOrDateTimeWrapper.makeDate(START_DATE), 
+					DateOrDateTimeWrapper.makeDate(END_DATE), 
+					rawDefinition.getMapping()));
+			return dosageWrapper;
+		}
+		else {
+			// Wrap structured dosage  
+			DosageWrapper dosageWrapper = DosageWrapper.makeDosage(
+				StructuresWrapper.makeStructures(
+					wrapUnits(
+						rawDefinition.getUnitSingular(), 
+						rawDefinition.getUnitPlural()), 
+					wrapStructures(
+						rawDefinition.getIterationIntervals(), 
+						rawDefinition.getTypes(), 
+						rawDefinition.getMappings(), 
+						rawDefinition.getSupplementaryText(), 
+						rawDefinition.getRowNumber())));
+			return dosageWrapper;
+		}
 	}
 
 	private static UnitOrUnitsWrapper wrapUnits(String unitSingular, String unitPlural) {
