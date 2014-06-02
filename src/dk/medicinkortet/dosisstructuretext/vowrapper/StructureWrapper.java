@@ -94,8 +94,7 @@ public class StructureWrapper {
 		this.endDateOrDateTime = endDateOrDateTime;
 		if(days==null)
 			throw new NullPointerException();
-		if(days.size()==0)
-			throw new IllegalArgumentException();
+
 		this.days = days;
 		this.refToSource = refToSource;
 	}
