@@ -51,8 +51,6 @@ public class Validator {
 	public static void validate(StructureWrapper structure) {
 		if(structure.getStartDateOrDateTime()==null)
 			throw new IllegalArgumentException("Start date or date time is required");			
-		if(structure.getDays()==null || structure.getDays().size()==0)
-			throw new IllegalArgumentException("At least one day is required");
 		for(DayWrapper day: structure.getDays()) 
 			validateDay(structure, day);
 	}
