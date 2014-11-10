@@ -33,7 +33,7 @@ public class AdministrationAccordingToSchemaConverterImpl extends SimpleLongText
 
 	@Override
 	public String doConvert(DosageWrapper dosage) {
-		return doConvert("Dosering efter skema i lokalt system", 
+		return doConvert("Dosering efter skriftlig anvisning", 
 				dosage.getAdministrationAccordingToSchema().getStartDateOrDateTime(), 
 				dosage.getAdministrationAccordingToSchema().getEndDateOrDateTime());
 	}

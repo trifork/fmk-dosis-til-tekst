@@ -33,7 +33,7 @@ public class AdministrationAccordingToSchemaConverterImpl extends ShortTextConve
 
 	@Override
 	public String doConvert(DosageWrapper dosage) {
-		return "Dosering efter skema i lokalt system";
+		return "Dosering efter skriftlig anvisning";
 	}
 
 }
