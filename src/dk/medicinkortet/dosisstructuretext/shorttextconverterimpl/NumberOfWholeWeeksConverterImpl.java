@@ -39,6 +39,8 @@ public class NumberOfWholeWeeksConverterImpl extends ShortTextConverterImpl {
             return false;
 		if(structure.getStartDateOrDateTime().equals(structure.getEndDateOrDateTime()))
 			return false;
+		if(structure.getDays().isEmpty())
+			return false;
 		if(structure.getDays().first().getDayNumber()>7)
 			return false;
 		if(!structure.daysAreInUninteruptedSequenceFromOne())

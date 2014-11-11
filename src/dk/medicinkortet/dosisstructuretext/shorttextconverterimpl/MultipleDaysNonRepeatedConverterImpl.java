@@ -16,7 +16,7 @@ public class MultipleDaysNonRepeatedConverterImpl extends ShortTextConverterImpl
 		StructureWrapper structure = dosage.getStructures().getStructures().first();
 		if(structure.getIterationInterval()!=0)
 			return false;
-		if(structure.getDays().size()==1)
+		if(structure.getDays().size()<=1)
 			return false;
 		if(!structure.allDaysAreTheSame())
 			return false;

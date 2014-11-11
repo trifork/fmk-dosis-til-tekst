@@ -7,7 +7,9 @@ public class EmptyStructureConverterImpl extends LongTextConverterImpl {
 
 	@Override
 	public boolean canConvert(DosageWrapper dosageStructure) {
-		return dosageStructure.isStructured() && dosageStructure.getStructures().getStructures() != null
+		return dosageStructure.isStructured() 
+				&& dosageStructure.getStructures().getStructures() != null
+				&& dosageStructure.getStructures().getStructures().size() == 1 
 				&& dosageStructure.getStructures().getStructures().first().getDays().isEmpty();
 	}
 

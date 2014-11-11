@@ -96,9 +96,13 @@ public class MultiplePeriodesTest {
 		Assert.assertNull(DailyDosisCalculator.calculate(dosage).getValue()); 		
 		Assert.assertEquals(DosageType.Combined, DosageTypeCalculator.calculate(dosage));		
 	}
+
+
+	
+
 	
 	@Test
-	public void testTwoFollwingPeriodesWithEmptyStructure() throws Exception {
+	public void testTwoFololwingPeriodesWithEmptyStructure() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeDosage(
 			StructuresWrapper.makeStructures(
 				UnitOrUnitsWrapper.makeUnits("tablet", "tabletter"), 
@@ -137,6 +141,48 @@ public class MultiplePeriodesTest {
 		Assert.assertNull(DailyDosisCalculator.calculate(dosage).getValue()); 		
 		Assert.assertEquals(DosageType.Combined, DosageTypeCalculator.calculate(dosage));		
 	}
+	
+	@Test
+	public void testEmptyStructure() throws Exception {
+		DosageWrapper dosage = DosageWrapper.makeDosage(
+			StructuresWrapper.makeStructures(
+				UnitOrUnitsWrapper.makeUnits("tablet", "tabletter"), 
+				StructureWrapper.makeStructure(
+					0, null, DateOrDateTimeWrapper.makeDate("2013-06-01"), DateOrDateTimeWrapper.makeDate("2013-06-3"),
+					DayWrapper.makeDay(
+						1, 
+						MorningDoseWrapper.makeDose(new BigDecimal(2)), 
+						NoonDoseWrapper.makeDose(new BigDecimal(2)), 
+						EveningDoseWrapper.makeDose(new BigDecimal(2))),
+					DayWrapper.makeDay(
+						2, 
+						MorningDoseWrapper.makeDose(new BigDecimal(2)), 
+						EveningDoseWrapper.makeDose(new BigDecimal(2))),
+					DayWrapper.makeDay(
+						3, 
+						MorningDoseWrapper.makeDose(new BigDecimal(2)))), 
+						
+						
+				StructureWrapper.makeStructure(
+					1, null, DateOrDateTimeWrapper.makeDate("2013-06-04"), null))); 
+		Assert.assertEquals(
+			"Doseringen indeholder flere perioder:\n" +
+			"\n" +
+			"Doseringsforløbet starter lørdag den 1. juni 2013 og ophører efter det angivne forløb.\n" +
+			"Bemærk at doseringen varierer:\n" +
+			"   Doseringsforløb:\n" +
+			"   Lørdag den 1. juni 2013: 2 tabletter morgen + 2 tabletter middag + 2 tabletter aften\n" +
+			"   Søndag den 2. juni 2013: 2 tabletter morgen + 2 tabletter aften\n" +
+			"   Mandag den 3. juni 2013: 2 tabletter morgen\n" +
+			"\n" +
+			"Doseringsforløbet starter tirsdag den 4. juni 2013:\n" +
+			"   Bemærk: skal ikke anvendes i denne periode!",
+			LongTextConverter.convert(dosage));
+		Assert.assertNull(ShortTextConverter.getConverterClass(dosage));
+		Assert.assertNull(DailyDosisCalculator.calculate(dosage).getValue()); 		
+		Assert.assertEquals(DosageType.Combined, DosageTypeCalculator.calculate(dosage));		
+	}
+	
 	
 	
 	@Test
@@ -253,6 +299,53 @@ public class MultiplePeriodesTest {
 			FreeTextWrapper.makeFreeText(
 				DateOrDateTimeWrapper.makeDate("2013-06-01"), DateOrDateTimeWrapper.makeDate("2013-06-03"), 
 				"Efter aftale"));
+				
+		Assert.assertEquals(
+			"Doseringsforløbet starter lørdag den 1. juni 2013 og ophører mandag den 3. juni 2013.\n" +
+			"   Doseringsforløb:\n" +
+			"   Efter aftale",
+			LongTextConverter.convert(dosage));
+		Assert.assertEquals(FreeTextConverterImpl.class, ShortTextConverter.getConverterClass(dosage));
+		Assert.assertNull(DailyDosisCalculator.calculate(dosage).getValue()); 		
+		Assert.assertEquals(DosageType.Unspecified, DosageTypeCalculator.calculate(dosage));		
+	}
+	
+	@Test
+	public void structuredWithStartEndDateTimeTest() throws Exception {
+		DosageWrapper dosage = DosageWrapper.makeDosage(
+				StructuresWrapper.makeStructures(
+					UnitOrUnitsWrapper.makeUnits("tablet", "tabletter"), 
+					StructureWrapper.makeStructure(
+						0, null, DateOrDateTimeWrapper.makeDateTime("2013-06-01 08:00:00"), DateOrDateTimeWrapper.makeDateTime("2013-06-03 10:00:00"),
+						DayWrapper.makeDay(
+							1, 
+							MorningDoseWrapper.makeDose(new BigDecimal(2)), 
+							NoonDoseWrapper.makeDose(new BigDecimal(2)), 
+							EveningDoseWrapper.makeDose(new BigDecimal(2))),
+						DayWrapper.makeDay(
+							2, 
+							MorningDoseWrapper.makeDose(new BigDecimal(2)), 
+							EveningDoseWrapper.makeDose(new BigDecimal(2))),
+						DayWrapper.makeDay(
+							3, 
+							MorningDoseWrapper.makeDose(new BigDecimal(2)))), 
+							
+							
+					StructureWrapper.makeStructure(
+						1, null, DateOrDateTimeWrapper.makeDateTime("2013-06-04 10:30:00"), DateOrDateTimeWrapper.makeDateTime("2013-06-06 15:30:00"), 
+						DayWrapper.makeDay(
+							1, 
+							MorningDoseWrapper.makeDose(new BigDecimal(1)))),
+					
+					
+					StructureWrapper.makeStructure(
+						0, "ved smerter", DateOrDateTimeWrapper.makeDateTime("2013-06-01 14:20:00"), DateOrDateTimeWrapper.makeDateTime("2013-06-10 20:30:00"), 
+						DayWrapper.makeDay(
+							0, 
+							PlainDoseWrapper.makeDose(new BigDecimal(2), true))))
+							
+				); 
+		
 				
 		Assert.assertEquals(
 			"Doseringsforløbet starter lørdag den 1. juni 2013 og ophører mandag den 3. juni 2013.\n" +

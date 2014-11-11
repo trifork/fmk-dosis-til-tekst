@@ -43,7 +43,7 @@ public class WeeklyRepeatedConverterImpl extends ShortTextConverterImpl {
 			return false;
 		if(structure.getStartDateOrDateTime().equals(structure.getEndDateOrDateTime()))
 			return false; 
-		if(structure.getDays().size()>7)
+		if(structure.getDays().size()>7 || structure.getDays().size() == 0)
 			return false;
 		if(structure.getDays().first().getDayNumber()==0)
 			return false;
