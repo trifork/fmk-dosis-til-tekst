@@ -43,6 +43,7 @@ public class SimpleLimitedAccordingToNeedConverterImpl extends ShortTextConverte
 			return false;	
 		StructureWrapper structure = dosage.getStructures().getStructures().first();
 		if(structure.getIterationInterval()!=1) 
+			return false;
 		if(structure.getDays().size()!=1)
 			return false;
 		DayWrapper day = structure.getDays().first();

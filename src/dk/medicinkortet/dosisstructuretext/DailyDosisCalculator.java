@@ -50,7 +50,7 @@ public class DailyDosisCalculator {
 	}
 
 	private static DailyDosis calculateFromStructures(StructuresWrapper structures) {
-		if(structures.getStructures().size()==1) 
+		if(structures.getStructures().size()==1 && structures.getStructures().first().getDays() != null && !structures.getStructures().first().getDays().isEmpty()) 
 			return calculateFromStructure(structures.getStructures().first(), structures.getUnitOrUnits());
 		else 
 			return new DailyDosis(); // Calculating a daily dosis for more than one dosage periode is not supported
