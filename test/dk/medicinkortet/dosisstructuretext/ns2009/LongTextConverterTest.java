@@ -50,7 +50,7 @@ public class LongTextConverterTest {
 	public void testAdministrationAccordingToSchemeInLocalSystem() {
 		DosageWrapper dosage = DosageWrapper.makeDosage(
 			AdministrationAccordingToSchemaWrapper.makeAdministrationAccordingToSchema(null, null));
-		Assert.assertEquals("Dosering efter skema i lokalt system",	LongTextConverter.convert(dosage));
+		Assert.assertEquals("Dosering efter skriftlig anvisning",	LongTextConverter.convert(dosage));
 		Assert.assertTrue(DailyDosisCalculator.calculate(dosage).isNone());
 		Assert.assertEquals(DosageType.Unspecified, DosageTypeCalculator.calculate(dosage));
 

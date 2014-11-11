@@ -324,7 +324,7 @@ public class MultiplePeriodesTest {
 		Assert.assertEquals(
 			"Doseringsforløbet starter lørdag den 1. juni 2013 og ophører mandag den 3. juni 2013.\n" +
 			"   Doseringsforløb:\n" +
-			"   Dosering efter skema i lokalt system",
+			"   Dosering efter skriftlig anvisning",
 			LongTextConverter.convert(dosage));
 		Assert.assertEquals(AdministrationAccordingToSchemaConverterImpl.class, ShortTextConverter.getConverterClass(dosage));
 		Assert.assertNull(DailyDosisCalculator.calculate(dosage).getValue()); 		
@@ -340,7 +340,7 @@ public class MultiplePeriodesTest {
 		Assert.assertEquals(
 			"Doseringen foretages kun lørdag den 1. juni 2013.\n" +
 			"   Dosering:\n" +
-			"   Dosering efter skema i lokalt system",
+			"   Dosering efter skriftlig anvisning",
 			LongTextConverter.convert(dosage));
 		Assert.assertEquals(AdministrationAccordingToSchemaConverterImpl.class, ShortTextConverter.getConverterClass(dosage));
 		Assert.assertNull(DailyDosisCalculator.calculate(dosage).getValue()); 		
@@ -356,7 +356,7 @@ public class MultiplePeriodesTest {
 		Assert.assertEquals(
 			"Doseringsforløbet starter lørdag den 1. juni 2013.\n" +
 			"   Doseringsforløb:\n" +
-			"   Dosering efter skema i lokalt system",
+			"   Dosering efter skriftlig anvisning",
 			LongTextConverter.convert(dosage));
 		Assert.assertEquals(AdministrationAccordingToSchemaConverterImpl.class, ShortTextConverter.getConverterClass(dosage));
 		Assert.assertNull(DailyDosisCalculator.calculate(dosage).getValue()); 		
@@ -372,7 +372,7 @@ public class MultiplePeriodesTest {
 		Assert.assertEquals(
 			"Doseringsforløbet ophører mandag den 3. juni 2013.\n" +
 			"   Doseringsforløb:\n" +
-			"   Dosering efter skema i lokalt system",
+			"   Dosering efter skriftlig anvisning",
 			LongTextConverter.convert(dosage));
 		Assert.assertEquals(AdministrationAccordingToSchemaConverterImpl.class, ShortTextConverter.getConverterClass(dosage));
 		Assert.assertNull(DailyDosisCalculator.calculate(dosage).getValue()); 		
