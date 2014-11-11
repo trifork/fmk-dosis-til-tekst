@@ -348,13 +348,25 @@ public class MultiplePeriodesTest {
 		
 				
 		Assert.assertEquals(
-			"Doseringsforløbet starter lørdag den 1. juni 2013 og ophører mandag den 3. juni 2013.\n" +
-			"   Doseringsforløb:\n" +
-			"   Efter aftale",
-			LongTextConverter.convert(dosage));
-		Assert.assertEquals(FreeTextConverterImpl.class, ShortTextConverter.getConverterClass(dosage));
+				"Doseringen indeholder flere perioder, bemærk at der er overlappende perioder:\n" +
+				"\n" +
+				"Doseringsforløbet starter lørdag den 1. juni 2013 kl. 08:00 og ophører efter det angivne forløb.\n" +
+				"Bemærk at doseringen varierer:\n" +
+				"   Doseringsforløb:\n" +
+				"   Lørdag den 1. juni 2013: 2 tabletter morgen + 2 tabletter middag + 2 tabletter aften\n" +
+				"   Søndag den 2. juni 2013: 2 tabletter morgen + 2 tabletter aften\n" +
+				"   Mandag den 3. juni 2013: 2 tabletter morgen\n" +
+				"\n" +
+				"Doseringsforløbet starter lørdag den 1. juni 2013 kl. 14:20:\n" + 
+				"   Doseringsforløb:\n" +
+				"   Efter behov: 2 tabletter efter behov ved smerter\n" +
+				"\n" + 
+				"Doseringsforløbet starter tirsdag den 4. juni 2013 kl. 10:30 og gentages hver dag:\n" +
+				"   Doseringsforløb:\n" +
+				"   1 tablet morgen",
+				LongTextConverter.convert(dosage));
 		Assert.assertNull(DailyDosisCalculator.calculate(dosage).getValue()); 		
-		Assert.assertEquals(DosageType.Unspecified, DosageTypeCalculator.calculate(dosage));		
+		Assert.assertEquals(DosageType.Combined, DosageTypeCalculator.calculate(dosage));		
 	}
 	
 	@Test
