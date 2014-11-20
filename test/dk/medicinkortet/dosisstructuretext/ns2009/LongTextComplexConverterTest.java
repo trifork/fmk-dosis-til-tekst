@@ -445,7 +445,7 @@ public class LongTextComplexConverterTest {
 				SimpleLimitedAccordingToNeedConverterImpl.class, 
 				ShortTextConverter.getConverterClass(dosage));
 		Assert.assertEquals(
-				"1-2 tabletter efter behov ved smerter, højst 3 gange daglig", 
+				"1-2 tabletter efter behov, højst 3 gange daglig ved smerter", 
 				ShortTextConverter.convert(dosage));
 		Assert.assertNull(DailyDosisCalculator.calculate(dosage).getValue());
 		Assert.assertEquals(DosageType.AccordingToNeed, DosageTypeCalculator.calculate(dosage));		

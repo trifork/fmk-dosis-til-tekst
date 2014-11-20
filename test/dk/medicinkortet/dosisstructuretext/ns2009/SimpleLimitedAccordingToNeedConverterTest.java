@@ -64,7 +64,7 @@ public class SimpleLimitedAccordingToNeedConverterTest {
 				SimpleLimitedAccordingToNeedConverterImpl.class, 
 				ShortTextConverter.getConverterClass(dosage));
 		Assert.assertEquals(
-				"1 pust efter behov ved anfald, højst 3 gange daglig", 
+				"1 pust efter behov, højst 3 gange daglig ved anfald", 
 				ShortTextConverter.convert(dosage));
 		Assert.assertTrue(DailyDosisCalculator.calculate(dosage).isNone()); 
 		Assert.assertEquals(DosageType.AccordingToNeed, DosageTypeCalculator.calculate(dosage));				
@@ -89,7 +89,7 @@ public class SimpleLimitedAccordingToNeedConverterTest {
 				SimpleLimitedAccordingToNeedConverterImpl.class, 
 				ShortTextConverter.getConverterClass(dosage));
 		Assert.assertEquals(
-				"1 pust efter behov ved anfald, højst 1 gang daglig", 
+				"1 pust efter behov, højst 1 gang daglig ved anfald", 
 				ShortTextConverter.convert(dosage));
 		Assert.assertTrue(DailyDosisCalculator.calculate(dosage).isNone()); 
 		Assert.assertEquals(DosageType.AccordingToNeed, DosageTypeCalculator.calculate(dosage));				

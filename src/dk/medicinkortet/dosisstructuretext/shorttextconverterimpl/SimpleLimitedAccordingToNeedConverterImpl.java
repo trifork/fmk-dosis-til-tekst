@@ -63,12 +63,15 @@ public class SimpleLimitedAccordingToNeedConverterImpl extends ShortTextConverte
 		DayWrapper day = structure.getDays().first();
 		text.append(toValue(day.getAccordingToNeedDoses().get(0), dosage.getStructures().getUnitOrUnits()));
 		text.append(" efter behov");
-		if(structure.getSupplText()!=null)
-			text.append(TextHelper.maybeAddSpace(structure.getSupplText())).append(structure.getSupplText());
+		
 		if(day.getNumberOfAccordingToNeedDoses()==1)
 			text.append(", højst "+day.getNumberOfAccordingToNeedDoses()+" gang daglig");
 		else
 			text.append(", højst "+day.getNumberOfAccordingToNeedDoses()+" gange daglig");
+		
+		if(structure.getSupplText()!=null)
+			text.append(TextHelper.maybeAddSpace(structure.getSupplText())).append(structure.getSupplText());
+		
 		return text.toString();
 	}
 
