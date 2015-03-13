@@ -90,10 +90,20 @@ public class ShortTextConverter {
 	 * @return A short text string describing the dosage 
 	 */
 	public static String convert(DosageWrapper dosage) {
+		return convert(dosage, MAX_LENGTH);
+	}
+	
+	/**
+	 * Performs a conversion to a short text with a custom maximum length. Returns translation if possible, otherwise null.
+	 * @param dosage
+	 * @param maxLength
+	 * @return A short text string describing the dosage 
+	 */
+	public static String convert(DosageWrapper dosage, int maxLength) {
 		for(ShortTextConverterImpl converter: converters) {
 			if(converter.canConvert(dosage)) {
 				String s = converter.doConvert(dosage);
-				if(s.length()<=MAX_LENGTH)
+				if(s.length()<=maxLength)
 					return s;
 			}
 		}
