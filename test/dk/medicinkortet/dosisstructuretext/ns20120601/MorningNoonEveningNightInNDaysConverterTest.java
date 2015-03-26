@@ -75,7 +75,7 @@ public class MorningNoonEveningNightInNDaysConverterTest {
 				DefaultLongTextConverterImpl.class, 
 				LongTextConverter.getConverterClass(dosage));
 		Assert.assertEquals(
-				"Doseringsforløbet starter lørdag den 1. januar 2011 og ophører efter det angivne forløb:\n"+
+				"Doseringsforløbet starter lørdag den 1. januar 2011, og ophører onsdag den 5. januar 2011:\n"+
 				"   Doseringsforløb:\n"+
 				"   Lørdag den 1. januar 2011: 1 tablet morgen ved måltid\n"+
 				"   Søndag den 2. januar 2011: 1 tablet morgen ved måltid\n"+
@@ -122,7 +122,7 @@ public class MorningNoonEveningNightInNDaysConverterTest {
 				DefaultLongTextConverterImpl.class, 
 				LongTextConverter.getConverterClass(dosage));
 		Assert.assertEquals(
-				"Doseringsforløbet starter lørdag den 1. januar 2011 og ophører efter det angivne forløb:\n"+
+				"Doseringsforløbet starter lørdag den 1. januar 2011, og ophører onsdag den 5. januar 2011:\n"+
 				"   Doseringsforløb:\n"+
 				"   Lørdag den 1. januar 2011: 1 tablet morgen efter behov højst 1 gang ved måltid\n"+
 				"   Søndag den 2. januar 2011: 1 tablet morgen efter behov højst 1 gang ved måltid\n"+

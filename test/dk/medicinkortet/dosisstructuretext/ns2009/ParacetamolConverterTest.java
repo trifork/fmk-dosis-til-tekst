@@ -58,7 +58,7 @@ public class ParacetamolConverterTest {
 						PlainDoseWrapper.makeDose(new BigDecimal(1), new BigDecimal(2)), 
 						PlainDoseWrapper.makeDose(new BigDecimal(1), new BigDecimal(2), true)))));		
 		Assert.assertEquals(
-			"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages hver dag:\n"+
+			"Doseringsforløbet starter lørdag den 1. januar 2011, gentages hver dag, og ophører søndag den 30. januar 2011:\n"+
 			"   Doseringsforløb:\n"+
 			"   1-2 stk ved smerter + 1-2 stk ved smerter + 1-2 stk ved smerter + 1-2 stk efter behov ved smerter",
 			LongTextConverter.convert(dosage));
@@ -87,7 +87,7 @@ public class ParacetamolConverterTest {
 				DailyRepeatedConverterImpl.class, 
 				LongTextConverter.getConverterClass(dosage));
 		Assert.assertEquals(
-				"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages hver dag:\n"+
+				"Doseringsforløbet starter lørdag den 1. januar 2011, gentages hver dag, og ophører tirsdag den 11. januar 2011:\n"+
 				"   Doseringsforløb:\n"+
 				"   2 stk efter behov + 2 stk",
 				LongTextConverter.convert(dosage));
@@ -117,7 +117,7 @@ public class ParacetamolConverterTest {
 				DailyRepeatedConverterImpl.class, 
 				LongTextConverter.getConverterClass(dosage));
 		Assert.assertEquals(
-				"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages hver dag:\n"+
+				"Doseringsforløbet starter lørdag den 1. januar 2011, gentages hver dag, og ophører tirsdag den 11. januar 2011:\n"+
 				"   Doseringsforløb:\n"+
 				"   2 stk efter behov + 2 stk + 2 stk",
 				LongTextConverter.convert(dosage));
@@ -148,7 +148,7 @@ public class ParacetamolConverterTest {
 				DailyRepeatedConverterImpl.class, 
 				LongTextConverter.getConverterClass(dosage));
 		Assert.assertEquals(
-				"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages hver dag:\n"+
+				"Doseringsforløbet starter lørdag den 1. januar 2011, gentages hver dag, og ophører tirsdag den 11. januar 2011:\n"+
 				"   Doseringsforløb:\n"+
 	   			"   2 stk efter behov + 2 stk efter behov + 2 stk + 2 stk",
 				LongTextConverter.convert(dosage));
@@ -177,7 +177,7 @@ public class ParacetamolConverterTest {
 				DailyRepeatedConverterImpl.class, 
 				LongTextConverter.getConverterClass(dosage));
 		Assert.assertEquals(
-				"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages hver dag:\n"+
+				"Doseringsforløbet starter lørdag den 1. januar 2011, gentages hver dag, og ophører tirsdag den 11. januar 2011:\n"+
 				"   Doseringsforløb:\n"+
 				"   4 stk efter behov + 2 stk",
 				LongTextConverter.convert(dosage));

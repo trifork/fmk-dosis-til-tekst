@@ -107,7 +107,7 @@ public class CombinedTwoPeriodesConverterTest {
 		Assert.assertEquals(
 			"Doseringen indeholder flere perioder:\n"+
 			"\n"+
-			"Doseringsforløbet starter lørdag den 1. januar 2011 og ophører efter det angivne forløb:\n"+
+			"Doseringsforløbet starter lørdag den 1. januar 2011, og ophører mandag den 3. januar 2011:\n"+
 			"   Doseringsforløb:\n"+
 			"   Lørdag den 1. januar 2011: 2 dråber morgen + 2 dråber aften\n"+
 			"   Søndag den 2. januar 2011: 2 dråber morgen + 2 dråber aften\n"+

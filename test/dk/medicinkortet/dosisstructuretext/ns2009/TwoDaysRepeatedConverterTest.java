@@ -59,7 +59,7 @@ public class TwoDaysRepeatedConverterTest {
 				TwoDaysRepeatedConverterImpl.class, 
 				LongTextConverter.getConverterClass(dosage));
 		Assert.assertEquals(
-				"Doseringsforløbet starter lørdag den 1. januar 2011, forløbet gentages hver 2. dag:\n"+
+				"Doseringsforløbet starter lørdag den 1. januar 2011, forløbet gentages hver 2. dag, og ophører søndag den 30. januar 2011:\n"+
 				"   Doseringsforløb:\n"+
 				"   Dag 1: 1 stk 2 gange ved måltid",
 				LongTextConverter.convert(dosage));
@@ -91,7 +91,7 @@ public class TwoDaysRepeatedConverterTest {
 				TwoDaysRepeatedConverterImpl.class, 
 				LongTextConverter.getConverterClass(dosage));
 		Assert.assertEquals(
-				"Doseringsforløbet starter lørdag den 1. januar 2011, forløbet gentages hver 2. dag:\n"+
+				"Doseringsforløbet starter lørdag den 1. januar 2011, forløbet gentages hver 2. dag, og ophører søndag den 30. januar 2011:\n"+
 				"   Doseringsforløb:\n"+
 				"   Dag 2: 1 stk 2 gange ved måltid",
 				LongTextConverter.convert(dosage));
@@ -126,7 +126,7 @@ public class TwoDaysRepeatedConverterTest {
 				TwoDaysRepeatedConverterImpl.class, 
 				LongTextConverter.getConverterClass(dosage));
 		Assert.assertEquals(
-				"Doseringsforløbet starter lørdag den 1. januar 2011, forløbet gentages hver 2. dag.\n"+
+				"Doseringsforløbet starter lørdag den 1. januar 2011, forløbet gentages hver 2. dag, og ophører søndag den 30. januar 2011.\n"+
 				"Bemærk at doseringen varierer:\n"+
 				"   Doseringsforløb:\n"+
 				"   Dag 1: 1 stk ved måltid\n"+

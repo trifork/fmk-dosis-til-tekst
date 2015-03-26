@@ -49,7 +49,7 @@ public class DosageWrapperTest {
 					UnitOrUnitsWrapper.makeUnit("stk"),
 					StructureWrapper.makeStructure(
 						1, "mod smerter", 
-						DateOrDateTimeWrapper.makeDate("2011-01-01"), DateOrDateTimeWrapper.makeDate("2011-01-04"),
+						DateOrDateTimeWrapper.makeDate("2011-01-01"), null,
 						DayWrapper.makeDay(1,
 							PlainDoseWrapper.makeDose(new BigDecimal(4)), 
 							PlainDoseWrapper.makeDose(new BigDecimal(4))))));
@@ -68,7 +68,7 @@ public class DosageWrapperTest {
 					UnitOrUnitsWrapper.makeUnit("stk"),
 					StructureWrapper.makeStructure(
 						1, "mod smerter", 
-						DateOrDateTimeWrapper.makeDate("2011-01-01"), DateOrDateTimeWrapper.makeDate("2011-01-14"),
+						DateOrDateTimeWrapper.makeDate("2011-01-01"), null,
 						DayWrapper.makeDay(1,
 								PlainDoseWrapper.makeDose(new BigDecimal(4)), 
 								PlainDoseWrapper.makeDose(new BigDecimal(4), true)))));
@@ -93,7 +93,7 @@ public class DosageWrapperTest {
 						DayWrapper.makeDay(2, 
 							PlainDoseWrapper.makeDose(new BigDecimal(2))))));
 		Assert.assertEquals(
-			"Doseringsforløbet starter lørdag den 1. januar 2011, forløbet gentages hver 2. dag.\n"+
+			"Doseringsforløbet starter lørdag den 1. januar 2011, forløbet gentages hver 2. dag, og ophører fredag den 14. januar 2011.\n"+
 			"Bemærk at doseringen varierer:\n"+
 			"   Doseringsforløb:\n"+
 			"   Dag 1: 1 stk mod smerter\n"+
@@ -116,7 +116,7 @@ public class DosageWrapperTest {
 						EveningDoseWrapper.makeDose(new BigDecimal(1)), 
 						NightDoseWrapper.makeDose(new BigDecimal(1)))))); 
 		Assert.assertEquals(
-			"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages hver dag:\n"+
+			"Doseringsforløbet starter lørdag den 1. januar 2011, gentages hver dag, og ophører fredag den 14. januar 2011:\n"+
 			"   Doseringsforløb:\n"+
 			"   1 stk morgen mod smerter + 1 stk middag mod smerter + 1 stk aften mod smerter + 1 stk før sengetid mod smerter",				
 			LongTextConverter.convert(dosage));

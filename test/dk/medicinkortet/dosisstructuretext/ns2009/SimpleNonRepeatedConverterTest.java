@@ -57,7 +57,7 @@ public class SimpleNonRepeatedConverterTest {
 						0, 
 						PlainDoseWrapper.makeDose(new BigDecimal(1))))));				
 		Assert.assertEquals(
-			"Doseringsforløbet starter lørdag den 1. januar 2011 og ophører efter det angivne forløb:\n"+
+			"Doseringsforløbet starter lørdag den 1. januar 2011, og ophører søndag den 30. januar 2011:\n"+
 			"   Doseringsforløb:\n"+
 			"   Dag ikke angivet: 1 plaster 5 timer før virkning ønskes",
 			LongTextConverter.convert(dosage));
@@ -77,7 +77,7 @@ public class SimpleNonRepeatedConverterTest {
 			StructuresWrapper.makeStructures(
 				UnitOrUnitsWrapper.makeUnit("kapsel"),
 				StructureWrapper.makeStructure(
-					0,  "dagen før indlæggelse", DateOrDateTimeWrapper.makeDate("2011-01-01"), DateOrDateTimeWrapper.makeDate("2011-01-30"), 
+					0,  "dagen før indlæggelse", DateOrDateTimeWrapper.makeDate("2011-01-01"), null, 
 					DayWrapper.makeDay(
 						1, 
 						PlainDoseWrapper.makeDose(new BigDecimal(1)), 

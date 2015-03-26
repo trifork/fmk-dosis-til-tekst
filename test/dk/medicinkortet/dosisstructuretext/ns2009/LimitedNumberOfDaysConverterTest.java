@@ -53,7 +53,7 @@ public class LimitedNumberOfDaysConverterTest {
 				UnitOrUnitsWrapper.makeUnit("stk"), 
 				StructureWrapper.makeStructure(
 					0, "ved måltid", 
-					DateOrDateTimeWrapper.makeDate("2011-01-01"), DateOrDateTimeWrapper.makeDate("2011-01-04"), 
+					DateOrDateTimeWrapper.makeDate("2011-01-01"), null, 
 					DayWrapper.makeDay(
 						1, 
 						PlainDoseWrapper.makeDose(new BigDecimal(4)), 
@@ -100,7 +100,7 @@ public class LimitedNumberOfDaysConverterTest {
 			StructuresWrapper.makeStructures(
 				UnitOrUnitsWrapper.makeUnit("stk"), 
 				StructureWrapper.makeStructure(
-					0, "ved måltid", DateOrDateTimeWrapper.makeDate("2011-01-01"), DateOrDateTimeWrapper.makeDate("2011-01-04"), 
+					0, "ved måltid", DateOrDateTimeWrapper.makeDate("2011-01-01"), null,  
 					DayWrapper.makeDay(
 						1, 
 						PlainDoseWrapper.makeDose(new BigDecimal(4), new BigDecimal(6)), 
@@ -143,7 +143,7 @@ public class LimitedNumberOfDaysConverterTest {
 			StructuresWrapper.makeStructures(
 				UnitOrUnitsWrapper.makeUnit("ml"), 
 				StructureWrapper.makeStructure(
-					0, "ved måltid", DateOrDateTimeWrapper.makeDate("2011-01-01"), DateOrDateTimeWrapper.makeDate("2011-01-04"), 
+					0, "ved måltid", DateOrDateTimeWrapper.makeDate("2011-01-01"), null, 
 					DayWrapper.makeDay(
 						3, 
 						TimedDoseWrapper.makeDose(new LocalTime(11,25), new BigDecimal(7), false)))));

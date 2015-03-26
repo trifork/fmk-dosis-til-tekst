@@ -39,7 +39,7 @@ public class RepeatedEyeOrEarConverterTest {
 				DailyRepeatedConverterImpl.class, 
 				LongTextConverter.getConverterClass(dosage));
 		Assert.assertEquals(
-			"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages hver dag:\n"+
+			"Doseringsforløbet starter lørdag den 1. januar 2011, gentages hver dag, og ophører søndag den 30. januar 2011:\n"+
 			"   Doseringsforløb:\n"+
 			"   2 dråber 2 gange daglig, 1 i hvert øje",
 			LongTextConverter.convert(dosage));

@@ -113,7 +113,7 @@ public class SimpleAccordingToNeedConverterTest {
 							PlainDoseWrapper.makeDose(new BigDecimal(2), true),
 							PlainDoseWrapper.makeDose(new BigDecimal(2), true)))));
 		Assert.assertEquals(
-				"Doseringsforløbet starter onsdag den 1. januar 2014 og gentages hver dag:\n"+
+				"Doseringsforløbet starter onsdag den 1. januar 2014, gentages hver dag, og ophører onsdag den 31. december 2014:\n"+
 				"   Doseringsforløb:\n"+
 				"   Efter behov: 2 tabletter efter behov 2 gange",
 				LongTextConverter.convert(dosage));
@@ -134,7 +134,7 @@ public class SimpleAccordingToNeedConverterTest {
 							MorningDoseWrapper.makeDose(new BigDecimal(2), true), 
 							EveningDoseWrapper.makeDose(new BigDecimal(2), true)))));
 		Assert.assertEquals(
-				"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages hver dag:\n"+
+				"Doseringsforløbet starter lørdag den 1. januar 2011, gentages hver dag, og ophører tirsdag den 11. januar 2011:\n"+
 				"   Doseringsforløb:\n"+
 				"   2 tabletter morgen efter behov + 2 tabletter aften efter behov",
 				LongTextConverter.convert(dosage));

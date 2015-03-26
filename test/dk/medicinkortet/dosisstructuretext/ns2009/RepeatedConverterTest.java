@@ -55,7 +55,7 @@ public class RepeatedConverterTest {
 				DailyRepeatedConverterImpl.class, 
 				LongTextConverter.getConverterClass(dosage));
 		Assert.assertEquals(
-				"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages hver dag:\n"+
+				"Doseringsforløbet starter lørdag den 1. januar 2011, gentages hver dag, og ophører søndag den 30. januar 2011:\n"+
 				"   Doseringsforløb:\n"+
 				"   3 stk 2 gange daglig",
 				LongTextConverter.convert(dosage));
@@ -84,7 +84,7 @@ public class RepeatedConverterTest {
 						PlainDoseWrapper.makeDose(new BigDecimal(3)), 
 						PlainDoseWrapper.makeDose(new BigDecimal(3))))));
 		Assert.assertEquals(
-				"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages hver dag:\n"+
+				"Doseringsforløbet starter lørdag den 1. januar 2011, gentages hver dag, og ophører søndag den 30. januar 2011:\n"+
 				"   Doseringsforløb:\n"+
 				"   3 stk 2 gange daglig ved måltid",
 				LongTextConverter.convert(dosage));
@@ -112,7 +112,7 @@ public class RepeatedConverterTest {
 						1, 
 						PlainDoseWrapper.makeDose(new BigDecimal(1))))));
 		Assert.assertEquals(
-				"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages hver dag:\n"+
+				"Doseringsforløbet starter lørdag den 1. januar 2011, gentages hver dag, og ophører søndag den 30. januar 2011:\n"+
 				"   Doseringsforløb:\n"+
 				"   1 stk ved måltid",
 				LongTextConverter.convert(dosage));
@@ -137,7 +137,7 @@ public class RepeatedConverterTest {
 						PlainDoseWrapper.makeDose(new BigDecimal(1), new BigDecimal(2)), 
 						PlainDoseWrapper.makeDose(new BigDecimal(1), new BigDecimal(2))))));
 		Assert.assertEquals(
-				"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages hver dag:\n"+
+				"Doseringsforløbet starter lørdag den 1. januar 2011, gentages hver dag, og ophører søndag den 30. januar 2011:\n"+
 				"   Doseringsforløb:\n"+
 				"   1-2 stk 2 gange daglig",
 				LongTextConverter.convert(dosage));
@@ -172,7 +172,7 @@ public class RepeatedConverterTest {
 				TwoDaysRepeatedConverterImpl.class, 
 				LongTextConverter.getConverterClass(dosage));
 		Assert.assertEquals(
-				"Doseringsforløbet starter lørdag den 1. januar 2011, forløbet gentages hver 2. dag:\n"+
+				"Doseringsforløbet starter lørdag den 1. januar 2011, forløbet gentages hver 2. dag, og ophører søndag den 30. januar 2011:\n"+
 				"   Doseringsforløb:\n"+
 				"   Dag 1: 1 stk ved måltid",
 				LongTextConverter.convert(dosage));
@@ -229,7 +229,7 @@ public class RepeatedConverterTest {
 						1, 
 						PlainDoseWrapper.makeDose(new BigDecimal(1))))));
 		Assert.assertEquals(
-				"Doseringsforløbet starter lørdag den 1. januar 2011, forløbet gentages efter 30 dage:\n"+
+				"Doseringsforløbet starter lørdag den 1. januar 2011, forløbet gentages efter 30 dage, og ophører tirsdag den 1. januar 2013:\n"+
 				"   Doseringsforløb:\n"+
 				"   Lørdag den 1. januar 2011: 1 stk ved måltid",
 				LongTextConverter.convert(dosage));
@@ -313,7 +313,7 @@ public class RepeatedConverterTest {
 						1,
 						PlainDoseWrapper.makeDose(new BigDecimal(2.5))))));
 		Assert.assertEquals(
-				"Doseringsforløbet starter lørdag den 1. januar 2011, forløbet gentages efter 30 dage:\n"+
+				"Doseringsforløbet starter lørdag den 1. januar 2011, forløbet gentages efter 30 dage, og ophører tirsdag den 1. januar 2013:\n"+
 				"   Doseringsforløb:\n"+
 				"   Lørdag den 1. januar 2011: 2,5 stk ved måltid",
 				LongTextConverter.convert(dosage));
@@ -336,13 +336,13 @@ public class RepeatedConverterTest {
 			StructuresWrapper.makeStructures(
 				UnitOrUnitsWrapper.makeUnit("stk"), 
 				StructureWrapper.makeStructure(
-					30, "ved måltid", DateOrDateTimeWrapper.makeDate("2011-01-01"), DateOrDateTimeWrapper.makeDate("2013-01-01"), 
+					30, "ved måltid", DateOrDateTimeWrapper.makeDate("2011-01-01"), DateOrDateTimeWrapper.makeDate("2013-01-01"),  
 					DayWrapper.makeDay(
 						1, 
 						PlainDoseWrapper.makeDose(new BigDecimal(2.5)), 
 						PlainDoseWrapper.makeDose(new BigDecimal(2.5))))));
 		Assert.assertEquals(
-				"Doseringsforløbet starter lørdag den 1. januar 2011, forløbet gentages efter 30 dage:\n"+
+				"Doseringsforløbet starter lørdag den 1. januar 2011, forløbet gentages efter 30 dage, og ophører tirsdag den 1. januar 2013:\n"+
 				"   Doseringsforløb:\n"+
 				"   Lørdag den 1. januar 2011: 2,5 stk 2 gange ved måltid",
 				LongTextConverter.convert(dosage));
@@ -370,7 +370,7 @@ public class RepeatedConverterTest {
 						1, 
 						PlainDoseWrapper.makeDose(new BigDecimal(2.5))))));
 		Assert.assertEquals(
-				"Doseringsforløbet starter lørdag den 1. januar 2011, forløbet gentages efter 5 dage:\n"+
+				"Doseringsforløbet starter lørdag den 1. januar 2011, forløbet gentages efter 5 dage, og ophører tirsdag den 1. januar 2013:\n"+
 				"   Doseringsforløb:\n"+
 				"   Lørdag den 1. januar 2011: 2,5 stk ved måltid",
 				LongTextConverter.convert(dosage));
@@ -399,7 +399,7 @@ public class RepeatedConverterTest {
 						PlainDoseWrapper.makeDose(new BigDecimal(2.5)), 
 						PlainDoseWrapper.makeDose(new BigDecimal(2.5))))));
 		Assert.assertEquals(
-				"Doseringsforløbet starter lørdag den 1. januar 2011, forløbet gentages efter 5 dage:\n"+
+				"Doseringsforløbet starter lørdag den 1. januar 2011, forløbet gentages efter 5 dage, og ophører tirsdag den 1. januar 2013:\n"+
 				"   Doseringsforløb:\n"+
 				"   Lørdag den 1. januar 2011: 2,5 stk 2 gange ved måltid",
 				LongTextConverter.convert(dosage));
@@ -428,7 +428,7 @@ public class RepeatedConverterTest {
 						PlainDoseWrapper.makeDose(new BigDecimal(0.5)), 
 						PlainDoseWrapper.makeDose(new BigDecimal(0.5))))));
 		Assert.assertEquals(
-				"Doseringsforløbet starter lørdag den 1. januar 2011, forløbet gentages efter 5 dage:\n"+
+				"Doseringsforløbet starter lørdag den 1. januar 2011, forløbet gentages efter 5 dage, og ophører tirsdag den 1. januar 2013:\n"+
 				"   Doseringsforløb:\n"+
 				"   Lørdag den 1. januar 2011: 0,5 stk 2 gange ved måltid",
 				LongTextConverter.convert(dosage));
@@ -456,7 +456,7 @@ public class RepeatedConverterTest {
 						1, 
 						TimedDoseWrapper.makeDose(new LocalTime(8,00), new BigDecimal(1), false)))));
 		Assert.assertEquals(
-				"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages hver dag:\n"+
+				"Doseringsforløbet starter lørdag den 1. januar 2011, gentages hver dag, og ophører søndag den 30. januar 2011:\n"+
 				"   Doseringsforløb:\n"+
 				"   1 stk kl. 08:00",
 				LongTextConverter.convert(dosage));

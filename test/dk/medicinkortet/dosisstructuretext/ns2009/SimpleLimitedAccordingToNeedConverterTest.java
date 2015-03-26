@@ -50,7 +50,7 @@ public class SimpleLimitedAccordingToNeedConverterTest {
 				StructuresWrapper.makeStructures(
 					UnitOrUnitsWrapper.makeUnit("pust"),
 					StructureWrapper.makeStructure(
-						1, "ved anfald", DateOrDateTimeWrapper.makeDate("2011-01-01"), DateOrDateTimeWrapper.makeDate("2011-01-11"), 
+						1, "ved anfald", DateOrDateTimeWrapper.makeDate("2011-01-01"), null, 
 						DayWrapper.makeDay(1,
 							PlainDoseWrapper.makeDose(new BigDecimal(1), true),
 							PlainDoseWrapper.makeDose(new BigDecimal(1), true),
@@ -81,7 +81,7 @@ public class SimpleLimitedAccordingToNeedConverterTest {
 						DayWrapper.makeDay(1,
 							PlainDoseWrapper.makeDose(new BigDecimal(1), true)))));
 		Assert.assertEquals(
-				"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages hver dag:\n"+
+				"Doseringsforløbet starter lørdag den 1. januar 2011, gentages hver dag, og ophører tirsdag den 11. januar 2011:\n"+
 				"   Doseringsforløb:\n"+
 				"   1 pust efter behov højst 1 gang daglig ved anfald", 
 				LongTextConverter.convert(dosage));

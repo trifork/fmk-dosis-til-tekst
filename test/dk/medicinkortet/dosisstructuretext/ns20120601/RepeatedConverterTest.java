@@ -67,7 +67,7 @@ public class RepeatedConverterTest {
 						PlainDoseWrapper.makeDose(new BigDecimal(3)), 
 						PlainDoseWrapper.makeDose(new BigDecimal(3))))));
 		Assert.assertEquals(
-				"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages hver dag:\n"+
+				"Doseringsforløbet starter lørdag den 1. januar 2011, gentages hver dag, og ophører søndag den 30. januar 2011:\n"+
 				"   Doseringsforløb:\n"+
 				"   3 dåser 2 gange daglig",
 				LongTextConverter.convert(dosage));
@@ -96,7 +96,7 @@ public class RepeatedConverterTest {
 						PlainDoseWrapper.makeDose(new BigDecimal(3), true), 
 						PlainDoseWrapper.makeDose(new BigDecimal(3), true)))));
 		Assert.assertEquals(
-				"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages hver dag:\n"+
+				"Doseringsforløbet starter lørdag den 1. januar 2011, gentages hver dag, og ophører søndag den 30. januar 2011:\n"+
 				"   Doseringsforløb:\n"+
 				"   3 dåser efter behov højst 2 gange daglig",
 				LongTextConverter.convert(dosage));
@@ -245,7 +245,7 @@ public class RepeatedConverterTest {
 						1, 
 						PlainDoseWrapper.makeDose(new BigDecimal(4))))));		
 		Assert.assertEquals(
-				"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages hver dag:\n"+
+				"Doseringsforløbet starter lørdag den 1. januar 2011, gentages hver dag, og ophører tirsdag den 4. januar 2011:\n"+
 				"   Doseringsforløb:\n"+
 				"   4 tabletter ved måltid",
 				LongTextConverter.convert(dosage));
@@ -276,7 +276,7 @@ public class RepeatedConverterTest {
 						15, 
 						PlainDoseWrapper.makeDose(new BigDecimal(1))))));		
 		Assert.assertEquals(
-				"Doseringsforløbet starter lørdag den 1. januar 2011, forløbet gentages efter 35 dage.\n"+
+				"Doseringsforløbet starter lørdag den 1. januar 2011, forløbet gentages efter 35 dage, og ophører tirsdag den 4. januar 2011.\n"+
 				"Bemærk at doseringen har et komplekst forløb:\n"+
 				"   Doseringsforløb:\n"+
 				"   Lørdag den 1. januar 2011: 1 plaster\n"+

@@ -50,7 +50,7 @@ public class MorningNoonEveningNightInNDaysConverterTest {
 			StructuresWrapper.makeStructures(
 				UnitOrUnitsWrapper.makeUnit("tabletter"), 
 				StructureWrapper.makeStructure(
-					0, "ved måltid", DateOrDateTimeWrapper.makeDate("2011-01-01"), DateOrDateTimeWrapper.makeDate("2011-01-05"), 
+					0, "ved måltid", DateOrDateTimeWrapper.makeDate("2011-01-01"), null, 
 					DayWrapper.makeDay(
 						1, 
 						MorningDoseWrapper.makeDose(new BigDecimal(1))),
@@ -88,7 +88,7 @@ public class MorningNoonEveningNightInNDaysConverterTest {
 				1.0, 
 				DailyDosisCalculator.calculate(dosage).getValue().doubleValue(), 
 				0.000000001);
-		Assert.assertEquals(DosageType.Temporary, DosageTypeCalculator.calculate(dosage));						
+		Assert.assertEquals(DosageType.OneTime, DosageTypeCalculator.calculate(dosage));						
 	}
 		
 }

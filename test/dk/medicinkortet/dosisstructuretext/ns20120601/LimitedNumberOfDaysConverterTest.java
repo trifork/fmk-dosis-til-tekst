@@ -72,7 +72,7 @@ public class LimitedNumberOfDaysConverterTest {
 						PlainDoseWrapper.makeDose(new BigDecimal(4)), 
 						PlainDoseWrapper.makeDose(new BigDecimal(4))))));		
 		Assert.assertEquals(
-				"Doseringsforløbet starter lørdag den 1. januar 2011 og ophører efter det angivne forløb:\n"+
+				"Doseringsforløbet starter lørdag den 1. januar 2011, og ophører tirsdag den 4. januar 2011:\n"+
 				"   Doseringsforløb:\n"+
 				"   Lørdag den 1. januar 2011: 4 måleskefulde 2 gange ved måltid\n"+
 				"   Søndag den 2. januar 2011: 4 måleskefulde 2 gange ved måltid\n"+
@@ -116,7 +116,7 @@ public class LimitedNumberOfDaysConverterTest {
 						PlainDoseWrapper.makeDose(new BigDecimal(4), true), 
 						PlainDoseWrapper.makeDose(new BigDecimal(4), true)))));		
 		Assert.assertEquals(
-				"Doseringsforløbet starter lørdag den 1. januar 2011 og ophører efter det angivne forløb:\n"+
+				"Doseringsforløbet starter lørdag den 1. januar 2011, og ophører tirsdag den 4. januar 2011:\n"+
 				"   Doseringsforløb:\n"+
 				"   Lørdag den 1. januar 2011: 4 måleskefulde efter behov højst 2 gange ved måltid\n"+
 				"   Søndag den 2. januar 2011: 4 måleskefulde efter behov højst 2 gange ved måltid\n"+
@@ -139,7 +139,7 @@ public class LimitedNumberOfDaysConverterTest {
 			StructuresWrapper.makeStructures(
 				UnitOrUnitsWrapper.makeUnits("tablet", "tabletter"),  
 				StructureWrapper.makeStructure(
-					0, "ved måltid", DateOrDateTimeWrapper.makeDate("2011-01-01"), DateOrDateTimeWrapper.makeDate("2011-01-04"),  
+					0, "ved måltid", DateOrDateTimeWrapper.makeDate("2011-01-01"), null,  
 					DayWrapper.makeDay(
 						1, 
 						PlainDoseWrapper.makeDose(new BigDecimal(4))))));		
@@ -155,7 +155,7 @@ public class LimitedNumberOfDaysConverterTest {
 				"4 tabletter 1 gang ved måltid", 
 				ShortTextConverter.convert(dosage));
 		Assert.assertEquals(4.0, DailyDosisCalculator.calculate(dosage).getValue().doubleValue(), 0.000000001); 				
-		Assert.assertEquals(DosageType.Temporary, DosageTypeCalculator.calculate(dosage));
+		Assert.assertEquals(DosageType.OneTime, DosageTypeCalculator.calculate(dosage));
 	}
 
 }

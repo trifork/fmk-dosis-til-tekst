@@ -42,6 +42,10 @@ public abstract class LongTextConverterImpl {
 		s.append("Doseringsforløbet starter "+datesToLongText(startDateOrDateTime));
 	}
 	
+	protected void appendDosageEnd(StringBuilder s, DateOrDateTimeWrapper endDateOrDateTime) {
+		s.append(", og ophører "+datesToLongText(endDateOrDateTime));
+	}
+	
 	protected String datesToLongText(DateOrDateTimeWrapper startDateOrDateTime) {
 		if(startDateOrDateTime==null)
 			throw new IllegalArgumentException();

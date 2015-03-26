@@ -67,7 +67,7 @@ public class DailyRepeatedConverterTest {
 				DailyRepeatedConverterImpl.class, 
 				LongTextConverter.getConverterClass(dosage));
 		Assert.assertEquals(
-				"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages hver dag:\n"+
+				"Doseringsforløbet starter lørdag den 1. januar 2011, gentages hver dag, og ophører søndag den 30. januar 2011:\n"+
 				"   Doseringsforløb:\n"+
 				"   1 tablet ved måltid + 1 tablet ved måltid + 1 tablet efter behov ved måltid",
 				LongTextConverter.convert(dosage));
@@ -99,7 +99,7 @@ public class DailyRepeatedConverterTest {
 				DailyRepeatedConverterImpl.class, 
 				LongTextConverter.getConverterClass(dosage));
 		Assert.assertEquals(
-				"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages hver dag:\n"+
+				"Doseringsforløbet starter lørdag den 1. januar 2011, gentages hver dag, og ophører søndag den 30. januar 2011:\n"+
 				"   Doseringsforløb:\n"+
 				"   1 tablet ved måltid + 1 tablet ved måltid + 1 tablet efter behov ved måltid",
 				LongTextConverter.convert(dosage));

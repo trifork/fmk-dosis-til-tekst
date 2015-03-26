@@ -81,7 +81,7 @@ public class MultiplePeriodesTest {
 		Assert.assertEquals(
 			"Doseringen indeholder flere perioder:\n" +
 			"\n" +
-			"Doseringsforløbet starter lørdag den 1. juni 2013 og ophører efter det angivne forløb.\n" +
+			"Doseringsforløbet starter lørdag den 1. juni 2013, og ophører mandag den 3. juni 2013.\n" +
 			"Bemærk at doseringen varierer:\n" +
 			"   Doseringsforløb:\n" +
 			"   Lørdag den 1. juni 2013: 2 tabletter morgen + 2 tabletter middag + 2 tabletter aften\n" +
@@ -97,9 +97,120 @@ public class MultiplePeriodesTest {
 		Assert.assertEquals(DosageType.Combined, DosageTypeCalculator.calculate(dosage));		
 	}
 
-
+	@Test
+	public void testTwoFollwingPeriodes_Nedtrapning_DailyRepeated() throws Exception {
+		DosageWrapper dosage = DosageWrapper.makeDosage(
+			StructuresWrapper.makeStructures(
+				UnitOrUnitsWrapper.makeUnits("tablet", "tabletter"), 
+				StructureWrapper.makeStructure(
+					1, null, DateOrDateTimeWrapper.makeDate("2013-06-01"), DateOrDateTimeWrapper.makeDate("2013-06-03"),
+					DayWrapper.makeDay(
+						1, 
+						MorningDoseWrapper.makeDose(new BigDecimal(2)), 
+						NoonDoseWrapper.makeDose(new BigDecimal(2)), 
+						EveningDoseWrapper.makeDose(new BigDecimal(2)))),
+				StructureWrapper.makeStructure(
+					1, null, DateOrDateTimeWrapper.makeDate("2013-06-04"), DateOrDateTimeWrapper.makeDate("2013-06-10"), 
+					DayWrapper.makeDay(
+						1, 
+						MorningDoseWrapper.makeDose(new BigDecimal(1)))
+					)
+				)				
+			); 
+		Assert.assertEquals(
+			"Doseringen indeholder flere perioder:\n" +
+			"\n" +
+			"Doseringsforløbet starter lørdag den 1. juni 2013, gentages hver dag, og ophører mandag den 3. juni 2013:\n" +
+			"   Doseringsforløb:\n" +
+			"   2 tabletter morgen + 2 tabletter middag + 2 tabletter aften\n" +
+			"\n" +
+			"Doseringsforløbet starter tirsdag den 4. juni 2013, gentages hver dag, og ophører mandag den 10. juni 2013:\n" +
+			"   Doseringsforløb:\n" +
+			"   1 tablet morgen",
+			LongTextConverter.convert(dosage));
+		Assert.assertNull(ShortTextConverter.getConverterClass(dosage));
+		Assert.assertNull(DailyDosisCalculator.calculate(dosage).getValue()); 		
+		Assert.assertEquals(DosageType.Combined, DosageTypeCalculator.calculate(dosage));		
+	}
 	
-
+	@Test
+	public void testTwoFollwingPeriodes_Nedtrapning_2DaysRepeated() throws Exception {
+		DosageWrapper dosage = DosageWrapper.makeDosage(
+			StructuresWrapper.makeStructures(
+				UnitOrUnitsWrapper.makeUnits("tablet", "tabletter"), 
+				StructureWrapper.makeStructure(
+					2, null, DateOrDateTimeWrapper.makeDate("2013-06-01"), DateOrDateTimeWrapper.makeDate("2013-06-03"),
+					DayWrapper.makeDay(
+						1, 
+						MorningDoseWrapper.makeDose(new BigDecimal(2)), 
+						NoonDoseWrapper.makeDose(new BigDecimal(2)), 
+						EveningDoseWrapper.makeDose(new BigDecimal(2)))),
+				StructureWrapper.makeStructure(
+					1, null, DateOrDateTimeWrapper.makeDate("2013-06-04"), DateOrDateTimeWrapper.makeDate("2013-06-10"), 
+					DayWrapper.makeDay(
+						1, 
+						MorningDoseWrapper.makeDose(new BigDecimal(1)))
+					)
+				)				
+			); 
+		Assert.assertEquals(
+			"Doseringen indeholder flere perioder:\n" +
+			"\n" +
+			"Doseringsforløbet starter lørdag den 1. juni 2013, forløbet gentages hver 2. dag, og ophører mandag den 3. juni 2013:\n" +
+			"   Doseringsforløb:\n" +
+			"   Dag 1: 2 tabletter morgen + 2 tabletter middag + 2 tabletter aften\n" +
+			"\n" +
+			"Doseringsforløbet starter tirsdag den 4. juni 2013, gentages hver dag, og ophører mandag den 10. juni 2013:\n" +
+			"   Doseringsforløb:\n" +
+			"   1 tablet morgen",
+			LongTextConverter.convert(dosage));
+		Assert.assertNull(ShortTextConverter.getConverterClass(dosage));
+		Assert.assertNull(DailyDosisCalculator.calculate(dosage).getValue()); 		
+		Assert.assertEquals(DosageType.Combined, DosageTypeCalculator.calculate(dosage));		
+	}
+	
+	@Test
+	public void testTwoFollwingPeriodes_Nedtrapning_3DaysRepeated() throws Exception {
+		DosageWrapper dosage = DosageWrapper.makeDosage(
+			StructuresWrapper.makeStructures(
+				UnitOrUnitsWrapper.makeUnits("tablet", "tabletter"), 
+				StructureWrapper.makeStructure(
+					3, null, DateOrDateTimeWrapper.makeDate("2013-06-01"), DateOrDateTimeWrapper.makeDate("2013-06-09"),
+					DayWrapper.makeDay(
+						1, 
+						MorningDoseWrapper.makeDose(new BigDecimal(3)))),
+				StructureWrapper.makeStructure(
+						1, null, DateOrDateTimeWrapper.makeDate("2013-06-09"), DateOrDateTimeWrapper.makeDate("2013-06-18"),
+						DayWrapper.makeDay(
+							1, 
+							MorningDoseWrapper.makeDose(new BigDecimal(2)))),
+				StructureWrapper.makeStructure(
+					1, null, DateOrDateTimeWrapper.makeDate("2013-06-18"), DateOrDateTimeWrapper.makeDate("2013-06-27"), 
+					DayWrapper.makeDay(
+						1, 
+						MorningDoseWrapper.makeDose(new BigDecimal(1)))
+					)
+				)				
+			); 
+		Assert.assertEquals(
+			"Doseringen indeholder flere perioder:\n" +
+			"\n" +
+			"Doseringsforløbet starter lørdag den 1. juni 2013, forløbet gentages efter 3 dage, og ophører søndag den 9. juni 2013:\n" +
+			"   Doseringsforløb:\n" +
+			"   Lørdag den 1. juni 2013: 3 tabletter morgen\n" +
+			"\n" +
+			"Doseringsforløbet starter søndag den 9. juni 2013, gentages hver dag, og ophører tirsdag den 18. juni 2013:\n" +
+			"   Doseringsforløb:\n" +
+			"   2 tabletter morgen\n" +
+			"\n" +
+			"Doseringsforløbet starter tirsdag den 18. juni 2013, gentages hver dag, og ophører torsdag den 27. juni 2013:\n" +
+			"   Doseringsforløb:\n" +
+			"   1 tablet morgen",
+			LongTextConverter.convert(dosage));
+		Assert.assertNull(ShortTextConverter.getConverterClass(dosage));
+		Assert.assertNull(DailyDosisCalculator.calculate(dosage).getValue()); 		
+		Assert.assertEquals(DosageType.Combined, DosageTypeCalculator.calculate(dosage));		
+	}
 	
 	@Test
 	public void testTwoFololwingPeriodesWithEmptyStructure() throws Exception {
@@ -127,7 +238,7 @@ public class MultiplePeriodesTest {
 		Assert.assertEquals(
 			"Doseringen indeholder flere perioder:\n" +
 			"\n" +
-			"Doseringsforløbet starter lørdag den 1. juni 2013 og ophører efter det angivne forløb.\n" +
+			"Doseringsforløbet starter lørdag den 1. juni 2013, og ophører mandag den 3. juni 2013.\n" +
 			"Bemærk at doseringen varierer:\n" +
 			"   Doseringsforløb:\n" +
 			"   Lørdag den 1. juni 2013: 2 tabletter morgen + 2 tabletter middag + 2 tabletter aften\n" +
@@ -168,7 +279,7 @@ public class MultiplePeriodesTest {
 		Assert.assertEquals(
 			"Doseringen indeholder flere perioder:\n" +
 			"\n" +
-			"Doseringsforløbet starter lørdag den 1. juni 2013 og ophører efter det angivne forløb.\n" +
+			"Doseringsforløbet starter lørdag den 1. juni 2013, og ophører mandag den 3. juni 2013.\n" +
 			"Bemærk at doseringen varierer:\n" +
 			"   Doseringsforløb:\n" +
 			"   Lørdag den 1. juni 2013: 2 tabletter morgen + 2 tabletter middag + 2 tabletter aften\n" +
@@ -273,7 +384,7 @@ public class MultiplePeriodesTest {
 		Assert.assertEquals(
 			"Doseringen indeholder flere perioder, bemærk at der er overlappende perioder:\n" +
 			"\n" +
-			"Doseringsforløbet starter lørdag den 1. juni 2013 og ophører efter det angivne forløb.\n" +
+			"Doseringsforløbet starter lørdag den 1. juni 2013, og ophører mandag den 3. juni 2013.\n" +
 			"Bemærk at doseringen varierer:\n" +
 			"   Doseringsforløb:\n" +
 			"   Lørdag den 1. juni 2013: 2 tabletter morgen + 2 tabletter middag + 2 tabletter aften\n" +
@@ -350,7 +461,7 @@ public class MultiplePeriodesTest {
 		Assert.assertEquals(
 				"Doseringen indeholder flere perioder, bemærk at der er overlappende perioder:\n" +
 				"\n" +
-				"Doseringsforløbet starter lørdag den 1. juni 2013 kl. 08:00 og ophører efter det angivne forløb.\n" +
+				"Doseringsforløbet starter lørdag den 1. juni 2013 kl. 08:00, og ophører mandag den 3. juni 2013 kl. 10:00.\n" +
 				"Bemærk at doseringen varierer:\n" +
 				"   Doseringsforløb:\n" +
 				"   Lørdag den 1. juni 2013: 2 tabletter morgen + 2 tabletter middag + 2 tabletter aften\n" +
@@ -361,7 +472,7 @@ public class MultiplePeriodesTest {
 				"   Doseringsforløb:\n" +
 				"   Efter behov: 2 tabletter efter behov ved smerter\n" +
 				"\n" + 
-				"Doseringsforløbet starter tirsdag den 4. juni 2013 kl. 10:30 og gentages hver dag:\n" +
+				"Doseringsforløbet starter tirsdag den 4. juni 2013 kl. 10:30, gentages hver dag, og ophører torsdag den 6. juni 2013 kl. 15:30:\n" +
 				"   Doseringsforløb:\n" +
 				"   1 tablet morgen",
 				LongTextConverter.convert(dosage));

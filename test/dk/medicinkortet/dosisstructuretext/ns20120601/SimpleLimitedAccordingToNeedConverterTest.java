@@ -59,7 +59,7 @@ public class SimpleLimitedAccordingToNeedConverterTest {
 						DayWrapper.makeDay(1,
 							PlainDoseWrapper.makeDose(new BigDecimal(1), true)))));
 		Assert.assertEquals(
-				"Doseringsforløbet starter onsdag den 1. januar 2014 og gentages hver dag:\n"+
+				"Doseringsforløbet starter onsdag den 1. januar 2014, gentages hver dag, og ophører onsdag den 31. december 2014:\n"+
 				"   Doseringsforløb:\n"+
 				"   1 påsmøring efter behov højst 1 gang daglig",
 				LongTextConverter.convert(dosage));

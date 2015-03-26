@@ -25,7 +25,7 @@ public class DosageWrapperWrapperTest {
 				"   Doseringsforløb:\n"+
 				"   Mandag den 3. juni 2013: 2 dråber 4 gange\n"+
 				"\n"+
-				"Doseringsforløbet starter tirsdag den 4. juni 2013 og gentages hver dag:\n"+
+				"Doseringsforløbet starter tirsdag den 4. juni 2013, gentages hver dag, og ophører mandag den 1. juni 2015:\n"+
 				"   Doseringsforløb:\n"+
 				"   2 dråber 2 gange daglig",
 				definition.getLongText());
@@ -44,7 +44,7 @@ public class DosageWrapperWrapperTest {
 		DosageWrapper dosage = DosageWrapperWrapper.wrap(definition);
 		DosageToTextTranslator.translate(dosage, definition);
 		Assert.assertEquals(
-				"Doseringsforløbet starter mandag den 3. juni 2013 og gentages hver dag:\n"+
+				"Doseringsforløbet starter mandag den 3. juni 2013, gentages hver dag, og ophører mandag den 1. juni 2015:\n"+
 				"   Doseringsforløb:\n"+
 				"   20 tabletter før sengetid + 20 tabletter efter behov",
 				definition.getLongText());
@@ -62,7 +62,7 @@ public class DosageWrapperWrapperTest {
 		DosageWrapper dosage = DosageWrapperWrapper.wrap(definition);
 		DosageToTextTranslator.translate(dosage, definition);
 		Assert.assertEquals(
-				"Doseringsforløbet starter mandag den 3. juni 2013, forløbet gentages efter 28 dage:\n"+
+				"Doseringsforløbet starter mandag den 3. juni 2013, forløbet gentages efter 28 dage, og ophører mandag den 1. juni 2015:\n"+
 				"   Doseringsforløb:\n"+
 				"   Mandag den 3. juni 2013: 1 tablet\n"+
 				"   Tirsdag den 4. juni 2013: 1 tablet\n"+
@@ -100,7 +100,7 @@ public class DosageWrapperWrapperTest {
 		DosageWrapper dosage = DosageWrapperWrapper.wrap(definition);
 		DosageToTextTranslator.translate(dosage, definition);
 		Assert.assertEquals(
-				"Doseringsforløbet starter mandag den 3. juni 2013, forløbet gentages efter 28 dage:\n"+
+				"Doseringsforløbet starter mandag den 3. juni 2013, forløbet gentages efter 28 dage, og ophører mandag den 1. juni 2015:\n"+
 				"   Doseringsforløb:\n"+
 				"   Mandag den 3. juni 2013: 1 tablet optimalt fra 15.-24. cyklusdag\n"+
 				"   Tirsdag den 4. juni 2013: 1 tablet optimalt fra 15.-24. cyklusdag\n"+
@@ -127,7 +127,7 @@ public class DosageWrapperWrapperTest {
 		DosageWrapper dosage = DosageWrapperWrapper.wrap(definition);
 		DosageToTextTranslator.translate(dosage, definition);
 		Assert.assertEquals(
-				"Doseringsforløbet starter mandag den 3. juni 2013 og ophører efter det angivne forløb.\n"+
+				"Doseringsforløbet starter mandag den 3. juni 2013, og ophører mandag den 1. juni 2015.\n"+
 				"Bemærk at doseringen har et komplekst forløb:\n"+
 				"   Doseringsforløb:\n"+
 				"   Tirsdag den 4. juni 2013: 1 kapsel morgen\n"+
@@ -147,7 +147,7 @@ public class DosageWrapperWrapperTest {
 		DosageWrapper dosage = DosageWrapperWrapper.wrap(definition);
 		DosageToTextTranslator.translate(dosage, definition);
 		Assert.assertEquals(
-				"Doseringsforløbet starter mandag den 3. juni 2013 og ophører efter det angivne forløb.\n"+
+				"Doseringsforløbet starter mandag den 3. juni 2013, og ophører mandag den 1. juni 2015.\n"+
 				"Bemærk at doseringen varierer og har et komplekst forløb:\n"+
 				"   Doseringsforløb:\n"+
 				"   Mandag den 3. juni 2013: 1 tablet\n"+
@@ -167,7 +167,7 @@ public class DosageWrapperWrapperTest {
 		DosageWrapper dosage = DosageWrapperWrapper.wrap(definition);
 		DosageToTextTranslator.translate(dosage, definition);
 		Assert.assertEquals(
-				"Doseringsforløbet starter mandag den 3. juni 2013 og ophører efter det angivne forløb.\n"+
+				"Doseringsforløbet starter mandag den 3. juni 2013, og ophører mandag den 1. juni 2015.\n"+
 				"Bemærk at doseringen har et komplekst forløb:\n"+
 				"   Doseringsforløb:\n"+
 				"   Mandag den 3. juni 2013: 1 tablet\n"+

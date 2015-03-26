@@ -78,7 +78,7 @@ public class LongTextConverterTest {
 							MorningDoseWrapper.makeDose(new BigDecimal(1)), 
 							EveningDoseWrapper.makeDose(new BigDecimal(2))))));
 		Assert.assertEquals(
-				"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages hver dag:\n"+
+				"Doseringsforløbet starter lørdag den 1. januar 2011, gentages hver dag, og ophører søndag den 30. januar 2011:\n"+
 				"   Doseringsforløb:\n"+
 				"   1 ml morgen ved måltid + 2 ml aften ved måltid",
 				LongTextConverter.convert(dosage));

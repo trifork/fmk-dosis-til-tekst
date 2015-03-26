@@ -57,19 +57,34 @@ public class DefaultLongTextConverterImpl extends LongTextConverterImpl {
 				s.append(":\n");
 			}
 			else {
-				s.append(" og ophører efter det angivne forløb");
+				if(structure.getEndDateOrDateTime() != null) {
+					appendDosageEnd(s, structure.getEndDateOrDateTime());
+				}
+				else {
+					s.append(" og ophører efter det angivne forløb");
+				}
 				appendNoteText(s, structure);				
 			}
 		}
 		else if(structure.getIterationInterval()==1) {
 			// Daily dosage
 			appendDosageStart(s, structure.getStartDateOrDateTime());
-			s.append(" og gentages hver dag:\n");
+			if(structure.getEndDateOrDateTime() != null) {
+				s.append(", gentages hver dag");
+				appendDosageEnd(s, structure.getEndDateOrDateTime());
+				s.append(":\n");
+			}
+			else {
+				s.append(" og gentages hver dag:\n");
+			}
 		}
 		else if(structure.getIterationInterval()>1) {
 			// Dosage repeated after more than one day
 			appendDosageStart(s, structure.getStartDateOrDateTime());
 			appendRepetition(s, structure);
+			if(structure.getEndDateOrDateTime() != null) {
+				appendDosageEnd(s, structure.getEndDateOrDateTime());
+			}
 			appendNoteText(s, structure);
 		}
 		s.append(TextHelper.INDENT+"Doseringsforløb:\n");

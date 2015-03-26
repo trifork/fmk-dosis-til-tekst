@@ -63,7 +63,7 @@ public class MorningNoonEveningNightAndAccordingToNeedConverterTest {
 						NightDoseWrapper.makeDose(new BigDecimal(2)), 
 						PlainDoseWrapper.makeDose(new BigDecimal(2), true)))));		
 		Assert.assertEquals(
-			"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages hver dag:\n"+
+			"Doseringsforløbet starter lørdag den 1. januar 2011, gentages hver dag, og ophører søndag den 30. januar 2011:\n"+
 			"   Doseringsforløb:\n"+
 			"   2 stk morgen + 2 stk middag + 2 stk aften + 2 stk før sengetid + 2 stk efter behov",
 			LongTextConverter.convert(dosage));
@@ -92,7 +92,7 @@ public class MorningNoonEveningNightAndAccordingToNeedConverterTest {
 				DailyRepeatedConverterImpl.class, 
 				LongTextConverter.getConverterClass(dosage));
 		Assert.assertEquals(
-				"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages hver dag:\n"+
+				"Doseringsforløbet starter lørdag den 1. januar 2011, gentages hver dag, og ophører tirsdag den 11. januar 2011:\n"+
 				"   Doseringsforløb:\n"+
 				"   2 stk efter behov + 2 stk morgen",
 				LongTextConverter.convert(dosage));
@@ -123,7 +123,7 @@ public class MorningNoonEveningNightAndAccordingToNeedConverterTest {
 				DailyRepeatedConverterImpl.class, 
 				LongTextConverter.getConverterClass(dosage));
 		Assert.assertEquals(
-				"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages hver dag:\n"+
+				"Doseringsforløbet starter lørdag den 1. januar 2011, gentages hver dag, og ophører tirsdag den 11. januar 2011:\n"+
 				"   Doseringsforløb:\n"+
 	   			"   1-2 stk morgen + 1-1 stk middag + 1-2 stk aften + 1-2 stk efter behov",
 				LongTextConverter.convert(dosage));
@@ -155,7 +155,7 @@ public class MorningNoonEveningNightAndAccordingToNeedConverterTest {
 				DailyRepeatedConverterImpl.class, 
 				LongTextConverter.getConverterClass(dosage));
 		Assert.assertEquals(
-				"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages hver dag:\n"+
+				"Doseringsforløbet starter lørdag den 1. januar 2011, gentages hver dag, og ophører tirsdag den 11. januar 2011:\n"+
 				"   Doseringsforløb:\n"+
 	   			"   1-2 stk morgen + 1-1 stk middag + 1-2 stk aften + 1-2 stk efter behov + 1-2 stk efter behov",
 				LongTextConverter.convert(dosage));
