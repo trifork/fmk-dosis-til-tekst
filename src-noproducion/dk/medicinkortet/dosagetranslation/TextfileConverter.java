@@ -23,12 +23,12 @@ public class TextfileConverter {
 	 * Path to input file. Text file with columns separated by '|'. First line is header. Columns are 
 	 * drugid, drug name (not used), unit-singular, unit-plural, (old code, not used), iteration, type of mapping, mapping, suppl. text 
 	 */
-	public static final String PATH_TO_INPUT_FILE = "2014-03-31/input.txt"; 
+	public static final String PATH_TO_INPUT_FILE = "2015-03-26/input.txt";
 
 	/**
 	 * Path to output dir, where json files are written 
 	 */
-	public static final String PATH_TO_OUTPUT_DIR = "2014-03-31";
+	public static final String PATH_TO_OUTPUT_DIR = "2015-03-26";
 	
 	/**
 	 * If true no dosage translations are written
@@ -43,12 +43,12 @@ public class TextfileConverter {
 	/**
 	 * Release number. Must be greater than prevoius release. 
 	 */
-	public static final long RELEASE_NUMBER = 20L;
+	public static final long RELEASE_NUMBER = 22L;
 	
 	/**
 	 * Relase date for the data set, typically tomorrow
 	 */
-	public static final String RELEASE_DATE = "2014-03-31" ;
+	public static final String RELEASE_DATE = "2015-03-26" ;
 	
 	
 	public static void main(String[] args) {
@@ -119,6 +119,10 @@ public class TextfileConverter {
 			if(d.isComplete()) {				
 				
 				String xml = xmlBuilder.toXML(d, 10000);
+                if (xml == null) {
+                    // Hvis ikke vi finder en dosering fortsæt til den næste
+                    continue;
+                }
 					
 				String simpleString = null;
 				if(d.getIterationInterval()!=null && d.getIterationInterval().equals("1"))

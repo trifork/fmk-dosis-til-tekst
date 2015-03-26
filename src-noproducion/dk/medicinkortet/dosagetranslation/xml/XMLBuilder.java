@@ -23,6 +23,10 @@ public class XMLBuilder {
 		String xml126 = XMLBuilder126.build(d);
 		String xml140 = XMLBuilder140.build(d);
 		String xml142 = XMLBuilder142.build(d);
+
+        if (xml126 == null && xml140 == null && xml142 == null) {
+            return null;
+        }
 				
 		if(xml126==null) 
 			xml126 = "";
