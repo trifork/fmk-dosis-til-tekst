@@ -23,12 +23,12 @@ public class TextfileConverter {
 	 * Path to input file. Text file with columns separated by '|'. First line is header. Columns are 
 	 * drugid, drug name (not used), unit-singular, unit-plural, (old code, not used), iteration, type of mapping, mapping, suppl. text 
 	 */
-	public static final String PATH_TO_INPUT_FILE = "2015-03-26/input.txt";
+	public static String PATH_TO_INPUT_FILE = "2015-03-26/input.txt";
 
 	/**
 	 * Path to output dir, where json files are written 
 	 */
-	public static final String PATH_TO_OUTPUT_DIR = "2015-03-26";
+	public static String PATH_TO_OUTPUT_DIR = "2015-03-26";
 	
 	/**
 	 * If true no dosage translations are written

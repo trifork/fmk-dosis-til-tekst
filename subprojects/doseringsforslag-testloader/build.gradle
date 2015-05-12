@@ -1,0 +1,51 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+
+repositories {
+    mavenCentral()
+}
+
+sourceSets {
+    dosistiltekst {
+        java {
+            srcDir '../../src'
+        }
+    }
+    doseringsforslag {
+        java {
+            srcDir '../../src-noproducion'
+            compileClasspath += dosistiltekst.output
+            runtimeClasspath += dosistiltekst.output
+        }
+    }
+    main {
+        java {
+            srcDir 'src/main/java'
+            compileClasspath += doseringsforslag.output
+            runtimeClasspath += doseringsforslag.output
+        }
+        resources {
+            srcDir 'src/main/resources'
+        }
+    }
+}
+idea {
+    module {
+        sourceDirs += file('../../src-noproducion')
+        sourceDirs += file('../../src')
+    }
+}
+
+configurations {
+    doseringsforslagCompile.extendsFrom dosistiltekstCompile
+    doseringsforslagRuntime.extendsFrom dosistiltekstRuntime
+    compile.extendsFrom doseringsforslagCompile
+    runtime.extendsFrom doseringsforslagRuntime
+}
+
+dependencies {
+    dosistiltekstCompile    group: 'log4j',                     name: 'log4j',     version: '1.2.9'
+    doseringsforslagCompile group: 'com.google.code.gson',      name: 'gson',      version: '1.4'
+    compile                 group: 'org.apache.httpcomponents', name:'httpclient', version: '4.3.6'
+}

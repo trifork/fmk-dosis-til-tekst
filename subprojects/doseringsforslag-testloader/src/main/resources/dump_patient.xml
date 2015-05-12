@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:medcom="http://www.medcom.dk/dgws/2006/04/dgws-1.0.xsd" xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion" xmlns:sosi="http://www.sosi.dk/sosi/2006/04/sosi-1.0.xsd" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wst="http://schemas.xmlsoap.org/ws/2005/02/trust" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Envelope">
+    <soapenv:Header>
+        <wsse:Security>
+            <wsu:Timestamp>
+                <wsu:Created>2011-06-23T12:09:36Z</wsu:Created>
+            </wsu:Timestamp>
+            <saml:Assertion IssueInstant="2011-06-23T12:04:35Z" Version="2.0" id="IDCard">
+                <saml:Issuer>TESTSTS</saml:Issuer>
+                <saml:Subject>
+                    <saml:NameID Format="medcom:other">##USERNAME##</saml:NameID>
+                </saml:Subject>
+                <saml:Conditions NotBefore="2011-06-23T12:04:35Z" NotOnOrAfter="2011-06-24T12:04:35Z"/>
+                <saml:AttributeStatement id="IDCardData">
+                    <saml:Attribute Name="sosi:IDCardID">
+                        <saml:AttributeValue>d35b9d9f-685b-4a3e-8fa2-591ae50fbe48</saml:AttributeValue>
+                    </saml:Attribute>
+                    <saml:Attribute Name="sosi:IDCardVersion">
+                        <saml:AttributeValue>1.0.1</saml:AttributeValue>
+                    </saml:Attribute>
+                    <saml:Attribute Name="sosi:IDCardType">
+                        <saml:AttributeValue>user</saml:AttributeValue>
+                    </saml:Attribute>
+                    <saml:Attribute Name="sosi:AuthenticationLevel">
+                        <saml:AttributeValue>1</saml:AttributeValue>
+                    </saml:Attribute>
+                </saml:AttributeStatement>
+                <saml:AttributeStatement id="UserLog">
+                    <saml:Attribute Name="medcom:UserCivilRegistrationNumber">
+                        <saml:AttributeValue>##USERCPR##</saml:AttributeValue>
+                    </saml:Attribute>
+                    <saml:Attribute Name="medcom:UserGivenName">
+                        <saml:AttributeValue>##USERGIVENNAME##</saml:AttributeValue>
+                    </saml:Attribute>
+                    <saml:Attribute Name="medcom:UserSurName">
+                        <saml:AttributeValue>##USERSURNAME##</saml:AttributeValue>
+                    </saml:Attribute>
+                    <saml:Attribute Name="medcom:UserRole">
+                        <saml:AttributeValue>##USERROLE##</saml:AttributeValue>
+                    </saml:Attribute>
+                    <saml:Attribute Name="medcom:UserAuthorizationCode">
+                        <saml:AttributeValue>##USERAUTH##</saml:AttributeValue>
+                    </saml:Attribute>
+                    <saml:Attribute Name="medcom:UserOccupation">
+                        <saml:AttributeValue>Plappe</saml:AttributeValue>
+                    </saml:Attribute>
+                </saml:AttributeStatement>
+                <saml:AttributeStatement id="SystemLog">
+                    <saml:Attribute Name="medcom:ITSystemName">
+                        <saml:AttributeValue>##SYSTEMNAME##</saml:AttributeValue>
+                    </saml:Attribute>
+                    <saml:Attribute Name="medcom:CareProviderID" NameFormat="medcom:cvrnumber">
+                        <saml:AttributeValue>##CARECVR##</saml:AttributeValue>
+                    </saml:Attribute>
+                    <saml:Attribute Name="medcom:CareProviderName">
+                        <saml:AttributeValue>##CARENAME##</saml:AttributeValue>
+                    </saml:Attribute>
+                </saml:AttributeStatement>
+            </saml:Assertion>
+        </wsse:Security>
+        <medcom:Header>
+            <medcom:SecurityLevel>4</medcom:SecurityLevel>
+            <medcom:Linking>
+                <medcom:FlowID>flowId</medcom:FlowID>
+                <medcom:MessageID>##MESSAGEID##</medcom:MessageID>
+            </medcom:Linking>
+            <medcom:RequireNonRepudiationReceipt>no</medcom:RequireNonRepudiationReceipt>
+        </medcom:Header>
+        <To xmlns="http://www.w3.org/2005/08/addressing">##FMKDUMPURL##</To>
+        <Action xmlns="http://www.w3.org/2005/08/addressing">http://www.ssi.dk/nsi/xml.schema/2013/01/01#DumpPatients</Action>
+        <ReplyTo xmlns="http://www.w3.org/2005/08/addressing">
+            <Address>http://www.w3.org/2005/08/addressing/anonymous</Address>
+        </ReplyTo>
+        <MessageID xmlns="http://www.w3.org/2005/08/addressing">##MESSAGEID##</MessageID>
+    </soapenv:Header>
+    <soapenv:Body xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+        <ssi2013:DumpPatientsRequest xmlns:ssi2013="http://www.ssi.dk/nsi/xml.schema/2013/01/01"
+                                     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <ssi2013:Identifier>
+                <ssi2013:PersonIdentifier>##CPR##</ssi2013:PersonIdentifier>
+            </ssi2013:Identifier>
+        </ssi2013:DumpPatientsRequest>
+    </soapenv:Body>
+</soapenv:Envelope>

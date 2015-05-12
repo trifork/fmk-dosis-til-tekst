@@ -23,8 +23,9 @@ public class XMLBuilder {
 		String xml126 = XMLBuilder126.build(d);
 		String xml140 = XMLBuilder140.build(d);
 		String xml142 = XMLBuilder142.build(d);
+		String xml144 = XMLBuilder144.build(d);
 
-        if (xml126 == null && xml140 == null && xml142 == null) {
+        if (xml126 == null && xml140 == null && xml142 == null && xml144 == null) {
             return null;
         }
 				
@@ -34,13 +35,17 @@ public class XMLBuilder {
 			xml140 = "";		
 		if(xml142==null)
 			xml142 = "";
+        if(xml144==null)
+            xml144 = "";
 		
-		if(head.length() + xml126.length() + xml140.length() + xml142.length() + tail.length() <= maxLength)
-			return head + xml126 + xml140 + xml142 + tail;
-		else if(head.length() + xml140.length() + xml142.length() + tail.length() <= maxLength)
-			return head + xml140 + xml142 + tail;
-		else if(head.length() + xml142.length() + tail.length() <= maxLength)
-			return head + xml142 + tail;
+		if(head.length() + xml126.length() + xml140.length() + xml142.length() + xml144.length() + tail.length() <= maxLength)
+			return head + xml126 + xml140 + xml142 + xml144 + tail;
+		else if(head.length() + xml140.length() + xml142.length() + xml144.length() + tail.length() <= maxLength)
+			return head + xml140 + xml142 + xml144 + tail;
+		else if(head.length() + xml142.length() + xml144.length() + tail.length() <= maxLength)
+			return head + xml142 + xml144 + tail;
+        else if(head.length() + xml144.length() + tail.length() <= maxLength)
+            return head + xml144 + tail;
 		else
 			return head + tail;
 	}
