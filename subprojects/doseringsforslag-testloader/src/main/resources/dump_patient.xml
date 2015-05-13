@@ -22,7 +22,7 @@
                         <saml:AttributeValue>user</saml:AttributeValue>
                     </saml:Attribute>
                     <saml:Attribute Name="sosi:AuthenticationLevel">
-                        <saml:AttributeValue>1</saml:AttributeValue>
+                        <saml:AttributeValue>4</saml:AttributeValue>
                     </saml:Attribute>
                 </saml:AttributeStatement>
                 <saml:AttributeStatement id="UserLog">

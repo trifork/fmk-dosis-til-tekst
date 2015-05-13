@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:medcom="http://www.medcom.dk/dgws/2006/04/dgws-1.0.xsd" xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion" xmlns:sosi="http://www.sosi.dk/sosi/2006/04/sosi-1.0.xsd" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wst="http://schemas.xmlsoap.org/ws/2005/02/trust" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Envelope">
+    <soapenv:Header>
+        <wsse:Security>
+            <wsu:Timestamp>
+                <wsu:Created>2011-06-23T12:09:36Z</wsu:Created>
+            </wsu:Timestamp>
+            <saml:Assertion IssueInstant="2011-06-23T12:04:35Z" Version="2.0" id="IDCard">
+                <saml:Issuer>TESTSTS</saml:Issuer>
+                <saml:Subject>
+                    <saml:NameID Format="medcom:other">##USERNAME##</saml:NameID>
+                </saml:Subject>
+                <saml:Conditions NotBefore="2011-06-23T12:04:35Z" NotOnOrAfter="2011-06-24T12:04:35Z"/>
+                <saml:AttributeStatement id="IDCardData">
+                    <saml:Attribute Name="sosi:IDCardID">
+                        <saml:AttributeValue>d35b9d9f-685b-4a3e-8fa2-591ae50fbe48</saml:AttributeValue>
+                    </saml:Attribute>
+                    <saml:Attribute Name="sosi:IDCardVersion">
+                        <saml:AttributeValue>1.0.1</saml:AttributeValue>
+                    </saml:Attribute>
+                    <saml:Attribute Name="sosi:IDCardType">
+                        <saml:AttributeValue>user</saml:AttributeValue>
+                    </saml:Attribute>
+                    <saml:Attribute Name="sosi:AuthenticationLevel">
+                        <saml:AttributeValue>4</saml:AttributeValue>
+                    </saml:Attribute>
+                </saml:AttributeStatement>
+                <saml:AttributeStatement id="UserLog">
+                    <saml:Attribute Name="medcom:UserCivilRegistrationNumber">
+                        <saml:AttributeValue>##USERCPR##</saml:AttributeValue>
+                    </saml:Attribute>
+                    <saml:Attribute Name="medcom:UserGivenName">
+                        <saml:AttributeValue>##USERGIVENNAME##</saml:AttributeValue>
+                    </saml:Attribute>
+                    <saml:Attribute Name="medcom:UserSurName">
+                        <saml:AttributeValue>##USERSURNAME##</saml:AttributeValue>
+                    </saml:Attribute>
+                    <saml:Attribute Name="medcom:UserRole">
+                        <saml:AttributeValue>##USERROLE##</saml:AttributeValue>
+                    </saml:Attribute>
+                    <saml:Attribute Name="medcom:UserAuthorizationCode">
+                        <saml:AttributeValue>##USERAUTH##</saml:AttributeValue>
+                    </saml:Attribute>
+                    <saml:Attribute Name="medcom:UserOccupation">
+                        <saml:AttributeValue>Plappe</saml:AttributeValue>
+                    </saml:Attribute>
+                </saml:AttributeStatement>
+                <saml:AttributeStatement id="SystemLog">
+                    <saml:Attribute Name="medcom:ITSystemName">
+                        <saml:AttributeValue>##SYSTEMNAME##</saml:AttributeValue>
+                    </saml:Attribute>
+                    <saml:Attribute Name="medcom:CareProviderID" NameFormat="medcom:cvrnumber">
+                        <saml:AttributeValue>##CARECVR##</saml:AttributeValue>
+                    </saml:Attribute>
+                    <saml:Attribute Name="medcom:CareProviderName">
+                        <saml:AttributeValue>##CARENAME##</saml:AttributeValue>
+                    </saml:Attribute>
+                </saml:AttributeStatement>
+            </saml:Assertion>
+        </wsse:Security>
+        <medcom:Header>
+            <medcom:SecurityLevel>4</medcom:SecurityLevel>
+            <medcom:Linking>
+                <medcom:FlowID>##FLOWID##</medcom:FlowID>
+                <medcom:MessageID>##MESSAGEID##</medcom:MessageID>
+            </medcom:Linking>
+            <medcom:RequireNonRepudiationReceipt>no</medcom:RequireNonRepudiationReceipt>
+        </medcom:Header>
+        <To xmlns="http://www.w3.org/2005/08/addressing">##FMKURL##</To>
+        <Action xmlns="http://www.w3.org/2005/08/addressing">http://www.dkma.dk/medicinecard/xml.schema/2011/01/01#CreateDrugMedication</Action>
+        <ReplyTo xmlns="http://www.w3.org/2005/08/addressing">
+            <Address>http://www.w3.org/2005/08/addressing/anonymous</Address>
+        </ReplyTo>
+        <MessageID xmlns="http://www.w3.org/2005/08/addressing">##MESSAGEID##</MessageID>
+        <sd:SystemOwnerName xmlns:sd="http://www.sdsd.dk/dgws/2010/08">##CARENAME##</sd:SystemOwnerName>
+        <sd:SystemName xmlns:sd="http://www.sdsd.dk/dgws/2010/08">##SYSTEMNAME##</sd:SystemName>
+        <sd:SystemVersion xmlns:sd="http://www.sdsd.dk/dgws/2010/08">1.0</sd:SystemVersion>
+        <sd:OrgResponsibleName xmlns:sd="http://www.sdsd.dk/dgws/2010/08">##CARENAME##</sd:OrgResponsibleName>
+        <sd:OrgUsingName xmlns:sd="http://www.sdsd.dk/dgws/2010/08">##CARENAME##</sd:OrgUsingName>
+        <sd:OrgUsingID NameFormat="medcom:cvrnumber" xmlns:sd="http://www.sdsd.dk/dgws/2010/08">##CARECVR##</sd:OrgUsingID>
+        <sd:RequestedRole xmlns:sd="http://www.sdsd.dk/dgws/2010/08">##USERROLENAME##</sd:RequestedRole>
+    </soapenv:Header>
+    <soapenv:Body xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+        <mc2011:CreateDrugMedicationRequestStructure
+                xmlns:cpr="http://rep.oio.dk/cpr.dk/xml/schemas/core/2005/03/18/"
+                xmlns:dkcc="http://rep.oio.dk/ebxml/xml/schemas/dkcc/2003/02/13/"
+                xmlns:dkcc2005="http://rep.oio.dk/ebxml/xml/schemas/dkcc/2005/03/15/"
+                xmlns:dkcc2005-2="http://rep.oio.dk/ebxml/xml/schemas/dkcc/2005/05/13/"
+                xmlns:itst="http://rep.oio.dk/itst.dk/xml/schemas/2005/01/10/"
+                xmlns:xkom="http://rep.oio.dk/xkom.dk/xml/schemas/2006/01/06/"
+                xmlns:mc2008="http://www.dkma.dk/medicinecard/xml.schema/2008/06/01"
+                xmlns:mc2009="http://www.dkma.dk/medicinecard/xml.schema/2009/01/01"
+                xmlns:mc2011="http://www.dkma.dk/medicinecard/xml.schema/2011/01/01">
+            <cpr:PersonCivilRegistrationIdentifier>##CPR##</cpr:PersonCivilRegistrationIdentifier>
+            <mc2008:MedicineCardVersionIdentifier>1</mc2008:MedicineCardVersionIdentifier>
+            <mc2009:OrganisationStructure>
+                <mc2009:OrganisationName> Tandlægerne</mc2009:OrganisationName>
+                <mc2009:AddressLine>Hjemme hos Anita 1</mc2009:AddressLine>
+                <mc2009:AddressLine>1000 København K</mc2009:AddressLine>
+                <itst:TelephoneNumberIdentifier>12345678</itst:TelephoneNumberIdentifier>
+                <mc2008:DoctorOrganisationIdentifier>441449</mc2008:DoctorOrganisationIdentifier>
+            </mc2009:OrganisationStructure>
+            <mc2008:DoctorStructure>
+                <mc2008:AuthorisationIdentifier>##USERAUTH##</mc2008:AuthorisationIdentifier>
+                <mc2008:DoctorName>##USERNAME##</mc2008:DoctorName>
+            </mc2008:DoctorStructure>
+            <mc2011:CreateDrugMedicationStructure>
+                <mc2008:PauseDrugMedicationIndicator>false</mc2008:PauseDrugMedicationIndicator>
+                <mc2009:PriceListVersionDate>2009-02-24</mc2009:PriceListVersionDate>
+                <mc2009:DrugMedicationBeginEndDateStructure>
+                    <mc2009:DrugMedicationTreatmentStartDate>2008-01-01Z</mc2009:DrugMedicationTreatmentStartDate>
+                    <mc2009:DrugMedicationTreatmentEndDate>2099-12-31Z</mc2009:DrugMedicationTreatmentEndDate>
+                </mc2009:DrugMedicationBeginEndDateStructure>
+                <mc2009:IndicationStructure>
+                    <mc2008:IndicationCode>2</mc2008:IndicationCode>
+                    <mc2008:IndicationText>mod for meget mavesyre</mc2008:IndicationText>
+                </mc2009:IndicationStructure>
+                <mc2008:RouteOfAdministrationStructure>
+                    <mc2008:RouteOfAdministrationCode>of</mc2008:RouteOfAdministrationCode>
+                    <mc2008:RouteOfAdministrationText>Testdata</mc2008:RouteOfAdministrationText>
+                </mc2008:RouteOfAdministrationStructure>
+                <mc2009:DrugStructure>
+                    <mc2008:ATCStructure>
+                        <mc2008:ATCCode>A02AB</mc2008:ATCCode>
+                        <mc2008:ATCText>Aluminiumforbindelser</mc2008:ATCText>
+                    </mc2008:ATCStructure>
+                    <mc2008:DrugIdentifier>28100000555</mc2008:DrugIdentifier>
+                    <mc2008:DrugName>Demulcin</mc2008:DrugName>
+                    <mc2008:DrugFormStructure>
+                        <mc2008:DrugFormCode>ORESPR</mc2008:DrugFormCode>
+                        <mc2008:DrugFormText>Testsdata</mc2008:DrugFormText>
+                    </mc2008:DrugFormStructure>
+                    <mc2008:DrugStrengthStructure>
+                        <mc2008:DrugStrengthValue>1.00</mc2008:DrugStrengthValue>
+                        <mc2008:DrugStrengthUnitCode>MG</mc2008:DrugStrengthUnitCode>
+                    </mc2008:DrugStrengthStructure>
+                    <mc2009:SubstancesStructure>
+                        <mc2009:ActiveSubstanceStructure>
+                            <mc2008:ActiveSubstanceChemicalAbstractNumber>000000-00-0</mc2008:ActiveSubstanceChemicalAbstractNumber>
+                            <mc2008:ActiveSubstanceText>a</mc2008:ActiveSubstanceText>
+                            <mc2009:ActiveSubstanceFreeText>a</mc2009:ActiveSubstanceFreeText>
+                        </mc2009:ActiveSubstanceStructure>
+                    </mc2009:SubstancesStructure>
+                </mc2009:DrugStructure>
+                ##DOSAGESTRUCTURE##
+            </mc2011:CreateDrugMedicationStructure>
+        </mc2011:CreateDrugMedicationRequestStructure>
+    </soapenv:Body>
+</soapenv:Envelope>

@@ -22,7 +22,7 @@
                         <saml:AttributeValue>user</saml:AttributeValue>
                     </saml:Attribute>
                     <saml:Attribute Name="sosi:AuthenticationLevel">
-                        <saml:AttributeValue>4</saml:AttributeValue>
+                        <saml:AttributeValue>1</saml:AttributeValue>
                     </saml:Attribute>
                 </saml:AttributeStatement>
                 <saml:AttributeStatement id="UserLog">
@@ -66,21 +66,8 @@
             </medcom:Linking>
             <medcom:RequireNonRepudiationReceipt>no</medcom:RequireNonRepudiationReceipt>
         </medcom:Header>
-        <To xmlns="http://www.w3.org/2005/08/addressing">##FMKDUMPURL##</To>
-        <Action xmlns="http://www.w3.org/2005/08/addressing">http://www.ssi.dk/nsi/xml.schema/2013/01/01#RestorePatients</Action>
-        <ReplyTo xmlns="http://www.w3.org/2005/08/addressing">
-            <Address>http://www.w3.org/2005/08/addressing/anonymous</Address>
-        </ReplyTo>
-        <MessageID xmlns="http://www.w3.org/2005/08/addressing">##MESSAGEID##</MessageID>
     </soapenv:Header>
     <soapenv:Body xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
-        <ssi2013:RestorePatientsRequest xmlns:ssi2013="http://www.ssi.dk/nsi/xml.schema/2013/01/01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-            <ssi2013:Dump>
-                <ssi2013:Identifier>
-                    <ssi2013:PersonIdentifier>##CPR##</ssi2013:PersonIdentifier>
-                </ssi2013:Identifier>
-                <ssi2013:DumpData>##DUMPDATA##</ssi2013:DumpData>
-            </ssi2013:Dump>
-        </ssi2013:RestorePatientsRequest>
+        <logoutRequestBody xmlns="http://sosi.dk/gw/2014.06.01">dummy</logoutRequestBody>
     </soapenv:Body>
 </soapenv:Envelope>

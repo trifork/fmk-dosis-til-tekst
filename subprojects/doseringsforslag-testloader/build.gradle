@@ -1,51 +1,42 @@
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
+apply plugin: 'gradle-one-jar'
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.github.rholder:gradle-one-jar:1.0.4'
+    }
+}
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 repositories {
     mavenCentral()
 }
 
 sourceSets {
-    dosistiltekst {
-        java {
-            srcDir '../../src'
-        }
-    }
-    doseringsforslag {
-        java {
-            srcDir '../../src-noproducion'
-            compileClasspath += dosistiltekst.output
-            runtimeClasspath += dosistiltekst.output
-        }
-    }
     main {
         java {
             srcDir 'src/main/java'
-            compileClasspath += doseringsforslag.output
-            runtimeClasspath += doseringsforslag.output
+            srcDir '../../src-noproducion'
+            srcDir '../../src'
         }
-        resources {
-            srcDir 'src/main/resources'
-        }
-    }
-}
-idea {
-    module {
-        sourceDirs += file('../../src-noproducion')
-        sourceDirs += file('../../src')
     }
 }
 
-configurations {
-    doseringsforslagCompile.extendsFrom dosistiltekstCompile
-    doseringsforslagRuntime.extendsFrom dosistiltekstRuntime
-    compile.extendsFrom doseringsforslagCompile
-    runtime.extendsFrom doseringsforslagRuntime
+task fatJar(type: OneJar) {
+    mainClass = "dk.medicinkortet.dosagetranslation.FmkTestLoader"
+    targetConfiguration = configurations.runtime
 }
 
 dependencies {
-    dosistiltekstCompile    group: 'log4j',                     name: 'log4j',     version: '1.2.9'
-    doseringsforslagCompile group: 'com.google.code.gson',      name: 'gson',      version: '1.4'
-    compile                 group: 'org.apache.httpcomponents', name:'httpclient', version: '4.3.6'
+    compile                 group: 'log4j',                     name: 'log4j',     version: '1.2.9'
+    compile                 group: 'com.google.code.gson',      name: 'gson',      version: '1.4'
+    compile                 group: 'org.apache.httpcomponents', name: 'httpclient',version: '4.3.6'
+    compile                 group: 'com.opencsv',               name: 'opencsv',   version: '3.3'
+    compile                 group: 'commons-io',                name: 'commons-io',version: '2.4'
 }

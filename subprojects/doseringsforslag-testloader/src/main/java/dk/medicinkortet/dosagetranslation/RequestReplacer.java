@@ -11,6 +11,7 @@ public class RequestReplacer {
             result = result.replaceAll(entry.getKey(), entry.getValue());
         }
         result = result.replaceAll("##MESSAGEID##", UUID.randomUUID().toString());
+        result = result.replaceAll("##FLOWID##", UUID.randomUUID().toString());
         return result;
     }
 }

@@ -12,8 +12,8 @@ public class XMLBuilder144 extends XMLBuilderBase {
             return null;
         StringBuilder s = new StringBuilder();
         s.append("<Dosage>");
-        s.append("<Version>1.4.2</Version>");
-        s.append("<m15:DosageForRequest " +
+        s.append("<Version>1.4.4</Version>");
+        s.append("<m15:Dosage " +
                 "xsi:schemaLocation=\"http://www.dkma.dk/medicinecard/xml.schema/2015/01/01 ../../../2015/01/01/DosageForRequest.xsd\" " +
                 "xmlns:m15=\"http://www.dkma.dk/medicinecard/xml.schema/2015/01/01\" " +
                 "xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">");
@@ -33,7 +33,7 @@ public class XMLBuilder144 extends XMLBuilderBase {
         else {
             s.append(buildStructures(d));
         }
-        s.append("</m15:DosageForRequest>");
+        s.append("</m15:Dosage>");
         s.append("</Dosage>");
         return s.toString();
     }
