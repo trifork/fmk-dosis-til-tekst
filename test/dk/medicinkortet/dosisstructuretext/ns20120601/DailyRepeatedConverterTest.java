@@ -30,6 +30,7 @@ import org.junit.Test;
 import dk.medicinkortet.dosisstructuretext.DailyDosisCalculator;
 import dk.medicinkortet.dosisstructuretext.DosageType;
 import dk.medicinkortet.dosisstructuretext.DosageTypeCalculator;
+import dk.medicinkortet.dosisstructuretext.LocalTime;
 import dk.medicinkortet.dosisstructuretext.LongTextConverter;
 import dk.medicinkortet.dosisstructuretext.ShortTextConverter;
 import dk.medicinkortet.dosisstructuretext.longtextconverterimpl.DailyRepeatedConverterImpl;
@@ -40,6 +41,7 @@ import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.PlainDoseWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.StructureWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.StructuresWrapper;
+import dk.medicinkortet.dosisstructuretext.vowrapper.TimedDoseWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.UnitOrUnitsWrapper;
 
 /**
@@ -112,5 +114,44 @@ public class DailyRepeatedConverterTest {
 		Assert.assertNull(DailyDosisCalculator.calculate(dosage).getValue());
 		Assert.assertEquals(DosageType.Combined, DosageTypeCalculator.calculate(dosage));
 	}
+	
+	/* FMK-2444 Combined TimeDose/PlainDose was mistakenly converted by ParacetamolConverter */
+	@Test
+	public void testCombinedTimePlain() {
+		
+		DosageWrapper dosage = DosageWrapper.makeDosage(
+			StructuresWrapper.makeStructures(
+				UnitOrUnitsWrapper.makeUnits("tablet", "tabletter"), 
+				StructureWrapper.makeStructure(
+					1, 
+					null, 
+					DateOrDateTimeWrapper.makeDate("2011-01-01"), null, //DateOrDateTimeWrapper.makeDate("2011-01-01"), 
+					DayWrapper.makeDay(
+						1, 
+						TimedDoseWrapper.makeDose(new LocalTime(8,00), new BigDecimal(1), false), 
+						TimedDoseWrapper.makeDose(new LocalTime(12,00), new BigDecimal(1), false), 
+						TimedDoseWrapper.makeDose(new LocalTime(16,00), new BigDecimal(1), false), 
+						TimedDoseWrapper.makeDose(new LocalTime(20,00), new BigDecimal(1), false), 
+						PlainDoseWrapper.makeDose(new BigDecimal(1), true),
+						PlainDoseWrapper.makeDose(new BigDecimal(1), true),
+						PlainDoseWrapper.makeDose(new BigDecimal(1), true)
+					)
+				)
+			)
+		);
 
+		Assert.assertEquals(
+				"Doseringsforløbet starter lørdag den 1. januar 2011 og gentages hver dag:\n" + 
+				"   Doseringsforløb:\n" + 
+				"   1 tablet kl. 08:00 + 1 tablet kl. 12:00 + 1 tablet kl. 16:00 + 1 tablet kl. 20:00 + 1 tablet efter behov + 1 tablet efter behov + 1 tablet efter behov",
+				LongTextConverter.convert(dosage));
+
+		Assert.assertEquals(
+			DailyRepeatedConverterImpl.class, 
+			LongTextConverter.getConverterClass(dosage));
+		Assert.assertNull(ShortTextConverter.convert(dosage));	/* converted text is to long (>70) */
+		Assert.assertNull(ShortTextConverter.getConverterClass(dosage)); /* converted text is to long (>70) */
+		Assert.assertNull(DailyDosisCalculator.calculate(dosage).getValue());
+		Assert.assertEquals(DosageType.Combined, DosageTypeCalculator.calculate(dosage));
+	}
 }

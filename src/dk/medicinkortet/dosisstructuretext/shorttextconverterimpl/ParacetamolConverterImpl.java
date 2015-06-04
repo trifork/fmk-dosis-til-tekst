@@ -45,6 +45,9 @@ public class ParacetamolConverterImpl extends ShortTextConverterImpl {
 			return false;
 		if(day.containsAccordingToNeedDosesOnly())
 			return false;
+		if(day.containsTimedDose()) {
+			return false;
+		}
 		if(!day.containsPlainDose())
 			return false;
 		if(day.getMorningDose()!=null || day.getNoonDose()!=null 
