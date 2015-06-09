@@ -141,7 +141,23 @@ public class RawDefinition {
 	public ArrayList<String> getTypes() {
 		return types;
 	}
-	
+
+	public void setDrugName(String drugName) {
+		this.drugName = drugName;
+	}
+
+	public void setUnitSingular(String unitSingular) {
+		this.unitSingular = unitSingular;
+	}
+
+	public void setUnitPlural(String unitPlural) {
+		this.unitPlural = unitPlural;
+	}
+
+	public void setDrugIdentifier(Long drugIdentifier) {
+		this.drugIdentifier = drugIdentifier;
+	}
+
 	public String getSimpleString() {
 		if(mapping==null || mapping.trim().length()==0)
 			return null;
