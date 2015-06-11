@@ -149,8 +149,9 @@ public class DailyRepeatedConverterTest {
 		Assert.assertEquals(
 			DailyRepeatedConverterImpl.class, 
 			LongTextConverter.getConverterClass(dosage));
-		Assert.assertNull(ShortTextConverter.convert(dosage));	/* converted text is to long (>70) */
-		Assert.assertNull(ShortTextConverter.getConverterClass(dosage)); /* converted text is to long (>70) */
+		String shorttext= ShortTextConverter.convert(dosage);
+		Assert.assertNull(ShortTextConverter.convert(dosage, 1000));	/* no known converter */
+		Assert.assertNull(ShortTextConverter.getConverterClass(dosage)); /* no known converter */
 		Assert.assertNull(DailyDosisCalculator.calculate(dosage).getValue());
 		Assert.assertEquals(DosageType.Combined, DosageTypeCalculator.calculate(dosage));
 	}

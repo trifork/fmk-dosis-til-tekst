@@ -22,13 +22,22 @@
 
 package dk.medicinkortet.dosisstructuretext;
 
+import java.util.Iterator;
+
 import dk.medicinkortet.dosisstructuretext.vowrapper.DayWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.StructureWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.StructuresWrapper;
 
+/*** 
+ * From FMK 1.4.4 and above, only 3 dosage types are available: Fixed, AccordingToNeed and Combined (besides Unspec.).
+ * Use DosageTypeCalculator144 for all services using FMK 1.4.4 and higher, and use DosageTypeCalculator for FMK 1.4.2 and below
+ * 
+ * @author chj
+ *
+ */
 public class DosageTypeCalculator {
-
+	
 	public static DosageType calculate(DosageWrapper dosage) {
 		if(dosage.isAdministrationAccordingToSchema())
 			return DosageType.Unspecified;
@@ -38,13 +47,30 @@ public class DosageTypeCalculator {
 			return calculateFromStructures(dosage.getStructures());
 	}
 	
-	private static DosageType calculateFromStructures(StructuresWrapper structures) {
-		if(structures.getStructures().size()==1) 
+	private  static DosageType calculateFromStructures(StructuresWrapper structures) {
+		if(structures.getStructures().size()==1 || allStructuresHasSameDosageType(structures)) {
 			return calculateFromStructure(structures.getStructures().first());
-		else 
+		} else {
 			return DosageType.Combined;
+		}
 	}
 
+	private static boolean allStructuresHasSameDosageType(StructuresWrapper structures) {
+		if(structures != null && structures.getStructures() != null) {
+			Iterator<StructureWrapper> structureIterator = structures.getStructures().iterator();
+			if(structureIterator.hasNext()) {
+				DosageType firstType = calculateFromStructure(structureIterator.next());
+				while(structureIterator.hasNext()) {
+					if(!firstType.equals(calculateFromStructure(structureIterator.next()))) {
+						return false;
+					}
+				}
+			}
+		}
+		
+		return true;
+ 	}
+	
 	private static DosageType calculateFromStructure(StructureWrapper structure) {
 		if(isAccordingToNeed(structure))
 			return DosageType.AccordingToNeed;
@@ -58,7 +84,7 @@ public class DosageTypeCalculator {
 			return DosageType.Combined;
 	}
 
-	private static boolean isAccordingToNeed(StructureWrapper structure) {
+	protected static boolean isAccordingToNeed(StructureWrapper structure) {
 		// If the dosage contains only according to need doses, it is quite simply just  
 		// an according to need dosage
 		return structure.containsAccordingToNeedDosesOnly();
@@ -75,7 +101,7 @@ public class DosageTypeCalculator {
 		return true;
 	}
 	
-	private static boolean isFixed(StructureWrapper structure) {
+	protected static boolean isFixed(StructureWrapper structure) {
 		// If there is an end date defined the dosage isn't fixed
 		if(structure.getEndDateOrDateTime()!=null)
 			return false;
@@ -116,3 +142,4 @@ public class DosageTypeCalculator {
 	}
 	
 }
+ 
