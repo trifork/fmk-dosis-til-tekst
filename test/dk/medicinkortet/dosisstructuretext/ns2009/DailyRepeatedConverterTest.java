@@ -73,6 +73,6 @@ public class DailyRepeatedConverterTest {
 				"1 stk 2-3 gange daglig ved måltid", 
 				ShortTextConverter.convert(dosage));
 		Assert.assertNull(DailyDosisCalculator.calculate(dosage).getValue());
-		Assert.assertEquals(DosageType.Combined, DosageTypeCalculator.calculate(dosage));
+		Assert.assertEquals(DosageType.Combined, new DosageTypeCalculator().calculate(dosage));
 	}
 }

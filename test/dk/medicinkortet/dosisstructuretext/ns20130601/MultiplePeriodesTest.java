@@ -130,7 +130,7 @@ public class MultiplePeriodesTest {
 			LongTextConverter.convert(dosage));
 		Assert.assertNull(ShortTextConverter.getConverterClass(dosage));
 		Assert.assertNull(DailyDosisCalculator.calculate(dosage).getValue()); 		
-		Assert.assertEquals(DosageType.Combined, DosageTypeCalculator.calculate(dosage));		
+		Assert.assertEquals(DosageType.Temporary, DosageTypeCalculator.calculate(dosage));		
 	}
 	
 	@Test
@@ -166,7 +166,7 @@ public class MultiplePeriodesTest {
 			LongTextConverter.convert(dosage));
 		Assert.assertNull(ShortTextConverter.getConverterClass(dosage));
 		Assert.assertNull(DailyDosisCalculator.calculate(dosage).getValue()); 		
-		Assert.assertEquals(DosageType.Combined, DosageTypeCalculator.calculate(dosage));		
+		Assert.assertEquals(DosageType.Temporary, DosageTypeCalculator.calculate(dosage));		
 	}
 	
 	@Test
@@ -209,7 +209,7 @@ public class MultiplePeriodesTest {
 			LongTextConverter.convert(dosage));
 		Assert.assertNull(ShortTextConverter.getConverterClass(dosage));
 		Assert.assertNull(DailyDosisCalculator.calculate(dosage).getValue()); 		
-		Assert.assertEquals(DosageType.Combined, DosageTypeCalculator.calculate(dosage));		
+		Assert.assertEquals(DosageType.Temporary, DosageTypeCalculator.calculate(dosage));		
 	}
 	
 	@Test
