@@ -20,20 +20,30 @@ public class TextfileInputMerger {
     /**
     * Path where merged output is placed.
     */
-    private static String PATH_TO_OUTPUT = "2015-06-03/input_merged.txt";
+    private static final String PATH_TO_OUTPUT = "2015-08-07/input_merged.txt";
 
-    private static String LINE_1 = "drugid|pname|enhed_e|enhed_f|kode|iteration|type|mapning|tekst\r\n";
+    private static final String LINE_1 = "drugid|pname|enhed_e|enhed_f|kode|iteration|type|mapning|tekst\r\n";
+
+
+    // Drug ID's for lægemidler hvor enheden har ændret sig så et doseringsforslag vil blive "farligt"
+    private static final List<Long> excludeSuggestionsFor = Arrays.asList(28101401390L,28100965364L,28100515267L,28104505509L,28101706394L,
+            28104698210L,28103879605L,28101332288L,28104828011L,28101896997L,28103527003L,28100833780L,28104698510L,
+            28100599471L,28104865711L,28103729003L,28101504992L,28104845611L,28101444991L,28103036498L,28101503692L,
+            28103036598L,28104422508L,28101036079L,28103310301L,28101528092L,28103271101L,28103470003L,28101103282L,
+            28104122307L,28103908806L,28101720894L,28103874005L,28104807710L,28103874105L,28105159812L,28104617709L,
+            28101844496L,28101813496L,28104561809L,28105190312L,28104418908L,28100928577L,28101890497L,28101122082L);
 
 
     public static void main(String[] args) throws IOException {
         TextfileReader t = new TextfileReader();
-        RawDefinitions unitDefinitions = t.read(INPUT_FILE_UNITS);
+        RawDefinitions unitDefinitions = t.read(INPUT_FILE_UNITS, 1000000); // We need to offset lineno, since RawDefinition collection uses the line number as map key
         RawDefinitions suggestionDefinitions = t.read(INPUT_FILE_SUGGESTIONS);
         RawDefinitions outputDefinitions = new RawDefinitions();
         for (RawDefinition unitDefinition : unitDefinitions) {
+            Long drugId = unitDefinition.getDrugIdentifier();
             Collection<RawDefinition> suggestions =
-                    getDefinitionsForSuggestions(unitDefinition.getDrugIdentifier(), suggestionDefinitions);
-            if (suggestions == null || suggestions.size() == 0) {
+                    getDefinitionsForSuggestions(drugId, suggestionDefinitions);
+            if (excludeSuggestionsFor.contains(drugId) || suggestions == null || suggestions.size() == 0) {
                 outputDefinitions.add(unitDefinition);
             } else {
                 for (RawDefinition suggestion : suggestions) {

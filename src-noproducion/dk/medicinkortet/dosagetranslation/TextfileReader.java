@@ -11,6 +11,10 @@ import java.nio.charset.Charset;
 public class TextfileReader {
 
 	public RawDefinitions read(String filename) throws IOException {
+		return read(filename, 0);
+	}
+
+	public RawDefinitions read(String filename, int rowNoOffset) throws IOException {
 		File file = new File(filename);
 		if(!file.exists()) 
 			throw new FileNotFoundException("File not found: \""+file.getAbsolutePath()+"\"");
@@ -25,7 +29,7 @@ public class TextfileReader {
 				lineNo++;
 				String line = reader.readLine();
 				if(lineNo>1 == line.trim().length()>0) {
-					rawDefinitions.add(toRawDefinition(lineNo, line));
+					rawDefinitions.add(toRawDefinition(lineNo+rowNoOffset, line));
 				}
 			}
 		}
