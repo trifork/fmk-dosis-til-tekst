@@ -1,0 +1,16 @@
+apply plugin: 'java'
+apply plugin: 'application'
+
+repositories {
+    mavenCentral()
+}
+
+mainClassName = 'com.trifork.Main'
+
+dependencies {
+    compile 'mysql:mysql-connector-java:5.1.25'
+    compile 'org.springframework:spring-context:4.1.6.RELEASE'
+    compile 'org.springframework:spring-jdbc:4.1.6.RELEASE'
+    compile 'commons-dbcp:commons-dbcp:1.4'
+    compile 'org.apache.commons:commons-csv:1.1'
+}
