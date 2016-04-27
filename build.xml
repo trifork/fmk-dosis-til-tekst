@@ -133,7 +133,7 @@
 				<report format="frames" todir="${junitHtmlReportDir}" />
 			</junitreport>
 			<fail if="test.failed" message="There were test failures" />
-			<antcall target="coverage-report" />
+			<!-- <antcall target="coverage-report" /> -->
 		</target>
 	
 </project>
