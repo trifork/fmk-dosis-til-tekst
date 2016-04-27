@@ -70,16 +70,7 @@
 			        <classfiles>
 			        	<fileset dir="target/classes">
 				            <include name="**/medicinkortet/**/*.class" />
-				    	    <exclude name="**/services/listeners/*.class" />
-				            <exclude name="**/webadmin/**/*.class" />
-				    	    <exclude name="**/notproduktion/**/*.class" />
-				            <exclude name="**/ws/**/*.class" />
-				            <exclude name="**/medicinkortet/filter/**/*.class" />
-				    	    <exclude name="**/rest/**/*.class" />
-				    	    <exclude name="**/wsclient/**/*.class" />
-
-			        		<exclude name="**/services/constants/**/*.class" />
-				    	    <exclude name="**/RequestServlet.class" />
+				    	    <exclude name="**/notproducion/**/*.class" />
 			        	</fileset>
 			        </classfiles>
 			        <sourcefiles encoding="UTF-8">
@@ -106,7 +97,6 @@
 			<jacoco:coverage destfile="target/jacoco.exec">
 	        <junit forkmode="once" fork="true" failureproperty="test.failed" maxmemory="${testMaxMemory}" timeout="${unittest.timeout.millis}"
 	               showoutput="true" >
-				<sysproperty key="net.sourceforge.cobertura.datafile" file="target/cobertura.ser" />
 	            <sysproperty key="test.with.memorydb" value="true" />
 				<classpath refid="testclasspath" />
 				<jvmarg value="-Duser.timezone=Europe/Copenhagen"/>
@@ -133,7 +123,8 @@
 				<report format="frames" todir="${junitHtmlReportDir}" />
 			</junitreport>
 			<fail if="test.failed" message="There were test failures" />
-			<!-- <antcall target="coverage-report" /> -->
 		</target>
+	
+	
 	
 </project>
