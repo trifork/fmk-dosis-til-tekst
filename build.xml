@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!-- the project element's name attribute will be used in the name of the module's jar file -->
-<project name="dosis-til-text" basedir=".">
+<project name="dosis-til-text" basedir="."  xmlns:jacoco="antlib:org.jacoco.ant">
 
 	<property file="build.properties" />
 	<property file="revision.properties" />
@@ -11,6 +11,10 @@
 
 	<property name="test.instrument" value="true"/>
 
+	<taskdef uri="antlib:org.jacoco.ant" resource="org/jacoco/ant/antlib.xml">
+	        <classpath path="${trifork-common}/lib/shared-lib/org.jacoco/jacocoant.jar"/>
+	    </taskdef>
+	
 	<path id="sourcepath">
 		<pathelement location="src"/>
 	</path>
@@ -55,4 +59,81 @@
 			<fileset dir="target" includes="ivy.xml, dosis-til-text.jar"/>
 		</copy>	
 	</target>
+	
+	<target name="jacoco-report" depends=""> 
+			<jacoco:report>
+			    <executiondata>
+			        <file file="target/jacoco.exec"/>
+			    </executiondata>
+			                        
+			    <structure name="Example Project">
+			        <classfiles>
+			        	<fileset dir="target/classes">
+				            <include name="**/medicinkortet/**/*.class" />
+				    	    <exclude name="**/services/listeners/*.class" />
+				            <exclude name="**/webadmin/**/*.class" />
+				    	    <exclude name="**/notproduktion/**/*.class" />
+				            <exclude name="**/ws/**/*.class" />
+				            <exclude name="**/medicinkortet/filter/**/*.class" />
+				    	    <exclude name="**/rest/**/*.class" />
+				    	    <exclude name="**/wsclient/**/*.class" />
+
+			        		<exclude name="**/services/constants/**/*.class" />
+				    	    <exclude name="**/RequestServlet.class" />
+			        	</fileset>
+			        </classfiles>
+			        <sourcefiles encoding="UTF-8">
+			            <fileset dir="src"/>
+			        </sourcefiles>
+			    </structure>
+			                        
+			    <html destdir="target/report"/>
+			</jacoco:report>
+		</target>
+	
+	<target name="test-do">
+			<condition property="cond.jmx.port" value="${jmx.port}" else="8005">
+				<isset property="jmx.port"/>
+			</condition>
+			
+			<condition property="cond.jmx.remote" value="true" else="false">
+				<isset property="jmx.port"/>	
+			</condition>
+
+			<condition property="cond.jmx.auth" value="${jmx.auth}" else="false">
+				<isset property="jmx.auth"/>	
+			</condition>
+			<jacoco:coverage destfile="target/jacoco.exec">
+	        <junit forkmode="once" fork="true" failureproperty="test.failed" maxmemory="${testMaxMemory}" timeout="${unittest.timeout.millis}"
+	               showoutput="true" >
+				<sysproperty key="net.sourceforge.cobertura.datafile" file="target/cobertura.ser" />
+	            <sysproperty key="test.with.memorydb" value="true" />
+				<classpath refid="testclasspath" />
+				<jvmarg value="-Duser.timezone=Europe/Copenhagen"/>
+				<jvmarg value="-Dcom.sun.management.jmxremote=${cond.jmx.remote}"/>
+				<jvmarg value="-Dcom.sun.management.jmxremote.port=${cond.jmx.port}"/>
+				<jvmarg value="-Dcom.sun.management.jmxremote.ssl=false"/>
+				<jvmarg value="-Dcom.sun.management.jmxremote.authenticate=${cond.jmx.auth}"/>
+	      		<jvmarg value="-Djava.awt.headless=true"/>
+				
+				<formatter type="plain"/>
+				<formatter type="xml"/>
+				<batchtest fork="yes" todir="${artifactsDir}/test">
+					<fileset dir="${test.dir}">
+						<include name="${test.includePattern}"/>
+					</fileset>
+				</batchtest>
+			</junit>
+			</jacoco:coverage>
+			<mkdir dir="${junitHtmlReportDir}"/>
+				<junitreport todir="${junitHtmlReportDir}">
+				<fileset dir="${artifactsDir}/test">
+					<include name="**/TEST-*.xml"/>
+				</fileset>
+				<report format="frames" todir="${junitHtmlReportDir}" />
+			</junitreport>
+			<fail if="test.failed" message="There were test failures" />
+			<antcall target="coverage-report" />
+		</target>
+	
 </project>
