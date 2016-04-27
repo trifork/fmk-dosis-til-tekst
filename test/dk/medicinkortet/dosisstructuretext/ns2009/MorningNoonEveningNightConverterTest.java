@@ -417,13 +417,13 @@ public class MorningNoonEveningNightConverterTest {
 		Assert.assertEquals(
 				"Doseringsforløbet starter tirsdag den 26. juni 2012 kl. 00:00 og gentages hver dag:\n"+
 				"   Doseringsforløb:\n"+
-				"   42,117 tabletter middag",
+				"   42,117 tabletter middag + 0-0 tabletter aften",
 				LongTextConverter.convert(dosage));
 		Assert.assertEquals(
 				MorningNoonEveningNightConverterImpl.class, 
 				ShortTextConverter.getConverterClass(dosage));
 		Assert.assertEquals(
-				"42,117 tabletter middag", 
+				"42,117 tabletter middag og 0-0 tabletter aften", 
 				ShortTextConverter.convert(dosage));
 		Assert.assertEquals(
 				42.117, 
