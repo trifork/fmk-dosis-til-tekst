@@ -7,6 +7,7 @@ import org.junit.Test;
 import dk.medicinkortet.dosagetranslation.DosageToTextTranslator;
 import dk.medicinkortet.dosagetranslation.RawDefinition;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
+import dk.medicinkortet.dosagetranslation.wrapper.DosageWrapperWrapper;
 
 public class DosageWrapperWrapperTest {
 

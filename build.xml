@@ -15,6 +15,18 @@
 		<pathelement location="src"/>
 	</path>
 
+	<target name="compile-test" depends="compile,init-test, resolve-test">
+			<echo message="test.dir=${test.dir}"/> 
+			<javac classpathref="compile-test-classpath" destdir="target/test" debug="true" encoding="${encoding}">
+				<src path="${test.dir};src-noproducion" />
+			</javac>
+	        <copy todir="target/test" encoding="${encoding}">
+	            <fileset dir="${test.dir}">
+	            	<exclude name="**/*.java"/>
+	            </fileset>
+	        </copy>
+		</target>
+	
 	<target name="releasedosisstructure" depends="compile" description="dosisstructure jar">
 		<tstamp/>
 		<mkdir dir="target/dosisstruct"/>
