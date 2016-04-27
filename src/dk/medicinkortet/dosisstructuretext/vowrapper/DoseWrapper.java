@@ -72,10 +72,7 @@ public abstract class DoseWrapper {
 	}	
 	
 	protected static boolean isZero(BigDecimal minimalQuantity, BigDecimal maximalQuantity) {
-		if(minimalQuantity==null && maximalQuantity==null)
-			return true;
-		else
-			return maximalQuantity.doubleValue()<0.000000001;
+		return minimalQuantity == null && maximalQuantity == null;
 	}	
 	
 	public BigDecimal getMinimalDoseQuantity() {
