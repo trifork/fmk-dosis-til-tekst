@@ -10,6 +10,12 @@ import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
 
 public class RawDefinition {
 	
+	@Override
+	public String toString() {
+		return "RawDefinition [rowNumber=" + rowNumber + ", drugIdentifier=" + drugIdentifier + ", drugName=" + drugName
+				+ ", unitSingular=" + unitSingular + ", unitPlural=" + unitPlural + ", type=" + type;
+	}
+
 	// Read from the source (text file)
 	private int rowNumber; 
 	private Long drugIdentifier;

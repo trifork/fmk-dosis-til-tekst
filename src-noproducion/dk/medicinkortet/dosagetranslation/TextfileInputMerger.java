@@ -4,23 +4,29 @@ import java.io.*;
 import java.nio.charset.Charset;
 import java.util.*;
 
+
 public class TextfileInputMerger {
 
     /**
      * File to read dosage units from
      */
-    private static final String INPUT_FILE_UNITS = "2015-06-03/input-hbal.txt";
+    private static final String INPUT_FILE_UNITS = "2016-07-18/input_drugs.csv";
 
     /**
      * File with dosage suggestions that are merged with the units above.
      * !! BE VERY CAREFULL IF UNITS CHANGE SUGGESTIONS WILL BE DANGEROUS !!
      */
-    private static final String INPUT_FILE_SUGGESTIONS = "2015-03-26/input.txt";
+    private static final String INPUT_FILE_SUGGESTIONS = "2016-07-18/input_base.txt";
+
+    /**
+    * Path where list of changed units is placed.
+    */
+    private static final String PATH_TO_CHANGED = "2016-07-18/input_changed.txt";
 
     /**
     * Path where merged output is placed.
     */
-    private static final String PATH_TO_OUTPUT = "2015-08-07/input_merged.txt";
+    private static final String PATH_TO_OUTPUT = "2016-07-18/input_merged.txt";
 
     private static final String LINE_1 = "drugid|pname|enhed_e|enhed_f|kode|iteration|type|mapning|tekst\r\n";
 
@@ -31,7 +37,11 @@ public class TextfileInputMerger {
             28100599471L,28104865711L,28103729003L,28101504992L,28104845611L,28101444991L,28103036498L,28101503692L,
             28103036598L,28104422508L,28101036079L,28103310301L,28101528092L,28103271101L,28103470003L,28101103282L,
             28104122307L,28103908806L,28101720894L,28103874005L,28104807710L,28103874105L,28105159812L,28104617709L,
-            28101844496L,28101813496L,28104561809L,28105190312L,28104418908L,28100928577L,28101890497L,28101122082L);
+            28101844496L,28101813496L,28104561809L,28105190312L,28104418908L,28100928577L,28101890497L,28101122082L,
+            28101577993L,28101038079L,28101546293L,28103153300L,28103608403L,28104923111L,28101774595L,28104130807L,
+            28104167807L,28101355689L,28103441202L,28104194707L,28103813505L,28103813605L,28104768210L,28100606772L,
+            28104933611L,28103016298L,28104902611L,28105171312L,28101757095L,28104562309L,28104836411L,28104670810L,
+            28101849396L,28101171883L,28101355789L,28103441302L);
 
 
     public static void main(String[] args) throws IOException {
@@ -39,6 +49,8 @@ public class TextfileInputMerger {
         RawDefinitions unitDefinitions = t.read(INPUT_FILE_UNITS, 1000000); // We need to offset lineno, since RawDefinition collection uses the line number as map key
         RawDefinitions suggestionDefinitions = t.read(INPUT_FILE_SUGGESTIONS);
         RawDefinitions outputDefinitions = new RawDefinitions();
+        File changedFile = new File(PATH_TO_CHANGED);
+        OutputStreamWriter changedWriter = new OutputStreamWriter(new FileOutputStream(changedFile.getAbsoluteFile()),Charset.forName("ISO-8859-1"));
         for (RawDefinition unitDefinition : unitDefinitions) {
             Long drugId = unitDefinition.getDrugIdentifier();
             Collection<RawDefinition> suggestions =
@@ -47,6 +59,16 @@ public class TextfileInputMerger {
                 outputDefinitions.add(unitDefinition);
             } else {
                 for (RawDefinition suggestion : suggestions) {
+                	if (!isEmpty(suggestion.getLongText()) &&
+                		(!suggestion.getUnitSingular().equals(unitDefinition.getUnitSingular()) ||
+                   		 !suggestion.getUnitPlural().equals(unitDefinition.getUnitPlural()) 
+                   	     )
+                   		) {
+                		changedWriter.write(
+                		"Drug "+suggestion.getDrugName()+" DrugId="+suggestion.getDrugIdentifier()+
+                		" changed unit from "+suggestion.getUnitSingular()+","+suggestion.getUnitPlural()+" to "+unitDefinition.getUnitSingular()+","+unitDefinition.getUnitPlural()+
+                		System.lineSeparator());
+                	}
                     suggestion.setUnitPlural(unitDefinition.getUnitPlural());
                     suggestion.setUnitSingular(unitDefinition.getUnitSingular());
                     suggestion.setDrugName(unitDefinition.getDrugName());
@@ -54,6 +76,7 @@ public class TextfileInputMerger {
                 }
             }
         }
+        changedWriter.close();
         //**
         File outputFile = new File(PATH_TO_OUTPUT);
         if (outputFile.createNewFile()) {
@@ -95,6 +118,7 @@ public class TextfileInputMerger {
         } else {
             System.out.println("Failed to create output file");
         }
+        System.out.println("Done");
     }
 
     private static boolean isEmpty(String s) {

@@ -6,3 +6,4 @@ build.properties
 /out
 .idea/
 *.iml
+.settings/org.eclipse.core.resources.prefs
