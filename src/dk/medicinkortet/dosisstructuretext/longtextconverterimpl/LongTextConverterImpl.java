@@ -143,6 +143,10 @@ public abstract class LongTextConverterImpl {
 					s.append(" + ");
 			}
 		}
+		String dosagePeriodPostfix = structure.getDosagePeriodPostfix();
+        if (dosagePeriodPostfix != null && dosagePeriodPostfix.length() > 0) {
+		    s.append(" " + dosagePeriodPostfix);
+		}
 		
 		return s.toString();
 	}

@@ -43,6 +43,7 @@ public class StructureWrapper {
 	private DateOrDateTimeWrapper endDateOrDateTime;
 	private SortedSet<DayWrapper> days;
 	private Object refToSource;
+	private String dosagePeriodPostfix;
 	
 	// Cached values
 	private Boolean areAllDaysTheSame;
@@ -107,6 +108,10 @@ public class StructureWrapper {
 		return supplText;
 	}
 
+	public void setSupplText(String supplText) {
+	    this.supplText = supplText;
+	}
+	
 	public DateOrDateTimeWrapper getStartDateOrDateTime() {
 		return startDateOrDateTime;
 	}
@@ -117,6 +122,14 @@ public class StructureWrapper {
 	
 	public Object getRefToSource() {
 		return refToSource;
+	}
+	
+	public String getDosagePeriodPostfix() {
+	    return dosagePeriodPostfix;
+	}
+	
+	public void setDosagePeriodPostfix(String dosagePeriodPostfix) {
+	    this.dosagePeriodPostfix = dosagePeriodPostfix;
 	}
 	
 	public boolean startsAndEndsSameDay() {

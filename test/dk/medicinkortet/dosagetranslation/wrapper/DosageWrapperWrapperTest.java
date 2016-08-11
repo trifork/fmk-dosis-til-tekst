@@ -201,4 +201,30 @@ public class DosageWrapperWrapperTest {
 //				definition.getShortText());
 	}
 	
+    @Test
+    public void test9() throws Exception {
+        RawDefinition definition = new RawDefinition(
+                1, 28100000013L, "Test", 
+                "dråbe", "dråber", 
+                "{N daglig}{N daglig}", "{0}{1}", "{2;2;2;2}{2;2}", null);
+        DosageWrapper dosage = DosageWrapperWrapper.wrap(definition);
+        dosage.getStructures().getStructures().iterator().next().setDosagePeriodPostfix("[postfix]");
+        DosageToTextTranslator.translate(dosage, definition);
+        Assert.assertEquals(
+                "Doseringen indeholder flere perioder:\n"+
+                "\n"+
+                "Doseringen foretages kun mandag den 3. juni 2013:\n"+
+                "   Doseringsforløb:\n"+
+                "   Mandag den 3. juni 2013: 2 dråber 4 gange [postfix]\n"+
+                "\n"+
+                "Doseringsforløbet starter tirsdag den 4. juni 2013, gentages hver dag, og ophører mandag den 1. juni 2015:\n"+
+                "   Doseringsforløb:\n"+
+                "   2 dråber 2 gange daglig",
+                definition.getLongText());
+        Assert.assertEquals(
+                "første dag 2 dråber 4 gange, herefter 2 dråber 2 gange daglig", 
+                definition.getShortText());
+        
+    }
+    
 }
