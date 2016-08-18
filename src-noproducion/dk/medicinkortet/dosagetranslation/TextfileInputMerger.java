@@ -10,23 +10,23 @@ public class TextfileInputMerger {
     /**
      * File to read dosage units from
      */
-    private static final String INPUT_FILE_UNITS = "2016-07-18/input_drugs.csv";
+    private static final String INPUT_FILE_UNITS = "2016-08-11/input_drugs.csv";
 
     /**
      * File with dosage suggestions that are merged with the units above.
      * !! BE VERY CAREFULL IF UNITS CHANGE SUGGESTIONS WILL BE DANGEROUS !!
      */
-    private static final String INPUT_FILE_SUGGESTIONS = "2016-07-18/input_base.txt";
+    private static final String INPUT_FILE_SUGGESTIONS = "2016-08-11/input_base.txt";
 
     /**
     * Path where list of changed units is placed.
     */
-    private static final String PATH_TO_CHANGED = "2016-07-18/input_changed.txt";
+    private static final String PATH_TO_CHANGED = "2016-08-11/input_changed.txt";
 
     /**
     * Path where merged output is placed.
     */
-    private static final String PATH_TO_OUTPUT = "2016-07-18/input_merged.txt";
+    private static final String PATH_TO_OUTPUT = "2016-08-11/input_merged.txt";
 
     private static final String LINE_1 = "drugid|pname|enhed_e|enhed_f|kode|iteration|type|mapning|tekst\r\n";
 
@@ -50,7 +50,7 @@ public class TextfileInputMerger {
         RawDefinitions suggestionDefinitions = t.read(INPUT_FILE_SUGGESTIONS);
         RawDefinitions outputDefinitions = new RawDefinitions();
         File changedFile = new File(PATH_TO_CHANGED);
-        OutputStreamWriter changedWriter = new OutputStreamWriter(new FileOutputStream(changedFile.getAbsoluteFile()),Charset.forName("ISO-8859-1"));
+        OutputStreamWriter changedWriter = new OutputStreamWriter(new FileOutputStream(changedFile.getAbsoluteFile()),Charset.forName("UTF-8"));
         for (RawDefinition unitDefinition : unitDefinitions) {
             Long drugId = unitDefinition.getDrugIdentifier();
             Collection<RawDefinition> suggestions =
@@ -82,7 +82,7 @@ public class TextfileInputMerger {
         if (outputFile.createNewFile()) {
             OutputStreamWriter osw = null;
             try {
-                osw = new OutputStreamWriter(new FileOutputStream(outputFile.getAbsoluteFile()), Charset.forName("ISO-8859-1"));
+                osw = new OutputStreamWriter(new FileOutputStream(outputFile.getAbsoluteFile()), Charset.forName("UTF-8"));
                 osw.write(LINE_1);
                 for (RawDefinition outDefinition : outputDefinitions) {
                     StringBuilder line = new StringBuilder();

@@ -23,7 +23,7 @@ public class TextfileReader {
 		RawDefinitions rawDefinitions = new RawDefinitions();
 		BufferedReader reader = null;
 		try {
-			reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), Charset.forName("ISO-8859-1")));
+			reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), Charset.forName("UTF-8")));
 			int lineNo = 0;
 			while(reader.ready()) {
 				lineNo++;

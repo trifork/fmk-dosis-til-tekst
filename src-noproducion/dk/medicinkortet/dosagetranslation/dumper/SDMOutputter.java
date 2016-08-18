@@ -4,6 +4,8 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
@@ -14,7 +16,7 @@ public class SDMOutputter {
 
 	public static void dumpDosageVersion(File destinationDir, DumpVersion version, boolean createCsv) throws IOException {
 		System.out.println("Writing DosageVersions.json");
-		BufferedWriter writer = new BufferedWriter(new FileWriter(new File(destinationDir, "DosageVersion.json")));
+		BufferedWriter writer = getWriter(destinationDir, "DosageVersion.json");
 		writer.write("{\"version\":");
 		writer.write(JSONHelper.toJsonString(version));
 		writer.write("}");
@@ -31,9 +33,13 @@ public class SDMOutputter {
 		}
 	}
 
+	private static BufferedWriter getWriter(File destinationDir, String fileName) throws IOException {
+		return Files.newBufferedWriter(new File(destinationDir, fileName).toPath() ,Charset.forName("UTF-8"));
+	}
+
 	public static void dumpDosageUnits(File destinationDir, DumpDosageUnits dumpDosageUnits, boolean createCsv) throws IOException {
 		System.out.println("Writing DosageUnits.json");
-		BufferedWriter writer = new BufferedWriter(new FileWriter(new File(destinationDir, "DosageUnits.json")));
+		BufferedWriter writer = getWriter(destinationDir, "DosageUnits.json");
 		writer.write("{\"dosageUnits\":[");
 		writer.newLine();
 		int sz = dumpDosageUnits.getAll().size();
@@ -51,7 +57,8 @@ public class SDMOutputter {
 		
 		if(createCsv) {
 			System.out.println("Writing DosageUnits.csv");
-			writer = new BufferedWriter(new FileWriter(new File(destinationDir, "DosageUnits.csv")));
+			writer = getWriter(destinationDir, "DosageUnits.csv");
+
 			writer.write("ReleaseNumber"+S+"Code"+S+"TextSingular"+S+"TextPlural");
 			writer.newLine();
 			for(int i=0; i<sz; i++) {
@@ -65,7 +72,8 @@ public class SDMOutputter {
 
 	public static void dumpDosageStructures(File destinationDir, DumpDosageStructures dumpDosageStructures, boolean createCsv) throws IOException {
 		System.out.println("Writing DosageStructures.json");
-		BufferedWriter writer = new BufferedWriter(new FileWriter(new File(destinationDir, "DosageStructures.json")));
+		BufferedWriter writer = getWriter(destinationDir, "DosageStructures.json");
+
 		boolean firstRow = true; 
 		writer.write("{\"dosageStructures\":[");
 		for(DumpDosageStructure dumpDosageStructure: dumpDosageStructures.getAll()) {
@@ -86,7 +94,7 @@ public class SDMOutputter {
 		
 		if(createCsv) {
 			System.out.println("Writing DosageStructures.csv");
-			writer = new BufferedWriter(new FileWriter(new File(destinationDir, "DosageStructures.csv")));
+			writer = getWriter(destinationDir, "DosageStructures.csv");
 			writer.write("ReleaseNumber"+S+"Code"+S+"Type"+S+"SimpleString"+S+"SupplementaryText"+S+"XML"+S+"ShortTranslation"+S+"LongTranslation");
 			writer.newLine();
 			for(DumpDosageStructure dumpDosageStructure: dumpDosageStructures.getAll()) {
@@ -105,7 +113,7 @@ public class SDMOutputter {
 
 	public static void dumpDrugs(File destinationDir, DumpDrugs dumpDrugs, boolean createCsv) throws IOException {
 		System.out.println("Writing Drugs.json");
-		BufferedWriter writer = new BufferedWriter(new FileWriter(new File(destinationDir, "Drugs.json")));
+		BufferedWriter writer = getWriter(destinationDir, "Drugs.json");
 		writer.write("{\"drugs\":[");
 		boolean drugFirstRow = true;
 		for(DumpDrug drug: dumpDrugs.getAll()) {
@@ -129,7 +137,7 @@ public class SDMOutputter {
 		
 		if(createCsv) {
 			System.out.println("Writing Drugs.csv");
-			writer = new BufferedWriter(new FileWriter(new File(destinationDir, "Drugs.csv")));
+			writer = getWriter(destinationDir, "Drugs.csv");
 			writer.write("ReleaseNumber"+S+"DrugId"+S+"DrugName"+S+"DosageUnitCode");
 			writer.newLine();
 			for(DumpDrug drug: dumpDrugs.getAll()) {
@@ -144,7 +152,8 @@ public class SDMOutputter {
 
 	public static void dumpDrugsDosageStructures(File destinationDir, DumpDrugsDosageStructures dumpDrugsDosageStructures, boolean createCsv) throws IOException {
 		System.out.println("Writing DrugsDosageStructures.json");
-		BufferedWriter writer = new BufferedWriter(new FileWriter(new File(destinationDir, "DrugsDosageStructures.json")));
+		BufferedWriter writer = getWriter(destinationDir, "DrugsDosageStructures.json");
+
 		writer.write("{\"drugsDosageStructures\":[");
 		boolean relFirstRow = true;
 		for(DumpDrugsDosageStructure dumpDrugsDosageStructure: dumpDrugsDosageStructures.getAll()) {
@@ -165,7 +174,7 @@ public class SDMOutputter {
 		
 		if(createCsv) {
 			System.out.println("Writing DrugsDosageStructures.csv");
-			writer = new BufferedWriter(new FileWriter(new File(destinationDir, "DrugsDosageStructures.csv")));
+			writer = getWriter(destinationDir, "DrugsDosageStructures.csv");
 			writer.write("ReleaseNumber"+S+"DrugId"+S+"DosageStructureCode");
 			writer.newLine();
 			for(DumpDrugsDosageStructure dumpDrugsDosageStructure: dumpDrugsDosageStructures.getAll()) {
@@ -179,7 +188,7 @@ public class SDMOutputter {
 	public static void dumpCompleteUnitTable(File destinationDir, DumpDrugs dumpDrugs, DumpDosageUnits dumpDosageUnits, boolean createCsv)  throws IOException {
 		if(createCsv) {
 			System.out.println("Writing DrugsDosageUnits-Complete.csv");
-			BufferedWriter writer = new BufferedWriter(new FileWriter(new File(destinationDir, " DrugsDosageUnits-Complete.csv")));
+			BufferedWriter writer = getWriter(destinationDir, "DrugsDosageUnits-Complete.csv");
 			writer.write("DrugId"+S+"Drugname"+S+"TextSingular"+S+"TextPlural");
 			writer.newLine();
 			for(DumpDrug drug: dumpDrugs.getAll()) {
@@ -196,7 +205,7 @@ public class SDMOutputter {
 	public static void dumpFilteredDrugTable(File destinationDir, DumpDrugs dumpDrugs, DumpDosageUnits dumpDosageUnits,	DumpDrugsDosageStructures dumpDrugsDosageStructures, DumpDosageStructures dumpDosageStructures, boolean createCsv) throws IOException {
 		if(createCsv) {
 			System.out.println("Writing Filtered-Complete.csv");
-			BufferedWriter writer = new BufferedWriter(new FileWriter(new File(destinationDir, "Unfiltered-Complete.csv")));
+			BufferedWriter writer = getWriter(destinationDir, "Unfiltered-Complete.csv");
 			writer.write("DrugId"+S+"Drugname"+S+"ShortTranslation");
 			writer.newLine();
 			for(DumpDrug drug: dumpDrugs.getAll()) {
