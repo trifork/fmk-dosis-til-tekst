@@ -62,7 +62,9 @@ public class WeeklyRepeatedConverterImpl extends LongTextConverterImpl {
 		StringBuilder s = new StringBuilder();		
 		appendDosageStart(s, structure.getStartDateOrDateTime());
 		s.append(", forløbet gentages hver uge");
-		appendDosageEnd(s, structure.getEndDateOrDateTime());
+		if(structure.getEndDateOrDateTime() != null) {
+			appendDosageEnd(s, structure.getEndDateOrDateTime());
+		}
 		appendNoteText(s, structure);
 		s.append(TextHelper.INDENT+"Doseringsforløb:\n");
 		appendDays(s, unitOrUnits, structure);

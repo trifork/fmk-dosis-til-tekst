@@ -71,7 +71,7 @@ public class WeeklyMorningNoonEveningNightConverterTest {
 				WeeklyRepeatedConverterImpl.class, 
 				LongTextConverter.getConverterClass(dosage));
 		Assert.assertEquals(
-				"Doseringsforløbet starter fredag den 8. juni 2012, forløbet gentages hver uge.\n"+
+				"Doseringsforløbet starter fredag den 8. juni 2012, forløbet gentages hver uge, og ophører mandag den 31. december 2012.\n"+
 				"Bemærk at doseringen har et komplekst forløb:\n"+
 				 "   Doseringsforløb:\n"+
 				 "   Tirsdag: 1 stk morgen ved måltid + 1 stk aften ved måltid\n"+
