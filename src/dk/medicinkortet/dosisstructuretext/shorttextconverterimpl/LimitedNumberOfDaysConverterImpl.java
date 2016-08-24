@@ -64,6 +64,7 @@ public class LimitedNumberOfDaysConverterImpl extends ShortTextConverterImpl {
 		StringBuilder text = new StringBuilder();
 		DayWrapper day = structure.getDays().first();
 		text.append(toValue(day.getAllDoses().get(0), dosage.getStructures().getUnitOrUnits()));
+		if(day.getAllDoses().get(0).isAccordingToNeed()) { text.append(" efter behov"); }
 		if(structure.getDays().size()==1 && structure.getDays().first().getDayNumber()==1)
 			text.append(" "+day.getAllDoses().size()+" "+TextHelper.gange(day.getAllDoses().size()));
 		else {			

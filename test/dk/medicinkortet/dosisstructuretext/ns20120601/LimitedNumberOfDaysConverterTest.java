@@ -127,7 +127,7 @@ public class LimitedNumberOfDaysConverterTest {
 				LimitedNumberOfDaysConverterImpl.class, 
 				ShortTextConverter.getConverterClass(dosage));
 		Assert.assertEquals(
-				"4 måleskefulde 2 gange daglig i 4 dage ved måltid", 
+				"4 måleskefulde efter behov 2 gange daglig i 4 dage ved måltid", 
 				ShortTextConverter.convert(dosage));
 		Assert.assertNull(DailyDosisCalculator.calculate(dosage).getValue()); 				
 		Assert.assertEquals(DosageType.AccordingToNeed, DosageTypeCalculator.calculate(dosage));

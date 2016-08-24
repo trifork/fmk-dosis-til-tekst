@@ -160,5 +160,26 @@ public class LimitedNumberOfDaysConverterTest {
 		Assert.assertEquals(DosageType.Temporary, DosageTypeCalculator.calculate(dosage));
 	}
 	
+	// FMK-3017 Dosis-to-text oversætter NotIterated struktur med en enkelt dag forkert
+	@Test
+	public void test5ml4gange() throws Exception {
+		DosageWrapper dosage = DosageWrapper.makeDosage(
+			StructuresWrapper.makeStructures(
+				UnitOrUnitsWrapper.makeUnit("ml"), 
+				StructureWrapper.makeStructure(
+					0, null, 
+					DateOrDateTimeWrapper.makeDate("2010-01-01"), DateOrDateTimeWrapper.makeDate("2110-01-01"), 
+					DayWrapper.makeDay(
+						1, 
+						PlainDoseWrapper.makeDose(new BigDecimal(5), true), 
+						PlainDoseWrapper.makeDose(new BigDecimal(5), true), 
+						PlainDoseWrapper.makeDose(new BigDecimal(5), true),
+						PlainDoseWrapper.makeDose(new BigDecimal(5), true)))));			
+					
+		Assert.assertEquals(
+				"5 ml efter behov 4 gange", 
+				ShortTextConverter.convert(dosage));
+	}
+	
 	
 }
