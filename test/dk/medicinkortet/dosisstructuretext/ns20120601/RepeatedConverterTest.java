@@ -172,6 +172,40 @@ public class RepeatedConverterTest {
 		Assert.assertEquals(DosageType.Fixed, DosageTypeCalculator.calculate(dosage));						
 	}
 	
+
+	// FMK-2958 ASCP00078113 Dosis-til-text: slutdato mangler i ugentligt gentagede doseringer
+	@Test
+	public void testOnceWeeklyWithEndDate() throws Exception {
+		DosageWrapper dosage = DosageWrapper.makeDosage(
+			StructuresWrapper.makeStructures(
+				UnitOrUnitsWrapper.makeUnit("stk"), 
+				StructureWrapper.makeStructure(
+					7, "ved måltid", DateOrDateTimeWrapper.makeDate("2013-08-12"), DateOrDateTimeWrapper.makeDate("2013-09-12"), 
+					DayWrapper.makeDay(
+						3, 
+						MorningDoseWrapper.makeDose(new BigDecimal(1))))));
+		Assert.assertEquals(
+				WeeklyRepeatedConverterImpl.class, 
+				LongTextConverter.getConverterClass(dosage));
+		Assert.assertEquals(
+				"Doseringsforløbet starter mandag den 12. august 2013, forløbet gentages hver uge, og ophører torsdag den 12. september 2013:\n"+
+				"   Doseringsforløb:\n"+
+				"   Onsdag: 1 stk morgen ved måltid",
+				LongTextConverter.convert(dosage));
+		Assert.assertEquals(
+				dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.WeeklyMorningNoonEveningNightConverterImpl.class,
+				ShortTextConverter.getConverterClass(dosage));
+		Assert.assertEquals(
+				"1 stk morgen onsdag hver uge ved måltid",
+				ShortTextConverter.convert(dosage));
+		Assert.assertEquals(
+				1/7., 
+				DailyDosisCalculator.calculate(dosage).getValue().doubleValue(), 
+				0.000000001); 							
+		Assert.assertEquals(DosageType.Temporary, DosageTypeCalculator.calculate(dosage));						
+	}
+	
+	
 	@Test
 	public void testOnceEvery7thWeek() throws Exception {
 		DosageWrapper dosage = DosageWrapper.makeDosage(
