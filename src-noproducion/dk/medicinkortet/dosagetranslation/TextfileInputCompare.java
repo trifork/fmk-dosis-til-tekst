@@ -11,11 +11,11 @@ public class TextfileInputCompare {
      * File to read dosage units from
      */
     private static final String INPUT_FILE_UNITS_OLD = "2015-09-11/input_drugs.csv";
-    private static final String INPUT_FILE_UNITS_NEW = "2016-08-18/input_drugs.csv";
+    private static final String INPUT_FILE_UNITS_NEW = "2016-08-19/input_drugs.csv";
 
-    private static final String OUTPUT_FILE_CHANGED = "2016-08-18/info/changed_drugs.csv";
-    private static final String OUTPUT_FILE_REMOVED = "2016-08-18/info/removed_drugs.csv";
-    private static final String OUTPUT_FILE_ADDED = "2016-08-18/info/added_drugs.csv";
+    private static final String OUTPUT_FILE_CHANGED = "2016-08-19/info/changed_drugs.csv";
+    private static final String OUTPUT_FILE_REMOVED = "2016-08-19/info/removed_drugs.csv";
+    private static final String OUTPUT_FILE_ADDED = "2016-08-19/info/added_drugs.csv";
     
     private static Map<Long, RawDefinition> oldUnits = new HashMap<Long,RawDefinition>();
     private static Map<Long, RawDefinition> newUnits = new HashMap<Long,RawDefinition>();

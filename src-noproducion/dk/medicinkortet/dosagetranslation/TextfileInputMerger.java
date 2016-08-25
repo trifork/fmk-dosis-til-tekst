@@ -10,23 +10,23 @@ public class TextfileInputMerger {
     /**
      * File to read dosage units from
      */
-    private static final String INPUT_FILE_UNITS = "2016-08-11/input_drugs.csv";
+    private static final String INPUT_FILE_UNITS = "2016-08-19/input_drugs.csv";
 
     /**
      * File with dosage suggestions that are merged with the units above.
      * !! BE VERY CAREFULL IF UNITS CHANGE SUGGESTIONS WILL BE DANGEROUS !!
      */
-    private static final String INPUT_FILE_SUGGESTIONS = "2016-08-11/input_base.txt";
+    private static final String INPUT_FILE_SUGGESTIONS = "2016-08-19/input_base.txt";
 
     /**
     * Path where list of changed units is placed.
     */
-    private static final String PATH_TO_CHANGED = "2016-08-11/input_changed.txt";
+    private static final String PATH_TO_CHANGED = "2016-08-19/input_changed.txt";
 
     /**
     * Path where merged output is placed.
     */
-    private static final String PATH_TO_OUTPUT = "2016-08-11/input_merged.txt";
+    private static final String PATH_TO_OUTPUT = "2016-08-19/input_merged.txt";
 
     private static final String LINE_1 = "drugid|pname|enhed_e|enhed_f|kode|iteration|type|mapning|tekst\r\n";
 

@@ -23,12 +23,12 @@ public class TextfileConverter {
 	 * Path to input file. Text file with columns separated by '|'. First line is header. Columns are 
 	 * drugid, drug name (not used), unit-singular, unit-plural, (old code, not used), iteration, type of mapping, mapping, suppl. text 
 	 */
-	public static String PATH_TO_INPUT_FILE = "2016-08-18/input_merged_added.txt";
+	public static String PATH_TO_INPUT_FILE = "2016-08-19/input_merged_added.txt";
 
 	/**
 	 * Path to output dir, where json files are written 
 	 */
-	public static String PATH_TO_OUTPUT_DIR = "2016-08-18/out";
+	public static String PATH_TO_OUTPUT_DIR = "2016-08-19/out";
 	
 	/**
 	 * If true no dosage translations are written
@@ -43,12 +43,12 @@ public class TextfileConverter {
 	/**
 	 * Release number. Must be greater than prevoius release. 
 	 */
-	public static final long RELEASE_NUMBER = 31L;
+	public static final long RELEASE_NUMBER = 34L;
 	
 	/**
 	 * Relase date for the data set, typically tomorrow
 	 */
-	public static final String RELEASE_DATE = "2016-08-18" ;
+	public static final String RELEASE_DATE = "2016-08-20" ;
 
 	
 	public static void main(String[] args) {
