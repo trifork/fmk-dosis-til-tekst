@@ -66,20 +66,20 @@
 		</exec>
 	</target>
 	
-	<target name="war-js" depends="resolve-js">  
+	<target name="jar-js" depends="resolve-js">  
 		<delete file="src/project.properties"/>
 		<echo message="implementation=javascript${line.separator}" file="src/project.properties"/>
 		<echo message="applicationName=${ant.project.name}" append="true" file="src/project.properties"/>
 		<property name="build.war.dir" value="target/war"/>
 		<copy  file="node_modules/fmk-dosis-til-tekst-ts/target/dosistiltekst.js" tofile="${build.war.dir}/WEB-INF/classes/dosistiltekst.js" failonerror="true"/>
-		<antcall target="war"></antcall>
+		<antcall target="jar"></antcall>
 	</target>
 	
-	<target name="war-java"  > 
+	<target name="jar-java"  > 
 			<delete file="src/project.properties"/>
 			<echo message="implementation=java${line.separator}" file="src/project.properties"/>
 			<echo message="applicationName=${ant.project.name}" append="true" file="src/project.properties"/>
-			<antcall target="war"></antcall>
+			<antcall target="jar"></antcall>
 		</target>
 		
 	
