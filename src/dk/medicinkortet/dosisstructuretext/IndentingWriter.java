@@ -1,4 +1,4 @@
-package dk.medicinkortet.dosagetranslation.dumper;
+package dk.medicinkortet.dosisstructuretext;
 
 import java.io.IOException;
 import java.io.Writer;

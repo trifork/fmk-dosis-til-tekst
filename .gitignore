@@ -7,3 +7,5 @@ build.properties
 .idea/
 *.iml
 .settings/org.eclipse.core.resources.prefs
+node_modules/
+project.properties

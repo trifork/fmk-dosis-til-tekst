@@ -22,7 +22,16 @@
 
 package dk.medicinkortet.dosisstructuretext;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Properties;
+
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
 
 import dk.medicinkortet.dosisstructuretext.longtextconverterimpl.AdministrationAccordingToSchemaConverterImpl;
 import dk.medicinkortet.dosisstructuretext.longtextconverterimpl.DailyRepeatedConverterImpl;
@@ -40,7 +49,10 @@ import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
  */ 
 public class LongTextConverter {
 
+	private static Properties properties;
 	private static ArrayList<LongTextConverterImpl> converters = new ArrayList<LongTextConverterImpl>();
+	 
+	private static ScriptEngine engine = null;
 	 
 	/**
 	 * Populate a list of implemented converters 
@@ -56,6 +68,43 @@ public class LongTextConverter {
 		converters.add(new WeeklyRepeatedConverterImpl());		
 		converters.add(new DefaultLongTextConverterImpl());
 		converters.add(new DefaultMultiPeriodeLongTextConverterImpl());
+
+		if(!useJavaImplementation()) {
+			engine = new ScriptEngineManager().getEngineByName("nashorn");
+			
+			InputStream d2sResource = LongTextConverter.class.getClassLoader().getResourceAsStream("dosistiltekst.js");
+			if(d2sResource == null) {
+				// Development-environment, read from target
+				
+				try {
+					engine.eval(new FileReader("node_modules/fmk-dosis-til-tekst-ts/target/dosistiltekst.js"));
+				} catch (FileNotFoundException | ScriptException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
+	private static boolean useJavaImplementation() {
+		properties = new Properties();
+		InputStream propStream = LongTextConverter.class.getClassLoader().getResourceAsStream("project.properties");
+		if(propStream == null) {
+			try {
+				propStream = new java.io.FileInputStream("project.properties");
+			}
+			catch(FileNotFoundException e) {
+				return true;
+			}
+		}
+	
+		try {
+			properties.load(propStream);
+		} catch (IOException e) {
+			return true;
+		}
+		
+		return properties.getProperty("implementation") != null ? properties.getProperty("implementation").compareToIgnoreCase("java") == 0 : true;
 	}
 	
 	/**
@@ -64,13 +113,34 @@ public class LongTextConverter {
 	 * @return A long text string describing the dosage 
 	 */
 	public static String convert(DosageWrapper dosage) {
+		if(useJavaImplementation()) {
+			return convert_java(dosage);
+		}
+		else {
+			return convert_js(dosage);
+		}
+	}
+	
+	public static String convert_java(DosageWrapper dosage) {
 		for(LongTextConverterImpl converter: converters) {
 			if(converter.canConvert(dosage)) 
 				return converter.doConvert(dosage);
 		}
 		return null;
 	}
-
+	
+	public static String convert_js(DosageWrapper dosage) {
+		String json = JSONHelper.toJsonString(dosage);
+		Object res;
+		try {
+			res = engine.eval("dosistiltekst.Factory.getLongTextConverter().convert(" + json + ")");
+		} catch (ScriptException e) {
+			throw new RuntimeException("ScriptException in LongTextConverter.convert()", e);
+		}
+		
+		return (String)res;
+	}
+	
 	/**
 	 * This method returns the converter class handing the conversion to a short, if
 	 * the dosage can be converted. The metod is useful for test, logging etc. 

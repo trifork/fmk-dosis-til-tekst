@@ -9,6 +9,8 @@ import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+import dk.medicinkortet.dosisstructuretext.JSONHelper;
+
 public class SDMOutputter {
 	
 	private static final String S = "|";
