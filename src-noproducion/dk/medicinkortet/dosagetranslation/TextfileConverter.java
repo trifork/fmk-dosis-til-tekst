@@ -28,7 +28,7 @@ public class TextfileConverter {
 	/**
 	 * Path to output dir, where json files are written 
 	 */
-	public static String PATH_TO_OUTPUT_DIR = "2016-08-19/out";
+	public static String PATH_TO_OUTPUT_DIR = "2016-08-19/prod";
 	
 	/**
 	 * If true no dosage translations are written
@@ -48,7 +48,7 @@ public class TextfileConverter {
 	/**
 	 * Relase date for the data set, typically tomorrow
 	 */
-	public static final String RELEASE_DATE = "2016-08-20" ;
+	public static final String RELEASE_DATE = "2016-09-20" ;
 
 	
 	public static void main(String[] args) {
