@@ -97,8 +97,8 @@ public class MorningNoonEveningNightAndAccordingToNeedConverterTest {
 				"   2 stk efter behov + 2 stk morgen",
 				LongTextConverter.convert(dosage));
 		Assert.assertEquals(
-				MorningNoonEveningNightAndAccordingToNeedConverterImpl.class, 
-				ShortTextConverter.getConverterClass(dosage));
+				"MorningNoonEveningNightAndAccordingToNeedConverterImpl", 
+				ShortTextConverter.getConverterClassName(dosage));
 		Assert.assertEquals(
 				"2 stk morgen, samt 2 stk efter behov, højst 1 gang daglig", 
 				ShortTextConverter.convert(dosage));

@@ -29,9 +29,12 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Properties;
 
+import javax.script.Bindings;
+import javax.script.ScriptContext;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
+import javax.script.SimpleBindings;
 
 import dk.medicinkortet.dosisstructuretext.longtextconverterimpl.AdministrationAccordingToSchemaConverterImpl;
 import dk.medicinkortet.dosisstructuretext.longtextconverterimpl.DailyRepeatedConverterImpl;
@@ -49,6 +52,7 @@ import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
  */ 
 public class LongTextConverter {
 
+	
 	private static Properties properties;
 	private static ArrayList<LongTextConverterImpl> converters = new ArrayList<LongTextConverterImpl>();
 	 
@@ -68,22 +72,6 @@ public class LongTextConverter {
 		converters.add(new WeeklyRepeatedConverterImpl());		
 		converters.add(new DefaultLongTextConverterImpl());
 		converters.add(new DefaultMultiPeriodeLongTextConverterImpl());
-
-		if(!useJavaImplementation()) {
-			engine = new ScriptEngineManager().getEngineByName("nashorn");
-			
-			InputStream d2sResource = LongTextConverter.class.getClassLoader().getResourceAsStream("dosistiltekst.js");
-			if(d2sResource == null) {
-				// Development-environment, read from target
-				
-				try {
-					engine.eval(new FileReader("node_modules/fmk-dosis-til-tekst-ts/target/dosistiltekst.js"));
-				} catch (FileNotFoundException | ScriptException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		}
 	}
 
 	private static boolean useJavaImplementation() {
@@ -107,6 +95,7 @@ public class LongTextConverter {
 		return properties.getProperty("implementation") != null ? properties.getProperty("implementation").compareToIgnoreCase("java") == 0 : true;
 	}
 	
+
 	/**
 	 * Performs a conversion to a long text. 
 	 * @param dosage
@@ -130,15 +119,7 @@ public class LongTextConverter {
 	}
 	
 	public static String convert_js(DosageWrapper dosage) {
-		String json = JSONHelper.toJsonString(dosage);
-		Object res;
-		try {
-			res = engine.eval("dosistiltekst.Factory.getLongTextConverter().convert(" + json + ")");
-		} catch (ScriptException e) {
-			throw new RuntimeException("ScriptException in LongTextConverter.convert()", e);
-		}
-		
-		return (String)res;
+		return TypescriptBridge.convertLongText(dosage);
 	}
 	
 	/**

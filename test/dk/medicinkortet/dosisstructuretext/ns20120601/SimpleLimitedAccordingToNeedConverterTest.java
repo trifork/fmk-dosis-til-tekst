@@ -64,8 +64,8 @@ public class SimpleLimitedAccordingToNeedConverterTest {
 				"   1 påsmøring efter behov højst 1 gang daglig",
 				LongTextConverter.convert(dosage));
 		Assert.assertEquals(
-				SimpleLimitedAccordingToNeedConverterImpl.class, 
-				ShortTextConverter.getConverterClass(dosage));
+				"SimpleLimitedAccordingToNeedConverterImpl", 
+				ShortTextConverter.getConverterClassName(dosage));
 		Assert.assertEquals("1 påsmøring efter behov, højst 1 gang daglig", ShortTextConverter.convert(dosage));
 		Assert.assertTrue(DailyDosisCalculator.calculate(dosage).isNone());
 		Assert.assertEquals(DosageType.AccordingToNeed, DosageTypeCalculator.calculate(dosage));				

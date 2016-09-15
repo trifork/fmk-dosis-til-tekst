@@ -32,6 +32,7 @@ import dk.medicinkortet.dosisstructuretext.DailyDosisCalculator;
 import dk.medicinkortet.dosisstructuretext.DosageType;
 import dk.medicinkortet.dosisstructuretext.DosageTypeCalculator;
 import dk.medicinkortet.dosisstructuretext.LongTextConverter;
+import dk.medicinkortet.dosisstructuretext.ShortTextConverter;
 import dk.medicinkortet.dosisstructuretext.vowrapper.AdministrationAccordingToSchemaWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DateOrDateTimeWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DayWrapper;
@@ -51,6 +52,7 @@ public class LongTextConverterTest {
 		DosageWrapper dosage = DosageWrapper.makeDosage(
 			AdministrationAccordingToSchemaWrapper.makeAdministrationAccordingToSchema(null, null));
 		Assert.assertEquals("Dosering efter skriftlig anvisning",	LongTextConverter.convert(dosage));
+		Assert.assertEquals("Dosering efter skriftlig anvisning",	ShortTextConverter.convert(dosage));
 		Assert.assertTrue(DailyDosisCalculator.calculate(dosage).isNone());
 		Assert.assertEquals(DosageType.Unspecified, DosageTypeCalculator.calculate(dosage));
 

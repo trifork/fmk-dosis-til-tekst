@@ -62,8 +62,8 @@ public class SimpleNonRepeatedConverterTest {
 			"   Dag ikke angivet: 1 plaster 5 timer før virkning ønskes",
 			LongTextConverter.convert(dosage));
 		Assert.assertEquals(
-			SimpleNonRepeatedConverterImpl.class, 
-			ShortTextConverter.getConverterClass(dosage));
+			"SimpleNonRepeatedConverterImpl", 
+			ShortTextConverter.getConverterClassName(dosage));
 		Assert.assertEquals(
 			"1 plaster 5 timer før virkning ønskes", 
 			ShortTextConverter.convert(dosage));
@@ -88,8 +88,8 @@ public class SimpleNonRepeatedConverterTest {
 			"   Lørdag den 1. januar 2011: 1 kapsel 2 gange dagen før indlæggelse",
 			LongTextConverter.convert(dosage));
 		Assert.assertEquals(
-			LimitedNumberOfDaysConverterImpl.class, 
-			ShortTextConverter.getConverterClass(dosage));
+				"SimpleNonRepeatedConverterImpl", 
+				ShortTextConverter.getConverterClassName(dosage));
 		Assert.assertEquals(
 			"1 kapsel 2 gange dagen før indlæggelse", 
 			ShortTextConverter.convert(dosage));
@@ -113,8 +113,8 @@ public class SimpleNonRepeatedConverterTest {
 			"   Dag ikke angivet: 1 stk kl. 07:30 før indlæggelse",
 			LongTextConverter.convert(dosage));
 		Assert.assertEquals(
-			SimpleNonRepeatedConverterImpl.class, 
-			ShortTextConverter.getConverterClass(dosage));
+				"SimpleNonRepeatedConverterImpl", 
+				ShortTextConverter.getConverterClassName(dosage));
 		Assert.assertEquals(
 			"1 stk kl. 07:30 før indlæggelse", 
 			ShortTextConverter.convert(dosage));
@@ -138,8 +138,8 @@ public class SimpleNonRepeatedConverterTest {
 			"   Lørdag den 1. januar 2011: 1 stk kl. 07:30",
 			LongTextConverter.convert(dosage));
 		Assert.assertEquals(
-			SimpleNonRepeatedConverterImpl.class, 
-			ShortTextConverter.getConverterClass(dosage));
+				"SimpleNonRepeatedConverterImpl", 
+				ShortTextConverter.getConverterClassName(dosage));
 		Assert.assertEquals(
 			"1 stk kl. 07:30", 
 			ShortTextConverter.convert(dosage));

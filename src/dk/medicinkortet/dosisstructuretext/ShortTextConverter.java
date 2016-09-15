@@ -22,8 +22,13 @@
 
 package dk.medicinkortet.dosisstructuretext;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Properties;
 
+import dk.medicinkortet.dosisstructuretext.longtextconverterimpl.LongTextConverterImpl;
 import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.AdministrationAccordingToSchemaConverterImpl;
 import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.CombinedTwoPeriodesConverterImpl;
 import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.DayInWeekConverterImpl;
@@ -55,7 +60,8 @@ public class ShortTextConverter {
 	private static final int MAX_LENGTH = 70;
 	
 	private static ArrayList<ShortTextConverterImpl> converters = new ArrayList<ShortTextConverterImpl>();	
-	 
+	private static Properties properties;
+	
 	/**
 	 * Populate a list of implemented converters 
 	 * Consider the order: The tests are evaluated in order, adding the most likely to succeed
@@ -89,8 +95,8 @@ public class ShortTextConverter {
 	 * @param dosage
 	 * @return A short text string describing the dosage 
 	 */
-	public static String convert(DosageWrapper dosage) {
-		return convert(dosage, MAX_LENGTH);
+	public static String convert_java(DosageWrapper dosage) {
+		return convert_java(dosage, MAX_LENGTH);
 	}
 	
 	/**
@@ -99,7 +105,7 @@ public class ShortTextConverter {
 	 * @param maxLength
 	 * @return A short text string describing the dosage 
 	 */
-	public static String convert(DosageWrapper dosage, int maxLength) {
+	public static String convert_java(DosageWrapper dosage, int maxLength) {
 		for(ShortTextConverterImpl converter: converters) {
 			if(converter.canConvert(dosage)) {
 				String s = converter.doConvert(dosage);
@@ -118,6 +124,58 @@ public class ShortTextConverter {
 		return false;
 	}
 	
+	private static boolean useJavaImplementation() {
+		properties = new Properties();
+		InputStream propStream = LongTextConverter.class.getClassLoader().getResourceAsStream("project.properties");
+		if(propStream == null) {
+			try {
+				propStream = new java.io.FileInputStream("project.properties");
+			}
+			catch(FileNotFoundException e) {
+				return true;
+			}
+		}
+	
+		try {
+			properties.load(propStream);
+		} catch (IOException e) {
+			return true;
+		}
+		
+		return properties.getProperty("implementation") != null ? properties.getProperty("implementation").compareToIgnoreCase("java") == 0 : true;
+	}
+	
+
+	/**
+	 * Performs a conversion to a long text. 
+	 * @param dosage
+	 * @return A long text string describing the dosage 
+	 */
+	public static String convert(DosageWrapper dosage, int maxLength) {
+		if(useJavaImplementation()) {
+			return convert_java(dosage, maxLength);
+		}
+		else {
+			return convert_js(dosage);
+		}
+	}
+	
+	public static String convert(DosageWrapper dosage) {
+		if(useJavaImplementation()) {
+			return convert_java(dosage);
+		}
+		else {
+			return convert_js(dosage);
+		}
+	}
+	
+	
+	public static String convert_js(DosageWrapper dosage) {
+		return TypescriptBridge.convertShortText(dosage);
+	}
+	
+	
+	
 	/**
 	 * This method returns the converter class handing the conversion to a short, if
 	 * the dosage can be converted. The metod is useful for test, logging etc. 
@@ -128,6 +186,27 @@ public class ShortTextConverter {
 		for(ShortTextConverterImpl converter: converters) {
 			if(converter.canConvert(dosage) && converter.doConvert(dosage).length()<=MAX_LENGTH) 
 				return converter.getClass();
+		}
+		return null;
+	}
+	
+	public static String getConverterClassName(DosageWrapper dosage) {
+		if(useJavaImplementation()) {
+			return getConverterClassName_java(dosage);
+		}
+		else {
+			return getConverterClassName_js(dosage);
+		}
+	}
+
+	private static String getConverterClassName_js(DosageWrapper dosage) {
+		return TypescriptBridge.getShortTextConverterClassName(dosage);
+	}
+	
+	private static String getConverterClassName_java(DosageWrapper dosage) {
+		for(ShortTextConverterImpl converter: converters) {
+			if(converter.canConvert(dosage) && converter.doConvert(dosage).length()<=MAX_LENGTH) 
+				return converter.getClass().getName();
 		}
 		return null;
 	}

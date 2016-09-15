@@ -75,8 +75,8 @@ public class MorningNoonEveningNightEyeOrEarConverterTest {
 			"   2 dråber morgen, 1 i hvert øje + 2 dråber aften, 1 i hvert øje",
 			LongTextConverter.convert(dosage));
 		Assert.assertEquals(
-			MorningNoonEveningNightEyeOrEarConverterImpl.class, 
-			ShortTextConverter.getConverterClass(dosage));
+			"MorningNoonEveningNightEyeOrEarConverterImpl", 
+			ShortTextConverter.getConverterClassName(dosage));
 		Assert.assertEquals(
 			"1 dråbe morgen og aften i begge øjne", 
 			ShortTextConverter.convert(dosage));
@@ -100,8 +100,8 @@ public class MorningNoonEveningNightEyeOrEarConverterTest {
 						EveningDoseWrapper.makeDose(new BigDecimal(4)))))); 
 		
 		Assert.assertEquals(
-			MorningNoonEveningNightConverterImpl.class, 
-			ShortTextConverter.getConverterClass(dosage));
+			"MorningNoonEveningNightConverterImpl", 
+			ShortTextConverter.getConverterClassName(dosage));
 	}
 	
 }

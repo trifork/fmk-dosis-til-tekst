@@ -67,8 +67,8 @@ public class SimpleAccordingToNeedConverterTest {
 				"   Efter behov: 2 tabletter efter behov",
 				LongTextConverter.convert(dosage));
 		Assert.assertEquals(
-				SimpleAccordingToNeedConverterImpl.class, 
-				ShortTextConverter.getConverterClass(dosage));
+				"SimpleAccordingToNeedConverterImpl",
+				ShortTextConverter.getConverterClassName(dosage));
 		Assert.assertEquals(
 				"2 tabletter efter behov", 
 				ShortTextConverter.convert(dosage));
@@ -92,8 +92,8 @@ public class SimpleAccordingToNeedConverterTest {
 				"   Efter behov: 2 tabletter efter behov",
 				LongTextConverter.convert(dosage));
 		Assert.assertEquals(
-				SimpleAccordingToNeedConverterImpl.class, 
-				ShortTextConverter.getConverterClass(dosage));
+				"SimpleAccordingToNeedConverterImpl",
+				ShortTextConverter.getConverterClassName(dosage));
 		Assert.assertEquals(
 				"2 tabletter efter behov", 
 				ShortTextConverter.convert(dosage));
@@ -139,8 +139,8 @@ public class SimpleAccordingToNeedConverterTest {
 				"   2 tabletter morgen efter behov + 2 tabletter aften efter behov",
 				LongTextConverter.convert(dosage));
 		Assert.assertEquals(
-				MorningNoonEveningNightConverterImpl.class, 
-				ShortTextConverter.getConverterClass(dosage));
+				"SimpleLimitedAccordingToNeedConverterImpl", 
+				ShortTextConverter.getConverterClassName(dosage));
 		Assert.assertEquals(
 				"2 tabletter morgen efter behov og aften efter behov", 
 				ShortTextConverter.convert(dosage));

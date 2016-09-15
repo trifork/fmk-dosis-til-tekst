@@ -53,19 +53,15 @@ public class WeeklyMorningNoonEveningNightConverterTest {
 					7, "ved måltid", DateOrDateTimeWrapper.makeDate("2012-06-08"), DateOrDateTimeWrapper.makeDate("2012-12-31"), 
 					DayWrapper.makeDay(
 						1, 
-						MorningDoseWrapper.makeDose(new BigDecimal(1)), 
+						MorningDoseWrapper.makeDose(new BigDecimal(1)), 	// Fredag
 						EveningDoseWrapper.makeDose(new BigDecimal(1))),
 					DayWrapper.makeDay(
 						3, 
-						MorningDoseWrapper.makeDose(new BigDecimal(1)), 
-						EveningDoseWrapper.makeDose(new BigDecimal(1))),
-					DayWrapper.makeDay(
-						5, 
-						MorningDoseWrapper.makeDose(new BigDecimal(1)), 
+						MorningDoseWrapper.makeDose(new BigDecimal(1)), 	// Søndag
 						EveningDoseWrapper.makeDose(new BigDecimal(1))),
 					DayWrapper.makeDay(
 						7, 
-						MorningDoseWrapper.makeDose(new BigDecimal(1)), 
+						MorningDoseWrapper.makeDose(new BigDecimal(1)), 	// Torsdag
 						EveningDoseWrapper.makeDose(new BigDecimal(1))))));
 		Assert.assertEquals(
 				WeeklyRepeatedConverterImpl.class, 
@@ -74,19 +70,18 @@ public class WeeklyMorningNoonEveningNightConverterTest {
 				"Doseringsforløbet starter fredag den 8. juni 2012, forløbet gentages hver uge, og ophører mandag den 31. december 2012.\n"+
 				"Bemærk at doseringen har et komplekst forløb:\n"+
 				 "   Doseringsforløb:\n"+
-				 "   Tirsdag: 1 stk morgen ved måltid + 1 stk aften ved måltid\n"+
 				 "   Torsdag: 1 stk morgen ved måltid + 1 stk aften ved måltid\n"+
 				 "   Fredag: 1 stk morgen ved måltid + 1 stk aften ved måltid\n"+
 				 "   Søndag: 1 stk morgen ved måltid + 1 stk aften ved måltid",
 				LongTextConverter.convert(dosage));
-//		Assert.assertEquals(
-//				dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.WeeklyMorningNoonEveningNightConverterImpl.class,
-//				ShortTextConverter.getConverterClass(dosage));
-//		Assert.assertEquals(
-//				"1 stk morgen og aften tirsdag, torsdag, fredag og søndag hver uge ved måltid",
-//				ShortTextConverter.convert(dosage));
 		Assert.assertEquals(
-				8/7., 
+				"WeeklyMorningNoonEveningNightConverterImpl",
+				ShortTextConverter.getConverterClassName(dosage));
+		Assert.assertEquals(
+				"1 stk morgen og aften torsdag, fredag og søndag hver uge ved måltid",
+				ShortTextConverter.convert(dosage));
+		Assert.assertEquals(
+				6/7., 
 				DailyDosisCalculator.calculate(dosage).getValue().doubleValue(), 
 				0.000000001); 							
 		Assert.assertEquals(DosageType.Temporary, DosageTypeCalculator.calculate(dosage));						

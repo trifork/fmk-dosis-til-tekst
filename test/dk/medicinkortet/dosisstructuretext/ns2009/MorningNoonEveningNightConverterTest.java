@@ -65,8 +65,8 @@ public class MorningNoonEveningNightConverterTest {
 			"   1 stk morgen ! + 2 stk middag ! + 3 stk aften ! + 4 stk før sengetid !",
 			LongTextConverter.convert(dosage));
 		Assert.assertEquals(
-			MorningNoonEveningNightConverterImpl.class, 
-			ShortTextConverter.getConverterClass(dosage));
+			"MorningNoonEveningNightConverterImpl", 
+			ShortTextConverter.getConverterClassName(dosage));
 		Assert.assertEquals(
 			"1 stk morgen, 2 stk middag, 3 stk aften og 4 stk før sengetid !", 
 			ShortTextConverter.convert(dosage));
@@ -96,8 +96,8 @@ public class MorningNoonEveningNightConverterTest {
 			"   2 stk morgen ved måltid + 2 stk middag ved måltid + 2 stk aften ved måltid + 2 stk før sengetid ved måltid",
 			LongTextConverter.convert(dosage));
 		Assert.assertEquals(
-			MorningNoonEveningNightConverterImpl.class, 
-			ShortTextConverter.getConverterClass(dosage));
+			"MorningNoonEveningNightConverterImpl", 
+			ShortTextConverter.getConverterClassName(dosage));
 		Assert.assertEquals(
 			"2 stk morgen, middag, aften og før sengetid ved måltid", 
 			ShortTextConverter.convert(dosage));
@@ -126,8 +126,8 @@ public class MorningNoonEveningNightConverterTest {
 			"   2 stk middag ved måltid + 3 stk aften ved måltid + 4 stk før sengetid ved måltid",
 			LongTextConverter.convert(dosage));
 		Assert.assertEquals(
-			MorningNoonEveningNightConverterImpl.class, 
-			ShortTextConverter.getConverterClass(dosage));
+			"MorningNoonEveningNightConverterImpl", 
+			ShortTextConverter.getConverterClassName(dosage));
 		Assert.assertEquals(
 			"2 stk middag, 3 stk aften og 4 stk før sengetid ved måltid", 
 			ShortTextConverter.convert(dosage));
@@ -156,8 +156,8 @@ public class MorningNoonEveningNightConverterTest {
 			"   1 stk morgen ved måltid + 2 stk middag ved måltid + 3 stk aften ved måltid",
 			LongTextConverter.convert(dosage));
 		Assert.assertEquals(
-			MorningNoonEveningNightConverterImpl.class, 
-			ShortTextConverter.getConverterClass(dosage));
+				"MorningNoonEveningNightConverterImpl", 
+				ShortTextConverter.getConverterClassName(dosage));
 		Assert.assertEquals(
 			"1 stk morgen, 2 stk middag og 3 stk aften ved måltid", 
 			ShortTextConverter.convert(dosage));
@@ -185,8 +185,8 @@ public class MorningNoonEveningNightConverterTest {
 			"   0-1 stk morgen ved måltid + 2-3 stk middag ved måltid",
 			LongTextConverter.convert(dosage));
 		Assert.assertEquals(
-			MorningNoonEveningNightConverterImpl.class, 
-			ShortTextConverter.getConverterClass(dosage));
+				"MorningNoonEveningNightConverterImpl", 
+				ShortTextConverter.getConverterClassName(dosage));
 		Assert.assertEquals(
 			"0-1 stk morgen og 2-3 stk middag ved måltid", 
 			ShortTextConverter.convert(dosage));
@@ -214,8 +214,8 @@ public class MorningNoonEveningNightConverterTest {
 			"Daglig 2 stk nat ved måltid", 
 			LongTextConverter.convert(dosage));
 		Assert.assertEquals(
-			MorningNoonEveningNightConverterImpl.class, 
-			ShortTextConverter.getConverterClass(dosage));
+				"MorningNoonEveningNightConverterImpl", 
+				ShortTextConverter.getConverterClassName(dosage));
 		Assert.assertEquals(
 			"2 stk nat ved måltid", 
 			ShortTextConverter.convert(dosage));
@@ -243,8 +243,8 @@ public class MorningNoonEveningNightConverterTest {
 			"   1 dråbe middag + 1 dråbe aften",
 			LongTextConverter.convert(dosage));
 		Assert.assertEquals(
-			MorningNoonEveningNightConverterImpl.class, 
-			ShortTextConverter.getConverterClass(dosage));
+				"MorningNoonEveningNightConverterImpl", 
+				ShortTextConverter.getConverterClassName(dosage));
 		Assert.assertEquals(
 			"1 dråbe middag og aften", 
 			ShortTextConverter.convert(dosage));
@@ -272,8 +272,8 @@ public class MorningNoonEveningNightConverterTest {
 			"   1 dråbe aften + 1 dråbe før sengetid",
 			LongTextConverter.convert(dosage));
 		Assert.assertEquals(
-			MorningNoonEveningNightConverterImpl.class, 
-			ShortTextConverter.getConverterClass(dosage));
+				"MorningNoonEveningNightConverterImpl", 
+				ShortTextConverter.getConverterClassName(dosage));
 		Assert.assertEquals(
 			"1 dråbe aften og før sengetid", 
 			ShortTextConverter.convert(dosage));
@@ -300,8 +300,8 @@ public class MorningNoonEveningNightConverterTest {
 			"   1 dråbe før sengetid",
 			LongTextConverter.convert(dosage));
 		Assert.assertEquals(
-			MorningNoonEveningNightConverterImpl.class, 
-			ShortTextConverter.getConverterClass(dosage));
+				"MorningNoonEveningNightConverterImpl", 
+				ShortTextConverter.getConverterClassName(dosage));
 		Assert.assertEquals(
 			"1 dråbe før sengetid", 
 			ShortTextConverter.convert(dosage));
@@ -328,8 +328,8 @@ public class MorningNoonEveningNightConverterTest {
 			"   400 milligram før sengetid",
 			LongTextConverter.convert(dosage));
 		Assert.assertEquals(
-			MorningNoonEveningNightConverterImpl.class, 
-			ShortTextConverter.getConverterClass(dosage));
+				"MorningNoonEveningNightConverterImpl", 
+				ShortTextConverter.getConverterClassName(dosage));
 		Assert.assertEquals(
 			"400 milligram før sengetid", 
 			ShortTextConverter.convert(dosage));
@@ -357,8 +357,8 @@ public class MorningNoonEveningNightConverterTest {
 				"   1 tablet morgen + 2 tabletter aften",
 				LongTextConverter.convert(dosage));
 		Assert.assertEquals(
-				MorningNoonEveningNightConverterImpl.class, 
-				ShortTextConverter.getConverterClass(dosage));
+				"MorningNoonEveningNightConverterImpl", 
+				ShortTextConverter.getConverterClassName(dosage));
 		Assert.assertEquals(
 				"1 tablet morgen og 2 tabletter aften", 
 				ShortTextConverter.convert(dosage));
@@ -386,8 +386,8 @@ public class MorningNoonEveningNightConverterTest {
 				"   0-1 tablet morgen + 0,5-1,5 tabletter aften",
 				LongTextConverter.convert(dosage));
 		Assert.assertEquals(
-				MorningNoonEveningNightConverterImpl.class, 
-				ShortTextConverter.getConverterClass(dosage));
+				"MorningNoonEveningNightConverterImpl", 
+				ShortTextConverter.getConverterClassName(dosage));
 		Assert.assertEquals(
 				"0-1 tablet morgen og 1/2-1 1/2 tabletter aften", 
 				ShortTextConverter.convert(dosage));
@@ -420,8 +420,8 @@ public class MorningNoonEveningNightConverterTest {
 				"   42,117 tabletter middag + 0-0 tabletter aften",
 				LongTextConverter.convert(dosage));
 		Assert.assertEquals(
-				MorningNoonEveningNightConverterImpl.class, 
-				ShortTextConverter.getConverterClass(dosage));
+				"MorningNoonEveningNightConverterImpl", 
+				ShortTextConverter.getConverterClassName(dosage));
 		Assert.assertEquals(
 				"42,117 tabletter middag og 0-0 tabletter aften", 
 				ShortTextConverter.convert(dosage));

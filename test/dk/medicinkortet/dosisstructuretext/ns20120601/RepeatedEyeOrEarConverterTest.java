@@ -44,8 +44,8 @@ public class RepeatedEyeOrEarConverterTest {
 			"   2 dråber 2 gange daglig, 1 i hvert øje",
 			LongTextConverter.convert(dosage));
 		Assert.assertEquals(
-			RepeatedEyeOrEarConverterImpl.class, 
-			ShortTextConverter.getConverterClass(dosage));
+			"RepeatedEyeOrEarConverterImpl", 
+			ShortTextConverter.getConverterClassName(dosage));
 		Assert.assertEquals(
 			"1 dråbe 2 gange daglig i begge øjne", 
 			ShortTextConverter.convert(dosage));
