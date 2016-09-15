@@ -206,7 +206,7 @@ public class ShortTextConverter {
 	private static String getConverterClassName_java(DosageWrapper dosage) {
 		for(ShortTextConverterImpl converter: converters) {
 			if(converter.canConvert(dosage) && converter.doConvert(dosage).length()<=MAX_LENGTH) 
-				return converter.getClass().getName();
+				return converter.getClass().getSimpleName();
 		}
 		return null;
 	}
