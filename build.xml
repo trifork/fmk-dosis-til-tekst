@@ -71,7 +71,10 @@
 		<echo message="implementation=javascript${line.separator}" file="src/project.properties"/>
 		<echo message="applicationName=${ant.project.name}" append="true" file="src/project.properties"/>
 		<property name="build.war.dir" value="target/war"/>
-		<copy  file="node_modules/fmk-dosis-til-tekst-ts/target/dosistiltekst.js" tofile="${build.war.dir}/WEB-INF/classes/dosistiltekst.js" failonerror="true"/>
+		<copy  file="node_modules/fmk-dosis-til-tekst-ts/target/dosistiltekst.js" tofile="target/classes/dosistiltekst.js" failonerror="true"/>
+		<unzip src="lib/build/com.google.code.gson-gson.jar" dest="target/classes"/>
+		<unzip  src="lib/build/trifork-trifork-common.jar" dest="target/classes"/>
+		<unzip  src="lib/build/com.jcraft-jsch.jar" dest="target/classes"/>
 		<antcall target="jar"></antcall>
 	</target>
 	

@@ -1,8 +1,11 @@
 package dk.medicinkortet.dosisstructuretext;
 
+import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 
 import javax.script.Bindings;
 import javax.script.ScriptContext;
@@ -26,13 +29,12 @@ public class TypescriptBridge {
 	private static ScriptEngine getEngineInstance() {
 		if (engine == null) {
 
+			Reader reader = null;
 			engine = new ScriptEngineManager().getEngineByName("nashorn");
 
 			InputStream d2sResource = LongTextConverter.class.getClassLoader().getResourceAsStream("dosistiltekst.js");
 			if (d2sResource == null) {
 				// Development-environment, read from target, or directly from project
-
-				FileReader reader = null;
 				try {
 					reader = new FileReader("../fmk-dosis-til-tekst-ts/target/dosistiltekst.js");
 				} catch (FileNotFoundException e) {
@@ -42,27 +44,28 @@ public class TypescriptBridge {
 					try {
 						reader = new FileReader("node_modules/fmk-dosis-til-tekst-ts/target/dosistiltekst.js");
 					} catch (FileNotFoundException e) {
-
 					}
 				}
 
 				if (reader == null) {
 					throw new RuntimeException("dosistiltekst.js not found");
 				}
-
-				Bindings bindings = new SimpleBindings();
-				bindings.put("console", new TypescriptBridge().new ConsoleObject());
-
-				try {
-					engine.setBindings(bindings, ScriptContext.GLOBAL_SCOPE);
-					engine.eval(reader);
-
-				} catch (ScriptException e) {
-					e.printStackTrace();
-					throw new RuntimeException(e);
-				}
+			}
+			else {
+				reader = new InputStreamReader(d2sResource);
 			}
 
+			Bindings bindings = new SimpleBindings();
+			bindings.put("console", new TypescriptBridge().new ConsoleObject());
+
+			try {
+				engine.setBindings(bindings, ScriptContext.GLOBAL_SCOPE);
+				engine.eval(reader);
+
+			} catch (ScriptException e) {
+				e.printStackTrace();
+				throw new RuntimeException(e);
+			}
 		}
 
 		return engine;

@@ -88,7 +88,7 @@ public class SimpleNonRepeatedConverterTest {
 			"   Lørdag den 1. januar 2011: 1 kapsel 2 gange dagen før indlæggelse",
 			LongTextConverter.convert(dosage));
 		Assert.assertEquals(
-				"SimpleNonRepeatedConverterImpl", 
+				"LimitedNumberOfDaysConverterImpl", 
 				ShortTextConverter.getConverterClassName(dosage));
 		Assert.assertEquals(
 			"1 kapsel 2 gange dagen før indlæggelse", 

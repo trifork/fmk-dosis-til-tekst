@@ -33,7 +33,7 @@ import dk.medicinkortet.dosisstructuretext.DosageTypeCalculator;
 import dk.medicinkortet.dosisstructuretext.LongTextConverter;
 import dk.medicinkortet.dosisstructuretext.ShortTextConverter;
 import dk.medicinkortet.dosisstructuretext.longtextconverterimpl.DefaultLongTextConverterImpl;
-import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.MorningNoonEveningNightInNDaysConverterImp;
+import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.MorningNoonEveningNightInNDaysConverterImpl;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DateOrDateTimeWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DayWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
@@ -84,7 +84,7 @@ public class MorningNoonEveningNightInNDaysConverterTest {
 				"   Onsdag den 5. januar 2011: 1 tablet morgen ved måltid",
 				LongTextConverter.convert(dosage));
 		Assert.assertEquals(
-				MorningNoonEveningNightInNDaysConverterImp.class, 
+				MorningNoonEveningNightInNDaysConverterImpl.class, 
 				ShortTextConverter.getConverterClass(dosage));
 		Assert.assertEquals(
 				"1 tablet morgen ved måltid i 5 dage", 
@@ -131,7 +131,7 @@ public class MorningNoonEveningNightInNDaysConverterTest {
 				"   Onsdag den 5. januar 2011: 1 tablet morgen efter behov højst 1 gang ved måltid",
 				LongTextConverter.convert(dosage));
 		Assert.assertEquals(
-				MorningNoonEveningNightInNDaysConverterImp.class, 
+				MorningNoonEveningNightInNDaysConverterImpl.class, 
 				ShortTextConverter.getConverterClass(dosage));
 		Assert.assertEquals(
 				"1 tablet morgen efter behov ved måltid i 5 dage", 

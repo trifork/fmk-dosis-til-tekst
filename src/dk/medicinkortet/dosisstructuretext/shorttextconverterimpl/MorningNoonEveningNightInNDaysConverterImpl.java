@@ -29,7 +29,7 @@ import dk.medicinkortet.dosisstructuretext.vowrapper.StructureWrapper;
 /**
  * Conversion of: Non repeated morning, noon, evening, night-dosage where all dosages are equal
  */
-public class MorningNoonEveningNightInNDaysConverterImp extends ShortTextConverterImpl {
+public class MorningNoonEveningNightInNDaysConverterImpl extends ShortTextConverterImpl {
 
 	@Override
 	public boolean canConvert(DosageWrapper dosage) {

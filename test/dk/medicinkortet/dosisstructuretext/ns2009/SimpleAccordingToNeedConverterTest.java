@@ -59,8 +59,8 @@ public class SimpleAccordingToNeedConverterTest {
 				"   Efter behov: 2 stk efter behov",
 				LongTextConverter.convert(dosage));
 		Assert.assertEquals(
-				SimpleAccordingToNeedConverterImpl.class, 
-				ShortTextConverter.getConverterClass(dosage));
+				"SimpleAccordingToNeedConverterImpl", 
+				ShortTextConverter.getConverterClassName(dosage));
 		Assert.assertEquals(
 				"2 stk efter behov", 
 				ShortTextConverter.convert(dosage));
@@ -84,8 +84,8 @@ public class SimpleAccordingToNeedConverterTest {
 				"   Efter behov: 2 stk efter behov ved smerter",
 				LongTextConverter.convert(dosage));
 		Assert.assertEquals(
-				SimpleAccordingToNeedConverterImpl.class, 
-				ShortTextConverter.getConverterClass(dosage));
+				"SimpleAccordingToNeedConverterImpl", 
+				ShortTextConverter.getConverterClassName(dosage));
 		Assert.assertEquals(
 				"2 stk efter behov ved smerter", 
 				ShortTextConverter.convert(dosage));
@@ -109,8 +109,8 @@ public class SimpleAccordingToNeedConverterTest {
 				"   Efter behov: 1-2 stk efter behov",
 				LongTextConverter.convert(dosage));
 		Assert.assertEquals(
-				SimpleAccordingToNeedConverterImpl.class, 
-				ShortTextConverter.getConverterClass(dosage));
+				"SimpleAccordingToNeedConverterImpl", 
+				ShortTextConverter.getConverterClassName(dosage));
 		Assert.assertEquals(
 				"1-2 stk efter behov", 
 				ShortTextConverter.convert(dosage));

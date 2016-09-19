@@ -37,7 +37,7 @@ import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.LimitedNumberO
 import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.MorningNoonEveningNightAndAccordingToNeedConverterImpl;
 import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.MorningNoonEveningNightConverterImpl;
 import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.MorningNoonEveningNightEyeOrEarConverterImpl;
-import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.MorningNoonEveningNightInNDaysConverterImp;
+import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.MorningNoonEveningNightInNDaysConverterImpl;
 import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.MultipleDaysNonRepeatedConverterImpl;
 import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.NumberOfWholeWeeksConverterImpl;
 import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.ParacetamolConverterImpl;
@@ -76,7 +76,7 @@ public class ShortTextConverter {
 		converters.add(new RepeatedEyeOrEarConverterImpl());
 		converters.add(new RepeatedConverterImpl());
 		converters.add(new SimpleNonRepeatedConverterImpl());
-		converters.add(new MorningNoonEveningNightInNDaysConverterImp());
+		converters.add(new MorningNoonEveningNightInNDaysConverterImpl());
 		converters.add(new SimpleAccordingToNeedConverterImpl());
 		converters.add(new LimitedNumberOfDaysConverterImpl());
 		converters.add(new SimpleLimitedAccordingToNeedConverterImpl());
