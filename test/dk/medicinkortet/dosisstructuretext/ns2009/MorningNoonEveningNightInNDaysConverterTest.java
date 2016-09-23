@@ -67,8 +67,8 @@ public class MorningNoonEveningNightInNDaysConverterTest {
 						5, 
 						MorningDoseWrapper.makeDose(new BigDecimal(1))))));				
 		Assert.assertEquals(
-				DefaultLongTextConverterImpl.class, 
-				LongTextConverter.getConverterClass(dosage));
+				"DefaultLongTextConverterImpl", 
+				LongTextConverter.getConverterClassName(dosage));
 		Assert.assertEquals(
 				"Doseringsforløbet starter lørdag den 1. januar 2011 og ophører efter det angivne forløb:\n"+
 				"   Doseringsforløb:\n"+

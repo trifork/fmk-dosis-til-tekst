@@ -80,8 +80,8 @@ public class LimitedNumberOfDaysConverterTest {
 				"   Tirsdag den 4. januar 2011: 4 måleskefulde 2 gange ved måltid",
 				LongTextConverter.convert(dosage));
 		Assert.assertEquals(
-				LimitedNumberOfDaysConverterImpl.class, 
-				ShortTextConverter.getConverterClass(dosage));
+				"LimitedNumberOfDaysConverterImpl", 
+				ShortTextConverter.getConverterClassName(dosage));
 		Assert.assertEquals(
 				"4 måleskefulde 2 gange daglig i 4 dage ved måltid", 
 				ShortTextConverter.convert(dosage));
@@ -124,8 +124,8 @@ public class LimitedNumberOfDaysConverterTest {
 				"   Tirsdag den 4. januar 2011: 4 måleskefulde efter behov højst 2 gange ved måltid",
 				LongTextConverter.convert(dosage));
 		Assert.assertEquals(
-				LimitedNumberOfDaysConverterImpl.class, 
-				ShortTextConverter.getConverterClass(dosage));
+				"LimitedNumberOfDaysConverterImpl", 
+				ShortTextConverter.getConverterClassName(dosage));
 		Assert.assertEquals(
 				"4 måleskefulde efter behov 2 gange daglig i 4 dage ved måltid", 
 				ShortTextConverter.convert(dosage));
@@ -149,8 +149,8 @@ public class LimitedNumberOfDaysConverterTest {
 				"   Lørdag den 1. januar 2011: 4 tabletter ved måltid",
 				LongTextConverter.convert(dosage));
 		Assert.assertEquals(
-				LimitedNumberOfDaysConverterImpl.class, 
-				ShortTextConverter.getConverterClass(dosage));
+				"LimitedNumberOfDaysConverterImpl", 
+				ShortTextConverter.getConverterClassName(dosage));
 		Assert.assertEquals(
 				"4 tabletter 1 gang ved måltid", 
 				ShortTextConverter.convert(dosage));

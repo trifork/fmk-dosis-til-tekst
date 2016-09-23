@@ -49,8 +49,8 @@ public class CombinedTwoPeriodesConverterTest {
 						PlainDoseWrapper.makeDose(new BigDecimal(1)), 
 						PlainDoseWrapper.makeDose(new BigDecimal(1))))));
 		Assert.assertEquals(
-			DefaultMultiPeriodeLongTextConverterImpl.class, 
-			LongTextConverter.getConverterClass(dosage));
+			"DefaultMultiPeriodeLongTextConverterImpl", 
+			LongTextConverter.getConverterClassName(dosage));
 		Assert.assertEquals(
 			"Doseringen indeholder flere perioder:\n"+
 			"\n"+
@@ -63,8 +63,8 @@ public class CombinedTwoPeriodesConverterTest {
 			"   1 dråbe 2 gange daglig",
 			LongTextConverter.convert(dosage));
 			Assert.assertEquals(
-					CombinedTwoPeriodesConverterImpl.class, 
-					ShortTextConverter.getConverterClass(dosage));
+					"CombinedTwoPeriodesConverterImpl", 
+					ShortTextConverter.getConverterClassName(dosage));
 			Assert.assertEquals(
 					"første dag 1 dråbe 4 gange, herefter 1 dråbe 2 gange daglig", 
 					ShortTextConverter.convert(dosage));
@@ -102,8 +102,8 @@ public class CombinedTwoPeriodesConverterTest {
 						MorningDoseWrapper.makeDose(new BigDecimal(1)), 
 						EveningDoseWrapper.makeDose(new BigDecimal(1))))));
 		Assert.assertEquals(
-			DefaultMultiPeriodeLongTextConverterImpl.class, 
-			LongTextConverter.getConverterClass(dosage));
+			"DefaultMultiPeriodeLongTextConverterImpl", 
+			LongTextConverter.getConverterClassName(dosage));
 		Assert.assertEquals(
 			"Doseringen indeholder flere perioder:\n"+
 			"\n"+
@@ -118,8 +118,8 @@ public class CombinedTwoPeriodesConverterTest {
 			"   1 dråbe morgen + 1 dråbe aften",
 			LongTextConverter.convert(dosage));
 			Assert.assertEquals(
-					CombinedTwoPeriodesConverterImpl.class, 
-					ShortTextConverter.getConverterClass(dosage));
+					"CombinedTwoPeriodesConverterImpl", 
+					ShortTextConverter.getConverterClassName(dosage));
 			Assert.assertEquals(
 					"2 dråber morgen og aften i 3 dage, herefter 1 dråbe morgen og aften", 
 					ShortTextConverter.convert(dosage));

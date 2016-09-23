@@ -65,8 +65,8 @@ public class ValidatorTest {
 				"   2 stk morgen",
 				LongTextConverter.convert(dosage));
 		Assert.assertEquals(
-				MorningNoonEveningNightConverterImpl.class, 
-				ShortTextConverter.getConverterClass(dosage));
+				"MorningNoonEveningNightConverterImpl", 
+				ShortTextConverter.getConverterClassName(dosage));
 		Assert.assertEquals(
 				"2 stk morgen", 
 				ShortTextConverter.convert(dosage));
@@ -97,8 +97,8 @@ public class ValidatorTest {
 				"   2 stk efter behov højst 1 gang daglig",
 				LongTextConverter.convert(dosage));
 		Assert.assertEquals(
-				SimpleLimitedAccordingToNeedConverterImpl.class, 
-				ShortTextConverter.getConverterClass(dosage));
+				"SimpleLimitedAccordingToNeedConverterImpl", 
+				ShortTextConverter.getConverterClassName(dosage));
 		Assert.assertEquals(
 				"2 stk efter behov, højst 1 gang daglig", 
 				ShortTextConverter.convert(dosage));

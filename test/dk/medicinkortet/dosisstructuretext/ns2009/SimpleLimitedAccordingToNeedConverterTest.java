@@ -154,7 +154,7 @@ public class SimpleLimitedAccordingToNeedConverterTest {
 				"   Mandag den 4. juni 2012: 1 stk 2 gange",
 				 LongTextConverter.convert(dosage));
 		Assert.assertEquals(null,
-				ShortTextConverter.getConverterClass(dosage));
+				ShortTextConverter.getConverterClassName(dosage));
 		Assert.assertTrue(DailyDosisCalculator.calculate(dosage).isNone()); 
 		Assert.assertEquals(DosageType.Temporary, DosageTypeCalculator.calculate(dosage));				
 	}

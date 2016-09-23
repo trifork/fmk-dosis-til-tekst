@@ -68,8 +68,8 @@ public class MorningNoonEveningNightAndAccordingToNeedConverterTest {
 			"   2 stk morgen + 2 stk middag + 2 stk aften + 2 stk før sengetid + 2 stk efter behov",
 			LongTextConverter.convert(dosage));
 //		Assert.assertEquals(
-//			MorningNoonEveningNightAndAccordingToNeedConverterImpl.class, 
-//			ShortTextConverter.getConverterClass(dosage));
+//			"MorningNoonEveningNightAndAccordingToNeedConverterImpl", 
+//			ShortTextConverter.getConverterClassName(dosage));
 //		Assert.assertEquals(
 //			"2 stk morgen, middag, aften og før sengetid, samt 2 stk efter behov, højst 1 gang daglig", 
 //			ShortTextConverter.convert(dosage));
@@ -89,8 +89,8 @@ public class MorningNoonEveningNightAndAccordingToNeedConverterTest {
 							PlainDoseWrapper.makeDose(new BigDecimal(2), true),
 							MorningDoseWrapper.makeDose(new BigDecimal(2), false)))));
 		Assert.assertEquals(
-				DailyRepeatedConverterImpl.class, 
-				LongTextConverter.getConverterClass(dosage));
+				"DailyRepeatedConverterImpl", 
+				LongTextConverter.getConverterClassName(dosage));
 		Assert.assertEquals(
 				"Doseringsforløbet starter lørdag den 1. januar 2011, gentages hver dag, og ophører tirsdag den 11. januar 2011:\n"+
 				"   Doseringsforløb:\n"+
@@ -120,16 +120,16 @@ public class MorningNoonEveningNightAndAccordingToNeedConverterTest {
 							EveningDoseWrapper.makeDose(new BigDecimal(1), new BigDecimal(2)), 
 							PlainDoseWrapper.makeDose(new BigDecimal(1), new BigDecimal(2), true)))));		
 		Assert.assertEquals(
-				DailyRepeatedConverterImpl.class, 
-				LongTextConverter.getConverterClass(dosage));
+				"DailyRepeatedConverterImpl", 
+				LongTextConverter.getConverterClassName(dosage));
 		Assert.assertEquals(
 				"Doseringsforløbet starter lørdag den 1. januar 2011, gentages hver dag, og ophører tirsdag den 11. januar 2011:\n"+
 				"   Doseringsforløb:\n"+
 	   			"   1-2 stk morgen + 1-1 stk middag + 1-2 stk aften + 1-2 stk efter behov",
 				LongTextConverter.convert(dosage));
 //		Assert.assertEquals(
-//				MorningNoonEveningNightAndAccordingToNeedConverterImpl.class, 
-//				ShortTextConverter.getConverterClass(dosage));
+//				"MorningNoonEveningNightAndAccordingToNeedConverterImpl", 
+//				ShortTextConverter.getConverterClassName(dosage));
 //		Assert.assertEquals(
 //				"1-2 stk morgen, 1-1 stk middag og 1-2 stk aften, samt 1-2 stk efter behov, højst 1 gang daglig", 
 //				ShortTextConverter.convert(dosage));
@@ -152,16 +152,16 @@ public class MorningNoonEveningNightAndAccordingToNeedConverterTest {
 							PlainDoseWrapper.makeDose(new BigDecimal(1), new BigDecimal(2), true), 
 							PlainDoseWrapper.makeDose(new BigDecimal(1), new BigDecimal(2), true)))));		
 		Assert.assertEquals(
-				DailyRepeatedConverterImpl.class, 
-				LongTextConverter.getConverterClass(dosage));
+				"DailyRepeatedConverterImpl", 
+				LongTextConverter.getConverterClassName(dosage));
 		Assert.assertEquals(
 				"Doseringsforløbet starter lørdag den 1. januar 2011, gentages hver dag, og ophører tirsdag den 11. januar 2011:\n"+
 				"   Doseringsforløb:\n"+
 	   			"   1-2 stk morgen + 1-1 stk middag + 1-2 stk aften + 1-2 stk efter behov + 1-2 stk efter behov",
 				LongTextConverter.convert(dosage));
 //		Assert.assertEquals(
-//				MorningNoonEveningNightAndAccordingToNeedConverterImpl.class, 
-//				ShortTextConverter.getConverterClass(dosage));
+//				"MorningNoonEveningNightAndAccordingToNeedConverterImpl", 
+//				ShortTextConverter.getConverterClassName(dosage));
 //		Assert.assertEquals(
 //				"1-2 stk morgen, 1-1 stk middag og 1-2 stk aften, samt 1-2 stk efter behov, højst 2 gange daglig", 
 //				ShortTextConverter.convert(dosage));

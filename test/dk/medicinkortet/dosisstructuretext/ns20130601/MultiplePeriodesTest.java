@@ -92,7 +92,7 @@ public class MultiplePeriodesTest {
 			"   Doseringsforløb:\n" +
 			"   1 tablet morgen",
 			LongTextConverter.convert(dosage));
-		Assert.assertNull(ShortTextConverter.getConverterClass(dosage));
+		Assert.assertNull(ShortTextConverter.getConverterClassName(dosage));
 		Assert.assertNull(DailyDosisCalculator.calculate(dosage).getValue()); 		
 		Assert.assertEquals(DosageType.Combined, DosageTypeCalculator.calculate(dosage));		
 	}
@@ -128,7 +128,7 @@ public class MultiplePeriodesTest {
 			"   Doseringsforløb:\n" +
 			"   1 tablet morgen",
 			LongTextConverter.convert(dosage));
-		Assert.assertNull(ShortTextConverter.getConverterClass(dosage));
+		Assert.assertNull(ShortTextConverter.getConverterClassName(dosage));
 		Assert.assertNull(DailyDosisCalculator.calculate(dosage).getValue()); 		
 		Assert.assertEquals(DosageType.Temporary, DosageTypeCalculator.calculate(dosage));		
 	}
@@ -164,7 +164,7 @@ public class MultiplePeriodesTest {
 			"   Doseringsforløb:\n" +
 			"   1 tablet morgen",
 			LongTextConverter.convert(dosage));
-		Assert.assertNull(ShortTextConverter.getConverterClass(dosage));
+		Assert.assertNull(ShortTextConverter.getConverterClassName(dosage));
 		Assert.assertNull(DailyDosisCalculator.calculate(dosage).getValue()); 		
 		Assert.assertEquals(DosageType.Temporary, DosageTypeCalculator.calculate(dosage));		
 	}
@@ -207,7 +207,7 @@ public class MultiplePeriodesTest {
 			"   Doseringsforløb:\n" +
 			"   1 tablet morgen",
 			LongTextConverter.convert(dosage));
-		Assert.assertNull(ShortTextConverter.getConverterClass(dosage));
+		Assert.assertNull(ShortTextConverter.getConverterClassName(dosage));
 		Assert.assertNull(DailyDosisCalculator.calculate(dosage).getValue()); 		
 		Assert.assertEquals(DosageType.Temporary, DosageTypeCalculator.calculate(dosage));		
 	}
@@ -248,7 +248,7 @@ public class MultiplePeriodesTest {
 			"Doseringsforløbet starter tirsdag den 4. juni 2013:\n" +
 			"   Bemærk: skal ikke anvendes i denne periode!",
 			LongTextConverter.convert(dosage));
-		Assert.assertNull(ShortTextConverter.getConverterClass(dosage));
+		Assert.assertNull(ShortTextConverter.getConverterClassName(dosage));
 		Assert.assertNull(DailyDosisCalculator.calculate(dosage).getValue()); 		
 		Assert.assertEquals(DosageType.Combined, DosageTypeCalculator.calculate(dosage));		
 	}
@@ -289,7 +289,7 @@ public class MultiplePeriodesTest {
 			"Doseringsforløbet starter tirsdag den 4. juni 2013:\n" +
 			"   Bemærk: skal ikke anvendes i denne periode!",
 			LongTextConverter.convert(dosage));
-		Assert.assertNull(ShortTextConverter.getConverterClass(dosage));
+		Assert.assertNull(ShortTextConverter.getConverterClassName(dosage));
 		Assert.assertNull(DailyDosisCalculator.calculate(dosage).getValue()); 		
 		Assert.assertEquals(DosageType.Combined, DosageTypeCalculator.calculate(dosage));		
 	}
@@ -339,7 +339,7 @@ public class MultiplePeriodesTest {
 			"   Doseringsforløb:\n" +
 			"   1 tablet morgen",
 			LongTextConverter.convert(dosage));
-		Assert.assertNull(ShortTextConverter.getConverterClass(dosage));
+		Assert.assertNull(ShortTextConverter.getConverterClassName(dosage));
 		Assert.assertNull(DailyDosisCalculator.calculate(dosage).getValue()); 		
 		Assert.assertEquals(DosageType.Combined, DosageTypeCalculator.calculate(dosage));		
 	}
@@ -399,7 +399,7 @@ public class MultiplePeriodesTest {
 			"   Doseringsforløb:\n" +
 			"   1 tablet morgen",
 			LongTextConverter.convert(dosage));
-		Assert.assertNull(ShortTextConverter.getConverterClass(dosage));
+		Assert.assertNull(ShortTextConverter.getConverterClassName(dosage));
 		Assert.assertNull(DailyDosisCalculator.calculate(dosage).getValue()); 		
 		Assert.assertEquals(DosageType.Combined, DosageTypeCalculator.calculate(dosage));		
 	}
@@ -416,7 +416,7 @@ public class MultiplePeriodesTest {
 			"   Doseringsforløb:\n" +
 			"   Efter aftale",
 			LongTextConverter.convert(dosage));
-		Assert.assertEquals(FreeTextConverterImpl.class, ShortTextConverter.getConverterClass(dosage));
+		Assert.assertEquals("FreeTextConverterImpl", ShortTextConverter.getConverterClassName(dosage));
 		Assert.assertNull(DailyDosisCalculator.calculate(dosage).getValue()); 		
 		Assert.assertEquals(DosageType.Unspecified, DosageTypeCalculator.calculate(dosage));		
 	}
@@ -492,7 +492,7 @@ public class MultiplePeriodesTest {
 			"   Dosering:\n" +
 			"   Efter aftale",
 			LongTextConverter.convert(dosage));
-		Assert.assertEquals(FreeTextConverterImpl.class, ShortTextConverter.getConverterClass(dosage));
+		Assert.assertEquals("FreeTextConverterImpl", ShortTextConverter.getConverterClassName(dosage));
 		Assert.assertNull(DailyDosisCalculator.calculate(dosage).getValue()); 		
 		Assert.assertEquals(DosageType.Unspecified, DosageTypeCalculator.calculate(dosage));		
 	}
@@ -509,7 +509,7 @@ public class MultiplePeriodesTest {
 			"   Doseringsforløb:\n" +
 			"   Efter aftale",
 			LongTextConverter.convert(dosage));
-		Assert.assertEquals(FreeTextConverterImpl.class, ShortTextConverter.getConverterClass(dosage));
+		Assert.assertEquals("FreeTextConverterImpl", ShortTextConverter.getConverterClassName(dosage));
 		Assert.assertNull(DailyDosisCalculator.calculate(dosage).getValue()); 		
 		Assert.assertEquals(DosageType.Unspecified, DosageTypeCalculator.calculate(dosage));		
 	}	
@@ -526,7 +526,7 @@ public class MultiplePeriodesTest {
 			"   Doseringsforløb:\n" +
 			"   Efter aftale",
 			LongTextConverter.convert(dosage));
-		Assert.assertEquals(FreeTextConverterImpl.class, ShortTextConverter.getConverterClass(dosage));
+		Assert.assertEquals("FreeTextConverterImpl", ShortTextConverter.getConverterClassName(dosage));
 		Assert.assertNull(DailyDosisCalculator.calculate(dosage).getValue()); 		
 		Assert.assertEquals(DosageType.Unspecified, DosageTypeCalculator.calculate(dosage));		
 	}
@@ -542,7 +542,7 @@ public class MultiplePeriodesTest {
 			"   Doseringsforløb:\n" +
 			"   Dosering efter skriftlig anvisning",
 			LongTextConverter.convert(dosage));
-		Assert.assertEquals(AdministrationAccordingToSchemaConverterImpl.class, ShortTextConverter.getConverterClass(dosage));
+		Assert.assertEquals("AdministrationAccordingToSchemaConverterImpl", ShortTextConverter.getConverterClassName(dosage));
 		Assert.assertNull(DailyDosisCalculator.calculate(dosage).getValue()); 		
 		Assert.assertEquals(DosageType.Unspecified, DosageTypeCalculator.calculate(dosage));		
 	}
@@ -558,7 +558,7 @@ public class MultiplePeriodesTest {
 			"   Dosering:\n" +
 			"   Dosering efter skriftlig anvisning",
 			LongTextConverter.convert(dosage));
-		Assert.assertEquals(AdministrationAccordingToSchemaConverterImpl.class, ShortTextConverter.getConverterClass(dosage));
+		Assert.assertEquals("AdministrationAccordingToSchemaConverterImpl", ShortTextConverter.getConverterClassName(dosage));
 		Assert.assertNull(DailyDosisCalculator.calculate(dosage).getValue()); 		
 		Assert.assertEquals(DosageType.Unspecified, DosageTypeCalculator.calculate(dosage));		
 	}
@@ -574,7 +574,7 @@ public class MultiplePeriodesTest {
 			"   Doseringsforløb:\n" +
 			"   Dosering efter skriftlig anvisning",
 			LongTextConverter.convert(dosage));
-		Assert.assertEquals(AdministrationAccordingToSchemaConverterImpl.class, ShortTextConverter.getConverterClass(dosage));
+		Assert.assertEquals("AdministrationAccordingToSchemaConverterImpl", ShortTextConverter.getConverterClassName(dosage));
 		Assert.assertNull(DailyDosisCalculator.calculate(dosage).getValue()); 		
 		Assert.assertEquals(DosageType.Unspecified, DosageTypeCalculator.calculate(dosage));		
 	}	
@@ -590,7 +590,7 @@ public class MultiplePeriodesTest {
 			"   Doseringsforløb:\n" +
 			"   Dosering efter skriftlig anvisning",
 			LongTextConverter.convert(dosage));
-		Assert.assertEquals(AdministrationAccordingToSchemaConverterImpl.class, ShortTextConverter.getConverterClass(dosage));
+		Assert.assertEquals("AdministrationAccordingToSchemaConverterImpl", ShortTextConverter.getConverterClassName(dosage));
 		Assert.assertNull(DailyDosisCalculator.calculate(dosage).getValue()); 		
 		Assert.assertEquals(DosageType.Unspecified, DosageTypeCalculator.calculate(dosage));		
 	}

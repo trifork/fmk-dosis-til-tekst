@@ -64,8 +64,8 @@ public class WeeklyMorningNoonEveningNightConverterTest {
 						MorningDoseWrapper.makeDose(new BigDecimal(1)), 	// Torsdag
 						EveningDoseWrapper.makeDose(new BigDecimal(1))))));
 		Assert.assertEquals(
-				WeeklyRepeatedConverterImpl.class, 
-				LongTextConverter.getConverterClass(dosage));
+				"WeeklyRepeatedConverterImpl", 
+				LongTextConverter.getConverterClassName(dosage));
 		Assert.assertEquals(
 				"Doseringsforløbet starter fredag den 8. juni 2012, forløbet gentages hver uge, og ophører mandag den 31. december 2012.\n"+
 				"Bemærk at doseringen har et komplekst forløb:\n"+

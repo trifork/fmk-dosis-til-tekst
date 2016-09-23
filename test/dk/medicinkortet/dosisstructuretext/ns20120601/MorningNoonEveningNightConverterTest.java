@@ -64,16 +64,16 @@ public class MorningNoonEveningNightConverterTest {
 						MorningDoseWrapper.makeDose(new BigDecimal(1)), 
 						EveningDoseWrapper.makeDose(new BigDecimal(2)))))); 
 		Assert.assertEquals(
-				DailyRepeatedConverterImpl.class, 
-				LongTextConverter.getConverterClass(dosage));
+				"DailyRepeatedConverterImpl", 
+				LongTextConverter.getConverterClassName(dosage));
 		Assert.assertEquals(
 			"Doseringsforløbet starter lørdag den 1. januar 2011, gentages hver dag, og ophører søndag den 30. januar 2011:\n"+
 			"   Doseringsforløb:\n"+
 			"   1 tablet morgen ved måltid + 2 tabletter aften ved måltid",
 			LongTextConverter.convert(dosage));
 		Assert.assertEquals(
-			MorningNoonEveningNightConverterImpl.class, 
-			ShortTextConverter.getConverterClass(dosage));
+			"MorningNoonEveningNightConverterImpl", 
+			ShortTextConverter.getConverterClassName(dosage));
 		Assert.assertEquals(
 			"1 tablet morgen og 2 tabletter aften ved måltid", 
 			ShortTextConverter.convert(dosage));
@@ -96,16 +96,16 @@ public class MorningNoonEveningNightConverterTest {
 						MorningDoseWrapper.makeDose(new BigDecimal(2)), 
 						EveningDoseWrapper.makeDose(new BigDecimal(2)))))); 
 		Assert.assertEquals(
-				DailyRepeatedConverterImpl.class, 
-				LongTextConverter.getConverterClass(dosage));
+				"DailyRepeatedConverterImpl", 
+				LongTextConverter.getConverterClassName(dosage));
 		Assert.assertEquals(
 			"Doseringsforløbet starter lørdag den 1. januar 2011, gentages hver dag, og ophører søndag den 30. januar 2011:\n"+
 			"   Doseringsforløb:\n"+
 			"   2 tabletter morgen ved måltid + 2 tabletter aften ved måltid",
 			LongTextConverter.convert(dosage));
 		Assert.assertEquals(
-			MorningNoonEveningNightConverterImpl.class, 
-			ShortTextConverter.getConverterClass(dosage));
+			"MorningNoonEveningNightConverterImpl", 
+			ShortTextConverter.getConverterClassName(dosage));
 		Assert.assertEquals(
 			"2 tabletter morgen og aften ved måltid", 
 			ShortTextConverter.convert(dosage));
@@ -130,14 +130,14 @@ public class MorningNoonEveningNightConverterTest {
 						EveningDoseWrapper.makeDose(new BigDecimal(3.5)),
 						NightDoseWrapper.makeDose(new BigDecimal(4.5)))))); 
 		Assert.assertEquals(
-				DailyRepeatedConverterImpl.class, 
-				LongTextConverter.getConverterClass(dosage));
+				"DailyRepeatedConverterImpl", 
+				LongTextConverter.getConverterClassName(dosage));
 		Assert.assertEquals(
 			"Doseringsforløbet starter lørdag den 1. januar 2011, gentages hver dag, og ophører søndag den 30. januar 2011:\n"+
 			"   Doseringsforløb:\n"+
 			"   1,5 tabletter morgen ved måltid og hvornår man ellers skulle føle trang + 2,5 tabletter middag ved måltid og hvornår man ellers skulle føle trang + 3,5 tabletter aften ved måltid og hvornår man ellers skulle føle trang + 4,5 tabletter før sengetid ved måltid og hvornår man ellers skulle føle trang",
 			LongTextConverter.convert(dosage));
-		Assert.assertNull(ShortTextConverter.getConverterClass(dosage));
+		Assert.assertNull(ShortTextConverter.getConverterClassName(dosage));
 		Assert.assertNull(ShortTextConverter.convert(dosage));
 		Assert.assertEquals(
 				12.0, 
@@ -158,16 +158,16 @@ public class MorningNoonEveningNightConverterTest {
 						MorningDoseWrapper.makeDose(new BigDecimal(1), true), 
 						EveningDoseWrapper.makeDose(new BigDecimal(2), true))))); 
 		Assert.assertEquals(
-				DailyRepeatedConverterImpl.class, 
-				LongTextConverter.getConverterClass(dosage));
+				"DailyRepeatedConverterImpl", 
+				LongTextConverter.getConverterClassName(dosage));
 		Assert.assertEquals(
 			"Doseringsforløbet starter lørdag den 1. januar 2011, gentages hver dag, og ophører søndag den 30. januar 2011:\n"+
 			"   Doseringsforløb:\n"+
 			"   1 mg morgen efter behov ved måltid + 2 mg aften efter behov ved måltid",
 			LongTextConverter.convert(dosage));
 		Assert.assertEquals(
-			MorningNoonEveningNightConverterImpl.class, 
-			ShortTextConverter.getConverterClass(dosage));
+			"MorningNoonEveningNightConverterImpl", 
+			ShortTextConverter.getConverterClassName(dosage));
 		Assert.assertEquals(
 			"1 mg morgen efter behov og 2 mg aften efter behov ved måltid", 
 			ShortTextConverter.convert(dosage));

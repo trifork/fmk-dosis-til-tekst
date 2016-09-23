@@ -56,16 +56,16 @@ public class TwoDaysRepeatedConverterTest {
 						PlainDoseWrapper.makeDose(new BigDecimal(1)), 
 						PlainDoseWrapper.makeDose(new BigDecimal(1))))));
 		Assert.assertEquals(
-				TwoDaysRepeatedConverterImpl.class, 
-				LongTextConverter.getConverterClass(dosage));
+				"TwoDaysRepeatedConverterImpl", 
+				LongTextConverter.getConverterClassName(dosage));
 		Assert.assertEquals(
 				"Doseringsforløbet starter lørdag den 1. januar 2011, forløbet gentages hver 2. dag, og ophører søndag den 30. januar 2011:\n"+
 				"   Doseringsforløb:\n"+
 				"   Dag 1: 1 stk 2 gange ved måltid",
 				LongTextConverter.convert(dosage));
 		Assert.assertEquals(
-				RepeatedConverterImpl.class, 
-				ShortTextConverter.getConverterClass(dosage));
+				"RepeatedConverterImpl", 
+				ShortTextConverter.getConverterClassName(dosage));
 		Assert.assertEquals(
 				"1 stk 2 gange samme dag hver 2. dag ved måltid", 
 				ShortTextConverter.convert(dosage));
@@ -88,16 +88,16 @@ public class TwoDaysRepeatedConverterTest {
 						PlainDoseWrapper.makeDose(new BigDecimal(1)), 
 						PlainDoseWrapper.makeDose(new BigDecimal(1))))));
 		Assert.assertEquals(
-				TwoDaysRepeatedConverterImpl.class, 
-				LongTextConverter.getConverterClass(dosage));
+				"TwoDaysRepeatedConverterImpl", 
+				LongTextConverter.getConverterClassName(dosage));
 		Assert.assertEquals(
 				"Doseringsforløbet starter lørdag den 1. januar 2011, forløbet gentages hver 2. dag, og ophører søndag den 30. januar 2011:\n"+
 				"   Doseringsforløb:\n"+
 				"   Dag 2: 1 stk 2 gange ved måltid",
 				LongTextConverter.convert(dosage));
 		Assert.assertEquals(
-				RepeatedConverterImpl.class, 
-				ShortTextConverter.getConverterClass(dosage));
+				"RepeatedConverterImpl", 
+				ShortTextConverter.getConverterClassName(dosage));
 		Assert.assertEquals(
 				"1 stk 2 gange samme dag hver 2. dag ved måltid", 
 				ShortTextConverter.convert(dosage));
@@ -123,8 +123,8 @@ public class TwoDaysRepeatedConverterTest {
 						PlainDoseWrapper.makeDose(new BigDecimal(1)), 
 						PlainDoseWrapper.makeDose(new BigDecimal(1))))));
 		Assert.assertEquals(
-				TwoDaysRepeatedConverterImpl.class, 
-				LongTextConverter.getConverterClass(dosage));
+				"TwoDaysRepeatedConverterImpl", 
+				LongTextConverter.getConverterClassName(dosage));
 		Assert.assertEquals(
 				"Doseringsforløbet starter lørdag den 1. januar 2011, forløbet gentages hver 2. dag, og ophører søndag den 30. januar 2011.\n"+
 				"Bemærk at doseringen varierer:\n"+
@@ -133,7 +133,7 @@ public class TwoDaysRepeatedConverterTest {
 				"   Dag 2: 1 stk 2 gange ved måltid",
 				LongTextConverter.convert(dosage));
 		Assert.assertNull(
-				ShortTextConverter.getConverterClass(dosage));
+				ShortTextConverter.getConverterClassName(dosage));
 		Assert.assertNull(
 				ShortTextConverter.convert(dosage));
 		Assert.assertEquals(

@@ -71,8 +71,8 @@ public class LimitedNumberOfDaysConverterTest {
 						PlainDoseWrapper.makeDose(new BigDecimal(4)), 
 						PlainDoseWrapper.makeDose(new BigDecimal(4))))));		
 		Assert.assertEquals(
-				DefaultLongTextConverterImpl.class,
-				LongTextConverter.getConverterClass(dosage));
+				"DefaultLongTextConverterImpl",
+				LongTextConverter.getConverterClassName(dosage));
 		Assert.assertEquals(
 				"Doseringsforløbet starter lørdag den 1. januar 2011 og ophører efter det angivne forløb:\n"+
 				"   Doseringsforløb:\n"+
@@ -152,7 +152,7 @@ public class LimitedNumberOfDaysConverterTest {
 				"   Doseringsforløb:\n" +
 				"   Mandag den 3. januar 2011: 7 ml kl. 11:25 ved måltid",
 				LongTextConverter.convert(dosage));
-		Assert.assertNull(ShortTextConverter.getConverterClass(dosage));
+		Assert.assertNull(ShortTextConverter.getConverterClassName(dosage));
 		Assert.assertEquals(
 				7./3., 
 				DailyDosisCalculator.calculate(dosage).getValue().doubleValue(), 

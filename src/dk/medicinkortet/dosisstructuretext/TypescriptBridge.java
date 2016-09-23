@@ -112,4 +112,18 @@ public class TypescriptBridge {
 		
 		return (String)res;
 	}
+
+	public static String getLongTextConverterClassName(DosageWrapper dosage) {
+		String json = JSONHelper.toJsonString(dosage);
+		
+		Object res;
+		try {
+			res = getEngineInstance().eval("dosistiltekst.Factory.getLongTextConverter().getConverterClassName(" + json + ")");
+		} catch (ScriptException e) {
+			e.printStackTrace();
+			throw new RuntimeException("ScriptException in LongTextConverter.getConverterClassName()", e);
+		}
+		
+		return (String)res;
+	}
 }

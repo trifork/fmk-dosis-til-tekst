@@ -139,7 +139,7 @@ public class SimpleAccordingToNeedConverterTest {
 				"   2 tabletter morgen efter behov + 2 tabletter aften efter behov",
 				LongTextConverter.convert(dosage));
 		Assert.assertEquals(
-				"SimpleLimitedAccordingToNeedConverterImpl", 
+				"MorningNoonEveningNightConverterImpl", 
 				ShortTextConverter.getConverterClassName(dosage));
 		Assert.assertEquals(
 				"2 tabletter morgen efter behov og aften efter behov", 

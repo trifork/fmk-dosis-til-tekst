@@ -45,6 +45,7 @@ import dk.medicinkortet.dosisstructuretext.longtextconverterimpl.FreeTextConvert
 import dk.medicinkortet.dosisstructuretext.longtextconverterimpl.LongTextConverterImpl;
 import dk.medicinkortet.dosisstructuretext.longtextconverterimpl.TwoDaysRepeatedConverterImpl;
 import dk.medicinkortet.dosisstructuretext.longtextconverterimpl.WeeklyRepeatedConverterImpl;
+import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.ShortTextConverterImpl;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
 
 /**
@@ -128,12 +129,29 @@ public class LongTextConverter {
 	 * @param dosage
 	 * @return The converter class 
 	 */
-	public static Class<? extends LongTextConverterImpl> getConverterClass(DosageWrapper dosage) {
+	private static Class<? extends LongTextConverterImpl> getConverterClass(DosageWrapper dosage) {
 		for(LongTextConverterImpl converter: converters) {
 			if(converter.canConvert(dosage))
 				return converter.getClass();
 		}
 		return null;
+	}
+	
+	public static String getConverterClassName(DosageWrapper dosage) {
+		if(useJavaImplementation()) {
+			return getConverterClassName_java(dosage);
+		}
+		else {
+			return getConverterClassName_js(dosage);
+		}
+	}
+
+	private static String getConverterClassName_java(DosageWrapper dosage) {
+		return getConverterClass(dosage).getSimpleName();
+	}
+	
+	private static String getConverterClassName_js(DosageWrapper dosage) {
+		return TypescriptBridge.getLongTextConverterClassName(dosage);
 	}
 	
 }

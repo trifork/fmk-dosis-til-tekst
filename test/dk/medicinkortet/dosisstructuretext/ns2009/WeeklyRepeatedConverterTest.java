@@ -67,8 +67,8 @@ public class WeeklyRepeatedConverterTest {
 						PlainDoseWrapper.makeDose(new BigDecimal(1)), 
 						PlainDoseWrapper.makeDose(new BigDecimal(1))))));
 		Assert.assertEquals(
-				WeeklyRepeatedConverterImpl.class, 
-				LongTextConverter.getConverterClass(dosage));
+				"WeeklyRepeatedConverterImpl", 
+				LongTextConverter.getConverterClassName(dosage));
 		Assert.assertEquals(
 				"Doseringsforløbet starter fredag den 8. juni 2012, forløbet gentages hver uge, og ophører mandag den 31. december 2012.\n"+
 				"Bemærk at doseringen har et komplekst forløb:\n"+
@@ -79,8 +79,8 @@ public class WeeklyRepeatedConverterTest {
 				"   Søndag: 1 stk 2 gange ved måltid",
 				LongTextConverter.convert(dosage));
 //		Assert.assertEquals(
-//				dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.WeeklyRepeatedConverterImpl.class, 
-//				ShortTextConverter.getConverterClass(dosage));
+//				dk.medicinkortet.dosisstructuretext.shorttextconverterimpl."WeeklyRepeatedConverterImpl", 
+//				ShortTextConverter.getConverterClassName(dosage));
 //		Assert.assertEquals("1 stk 2 gange daglig tirsdag, torsdag, fredag og søndag hver uge ved måltid", ShortTextConverter.convert(dosage));
 		Assert.assertEquals(
 				8/7., 
@@ -109,8 +109,8 @@ public class WeeklyRepeatedConverterTest {
 						7, 
 						PlainDoseWrapper.makeDose(new BigDecimal(1))))));
 		Assert.assertEquals(
-				WeeklyRepeatedConverterImpl.class, 
-				LongTextConverter.getConverterClass(dosage));
+				"WeeklyRepeatedConverterImpl", 
+				LongTextConverter.getConverterClassName(dosage));
 		Assert.assertEquals(
 				"Doseringsforløbet starter fredag den 8. juni 2012, forløbet gentages hver uge, og ophører mandag den 31. december 2012.\n"+
 				"Bemærk at doseringen har et komplekst forløb:\n"+
@@ -121,8 +121,8 @@ public class WeeklyRepeatedConverterTest {
 				"   Søndag: 1 stk ved måltid",
 				LongTextConverter.convert(dosage));
 		Assert.assertEquals(
-				dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.WeeklyRepeatedConverterImpl.class, 
-				ShortTextConverter.getConverterClass(dosage));
+				"WeeklyRepeatedConverterImpl", 
+				ShortTextConverter.getConverterClassName(dosage));
 		Assert.assertEquals("1 stk tirsdag, torsdag, fredag og søndag hver uge ved måltid", ShortTextConverter.convert(dosage));
 		Assert.assertEquals(
 				4/7., 

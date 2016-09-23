@@ -72,8 +72,8 @@ public class MorningNoonEveningNightInNDaysConverterTest {
 						5, 
 						MorningDoseWrapper.makeDose(new BigDecimal(1), false)))));				
 		Assert.assertEquals(
-				DefaultLongTextConverterImpl.class, 
-				LongTextConverter.getConverterClass(dosage));
+				"DefaultLongTextConverterImpl", 
+				LongTextConverter.getConverterClassName(dosage));
 		Assert.assertEquals(
 				"Doseringsforløbet starter lørdag den 1. januar 2011, og ophører onsdag den 5. januar 2011:\n"+
 				"   Doseringsforløb:\n"+
@@ -84,8 +84,8 @@ public class MorningNoonEveningNightInNDaysConverterTest {
 				"   Onsdag den 5. januar 2011: 1 tablet morgen ved måltid",
 				LongTextConverter.convert(dosage));
 		Assert.assertEquals(
-				MorningNoonEveningNightInNDaysConverterImpl.class, 
-				ShortTextConverter.getConverterClass(dosage));
+				"MorningNoonEveningNightInNDaysConverterImpl", 
+				ShortTextConverter.getConverterClassName(dosage));
 		Assert.assertEquals(
 				"1 tablet morgen ved måltid i 5 dage", 
 				ShortTextConverter.convert(dosage));
@@ -119,8 +119,8 @@ public class MorningNoonEveningNightInNDaysConverterTest {
 						5, 
 						MorningDoseWrapper.makeDose(new BigDecimal(1), true)))));				
 		Assert.assertEquals(
-				DefaultLongTextConverterImpl.class, 
-				LongTextConverter.getConverterClass(dosage));
+				"DefaultLongTextConverterImpl", 
+				LongTextConverter.getConverterClassName(dosage));
 		Assert.assertEquals(
 				"Doseringsforløbet starter lørdag den 1. januar 2011, og ophører onsdag den 5. januar 2011:\n"+
 				"   Doseringsforløb:\n"+
@@ -131,8 +131,8 @@ public class MorningNoonEveningNightInNDaysConverterTest {
 				"   Onsdag den 5. januar 2011: 1 tablet morgen efter behov højst 1 gang ved måltid",
 				LongTextConverter.convert(dosage));
 		Assert.assertEquals(
-				MorningNoonEveningNightInNDaysConverterImpl.class, 
-				ShortTextConverter.getConverterClass(dosage));
+				"MorningNoonEveningNightInNDaysConverterImpl", 
+				ShortTextConverter.getConverterClassName(dosage));
 		Assert.assertEquals(
 				"1 tablet morgen efter behov ved måltid i 5 dage", 
 				ShortTextConverter.convert(dosage));

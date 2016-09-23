@@ -143,7 +143,7 @@ public class LongTextComplexConverterTest {
 				"   Doseringsforløb:\n"+
 				"   Onsdag: 1 tablet morgen",
 				LongTextConverter.convert(dosage));
-		Assert.assertEquals(WeeklyMorningNoonEveningNightConverterImpl.class, ShortTextConverter.getConverterClass(dosage));
+		Assert.assertEquals("WeeklyMorningNoonEveningNightConverterImpl", ShortTextConverter.getConverterClassName(dosage));
 		Assert.assertEquals("1 tablet morgen onsdag hver uge", ShortTextConverter.convert(dosage));
 		Assert.assertEquals(
 				1/7.0, 
@@ -304,7 +304,7 @@ public class LongTextComplexConverterTest {
 				"   Fredag: 1 tablet morgen\n"+
 				"   Søndag: 1 tablet morgen",
 				LongTextConverter.convert(dosage));
-		Assert.assertEquals(WeeklyMorningNoonEveningNightConverterImpl.class, ShortTextConverter.getConverterClass(dosage));
+		Assert.assertEquals("WeeklyMorningNoonEveningNightConverterImpl", ShortTextConverter.getConverterClassName(dosage));
 		Assert.assertEquals("1 tablet morgen tirsdag, onsdag, fredag og søndag hver uge", ShortTextConverter.convert(dosage));
 		Assert.assertEquals(
 				4/7.0, 
@@ -337,7 +337,7 @@ public class LongTextComplexConverterTest {
 				"   Torsdag: 2 tabletter morgen\n"+
 				"   Lørdag: 2 tabletter morgen",
 				LongTextConverter.convert(dosage));		
-		Assert.assertEquals(WeeklyMorningNoonEveningNightConverterImpl.class, ShortTextConverter.getConverterClass(dosage));
+		Assert.assertEquals("WeeklyMorningNoonEveningNightConverterImpl", ShortTextConverter.getConverterClassName(dosage));
 		Assert.assertEquals("2 tabletter morgen mandag, torsdag og lørdag hver uge", ShortTextConverter.convert(dosage));
 		Assert.assertEquals(
 				6/7.0, 
@@ -407,16 +407,16 @@ public class LongTextComplexConverterTest {
 						0, 
 						PlainDoseWrapper.makeDose(new BigDecimal(1), new BigDecimal(2), true)))));
 		Assert.assertEquals(
-				DefaultLongTextConverterImpl.class,
-				LongTextConverter.getConverterClass(dosage));
+				"DefaultLongTextConverterImpl",
+				LongTextConverter.getConverterClassName(dosage));
 		Assert.assertEquals(
 				"Doseringsforløbet starter onsdag den 18. april 2012:\n"+ 
 				"   Doseringsforløb:\n"+
 				"   Efter behov: 1-2 sug efter behov ved anstrengelse", 
 				LongTextConverter.convert(dosage));
 		Assert.assertEquals(
-				SimpleAccordingToNeedConverterImpl.class, 
-				ShortTextConverter.getConverterClass(dosage));
+				"SimpleAccordingToNeedConverterImpl", 
+				ShortTextConverter.getConverterClassName(dosage));
 		Assert.assertEquals(
 				"1-2 sug efter behov ved anstrengelse", 
 				ShortTextConverter.convert(dosage));
@@ -442,8 +442,8 @@ public class LongTextComplexConverterTest {
 				"   1-2 tabletter efter behov højst 3 gange daglig ved smerter", 
 				LongTextConverter.convert(dosage));
 		Assert.assertEquals(
-				SimpleLimitedAccordingToNeedConverterImpl.class, 
-				ShortTextConverter.getConverterClass(dosage));
+				"SimpleLimitedAccordingToNeedConverterImpl", 
+				ShortTextConverter.getConverterClassName(dosage));
 		Assert.assertEquals(
 				"1-2 tabletter efter behov, højst 3 gange daglig ved smerter", 
 				ShortTextConverter.convert(dosage));
@@ -607,7 +607,7 @@ public class LongTextComplexConverterTest {
 				"   Doseringsforløb:\n"+
 				"   2 stk efter behov højst 1 gang daglig",
 				LongTextConverter.convert(dosage));
-		Assert.assertEquals(SimpleLimitedAccordingToNeedConverterImpl.class, ShortTextConverter.getConverterClass(dosage));
+		Assert.assertEquals("SimpleLimitedAccordingToNeedConverterImpl", ShortTextConverter.getConverterClassName(dosage));
 		Assert.assertEquals("2 stk efter behov, højst 1 gang daglig", ShortTextConverter.convert(dosage));
 		Assert.assertNull(DailyDosisCalculator.calculate(dosage).getValue());
 		Assert.assertEquals(DosageType.AccordingToNeed, DosageTypeCalculator.calculate(dosage));		
@@ -629,7 +629,7 @@ public class LongTextComplexConverterTest {
 				"   Doseringsforløb:\n"+
 				"   2 stk efter behov højst 2 gange daglig",
 				LongTextConverter.convert(dosage));
-		Assert.assertEquals(SimpleLimitedAccordingToNeedConverterImpl.class, ShortTextConverter.getConverterClass(dosage));
+		Assert.assertEquals("SimpleLimitedAccordingToNeedConverterImpl", ShortTextConverter.getConverterClassName(dosage));
 		Assert.assertEquals("2 stk efter behov, højst 2 gange daglig", ShortTextConverter.convert(dosage));
 		Assert.assertNull(DailyDosisCalculator.calculate(dosage).getValue());
 		Assert.assertEquals(DosageType.AccordingToNeed, DosageTypeCalculator.calculate(dosage));		
