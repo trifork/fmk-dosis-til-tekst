@@ -37,6 +37,7 @@ import dk.medicinkortet.dosisstructuretext.vowrapper.DateOrDateTimeWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DayWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.MorningDoseWrapper;
+import dk.medicinkortet.dosisstructuretext.vowrapper.PlainDoseWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.StructureWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.StructuresWrapper;
 import dk.medicinkortet.dosisstructuretext.vowrapper.TimedDoseWrapper;
@@ -119,6 +120,55 @@ public class LongTextComplexConverterTest {
         Assert.assertNull(ShortTextConverter.convert(dosage));
         Assert.assertNull(DailyDosisCalculator.calculate(dosage).getValue());
         Assert.assertEquals(DosageType.Temporary, DosageTypeCalculator.calculate(dosage));
+    }
+    
+    @Test
+    public void testDifferentFirstDosage() throws Exception {
+        DosageWrapper dosage = DosageWrapper.makeDosage(
+            StructuresWrapper.makeStructures(
+                UnitOrUnitsWrapper.makeUnits("tablet", "tabletter"),
+                StructureWrapper.makeStructure(
+                    0, null, DateOrDateTimeWrapper.makeDate("2012-04-18"), null,
+                    DayWrapper.makeDay(
+                        1,
+                            TimedDoseWrapper.makeDose(new LocalTime(10,0), new BigDecimal(1), false),
+                            
+                            PlainDoseWrapper.makeDose(BigDecimal.valueOf(2)),
+                            PlainDoseWrapper.makeDose(BigDecimal.valueOf(2)),
+                            PlainDoseWrapper.makeDose(BigDecimal.valueOf(2)),
+                            PlainDoseWrapper.makeDose(BigDecimal.valueOf(2))
+                		))));
+        Assert.assertEquals(
+                "Doseringsforløbet starter onsdag den 18. april 2012 og ophører efter det angivne forløb:\n" +
+                        "   Doseringsforløb:\n" +
+                        "   Onsdag den 18. april 2012: 1 tablet kl. 10:00 + 2 tabletter 4 gange daglig",
+                LongTextConverter.convert(dosage));
+        Assert.assertNull(ShortTextConverter.convert(dosage));
+        Assert.assertEquals(9, DailyDosisCalculator.calculate(dosage).getValue().intValue());
+        Assert.assertEquals(DosageType.Temporary, DosageTypeCalculator.calculate(dosage));
+    }
+    
+    @Test
+    public void testFirstDosageDiffersOnPN() throws Exception {
+        DosageWrapper dosage = DosageWrapper.makeDosage(
+            StructuresWrapper.makeStructures(
+                UnitOrUnitsWrapper.makeUnits("tablet", "tabletter"),
+                StructureWrapper.makeStructure(
+                    0, null, DateOrDateTimeWrapper.makeDate("2012-04-18"), null,
+                    DayWrapper.makeDay(
+                        1,
+                            PlainDoseWrapper.makeDose(BigDecimal.valueOf(2), true),
+                            PlainDoseWrapper.makeDose(BigDecimal.valueOf(2), false),
+                            PlainDoseWrapper.makeDose(BigDecimal.valueOf(2), false)
+                		))));
+        Assert.assertEquals(
+                "Doseringsforløbet starter onsdag den 18. april 2012 og ophører efter det angivne forløb:\n" +
+                        "   Doseringsforløb:\n" +
+                        "   Onsdag den 18. april 2012: 2 tabletter efter behov + 2 tabletter 2 gange daglig",
+                LongTextConverter.convert(dosage));
+        Assert.assertNull(ShortTextConverter.convert(dosage));
+        Assert.assertNull(DailyDosisCalculator.calculate(dosage).getValue());
+        Assert.assertEquals(DosageType.Combined, DosageTypeCalculator.calculate(dosage));
     }
 		
 }

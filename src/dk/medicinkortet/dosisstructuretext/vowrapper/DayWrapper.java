@@ -47,6 +47,7 @@ public class DayWrapper {
 	
 	// Helper / cached values
 	private Boolean areAllDosesTheSame;
+	private Boolean areAllDosesExceptTheFirstTheSame;
 	private Boolean areAllDosesHaveTheSameQuantity;
 	private ArrayList<DoseWrapper> accordingToNeedDoses;
 	
@@ -157,6 +158,25 @@ public class DayWrapper {
 		}
 		return areAllDosesTheSame;
 	}
+	
+	
+	public boolean allDosesButTheFirstAreTheSame() {
+		if(areAllDosesExceptTheFirstTheSame==null) {
+			areAllDosesExceptTheFirstTheSame = true;
+			DoseWrapper dose0 = null;
+			for(int i = 1; i < getNumberOfDoses();i++) {
+				if(dose0==null) {
+					dose0 = getAllDoses().get(i);
+				}
+				else if(!dose0.theSameAs(getAllDoses().get(i))) {
+					areAllDosesExceptTheFirstTheSame = false;
+					break;
+				}	
+			}
+		}
+		return areAllDosesExceptTheFirstTheSame;
+	}
+	
 
 	/**
 	 * Compares dosage quantities (but not the dosages label)

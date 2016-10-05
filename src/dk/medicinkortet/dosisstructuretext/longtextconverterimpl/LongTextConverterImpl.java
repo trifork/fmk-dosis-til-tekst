@@ -135,6 +135,16 @@ public abstract class LongTextConverterImpl {
 			else
 				s.append(" "+day.getNumberOfDoses()+" "+TextHelper.gange(day.getNumberOfDoses())+daglig+supplText);
 		}
+		else if(day.getNumberOfDoses()>2 && day.allDosesButTheFirstAreTheSame()) {
+			// Eks.: 1 stk. kl. 08:00 og 2 stk. 4 gange daglig
+		
+			s.append((CharSequence)makeOneDose(day.getDose(0), unitOrUnits, structure.getSupplText())+supplText);
+			if(0<day.getNumberOfDoses()-1) {
+				s.append(" + ");
+			}
+			DayWrapper dayWithoutFirstDose = DayWrapper.makeDay(day.getDayNumber(), day.getAllDoses().subList(1, day.getAllDoses().size()).toArray(new DoseWrapper[0]));
+			s.append(makeDaysDosage(unitOrUnits, structure, dayWithoutFirstDose, false));
+		}
 		else {
 			for(int d=0; d<day.getNumberOfDoses(); d++) {
 				// The cast to CharSequence is needed to circumvent a gwt bug:
