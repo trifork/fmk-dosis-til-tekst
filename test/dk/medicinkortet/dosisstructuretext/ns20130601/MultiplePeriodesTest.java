@@ -78,6 +78,7 @@ public class MultiplePeriodesTest {
 					)
 				)				
 			); 
+		for(int i = 0; i < 50000; i++) {
 		Assert.assertEquals(
 			"Doseringen indeholder flere perioder:\n" +
 			"\n" +
@@ -92,6 +93,7 @@ public class MultiplePeriodesTest {
 			"   Doseringsforløb:\n" +
 			"   1 tablet morgen",
 			LongTextConverter.convert(dosage));
+		}
 		Assert.assertNull(ShortTextConverter.getConverterClassName(dosage));
 		Assert.assertNull(DailyDosisCalculator.calculate(dosage).getValue()); 		
 		Assert.assertEquals(DosageType.Combined, DosageTypeCalculator.calculate(dosage));		

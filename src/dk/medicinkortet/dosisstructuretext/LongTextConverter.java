@@ -22,19 +22,7 @@
 
 package dk.medicinkortet.dosisstructuretext;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Properties;
-
-import javax.script.Bindings;
-import javax.script.ScriptContext;
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
-import javax.script.ScriptException;
-import javax.script.SimpleBindings;
 
 import dk.medicinkortet.dosisstructuretext.longtextconverterimpl.AdministrationAccordingToSchemaConverterImpl;
 import dk.medicinkortet.dosisstructuretext.longtextconverterimpl.DailyRepeatedConverterImpl;
@@ -45,20 +33,15 @@ import dk.medicinkortet.dosisstructuretext.longtextconverterimpl.FreeTextConvert
 import dk.medicinkortet.dosisstructuretext.longtextconverterimpl.LongTextConverterImpl;
 import dk.medicinkortet.dosisstructuretext.longtextconverterimpl.TwoDaysRepeatedConverterImpl;
 import dk.medicinkortet.dosisstructuretext.longtextconverterimpl.WeeklyRepeatedConverterImpl;
-import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.ShortTextConverterImpl;
 import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
 
 /**
  * Converts dosage to long text. This must always be possible, DefaultLongTextConverterImpl ensures that
  */ 
-public class LongTextConverter {
+public class LongTextConverter extends TextConverter {
 
-	
-	private static Properties properties;
 	private static ArrayList<LongTextConverterImpl> converters = new ArrayList<LongTextConverterImpl>();
-	 
-	private static ScriptEngine engine = null;
-	 
+	
 	/**
 	 * Populate a list of implemented converters 
 	 * Consider the order: The tests are evaluated in order. DefaultLongTextConverterImpl is added 
@@ -75,35 +58,13 @@ public class LongTextConverter {
 		converters.add(new DefaultMultiPeriodeLongTextConverterImpl());
 	}
 
-	private static boolean useJavaImplementation() {
-		properties = new Properties();
-		InputStream propStream = LongTextConverter.class.getClassLoader().getResourceAsStream("project.properties");
-		if(propStream == null) {
-			try {
-				propStream = new java.io.FileInputStream("project.properties");
-			}
-			catch(FileNotFoundException e) {
-				return true;
-			}
-		}
-	
-		try {
-			properties.load(propStream);
-		} catch (IOException e) {
-			return true;
-		}
-		
-		return properties.getProperty("implementation") != null ? properties.getProperty("implementation").compareToIgnoreCase("java") == 0 : true;
-	}
-	
-
 	/**
 	 * Performs a conversion to a long text. 
 	 * @param dosage
 	 * @return A long text string describing the dosage 
 	 */
 	public static String convert(DosageWrapper dosage) {
-		if(useJavaImplementation()) {
+		if(useJavaImplementation) {
 			return convert_java(dosage);
 		}
 		else {
@@ -138,7 +99,7 @@ public class LongTextConverter {
 	}
 	
 	public static String getConverterClassName(DosageWrapper dosage) {
-		if(useJavaImplementation()) {
+		if(useJavaImplementation) {
 			return getConverterClassName_java(dosage);
 		}
 		else {

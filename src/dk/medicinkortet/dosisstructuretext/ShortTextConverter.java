@@ -22,13 +22,8 @@
 
 package dk.medicinkortet.dosisstructuretext;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Properties;
 
-import dk.medicinkortet.dosisstructuretext.longtextconverterimpl.LongTextConverterImpl;
 import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.AdministrationAccordingToSchemaConverterImpl;
 import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.CombinedTwoPeriodesConverterImpl;
 import dk.medicinkortet.dosisstructuretext.shorttextconverterimpl.DayInWeekConverterImpl;
@@ -55,12 +50,11 @@ import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
  * Converts dosage to short text. This is only possible for a limited number of dosages, as the result must not exceed 70 
  * characters. 
  */ 
-public class ShortTextConverter {
+public class ShortTextConverter extends TextConverter {
 
 	private static final int MAX_LENGTH = 70;
 	
 	private static ArrayList<ShortTextConverterImpl> converters = new ArrayList<ShortTextConverterImpl>();	
-	private static Properties properties;
 	
 	/**
 	 * Populate a list of implemented converters 
@@ -123,28 +117,6 @@ public class ShortTextConverter {
 		}
 		return false;
 	}
-	
-	private static boolean useJavaImplementation() {
-		properties = new Properties();
-		InputStream propStream = LongTextConverter.class.getClassLoader().getResourceAsStream("project.properties");
-		if(propStream == null) {
-			try {
-				propStream = new java.io.FileInputStream("project.properties");
-			}
-			catch(FileNotFoundException e) {
-				return true;
-			}
-		}
-	
-		try {
-			properties.load(propStream);
-		} catch (IOException e) {
-			return true;
-		}
-		
-		return properties.getProperty("implementation") != null ? properties.getProperty("implementation").compareToIgnoreCase("java") == 0 : true;
-	}
-	
 
 	/**
 	 * Performs a conversion to a long text. 
@@ -152,7 +124,7 @@ public class ShortTextConverter {
 	 * @return A long text string describing the dosage 
 	 */
 	public static String convert(DosageWrapper dosage, int maxLength) {
-		if(useJavaImplementation()) {
+		if(useJavaImplementation) {
 			return convert_java(dosage, maxLength);
 		}
 		else {
@@ -161,7 +133,7 @@ public class ShortTextConverter {
 	}
 	
 	public static String convert(DosageWrapper dosage) {
-		if(useJavaImplementation()) {
+		if(useJavaImplementation) {
 			return convert_java(dosage);
 		}
 		else {
@@ -191,7 +163,7 @@ public class ShortTextConverter {
 	}
 	
 	public static String getConverterClassName(DosageWrapper dosage) {
-		if(useJavaImplementation()) {
+		if(useJavaImplementation) {
 			return getConverterClassName_java(dosage);
 		}
 		else {
