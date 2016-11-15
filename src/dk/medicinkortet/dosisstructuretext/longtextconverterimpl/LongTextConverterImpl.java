@@ -124,6 +124,8 @@ public abstract class LongTextConverterImpl {
 			s.append((CharSequence)makeOneDose(day.getDose(0), unitOrUnits, structure.getSupplText()));
 			if(day.containsAccordingToNeedDosesOnly() && day.getDayNumber()>0)
 				s.append(" højst 1 gang"+daglig).append(supplText);
+			else if(!hasDaysLabel && day.containsPlainDose())	// Ex. 12 ml 1 gang daglig
+				s.append(" 1 gang").append(daglig).append(supplText);
 			else
 				s.append(supplText);
 		}

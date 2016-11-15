@@ -79,7 +79,7 @@ public class TypescriptBridge {
 			res = getEngineInstance().eval("dosistiltekst.Factory.getLongTextConverter().convert(" + json + ")");
 		} catch (ScriptException e) {
 			e.printStackTrace();
-			throw new RuntimeException("ScriptException in LongTextConverter.convert()", e);
+			throw new RuntimeException("ScriptException in LongTextConverter.convert() with json " + json, e);
 		}
 		
 		return (String)res;
@@ -93,7 +93,7 @@ public class TypescriptBridge {
 			res = getEngineInstance().eval("dosistiltekst.Factory.getShortTextConverter().convert(" + json + ")");
 		} catch (ScriptException e) {
 			e.printStackTrace();
-			throw new RuntimeException("ScriptException in ShortTextConverter.convert()", e);
+			throw new RuntimeException("ScriptException in ShortTextConverter.convert() with json " + json, e);
 		}
 		
 		return (String)res;

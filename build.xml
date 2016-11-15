@@ -78,11 +78,15 @@
 		<antcall target="jar"></antcall>
 	</target>
 	
-	<target name="jar-java"  > 
+	<target name="jar-java" depends="resolve-js"> 
 			<delete file="src/project.properties"/>
 			<echo message="implementation=java${line.separator}" file="src/project.properties"/>
 			<echo message="applicationName=${ant.project.name}" append="true" file="src/project.properties"/>
 			<antcall target="jar"></antcall>
+			<copy  file="node_modules/fmk-dosis-til-tekst-ts/target/dosistiltekst.js" tofile="target/classes/dosistiltekst.js" failonerror="true"/>
+			<unzip src="lib/build/com.google.code.gson-gson.jar" dest="target/classes"/>
+			<unzip  src="lib/build/trifork-trifork-common.jar" dest="target/classes"/>
+			<unzip  src="lib/build/com.jcraft-jsch.jar" dest="target/classes"/>
 		</target>
 		
 	

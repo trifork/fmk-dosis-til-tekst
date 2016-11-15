@@ -22,6 +22,8 @@
 
 package dk.medicinkortet.dosisstructuretext.ns20120601;
 
+import static org.junit.Assert.assertTrue;
+
 import java.math.BigDecimal;
 
 import org.junit.Assert;
@@ -155,4 +157,25 @@ public class DailyRepeatedConverterTest {
 		Assert.assertNull(DailyDosisCalculator.calculate(dosage).getValue());
 		Assert.assertEquals(DosageType.Combined, DosageTypeCalculator.calculate(dosage));
 	}
+	
+	// FMK-2606 DosageLong tekst viser ikke "1 gang daglig" i longtext
+	@Test
+	public void testDailyRepeatedWithOneDailyDosage() throws Exception {
+		
+		DosageWrapper dosage = DosageWrapper.makeDosage(
+				StructuresWrapper.makeStructures(
+					UnitOrUnitsWrapper.makeUnits("ml", "ml"), 
+					StructureWrapper.makeStructure(
+						1, null, DateOrDateTimeWrapper.makeDate("2013-01-01"), DateOrDateTimeWrapper.makeDate("2013-08-15"),
+						DayWrapper.makeDay(
+							1, 
+							PlainDoseWrapper.makeDose(new BigDecimal(12)))
+						)
+				));
+		
+		String shortText = ShortTextConverter.convert(dosage);
+		String longText = LongTextConverter.convert(dosage);
+		assertTrue(longText.contains("12 ml 1 gang daglig"));
+	}
+
 }
