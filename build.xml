@@ -8,7 +8,6 @@
 	<property file="build.properties" />
 	<property file="revision.properties" />
 	<property name="trifork-common" value="${basedir}/../trifork-common"/>
-	<property name="npm.local.executable" value="npm"/>
 	<import file="${trifork-common}/etc/build-common.xml"/>
 
 	<property environment="env"/>
@@ -55,41 +54,7 @@
 			destdir="target/doc"
 		/>	
 	</target>	
-
-	<target name="resolve-js">
-		<exec executable="cmd" osfamily="windows">
-			<arg value="/C"/>
-		 	<arg value="npm.cmd install"/>
-		</exec>
-		<exec executable="npm" osfamily="unix">
-			<arg value="install"/>
-		</exec>
-	</target>
-	
-	<target name="jar-js" depends="resolve-js">  
-		<delete file="src/project.properties"/>
-		<echo message="implementation=javascript${line.separator}" file="src/project.properties"/>
-		<echo message="applicationName=${ant.project.name}" append="true" file="src/project.properties"/>
-		<property name="build.war.dir" value="target/war"/>
-		<copy  file="node_modules/fmk-dosis-til-tekst-ts/target/dosistiltekst.js" tofile="target/classes/dosistiltekst.js" failonerror="true"/>
-		<unzip src="lib/build/com.google.code.gson-gson.jar" dest="target/classes"/>
-		<unzip  src="lib/build/trifork-trifork-common.jar" dest="target/classes"/>
-		<unzip  src="lib/build/com.jcraft-jsch.jar" dest="target/classes"/>
-		<antcall target="jar"></antcall>
-	</target>
-	
-	<target name="jar-java" depends="resolve-js,resolve-build"> 
-			<delete file="src/project.properties"/>
-			<echo message="implementation=java${line.separator}" file="src/project.properties"/>
-			<echo message="applicationName=${ant.project.name}" append="true" file="src/project.properties"/>
-			<copy  file="node_modules/fmk-dosis-til-tekst-ts/target/dosistiltekst.js" tofile="target/classes/dosistiltekst.js" failonerror="true"/>
-			<unzip src="lib/build/com.google.code.gson-gson.jar" dest="target/classes"/>
-			<unzip  src="lib/build/trifork-trifork-common.jar" dest="target/classes"/>
-			<unzip  src="lib/build/com.jcraft-jsch.jar" dest="target/classes"/>
-			<antcall target="jar"></antcall>
-		</target>
 		
-	
 	<target name="publish-internal" depends="init, resolve-build, local-revision,jar, war, publish-internal-do"/>
 
 	<target name="publish-trifork-common" depends="publish-local">

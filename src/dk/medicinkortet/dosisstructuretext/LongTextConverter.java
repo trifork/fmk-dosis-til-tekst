@@ -38,7 +38,7 @@ import dk.medicinkortet.dosisstructuretext.vowrapper.DosageWrapper;
 /**
  * Converts dosage to long text. This must always be possible, DefaultLongTextConverterImpl ensures that
  */ 
-public class LongTextConverter extends TextConverter {
+public class LongTextConverter {
 
 	private static ArrayList<LongTextConverterImpl> converters = new ArrayList<LongTextConverterImpl>();
 	
@@ -64,24 +64,11 @@ public class LongTextConverter extends TextConverter {
 	 * @return A long text string describing the dosage 
 	 */
 	public static String convert(DosageWrapper dosage) {
-		if(useJavaImplementation) {
-			return convert_java(dosage);
-		}
-		else {
-			return convert_js(dosage);
-		}
-	}
-	
-	public static String convert_java(DosageWrapper dosage) {
 		for(LongTextConverterImpl converter: converters) {
 			if(converter.canConvert(dosage)) 
 				return converter.doConvert(dosage);
 		}
 		return null;
-	}
-	
-	public static String convert_js(DosageWrapper dosage) {
-		return TypescriptBridge.convertLongText(dosage);
 	}
 	
 	/**
@@ -99,20 +86,6 @@ public class LongTextConverter extends TextConverter {
 	}
 	
 	public static String getConverterClassName(DosageWrapper dosage) {
-		if(useJavaImplementation) {
-			return getConverterClassName_java(dosage);
-		}
-		else {
-			return getConverterClassName_js(dosage);
-		}
-	}
-
-	private static String getConverterClassName_java(DosageWrapper dosage) {
 		return getConverterClass(dosage).getSimpleName();
 	}
-	
-	private static String getConverterClassName_js(DosageWrapper dosage) {
-		return TypescriptBridge.getLongTextConverterClassName(dosage);
-	}
-	
 }
