@@ -132,6 +132,10 @@ public class StructureWrapper {
 	    this.dosagePeriodPostfix = dosagePeriodPostfix;
 	}
 	
+	public boolean isEmpty() {
+		return days.isEmpty();
+	}
+	
 	public boolean startsAndEndsSameDay() {
 		if(getStartDateOrDateTime()==null || getEndDateOrDateTime()==null)
 			return false;

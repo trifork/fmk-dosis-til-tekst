@@ -36,7 +36,7 @@ public class StructuresWrapper {
 	private UnitOrUnitsWrapper unitOrUnits;
 	private SortedSet<StructureWrapper> structures;
 
-	private static final Comparator<StructureWrapper> STRUCTURE_COMPARATOR = new Comparator<StructureWrapper>() {
+	public static final Comparator<StructureWrapper> STRUCTURE_COMPARATOR = new Comparator<StructureWrapper>() {
 		@Override
 		public int compare(StructureWrapper o1, StructureWrapper o2) {
 			int i = o1.getStartDateOrDateTime().getDateOrDateTime().compareTo(o2.getStartDateOrDateTime().getDateOrDateTime());
