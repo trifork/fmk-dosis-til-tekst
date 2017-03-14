@@ -317,6 +317,11 @@ public class DosageTypeCalculator144Test {
 		StructureWrapper s2 = StructureWrapper.makeStructure(1, "mod smerter", DateOrDateTimeWrapper.makeDateTime("2017-01-02 11:00:01"), DateOrDateTimeWrapper.makeDateTime("2017-01-03 08:00:00"));
 		Assert.assertTrue(DosageTypeCalculator144.abuts(s1,  s2));
 		
+		// First structure with end date - equals seconds structures start (only possible due to old data in production, validation rejects new dosages of that kind)
+		s1 = StructureWrapper.makeStructure(1, "mod smerter", DateOrDateTimeWrapper.makeDateTime("2017-01-01 10:00:00"), DateOrDateTimeWrapper.makeDateTime("2017-01-02 11:00:00"));
+		s2 = StructureWrapper.makeStructure(1, "mod smerter", DateOrDateTimeWrapper.makeDateTime("2017-01-02 11:00:00"), DateOrDateTimeWrapper.makeDateTime("2017-01-03 08:00:00"));
+		Assert.assertTrue(DosageTypeCalculator144.abuts(s1,  s2));
+	
 		// First structure with end date - overlaps
 		s1 = StructureWrapper.makeStructure(1, "mod smerter", DateOrDateTimeWrapper.makeDateTime("2017-01-01 10:00:00"), DateOrDateTimeWrapper.makeDateTime("2017-01-03 09:00:00"));
 		s2 = StructureWrapper.makeStructure(1, "mod smerter", DateOrDateTimeWrapper.makeDateTime("2017-01-03 08:00:00"), DateOrDateTimeWrapper.makeDateTime("2017-01-05 11:00:00"));

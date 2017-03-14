@@ -131,7 +131,7 @@ public class DosageTypeCalculator144 {
 				}
 			}
 			
-			if(!pnStructures.isEmpty()) {
+			if(!handled && !pnStructures.isEmpty()) {
 				if(abuts(es, pnStructures.getFirst())) {
 					pnStructures.addFirst(es);
 					handled = true;
@@ -182,7 +182,8 @@ public class DosageTypeCalculator144 {
 	}
 	
 	protected static boolean dateTimeAbuts(Date dateTime1, Date dateTime2) {
-		return (ChronoUnit.SECONDS.between(Instant.ofEpochMilli(dateTime1.getTime()), Instant.ofEpochMilli(dateTime2.getTime())) == 1);
+		long secondsBetween = ChronoUnit.SECONDS.between(Instant.ofEpochMilli(dateTime1.getTime()), Instant.ofEpochMilli(dateTime2.getTime()));
+		return (secondsBetween  >= 0 && secondsBetween <= 1);
 	}
 
 	protected static boolean dateAbuts(Date d1, Date d2) {
