@@ -190,7 +190,8 @@ public class DosageTypeCalculator144 {
 	}
 
 	protected static boolean dateAbuts(Date d1, Date d2) {
-		return Period.between(d1.toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), d2.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()).getDays() == 1;
+		Period between = Period.between(d1.toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), d2.toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+		return between.getDays() == 1 && between.getMonths() == 0 && between.getYears() == 0;
 	}
 	
 	private static void fillGapsWithEmptyPeriods(LinkedList<StructureWrapper> structures, LinkedList<StructureWrapper> emptyStructures) {

@@ -274,7 +274,7 @@ public class DosageTypeCalculator144Test {
 	@Test
 	public void testDateAbuts() throws ParseException {
 		Assert.assertTrue(DosageTypeCalculator144.dateAbuts(dateParser.parse("2017-02-01"), dateParser.parse("2017-02-02")));
-		Assert.assertFalse(DosageTypeCalculator144.dateAbuts(dateParser.parse("2017-02-01"), dateParser.parse("2017-02-03")));
+		Assert.assertFalse(DosageTypeCalculator144.dateAbuts(dateParser.parse("2014-03-27"), dateParser.parse("2014-08-28")));
 		Assert.assertTrue(DosageTypeCalculator144.dateAbuts(dateParser.parse("2017-03-26"), dateParser.parse("2017-03-27")));	// Check for DST
 	}
 	
