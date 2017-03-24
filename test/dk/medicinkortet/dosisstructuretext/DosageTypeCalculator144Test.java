@@ -3,7 +3,6 @@ package dk.medicinkortet.dosisstructuretext;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.LinkedList;
 
 import org.junit.Assert;
@@ -276,6 +275,7 @@ public class DosageTypeCalculator144Test {
 	public void testDateAbuts() throws ParseException {
 		Assert.assertTrue(DosageTypeCalculator144.dateAbuts(dateParser.parse("2017-02-01"), dateParser.parse("2017-02-02")));
 		Assert.assertFalse(DosageTypeCalculator144.dateAbuts(dateParser.parse("2017-02-01"), dateParser.parse("2017-02-03")));
+		Assert.assertTrue(DosageTypeCalculator144.dateAbuts(dateParser.parse("2017-03-26"), dateParser.parse("2017-03-27")));	// Check for DST
 	}
 	
 	@Test

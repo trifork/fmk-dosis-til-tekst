@@ -23,6 +23,9 @@
 package dk.medicinkortet.dosisstructuretext;
 
 import java.time.Instant;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.Iterator;
@@ -187,7 +190,7 @@ public class DosageTypeCalculator144 {
 	}
 
 	protected static boolean dateAbuts(Date d1, Date d2) {
-		return (ChronoUnit.DAYS.between(Instant.ofEpochMilli(d1.getTime()), Instant.ofEpochMilli(d2.getTime())) == 1);
+		return Period.between(d1.toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), d2.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()).getDays() == 1;
 	}
 	
 	private static void fillGapsWithEmptyPeriods(LinkedList<StructureWrapper> structures, LinkedList<StructureWrapper> emptyStructures) {
