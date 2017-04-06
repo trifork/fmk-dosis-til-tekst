@@ -225,6 +225,10 @@ public class DayWrapper {
 		return false;
 	}
 	
+	public boolean containsOnlyPNOrFixedDoses() {
+		return containsAccordingToNeedDosesOnly() || containsFixedDosesOnly();
+	}
+	
 	public boolean containsPlainNotAccordingToNeedDose() {
 		for(DoseWrapper dose: getAllDoses()) {
 			if(dose instanceof PlainDoseWrapper && !dose.isAccordingToNeed()) {
@@ -247,6 +251,15 @@ public class DayWrapper {
 	public boolean containsAccordingToNeedDosesOnly() {
 		for(DoseWrapper dose: getAllDoses()) {
 			if(!(dose.isAccordingToNeed())) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	public boolean containsFixedDosesOnly() {
+		for(DoseWrapper dose: getAllDoses()) {
+			if(dose.isAccordingToNeed()) {
 				return false;
 			}
 		}

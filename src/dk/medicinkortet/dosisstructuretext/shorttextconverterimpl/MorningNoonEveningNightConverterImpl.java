@@ -72,11 +72,11 @@ public class MorningNoonEveningNightConverterImpl extends ShortTextConverterImpl
 	
 	public static void appendNoon(DayWrapper day, StringBuilder text, UnitOrUnitsWrapper unitOrUnits) {
 		if(day.getNoonDose()!=null) {
-			if(day.getMorningDose()!=null && (day.getEveningDose()!=null || day.getNightDose()!=null))
+			if(day.getMorningDose()!=null && (day.getEveningDose()!=null || day.getNightDose()!=null || !day.containsOnlyPNOrFixedDoses())) // Brug "," hvis blandet fast/PN, da teksten ellers bliver uklar
 				text.append(", ");
-			else if(day.getMorningDose()!=null)
+			else if(day.getMorningDose()!=null && day.containsOnlyPNOrFixedDoses())	// Ikke "og" hvis blandet fast+PN, da teksten ellers bliver uklar
 				text.append(" og ");			
-			if(!day.allDosesHaveTheSameQuantity())
+			if(!day.allDosesHaveTheSameQuantity() || !day.containsOnlyPNOrFixedDoses())
 				text.append(toValue(day.getNoonDose(), unitOrUnits));
 			else if(day.getMorningDose()!=null)
 				text.append(day.getNoonDose().getLabel());
@@ -89,11 +89,12 @@ public class MorningNoonEveningNightConverterImpl extends ShortTextConverterImpl
 	
 	public static void appendEvening(DayWrapper day, StringBuilder text, UnitOrUnitsWrapper unitOrUnits) {
 		if(day.getEveningDose()!=null) {
-			if((day.getMorningDose()!=null || day.getNoonDose()!=null) && day.getNightDose()!=null)
+			if((day.getMorningDose()!=null || day.getNoonDose()!=null) && (day.getNightDose()!=null || !day.containsOnlyPNOrFixedDoses())) // Brug "," hvis blandet fast/PN, da teksten ellers bliver uklar
 				text.append(", ");
-			else if(day.getMorningDose()!=null || day.getNoonDose()!=null)
-				text.append(" og ");			
-			if(!day.allDosesHaveTheSameQuantity())
+			else if((day.getMorningDose()!=null || day.getNoonDose()!=null) && day.containsOnlyPNOrFixedDoses())	// Ikke "og" hvis blandet PN+fast, da teksten ellers bliver uklar
+				text.append(" og ");
+			
+			if(!day.allDosesHaveTheSameQuantity() || !day.containsOnlyPNOrFixedDoses())
 				text.append(toValue(day.getEveningDose(), unitOrUnits));
 			else if(day.getMorningDose()!=null || day.getNoonDose()!=null)
 				text.append(day.getEveningDose().getLabel());			
@@ -106,9 +107,15 @@ public class MorningNoonEveningNightConverterImpl extends ShortTextConverterImpl
 	
 	public static void appendNight(DayWrapper day, StringBuilder text, UnitOrUnitsWrapper unitOrUnits) {
 		if(day.getNightDose()!=null) {
-			if(day.getMorningDose()!=null || day.getNoonDose()!=null || day.getEveningDose()!=null)
-				text.append(" og ");			
-			if(!day.allDosesHaveTheSameQuantity())
+			if(day.getMorningDose()!=null || day.getNoonDose()!=null || day.getEveningDose()!=null){
+				if(day.containsOnlyPNOrFixedDoses()) {	// Ikke "og" hvis PN er involveret, da teksten ellers bliver uklar
+					text.append(" og ");			
+				}
+				else {
+					text.append(", ");
+				}
+			}
+			if(!day.allDosesHaveTheSameQuantity() || !day.containsOnlyPNOrFixedDoses())
 				text.append(toValue(day.getNightDose(), unitOrUnits));
 			else if(day.getMorningDose()!=null || day.getNoonDose()!=null || day.getEveningDose()!=null)
 				text.append(day.getNightDose().getLabel());
