@@ -15,7 +15,7 @@ public class NumberOfWholeWeeksConverterTest {
                 StructuresWrapper.makeStructures(
                         UnitOrUnitsWrapper.makeUnit("stk"),
                         StructureWrapper.makeStructure(
-                                14, null, DateOrDateTimeWrapper.makeDateTime("2014-02-07 07:19:00"), null,
+                                14, "ved måltid", DateOrDateTimeWrapper.makeDateTime("2014-02-07 07:19:00"), null,
                                 DayWrapper.makeDay(1, NoonDoseWrapper.makeDose(new BigDecimal(1))),
                                 DayWrapper.makeDay(2, NoonDoseWrapper.makeDose(new BigDecimal(1))),
                                 DayWrapper.makeDay(3, NoonDoseWrapper.makeDose(new BigDecimal(1))),
@@ -28,14 +28,14 @@ public class NumberOfWholeWeeksConverterTest {
 
         Assert.assertEquals("Doseringsforløbet starter fredag den 7. februar 2014 kl. 07:19, forløbet gentages efter 14 dage:\n" +
                 "   Doseringsforløb:\n" +
-                "   Fredag den 7. februar 2014: 1 stk middag\n" +
-                "   Lørdag den 8. februar 2014: 1 stk middag\n" +
-                "   Søndag den 9. februar 2014: 1 stk middag\n" +
-                "   Mandag den 10. februar 2014: 1 stk middag\n" +
-                "   Tirsdag den 11. februar 2014: 1 stk middag\n" +
-                "   Onsdag den 12. februar 2014: 1 stk middag\n" +
-                "   Torsdag den 13. februar 2014: 1 stk middag", LongTextConverter.convert(dosage));
-        Assert.assertEquals("1 stk middag daglig i en uge, herefter en uges pause", ShortTextConverter.convert(dosage));
+                "   Fredag den 7. februar 2014: 1 stk middag ved måltid\n" +
+                "   Lørdag den 8. februar 2014: 1 stk middag ved måltid\n" +
+                "   Søndag den 9. februar 2014: 1 stk middag ved måltid\n" +
+                "   Mandag den 10. februar 2014: 1 stk middag ved måltid\n" +
+                "   Tirsdag den 11. februar 2014: 1 stk middag ved måltid\n" +
+                "   Onsdag den 12. februar 2014: 1 stk middag ved måltid\n" +
+                "   Torsdag den 13. februar 2014: 1 stk middag ved måltid", LongTextConverter.convert(dosage));
+        Assert.assertEquals("1 stk middag daglig ved måltid i en uge, herefter en uges pause", ShortTextConverter.convert(dosage));
         Assert.assertEquals(
                 0.5,
                 DailyDosisCalculator.calculate(dosage).getValue().doubleValue(),

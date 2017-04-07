@@ -70,6 +70,10 @@ public class NumberOfWholeWeeksConverterImpl extends ShortTextConverterImpl {
 		else
 			text.append(" daglig");
 		
+		if(structure.getSupplText() != null && !structure.getSupplText().isEmpty()) {
+			text.append(" ").append(structure.getSupplText());
+		}
+		
         int days = structure.getDays().size();
         int pauseDays = structure.getIterationInterval() - days;
 

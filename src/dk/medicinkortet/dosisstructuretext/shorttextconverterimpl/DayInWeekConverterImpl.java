@@ -81,6 +81,10 @@ import dk.medicinkortet.dosisstructuretext.vowrapper.StructureWrapper;
 			
 			text.append(TextHelper.makeDayOfWeekAndName(structure.getStartDateOrDateTime(), day, false).getName());
 			
+			if(structure.getSupplText() != null && !structure.getSupplText().isEmpty()) {
+				text.append(" ").append(structure.getSupplText());
+			}
+			
 	        int weeks = structure.getDays().size();
 	        int pauseWeeks = structure.getIterationInterval()/7 - weeks;
 	
