@@ -96,26 +96,27 @@ public class DosageWrapperWrapperTest {
 		RawDefinition definition = new RawDefinition(
 				1, 28100000013L, "Test",
 				"tablet", "tabletter", 
-				"N daglig", "28", "dag 1: 1 dag 2: 1 dag 3: 1 dag 4: 1 dag 5: 1 dag 6: 1 dag 7: 1 dag 8: 1 dag 9: 1 dag 10: 1", "optimalt fra 15.-24. cyklusdag");
+				"N daglig", "28", "dag 1: 1 dag 2: 1 dag 3: 1 dag 4: 1 dag 5: 1 dag 6: 1 dag 7: 1 dag 8: 1 dag 9: 1 dag 10: 1", "15.-24. cyklusdag");
 		DosageWrapper dosage = DosageWrapperWrapper.wrap(definition);
 		DosageToTextTranslator.translate(dosage, definition);
 		Assert.assertEquals(
+				"1 tablet daglig 15.-24. cyklusdag i 10 dage, herefter 18 dages pause", 
+				definition.getShortText());
+		Assert.assertEquals(
 				"Doseringsforløbet starter mandag den 3. juni 2013, forløbet gentages efter 28 dage, og ophører mandag den 1. juni 2015:\n"+
 				"   Doseringsforløb:\n"+
-				"   Mandag den 3. juni 2013: 1 tablet optimalt fra 15.-24. cyklusdag\n"+
-				"   Tirsdag den 4. juni 2013: 1 tablet optimalt fra 15.-24. cyklusdag\n"+
-				"   Onsdag den 5. juni 2013: 1 tablet optimalt fra 15.-24. cyklusdag\n"+
-				"   Torsdag den 6. juni 2013: 1 tablet optimalt fra 15.-24. cyklusdag\n"+
-				"   Fredag den 7. juni 2013: 1 tablet optimalt fra 15.-24. cyklusdag\n"+
-				"   Lørdag den 8. juni 2013: 1 tablet optimalt fra 15.-24. cyklusdag\n"+
-				"   Søndag den 9. juni 2013: 1 tablet optimalt fra 15.-24. cyklusdag\n"+
-				"   Mandag den 10. juni 2013: 1 tablet optimalt fra 15.-24. cyklusdag\n"+
-				"   Tirsdag den 11. juni 2013: 1 tablet optimalt fra 15.-24. cyklusdag\n"+
-				"   Onsdag den 12. juni 2013: 1 tablet optimalt fra 15.-24. cyklusdag",
+				"   Mandag den 3. juni 2013: 1 tablet 15.-24. cyklusdag\n"+
+				"   Tirsdag den 4. juni 2013: 1 tablet 15.-24. cyklusdag\n"+
+				"   Onsdag den 5. juni 2013: 1 tablet 15.-24. cyklusdag\n"+
+				"   Torsdag den 6. juni 2013: 1 tablet 15.-24. cyklusdag\n"+
+				"   Fredag den 7. juni 2013: 1 tablet 15.-24. cyklusdag\n"+
+				"   Lørdag den 8. juni 2013: 1 tablet 15.-24. cyklusdag\n"+
+				"   Søndag den 9. juni 2013: 1 tablet 15.-24. cyklusdag\n"+
+				"   Mandag den 10. juni 2013: 1 tablet 15.-24. cyklusdag\n"+
+				"   Tirsdag den 11. juni 2013: 1 tablet 15.-24. cyklusdag\n"+
+				"   Onsdag den 12. juni 2013: 1 tablet 15.-24. cyklusdag",
 				definition.getLongText());
-		Assert.assertEquals(
-				"1 tablet daglig i 10 dage, herefter 18 dages pause", 
-				definition.getShortText());
+		
 	}
 	
 	@Test
