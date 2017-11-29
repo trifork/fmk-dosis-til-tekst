@@ -46,10 +46,10 @@ public class DosageWrapperWrapperTest {
 		Assert.assertEquals(
 				"Doseringsforløbet starter mandag den 3. juni 2013, gentages hver dag, og ophører mandag den 1. juni 2015:\n"+
 				"   Doseringsforløb:\n"+
-				"   20 tabletter før sengetid + 20 tabletter efter behov",
+				"   20 tabletter nat + 20 tabletter efter behov",
 				definition.getLongText());
 //		Assert.assertEquals(
-//				"20 tabletter før sengetid, samt 20 tabletter efter behov, højst 1 gang daglig", 
+//				"20 tabletter nat, samt 20 tabletter efter behov, højst 1 gang daglig", 
 //				definition.getShortText());
 	}
 	

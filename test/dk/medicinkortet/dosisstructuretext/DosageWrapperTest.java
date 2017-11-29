@@ -61,6 +61,27 @@ public class DosageWrapperTest {
 	}
 
 	@Test
+	public void testMaxQuantityFullCiphers() throws Exception {
+		  
+		BigDecimal minimalQuantity = new BigDecimal("0.000000001");
+		BigDecimal maximalQuantity = new BigDecimal("999999999.9999999");
+		DosageWrapper dosage = 
+			DosageWrapper.makeDosage(
+				StructuresWrapper.makeStructures(
+					UnitOrUnitsWrapper.makeUnit("stk"), 
+					StructureWrapper.makeStructure(
+					1, "mod smerter",
+					DateOrDateTimeWrapper.makeDate("2011-01-01"),DateOrDateTimeWrapper.makeDate("2011-01-14"), 
+					DayWrapper.makeDay(1,
+						MorningDoseWrapper.makeDose(minimalQuantity, maximalQuantity)))));
+		
+		DailyDosis dd = DailyDosisCalculator.calculate(dosage);
+		Assert.assertEquals(0, minimalQuantity.compareTo(dd.getInterval().getMinimum()));
+		Assert.assertEquals(0, maximalQuantity.compareTo(dd.getInterval().getMaximum()));
+	}
+
+	
+	@Test
 	public void testDaglig4StkModSmerterPlus4StkEfterBehovModSmerter() throws Exception {
 		DosageWrapper dosage = 
 			DosageWrapper.makeDosage(
@@ -118,7 +139,7 @@ public class DosageWrapperTest {
 		Assert.assertEquals(
 			"Doseringsforløbet starter lørdag den 1. januar 2011, gentages hver dag, og ophører fredag den 14. januar 2011:\n"+
 			"   Doseringsforløb:\n"+
-			"   1 stk morgen mod smerter + 1 stk middag mod smerter + 1 stk aften mod smerter + 1 stk før sengetid mod smerter",				
+			"   1 stk morgen mod smerter + 1 stk middag mod smerter + 1 stk aften mod smerter + 1 stk nat mod smerter",				
 			LongTextConverter.convert(dosage));
 	}
 	

@@ -567,7 +567,7 @@ public class RepeatedConverterTest {
 
         Assert.assertEquals("Doseringsforløbet starter fredag den 7. februar 2014 kl. 07:19, forløbet gentages efter 42 dage:\n" +
                 "   Doseringsforløb:\n" +
-                "   Fredag den 7. februar 2014: 1 stk middag + 1 stk før sengetid", LongTextConverter.convert(dosage));
+                "   Fredag den 7. februar 2014: 1 stk middag + 1 stk nat", LongTextConverter.convert(dosage));
         Assert.assertNull(ShortTextConverter.convert(dosage)); // does not have a short text translation
         Assert.assertEquals(
                 0.047619048,

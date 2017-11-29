@@ -65,13 +65,13 @@ public class MorningNoonEveningNightAndAccordingToNeedConverterTest {
 		Assert.assertEquals(
 			"Doseringsforløbet starter lørdag den 1. januar 2011, gentages hver dag, og ophører søndag den 30. januar 2011:\n"+
 			"   Doseringsforløb:\n"+
-			"   2 stk morgen + 2 stk middag + 2 stk aften + 2 stk før sengetid + 2 stk efter behov",
+			"   2 stk morgen + 2 stk middag + 2 stk aften + 2 stk nat + 2 stk efter behov",
 			LongTextConverter.convert(dosage));
 //		Assert.assertEquals(
 //			"MorningNoonEveningNightAndAccordingToNeedConverterImpl", 
 //			ShortTextConverter.getConverterClassName(dosage));
 //		Assert.assertEquals(
-//			"2 stk morgen, middag, aften og før sengetid, samt 2 stk efter behov, højst 1 gang daglig", 
+//			"2 stk morgen, middag, aften og nat, samt 2 stk efter behov, højst 1 gang daglig", 
 //			ShortTextConverter.convert(dosage));
 		Assert.assertTrue(DailyDosisCalculator.calculate(dosage).isNone());
 		Assert.assertEquals(DosageType.Combined, DosageTypeCalculator.calculate(dosage));

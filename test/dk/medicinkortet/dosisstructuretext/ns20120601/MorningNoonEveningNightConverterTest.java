@@ -135,7 +135,7 @@ public class MorningNoonEveningNightConverterTest {
 		Assert.assertEquals(
 			"Doseringsforløbet starter lørdag den 1. januar 2011, gentages hver dag, og ophører søndag den 30. januar 2011:\n"+
 			"   Doseringsforløb:\n"+
-			"   1,5 tabletter morgen ved måltid og hvornår man ellers skulle føle trang + 2,5 tabletter middag ved måltid og hvornår man ellers skulle føle trang + 3,5 tabletter aften ved måltid og hvornår man ellers skulle føle trang + 4,5 tabletter før sengetid ved måltid og hvornår man ellers skulle føle trang",
+			"   1,5 tabletter morgen ved måltid og hvornår man ellers skulle føle trang + 2,5 tabletter middag ved måltid og hvornår man ellers skulle føle trang + 3,5 tabletter aften ved måltid og hvornår man ellers skulle føle trang + 4,5 tabletter nat ved måltid og hvornår man ellers skulle føle trang",
 			LongTextConverter.convert(dosage));
 		Assert.assertNull(ShortTextConverter.getConverterClassName(dosage));
 		Assert.assertNull(ShortTextConverter.convert(dosage));

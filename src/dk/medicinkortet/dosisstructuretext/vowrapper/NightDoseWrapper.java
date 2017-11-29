@@ -68,7 +68,7 @@ public class NightDoseWrapper extends DoseWrapper {
 		return new NightDoseWrapper(null, minimalQuantity, maximalQuantity, null, minimalSupplText, maximalSupplText, isAccordingToNeed);
 	}	
 	
-	public final static String LABEL = "før sengetid";  
+	public final static String LABEL = "nat";  
 	
 	@Override
 	public String getLabel() {
